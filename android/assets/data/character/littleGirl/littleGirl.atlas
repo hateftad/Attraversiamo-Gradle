@@ -1,0 +1,110 @@
+
+littleGirl.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+LFoot
+  rotate: false
+  xy: 1261, 125
+  size: 189, 102
+  orig: 189, 102
+  offset: 0, 0
+  index: -1
+LHand
+  rotate: true
+  xy: 1776, 185
+  size: 77, 145
+  orig: 77, 145
+  offset: 0, 0
+  index: -1
+LLeg
+  rotate: true
+  xy: 1466, 369
+  size: 101, 315
+  orig: 101, 316
+  offset: 0, 1
+  index: -1
+LlowerrArm
+  rotate: true
+  xy: 1783, 404
+  size: 66, 222
+  orig: 66, 222
+  offset: 0, 0
+  index: -1
+LupperArm
+  rotate: false
+  xy: 2, 18
+  size: 249, 207
+  orig: 249, 207
+  offset: 0, 0
+  index: -1
+RFoot
+  rotate: false
+  xy: 1466, 178
+  size: 179, 94
+  orig: 179, 94
+  offset: 0, 0
+  index: -1
+RHand
+  rotate: false
+  xy: 1647, 207
+  size: 127, 65
+  orig: 131, 66
+  offset: 0, 0
+  index: -1
+RLeg
+  rotate: true
+  xy: 1466, 274
+  size: 93, 316
+  orig: 93, 317
+  offset: 0, 1
+  index: -1
+RLowerArm
+  rotate: false
+  xy: 253, 2
+  size: 246, 128
+  orig: 246, 128
+  offset: 0, 0
+  index: -1
+RupperArm
+  rotate: true
+  xy: 253, 132
+  size: 93, 298
+  orig: 93, 298
+  offset: 0, 0
+  index: -1
+frontSkirt
+  rotate: false
+  xy: 1261, 229
+  size: 203, 241
+  orig: 204, 241
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 935, 142
+  size: 324, 328
+  orig: 324, 328
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 1784, 264
+  size: 169, 138
+  orig: 169, 138
+  offset: 0, 0
+  index: -1
+skirt
+  rotate: true
+  xy: 569, 133
+  size: 337, 364
+  orig: 338, 364
+  offset: 1, 0
+  index: -1
+torso
+  rotate: true
+  xy: 2, 227
+  size: 243, 565
+  orig: 243, 565
+  offset: 0, 0
+  index: -1

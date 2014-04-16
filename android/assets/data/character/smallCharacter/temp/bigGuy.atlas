@@ -1,0 +1,96 @@
+
+bigGuy.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+OpenRightHand
+  rotate: false
+  xy: 413, 174
+  size: 77, 103
+  orig: 77, 103
+  offset: 0, 0
+  index: -1
+RightHandC
+  rotate: false
+  xy: 319, 103
+  size: 51, 75
+  orig: 51, 75
+  offset: 0, 0
+  index: -1
+RightLowerArm
+  rotate: false
+  xy: 216, 21
+  size: 50, 168
+  orig: 50, 168
+  offset: 0, 0
+  index: -1
+RightUpperrArm
+  rotate: false
+  xy: 148, 36
+  size: 66, 153
+  orig: 66, 153
+  offset: 0, 0
+  index: -1
+foot
+  rotate: true
+  xy: 2, 2
+  size: 142, 86
+  orig: 142, 86
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 277, 342
+  size: 138, 158
+  orig: 138, 158
+  offset: 0, 0
+  index: -1
+leftHandC
+  rotate: false
+  xy: 90, 67
+  size: 56, 77
+  orig: 56, 77
+  offset: 0, 0
+  index: -1
+leftLowerArm
+  rotate: false
+  xy: 268, 10
+  size: 49, 168
+  orig: 49, 168
+  offset: 0, 0
+  index: -1
+leftUpperrArm
+  rotate: false
+  xy: 277, 180
+  size: 134, 160
+  orig: 134, 160
+  offset: 0, 0
+  index: -1
+lowerLeg
+  rotate: false
+  xy: 417, 279
+  size: 67, 221
+  orig: 67, 221
+  offset: 0, 0
+  index: -1
+neck
+  rotate: true
+  xy: 319, 34
+  size: 67, 36
+  orig: 67, 36
+  offset: 0, 0
+  index: -1
+torso
+  rotate: false
+  xy: 2, 146
+  size: 135, 354
+  orig: 135, 354
+  offset: 0, 0
+  index: -1
+upperLeg
+  rotate: false
+  xy: 139, 191
+  size: 136, 309
+  orig: 136, 309
+  offset: 0, 0
+  index: -1

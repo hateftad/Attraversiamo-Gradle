@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Levels>
+    
+    <Level name="level1">
+        <levelNr>1</levelNr>
+        <nrOfPlayers>2</nrOfPlayers>
+        <finishFacingLeft>false</finishFacingLeft>
+        <hasPortal>true</hasPortal>
+        <player>
+            <active>true</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>smallCharacter</playerName>
+            <playerNr>one</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x> 
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>false</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player>
+        <player>
+            <active>false</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>littleGirl</playerName>
+            <playerNr>two</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x> 
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>false</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player>
+        <camera>
+            <zoom>7</zoom>
+        </camera>
+        <lightColor>Grey</lightColor>
+    </Level>
+    <Level name="level2">
+        <levelNr>2</levelNr>
+        <nrOfPlayers>2</nrOfPlayers>
+        <finishFacingLeft>false</finishFacingLeft>
+        <hasPortal>false</hasPortal>
+        <player>
+            <active>true</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>smallCharacter</playerName>
+            <playerNr>one</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x> 
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>true</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player>
+        <player>
+            <active>false</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>littleGirl</playerName>
+            <playerNr>two</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x> 
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>true</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player> 
+         <camera>
+            <zoom>7</zoom>
+        </camera>
+        <lightColor>Blue</lightColor>
+    </Level>
+    <Level name="level3">
+        <levelNr>3</levelNr>
+        <nrOfPlayers>1</nrOfPlayers>
+        <finishFacingLeft>false</finishFacingLeft>
+        <hasPortal>false</hasPortal>
+        <player>
+            <active>true</active>
+            <canDeactivate>false</canDeactivate>
+            <playerName>smallCharacter</playerName>
+            <playerNr>one</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x> 
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>true</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player>
+         <camera>
+            <zoom>7</zoom>
+        </camera>
+        <lightColor>Yellow</lightColor>
+    </Level>
+    <Level name="level4">
+        <levelNr>4</levelNr>
+        <nrOfPlayers>1</nrOfPlayers>
+        <finishFacingLeft>false</finishFacingLeft>
+        <hasPortal>false</hasPortal>
+        <player>
+            <active>true</active>
+            <canDeactivate>false</canDeactivate>
+            <playerName>smallCharacter</playerName>
+            <playerNr>one</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x> 
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>true</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player>
+         <camera>
+            <zoom>7</zoom>
+        </camera>
+        <lightColor>Yellow</lightColor>
+    </Level>
+</Levels>

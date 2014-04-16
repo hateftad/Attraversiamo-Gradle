@@ -1,0 +1,33 @@
+
+intro.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+hat
+  rotate: true
+  xy: 2, 41
+  size: 241, 172
+  orig: 241, 172
+  offset: 0, 0
+  index: -1
+hatFront
+  rotate: false
+  xy: 2, 284
+  size: 240, 216
+  orig: 240, 216
+  offset: 0, 0
+  index: -1
+tada
+  rotate: false
+  xy: 244, 292
+  size: 135, 208
+  orig: 135, 208
+  offset: 0, 0
+  index: -1
+you
+  rotate: false
+  xy: 2, 2
+  size: 50, 37
+  orig: 50, 37
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,15 @@
+apply plugin: "java"
+
+sourceCompatibility = 1.6
+
+dependencies {
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+	compile "com.badlogicgames.box2dlights:box2dlights:1.1"
+	compile fileTree(dir: 'build/libs', include: '*.jar')
+}
+
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+eclipse.project {
+    name = appName + "-core"
+}
