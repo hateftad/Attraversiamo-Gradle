@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="output" path="bin"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
-	<classpathentry kind="src" path="/Attraversiamo-core" exported="true"/>
-	<classpathentry sourcepath="/Users/Hatef/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-rt/0.0.11/d0f2c636746ca898fb605832655c47317b609b0d/robovm-rt-0.0.11-sources.jar" kind="lib" path="/Users/Hatef/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-rt/0.0.11/4d39072af8f4ab14952595957427cf5e48ca6bf8/robovm-rt-0.0.11.jar" exported="true"/>
-	<classpathentry sourcepath="/Users/Hatef/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-cocoatouch/0.0.11/ad297f70d0452b1954ae3674fb924973f253bd98/robovm-cocoatouch-0.0.11-sources.jar" kind="lib" path="/Users/Hatef/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-cocoatouch/0.0.11/1001a6f13cf25bb759a104b2a2297e01a0343c9c/robovm-cocoatouch-0.0.11.jar" exported="true"/>
-	<classpathentry sourcepath="/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-robovm/1.0-SNAPSHOT/ce3e2641c94c5175d87ff39dbef7202647009e53/gdx-backend-robovm-1.0-SNAPSHOT-sources.jar" kind="lib" path="/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-robovm/1.0-SNAPSHOT/bb826af9427d626cb045c987e7cd328d3ac3e271/gdx-backend-robovm-1.0-SNAPSHOT.jar" exported="true"/>
-	<classpathentry sourcepath="/Users/Hatef/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-objc/0.0.11/e090633460a7bd5574b6e352f0ae49103b326775/robovm-objc-0.0.11-sources.jar" kind="lib" path="/Users/Hatef/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-objc/0.0.11/be19c0626c7c01188fc55f4f494471a8f72a9ac4/robovm-objc-0.0.11.jar" exported="true"/>
-	<classpathentry sourcepath="/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.0-SNAPSHOT/456879f624c81b1968ce7c30550b1d689f842747/gdx-1.0-SNAPSHOT-sources.jar" kind="lib" path="/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.0-SNAPSHOT/f726f8cd0af98a6ee91018b1722e5ece2325525d/gdx-1.0-SNAPSHOT.jar" exported="true"/>
+	<classpathentry exported="true" kind="src" path="/Attraversiamo-core"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.spine.AnimationState;
+import com.esotericsoftware.spine.AnimationState.AnimationStateListener;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.Bone;
+import com.esotericsoftware.spine.Event;
 import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonData;
 import com.esotericsoftware.spine.SkeletonJson;
@@ -32,6 +34,8 @@ public class AnimationComponent extends BaseComponent {
 	private State m_previousState;
 
 	private Vector2 m_center;
+	
+	public boolean m_isCompleted;
 
 	public enum State{
 		WALKING, IDLE, JUMPING, RUNNING, JOGGING, JOGJUMP,
@@ -75,7 +79,33 @@ public class AnimationComponent extends BaseComponent {
 		AnimationStateData stateData = new AnimationStateData(m_skeletonData);
 		m_animationState = new AnimationState(stateData);
 		m_animationState.setAnimation(0, animation, false);
-
+		m_animationState.addListener(new AnimationStateListener() {
+			
+			@Override
+			public void start(int trackIndex) {
+				// TODO Auto-generated method stub
+				m_isCompleted = false;
+			}
+			
+			@Override
+			public void event(int trackIndex, Event event) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void end(int trackIndex) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void complete(int trackIndex, int loopCount) {
+				// TODO Auto-generated method stub
+				m_isCompleted = true;
+			}
+		});
+		
 		m_skeleton = new Skeleton(m_skeletonData);
 		m_skeleton.setX(center.x);
 		m_skeleton.setY(center.y);
@@ -118,11 +148,11 @@ public class AnimationComponent extends BaseComponent {
 	
 	public boolean isCompleted()
 	{		
-		return false;//m_animationState.;
+		return m_isCompleted;
 	}
 	
 	public float getTime(){
-		return m_animationState.getTimeScale();
+		return m_animationState.getCurrent(0).getTime();
 	}
 
 	public AnimationState getAnimationState()

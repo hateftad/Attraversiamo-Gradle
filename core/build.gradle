@@ -2,9 +2,8 @@ apply plugin: "java"
 
 sourceCompatibility = 1.6
 
-dependencies {
-    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-	compile fileTree(dir: 'build/libs', include: '*.jar')
+dependencies{
+	compile fileTree(dir: 'libs', include:'*.jar')
 }
 
 sourceSets.main.java.srcDirs = [ "src/" ]

@@ -99,7 +99,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 			if(g.m_lifting){
 
 				AnimationComponent anim = e.getComponent(AnimationComponent.class);
-				if(j.getWeldJoint()!=null){
+				if(j.getWeldJoint() != null){
 					anim.setAnimationState(State.PULLUP);
 
 					if(anim.getTime() > 1.80f){

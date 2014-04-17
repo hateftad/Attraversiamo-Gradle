@@ -6,10 +6,9 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Attraversiamo-core/build/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.0-SNAPSHOT/f726f8cd0af98a6ee91018b1722e5ece2325525d/gdx-1.0-SNAPSHOT.jar" sourcepath="/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.0-SNAPSHOT/456879f624c81b1968ce7c30550b1d689f842747/gdx-1.0-SNAPSHOT-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/Hatef/git/Attraversiamo-Gradle/core/build/libs/artemis-src.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/Hatef/git/Attraversiamo-Gradle/core/build/libs/artemis.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/Hatef/git/Attraversiamo-Gradle/core/build/libs/core-1.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/Hatef/git/Attraversiamo-Gradle/core/build/libs/spine-libgdx-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.0-SNAPSHOT/f33cd854622c6b4e3b0a15ca6e5c7333eb579528/gdx-1.0-SNAPSHOT.jar" sourcepath="C:/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.0-SNAPSHOT/3136bb8d7a11b1f7ec571b4af8ccf6aad97fd73b/gdx-1.0-SNAPSHOT-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.box2dlights/box2dlights/1.1/516f0c870b42381ea822bac033c94384d591d5db/box2dlights-1.1.jar" sourcepath="C:/Users/Hatef/.gradle/caches/modules-2/files-2.1/com.badlogicgames.box2dlights/box2dlights/1.1/f4eb2eab0c2e3f5517fd09235871e8c959df9870/box2dlights-1.1-sources.jar"/>
+	<classpathentry kind="lib" path="build/libs/artemis.jar"/>
+	<classpathentry kind="lib" path="build/libs/spine-libgdx-1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
