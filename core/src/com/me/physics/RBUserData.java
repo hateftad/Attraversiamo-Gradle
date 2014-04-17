@@ -23,7 +23,10 @@ public class RBUserData {
 		BOXHAND,
 		PORTAL,
 		BOXFOOT,
-		FINISH
+		FINISH,
+		LEFTCRAWL,
+		RIGHTCRAWL,
+		CRAWLCANAL
 	}
 	
 	private int m_collisionGroup;
@@ -92,6 +95,15 @@ public class RBUserData {
 			break;
 		case 18:
 			setType(Type.FINISH);
+			break;
+		case 19:
+			setType(Type.LEFTCRAWL);
+			break;
+		case 20:
+			setType(Type.RIGHTCRAWL);
+			break;
+		case 21:
+			setType(Type.CRAWLCANAL);
 			break;
 		default:
 			break;

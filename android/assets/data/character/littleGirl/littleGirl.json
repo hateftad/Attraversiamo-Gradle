@@ -6,50 +6,6 @@
    [
       
       {
-         "angle" : 0,
-         "angularVelocity" : 0,
-         "awake" : true,
-         "customProperties" : 
-         [
-            
-            {
-               "int" : 15,
-               "name" : "boxIndex"
-            },
-            
-            {
-               "int" : 1,
-               "name" : "collisionGroup"
-            }
-         ],
-         "fixture" : 
-         [
-            
-            {
-               "circle" : 
-               {
-                  "center" : 0,
-                  "radius" : 0.167383611202240
-               },
-               "density" : 9.999999717180685e-010,
-               "friction" : 0.2000000029802322,
-               "name" : "fixture0"
-            }
-         ],
-         "gravityScale" : 0,
-         "linearVelocity" : 0,
-         "massData-I" : 1.233024207909772e-012,
-         "massData-mass" : 8.801886303144713e-011,
-         "name" : "body0",
-         "position" : 
-         {
-            "x" : 4.407106399536133,
-            "y" : 3.316697835922241
-         },
-         "type" : 2
-      },
-      
-      {
          "allowSleep" : false,
          "angle" : 0,
          "angularVelocity" : 0,
@@ -105,6 +61,60 @@
          {
             "x" : 4.435956001281738,
             "y" : 1.366467833518982
+         },
+         "type" : 2
+      },
+      
+      {
+         "allowSleep" : false,
+         "angle" : 0,
+         "angularVelocity" : 0,
+         "awake" : true,
+         "customProperties" : 
+         [
+            
+            {
+               "int" : 14,
+               "name" : "boxIndex"
+            },
+            
+            {
+               "int" : 5,
+               "name" : "collisionGroup"
+            },
+            
+            {
+               "name" : "characterType",
+               "string" : "LHand"
+            }
+         ],
+         "fixture" : 
+         [
+            
+            {
+               "circle" : 
+               {
+                  "center" : 
+                  {
+                     "x" : -4.768371582031250e-007,
+                     "y" : 0
+                  },
+                  "radius" : 0.4565761387348175
+               },
+               "filter-categoryBits" : 2,
+               "filter-maskBits" : 2,
+               "friction" : 0.2000000029802322,
+               "name" : "fixture10",
+               "sensor" : true
+            }
+         ],
+         "linearVelocity" : 0,
+         "massData-mass" : 1,
+         "name" : "lHand",
+         "position" : 
+         {
+            "x" : 4.428431987762451,
+            "y" : 2.513001680374146
          },
          "type" : 2
       },
@@ -189,7 +199,6 @@
       },
       
       {
-         "allowSleep" : false,
          "angle" : 0,
          "angularVelocity" : 0,
          "awake" : true,
@@ -197,18 +206,13 @@
          [
             
             {
-               "int" : 14,
+               "int" : 15,
                "name" : "boxIndex"
             },
             
             {
-               "int" : 5,
+               "int" : 1,
                "name" : "collisionGroup"
-            },
-            
-            {
-               "name" : "characterType",
-               "string" : "LHand"
             }
          ],
          "fixture" : 
@@ -217,27 +221,23 @@
             {
                "circle" : 
                {
-                  "center" : 
-                  {
-                     "x" : -4.768371582031250e-007,
-                     "y" : 0
-                  },
-                  "radius" : 0.4565761387348175
+                  "center" : 0,
+                  "radius" : 0.167383611202240
                },
-               "filter-categoryBits" : 2,
-               "filter-maskBits" : 2,
+               "density" : 9.999999717180685e-010,
                "friction" : 0.2000000029802322,
-               "name" : "fixture10",
-               "sensor" : true
+               "name" : "fixture0"
             }
          ],
+         "gravityScale" : 0,
          "linearVelocity" : 0,
-         "massData-mass" : 1,
-         "name" : "lHand",
+         "massData-I" : 1.233024207909772e-012,
+         "massData-mass" : 8.801886303144713e-011,
+         "name" : "body0",
          "position" : 
          {
-            "x" : 4.428431987762451,
-            "y" : 2.513001680374146
+            "x" : 4.407106399536133,
+            "y" : 3.316697835922241
          },
          "type" : 2
       }
@@ -276,7 +276,7 @@
                6.386110782623291
             ]
          },
-         "file" : "../smallCharacter/smallCharIdle.png",
+         "file" : "smallCharIdle.png",
          "filter" : 1,
          "flip" : false,
          "glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
@@ -304,6 +304,31 @@
       {
          "anchorA" : 
          {
+            "x" : -0.01444005966186523,
+            "y" : 0.5268045663833618
+         },
+         "anchorB" : 
+         {
+            "x" : 0.008257389068603516,
+            "y" : -1.911069989204407
+         },
+         "bodyA" : 0,
+         "bodyB" : 2,
+         "enableLimit" : true,
+         "enableMotor" : false,
+         "jointSpeed" : 0,
+         "lowerLimit" : 0,
+         "maxMotorTorque" : 0,
+         "motorSpeed" : 0,
+         "name" : "joint0",
+         "refAngle" : 0,
+         "type" : "revolute",
+         "upperLimit" : 0
+      },
+      
+      {
+         "anchorA" : 
+         {
             "x" : -0.02200126647949219,
             "y" : -0.01962089538574219
          },
@@ -313,7 +338,7 @@
             "y" : -0.01295804977416992
          },
          "bodyA" : 2,
-         "bodyB" : 0,
+         "bodyB" : 3,
          "enableLimit" : true,
          "enableMotor" : false,
          "jointSpeed" : 0,
@@ -321,31 +346,6 @@
          "maxMotorTorque" : 0,
          "motorSpeed" : 0,
          "name" : "joint1",
-         "refAngle" : 0,
-         "type" : "revolute",
-         "upperLimit" : 0
-      },
-      
-      {
-         "anchorA" : 
-         {
-            "x" : -0.01444005966186523,
-            "y" : 0.5268045663833618
-         },
-         "anchorB" : 
-         {
-            "x" : 0.008257389068603516,
-            "y" : -1.911069989204407
-         },
-         "bodyA" : 1,
-         "bodyB" : 2,
-         "enableLimit" : true,
-         "enableMotor" : false,
-         "jointSpeed" : 0,
-         "lowerLimit" : 0,
-         "maxMotorTorque" : 0,
-         "motorSpeed" : 0,
-         "name" : "joint0",
          "refAngle" : 0,
          "type" : "revolute",
          "upperLimit" : 0

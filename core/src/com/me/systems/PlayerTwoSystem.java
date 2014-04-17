@@ -148,6 +148,10 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 						m_jumpComps.get(e).m_jumped = m_playerComps.get(e).isOnGround();
 					} 
 				}
+				
+				if(m_inputMgr.isDown(action)){
+					animation.setAnimationState(State.LIEDOWN);
+				} 
 
 			}
 			if(finish){

@@ -42,7 +42,7 @@ public class AnimationComponent extends BaseComponent {
 		DYING, UPJUMP, HANGING, 
 		CLIMBING, LADDERCLIMBUP, LADDERCLIMBDOWN, 
 		LADDERHANG, FALLING, PUSHING,
-		LIEDOWN, PULLUP, SUCKIN, WALKOUT
+		LIEDOWN, PULLUP, SUCKIN, WALKOUT, CRAWL, STANDUP
 	}
 
 	public AnimationComponent(String atlas, String skeleton, float scale){
@@ -117,12 +117,11 @@ public class AnimationComponent extends BaseComponent {
 			@Override
 			public void end(int trackIndex) {
 				// TODO Auto-generated method stub
-
+				m_isCompleted = true;	
 			}
 
 			@Override
 			public void complete(int trackIndex, int loopCount) {
-				System.out.println(trackIndex + " event: " + m_animationState.getCurrent(trackIndex));
 				// TODO Auto-generated method stub
 				m_isCompleted = true;
 			}
@@ -242,6 +241,12 @@ public class AnimationComponent extends BaseComponent {
 				break;
 			case SUCKIN:
 				playAnimation("suckIn", false);
+				break;
+			case STANDUP:
+				playAnimation("standUp", false);
+				break;
+			case CRAWL:
+				playAnimation("crawling", true);
 				break;
 			default:
 				break;
