@@ -277,7 +277,7 @@ public class PhysicsListenerSetup {
 							if(playerUd.getType() == Type.TORSO && otherUd.getType() == Type.BOX){
 								if(e.getComponent(TouchComponent.class).m_groundTouch){
 									Body b = other.getBody("box");
-									b.getFixtureList().get(0).setFriction(0.1f);
+									b.getFixtureList().get(0).setFriction(0.001f);
 									e.getComponent(TouchComponent.class).m_boxTouch = true;
 									if(e.getComponent(PushComponent.class) != null){
 										if(e.getComponent(PlayerComponent.class).isFacingLeft()){
@@ -288,9 +288,8 @@ public class PhysicsListenerSetup {
 											e.getComponent(PushComponent.class).m_pushRight = true;
 										}
 									}
-								}else{
-									e.getComponent(MovementComponent.class).m_lockControls=true;
-								} 
+								}
+								
 							}
 						}
 					}
