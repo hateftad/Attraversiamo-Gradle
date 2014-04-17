@@ -76,6 +76,7 @@ public class PhysicsListenerSetup {
 
 						if(otherUd.getType() == Type.LEFTPULLUP && fB.isSensor()){
 							e.getComponent(TouchComponent.class).m_footEdgeL = false;
+							e.getComponent(TouchComponent.class).m_footEdge = false;
 						}
 
 						if(otherUd.getType() == Type.HAND){
@@ -192,6 +193,7 @@ public class PhysicsListenerSetup {
 
 							if(otherUd.getType() == Type.LEFTPULLUP && fB.isSensor()){
 								e.getComponent(TouchComponent.class).m_footEdgeL = true;
+								e.getComponent(TouchComponent.class).m_footEdge = true;
 								e.getComponent(TouchComponent.class).m_touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
 
 							}

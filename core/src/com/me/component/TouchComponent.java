@@ -18,6 +18,8 @@ public class TouchComponent extends BaseComponent {
 	
 	public boolean m_footEdgeR;
 	
+	public boolean m_footEdge;
+	
 	public boolean m_handTouch;
 	
 	public int m_endReach;

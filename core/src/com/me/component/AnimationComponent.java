@@ -24,17 +24,17 @@ public class AnimationComponent extends BaseComponent {
 	private TextureAtlas m_atlas;
 
 	private Skeleton m_skeleton;
-	
+
 	private SkeletonData m_skeletonData;
 
 	private AnimationState m_animationState;
-	
+
 	private State m_state;
 
 	private State m_previousState;
 
 	private Vector2 m_center;
-	
+
 	public boolean m_isCompleted;
 
 	public enum State{
@@ -45,8 +45,7 @@ public class AnimationComponent extends BaseComponent {
 		LIEDOWN, PULLUP, SUCKIN, WALKOUT
 	}
 
-	public AnimationComponent(String atlas, String skeleton, float scale)
-	{
+	public AnimationComponent(String atlas, String skeleton, float scale){
 		m_renderer = new SkeletonRenderer();
 
 		m_atlas = new TextureAtlas(Gdx.files.internal(atlas+".atlas"));
@@ -66,6 +65,27 @@ public class AnimationComponent extends BaseComponent {
 		m_center.set(image.center.x - size.x/2, image.center.y - (size.y/2));
 		m_animationState = new AnimationState(stateData);
 		m_animationState.setAnimation(0, "running", true);
+		m_animationState.addListener(new AnimationStateListener() {
+
+			@Override
+			public void start(int trackIndex) {
+				m_isCompleted = false;
+			}
+
+			@Override
+			public void event(int trackIndex, Event event) {
+			}
+
+			@Override
+			public void end(int trackIndex) {
+				m_isCompleted = true;
+			}
+
+			@Override
+			public void complete(int trackIndex, int loopCount) {
+				m_isCompleted = true;
+			}
+		});
 
 		m_skeleton = new Skeleton(m_skeletonData);
 		m_skeleton.setX(m_center.x);
@@ -74,104 +94,99 @@ public class AnimationComponent extends BaseComponent {
 		m_skeleton.updateWorldTransform();
 		return stateData;
 	}
-	
+
 	public void setUp(Vector2 center, String animation){
 		AnimationStateData stateData = new AnimationStateData(m_skeletonData);
 		m_animationState = new AnimationState(stateData);
 		m_animationState.setAnimation(0, animation, false);
 		m_animationState.addListener(new AnimationStateListener() {
-			
+
 			@Override
 			public void start(int trackIndex) {
 				// TODO Auto-generated method stub
+				System.out.println(trackIndex + " event: " + m_animationState.getCurrent(trackIndex));
 				m_isCompleted = false;
 			}
-			
+
 			@Override
 			public void event(int trackIndex, Event event) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void end(int trackIndex) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void complete(int trackIndex, int loopCount) {
+				System.out.println(trackIndex + " event: " + m_animationState.getCurrent(trackIndex));
 				// TODO Auto-generated method stub
 				m_isCompleted = true;
 			}
 		});
-		
+
 		m_skeleton = new Skeleton(m_skeletonData);
 		m_skeleton.setX(center.x);
 		m_skeleton.setY(center.y);
 		m_center = Converters.ToBox(center);
 		m_skeleton.updateWorldTransform();
 	}
-	
-	public TextureAtlas getAtlas()
-	{
+
+	public TextureAtlas getAtlas(){
 		return m_atlas;
 	}
-	
-	public Vector2 getcenter()
-	{
+
+	public Vector2 getcenter(){
 		return m_center;
 	}
-	
-	public void setPosition(float x, float y)
-	{
+
+	public void setPosition(float x, float y){
 		m_skeleton.setX(Converters.ToWorld(x));
 		m_skeleton.setY(Converters.ToWorld(m_center.y + y));
 	}
 
-	public Vector2 getBonePosition(String name)
-	{
+	public Vector2 getBonePosition(String name){
 		Bone b = m_skeleton.findBone(name);
 		return new Vector2(b.getX(), b.getY());
 	}
 
-	public void setFacing(boolean left)
-	{
+	public void setFacing(boolean left){
 		m_skeleton.setFlipX(left);
 	}
 
-	public void playAnimation(String name, boolean loop)
-	{
-		//m_animationState.setAnimation(name, loop);
+	public void playAnimation(String name, boolean loop){
 		m_animationState.setAnimation(0, name, loop);
 	}
-	
-	public boolean isCompleted()
-	{		
-		return m_isCompleted;
+
+	public void addAnimation(String name, boolean loop, float delay){
+		m_animationState.addAnimation(0, name, loop, delay);
 	}
 	
+	public boolean isCompleted(){		
+		return m_isCompleted;
+	}
+
 	public float getTime(){
+		System.out.println(m_animationState.getCurrent(0).getTime());
 		return m_animationState.getCurrent(0).getTime();
 	}
 
-	public AnimationState getAnimationState()
-	{
+	public AnimationState getAnimationState(){
 		return m_animationState;
 	}
-	
-	public State getState()
-	{
+
+	public State getState(){
 		return m_state;
 	}
-	
-	public void setState(State state)
-	{
+
+	public void setState(State state){
 		m_state = state;
 	}
 
-	public void setAnimationState(State state)
-	{
+	public void setAnimationState(State state){
 		if(state != m_previousState)
 		{
 			setState(state);
@@ -236,18 +251,15 @@ public class AnimationComponent extends BaseComponent {
 		m_previousState = state;
 	}
 
-	public Skeleton getSkeleton()
-	{
+	public Skeleton getSkeleton(){
 		return m_skeleton;
 	}
 
-	public void setupPose()
-	{
+	public void setupPose(){
 		m_skeleton.setBonesToSetupPose();
 	}
 
-	public void update(SpriteBatch sb, float dt)
-	{
+	public void update(SpriteBatch sb, float dt){
 		m_animationState.update(dt);
 		m_animationState.apply(m_skeleton);
 		m_skeleton.update(dt);
@@ -265,8 +277,6 @@ public class AnimationComponent extends BaseComponent {
 		m_atlas.getRegions().clear();
 		m_atlas.getTextures().clear();
 		m_atlas.dispose();
-		
 	}
-
 
 }
