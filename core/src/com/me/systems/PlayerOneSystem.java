@@ -10,7 +10,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.AnimationComponent;
-import com.me.component.AnimationComponent.State;
+import com.me.component.AnimationComponent.AnimState;
 import com.me.component.GrabComponent;
 import com.me.component.HangComponent;
 import com.me.component.JointComponent;
@@ -94,6 +94,9 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		AnimationComponent animation = m_animComps.get(e);
 		GrabComponent g = m_grabComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
+		PhysicsComponent ps = m_physComps.get(e);
+		
+		
 		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().m_finished;
 
 		if(m_inputMgr.m_playerSelected == PlayerSelection.ONE){
@@ -104,13 +107,13 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 
 		if(!player.isActive() && !finish){
 			if(!h.m_isHanging  && !touch.m_footEdge){
-				animation.setAnimationState(State.IDLE);
+				animation.setAnimationState(AnimState.IDLE);
 			}
-			if(animation.getAnimationState().equals(State.PULLUP) && animation.isCompleted() && touch.m_footEdge){
-				animation.setAnimationState(State.IDLE);
+			if(animation.getAnimationState().equals(AnimState.PULLUP) && animation.isCompleted() && touch.m_footEdge){
+				animation.setAnimationState(AnimState.IDLE);
 			}
 		}
-		PhysicsComponent ps = m_physComps.get(e);
+		
 		if(m_animComps.has(e)){
 			if(m_movComps.has(e)){
 				MovementComponent m = m_movComps.get(e);
@@ -126,8 +129,8 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 						if(!m.m_left && !m.m_right && touch.m_groundTouch && !touch.m_ladderTouch) {
 							vel.m_velocity = 0;
 							if(!g.m_gonnaGrab){
-								if(!animation.getAnimationState().equals(State.PULLUP)){
-									animation.setAnimationState(State.IDLE);
+								if(!animation.getAnimationState().equals(AnimState.PULLUP)){
+									animation.setAnimationState(AnimState.IDLE);
 								}
 							}
 						}
@@ -138,13 +141,13 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 								JointComponent j = e.getComponent(JointComponent.class);
 								if(j.getPrismJoint() != null){
 									j.climb();
-									animation.setAnimationState(State.CLIMBING);
+									animation.setAnimationState(AnimState.CLIMBING);
 									h.m_climbingUp = true;
 									m.m_lockControls = true;
 								}
 							}
 							if(h.m_isHanging && !h.m_climbingUp){
-								animation.setAnimationState(State.HANGING);
+								animation.setAnimationState(AnimState.HANGING);
 							}
 						}
 						if(m_ladderComps.has(e)){
@@ -163,12 +166,12 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 							if(m.m_jump && touch.m_groundTouch){
 								player.setOnGround(false);
 								if(m.m_left||m.m_right){
-									animation.setAnimationState(State.JUMPING);
+									animation.setAnimationState(AnimState.JUMPING);
 									ps.setLinearVelocity(ps.getLinearVelocity().x , vel.m_jumpLimit);
 								}
 								else if(!touch.m_boxTouch){
 									ps.setLinearVelocity(ps.getLinearVelocity().x , 8);
-									animation.setAnimationState(State.UPJUMP);
+									animation.setAnimationState(AnimState.UPJUMP);
 								}
 							}
 						}
@@ -176,7 +179,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 							if(touch.m_footEdgeL){
 								player.setFacingLeft(true);
 								ps.warp("feet", touch.m_touchCenter);
-								animation.setAnimationState(State.LIEDOWN);
+								animation.setAnimationState(AnimState.LIEDOWN);
 								g.m_gonnaGrab = true;
 							}
 							if(touch.m_ladderTouch){
@@ -201,7 +204,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 
 					if(ps.isFalling() && ps.movingForward())
 					{
-						animation.setAnimationState(State.FALLING);
+						animation.setAnimationState(AnimState.FALLING);
 					}
 
 					if(isDead(ps)){
@@ -239,21 +242,21 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 							ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
 							if(ps.getLinearVelocity().x < -vel.m_walkLimit){
 								ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
-								animation.setAnimationState(State.RUNNING);
+								animation.setAnimationState(AnimState.RUNNING);
 								vel.m_velocity=-vel.m_walkLimit;
 							}else{
-								animation.setAnimationState(State.JOGGING);
+								animation.setAnimationState(AnimState.JOGGING);
 							}
 						}
 						if( touch.m_boxTouch && push.m_pushLeft ){
 							ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
-							animation.setAnimationState(State.PUSHING);
+							animation.setAnimationState(AnimState.PUSHING);
 						}else if(touch.m_boxTouch && !push.m_pushLeft){
-							animation.setAnimationState(State.WALKING);
+							animation.setAnimationState(AnimState.WALKING);
 							ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
 						}
 						if(ladderComp.m_rightClimb &&!ps.isDynamic()){
-							animation.setAnimationState(State.WALKING);
+							animation.setAnimationState(AnimState.WALKING);
 							ps.makeDynamic();
 							ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
 							touch.m_ladderTouch = false;
@@ -289,21 +292,21 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 							ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
 							if(ps.getLinearVelocity().x > vel.m_walkLimit){
 								ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
-								animation.setAnimationState(State.RUNNING);
+								animation.setAnimationState(AnimState.RUNNING);
 								vel.m_velocity = vel.m_walkLimit;
 							}else{
-								animation.setAnimationState(State.JOGGING);
+								animation.setAnimationState(AnimState.JOGGING);
 							}
 						}
 						if(touch.m_boxTouch && push.m_pushRight){
-							animation.setAnimationState(State.PUSHING);
+							animation.setAnimationState(AnimState.PUSHING);
 							ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
 						} else if(touch.m_boxTouch && !push.m_pushRight){
-							animation.setAnimationState(State.WALKING);
+							animation.setAnimationState(AnimState.WALKING);
 							ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
 						}
 						if(l.m_leftClimb &&!ps.isDynamic()){
-							animation.setAnimationState(State.WALKING);
+							animation.setAnimationState(AnimState.WALKING);
 							ps.makeDynamic();
 							ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
 							touch.m_ladderTouch = false;
@@ -335,14 +338,14 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		}
 		else if(l.m_bottomLadder && m.m_down){
 			ps.setLinearVelocity(0, 0);
-			animation.setAnimationState(State.LADDERHANG);
+			animation.setAnimationState(AnimState.LADDERHANG);
 		}
 		if(vel.m_ladderClimbVelocity > 0)
-			animation.setAnimationState(State.LADDERCLIMBUP);
+			animation.setAnimationState(AnimState.LADDERCLIMBUP);
 		if(vel.m_ladderClimbVelocity < -1)
-			animation.setAnimationState(State.LADDERCLIMBDOWN);
+			animation.setAnimationState(AnimState.LADDERCLIMBDOWN);
 		if(vel.m_ladderClimbVelocity == 0){
-			animation.setAnimationState(State.LADDERHANG);
+			animation.setAnimationState(AnimState.LADDERHANG);
 		}
 
 	}

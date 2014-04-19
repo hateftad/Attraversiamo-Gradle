@@ -1,7 +1,7 @@
 package com.me.utils;
 
 import com.badlogic.gdx.math.Vector2;
-import com.me.component.AnimationComponent.State;
+import com.me.component.AnimationComponent.AnimState;
 
 public class PlayerConfig {
 	
@@ -10,7 +10,7 @@ public class PlayerConfig {
  	public boolean m_active;
  	public boolean m_canDeactivate;
  	public String m_name;
- 	public State m_finishAnimation;
+ 	public AnimState m_finishAnimation;
  	
  	public PlayerConfig(){
  		m_playerPosition = new Vector2();
@@ -23,10 +23,10 @@ public class PlayerConfig {
  	public void setFinishAnimation(String state){
  		
  		if(state.equals("suckin")){
- 			m_finishAnimation = State.SUCKIN;
+ 			m_finishAnimation = AnimState.SUCKIN;
  		}
  		if(state.equals("walkout")){
- 			m_finishAnimation = State.WALKOUT;
+ 			m_finishAnimation = AnimState.WALKOUT;
  		}
  	}
 }

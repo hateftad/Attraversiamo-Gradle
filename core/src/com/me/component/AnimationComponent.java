@@ -29,20 +29,21 @@ public class AnimationComponent extends BaseComponent {
 
 	private AnimationState m_animationState;
 
-	private State m_state;
+	private AnimState m_state;
 
-	private State m_previousState;
+	private AnimState m_previousState;
 
 	private Vector2 m_center;
 
 	public boolean m_isCompleted;
 
-	public enum State{
+	public enum AnimState{
 		WALKING, IDLE, JUMPING, RUNNING, JOGGING, JOGJUMP,
 		DYING, UPJUMP, HANGING, 
 		CLIMBING, LADDERCLIMBUP, LADDERCLIMBDOWN, 
 		LADDERHANG, FALLING, PUSHING,
-		LIEDOWN, PULLUP, SUCKIN, WALKOUT, CRAWL, STANDUP
+		LIEDOWN, PULLUP, SUCKIN, WALKOUT, CRAWL, STANDUP,
+		LYINGDOWN
 	}
 
 	public AnimationComponent(String atlas, String skeleton, float scale){
@@ -104,7 +105,6 @@ public class AnimationComponent extends BaseComponent {
 			@Override
 			public void start(int trackIndex) {
 				// TODO Auto-generated method stub
-				System.out.println(trackIndex + " event: " + m_animationState.getCurrent(trackIndex));
 				m_isCompleted = false;
 			}
 
@@ -169,7 +169,6 @@ public class AnimationComponent extends BaseComponent {
 	}
 
 	public float getTime(){
-		System.out.println(m_animationState.getCurrent(0).getTime());
 		return m_animationState.getCurrent(0).getTime();
 	}
 
@@ -177,15 +176,92 @@ public class AnimationComponent extends BaseComponent {
 		return m_animationState;
 	}
 
-	public State getState(){
+	public AnimState getState(){
 		return m_state;
 	}
 
-	public void setState(State state){
+	public void setState(AnimState state){
 		m_state = state;
 	}
 
-	public void setAnimationState(State state){
+	public void addAnimation(AnimState state, boolean loop, float delay){
+		
+		if(state != m_previousState)
+		{
+			setState(state);
+			switch(state)
+			{
+			case WALKING:
+				addAnimation("walking", loop, delay);
+				break;
+			case JOGGING:	
+				addAnimation("jogging", loop, delay);
+				break;
+			case RUNNING:
+				addAnimation("running", loop, delay);
+				break;
+			case JUMPING:
+				addAnimation("runjumping", loop, delay);
+				break;
+			case JOGJUMP:
+				addAnimation("jogjumping", loop, delay);
+				break;
+			case IDLE:
+				addAnimation("idle", loop, delay);
+				break;
+			case UPJUMP:
+				addAnimation("upJump", loop, delay);
+				break;
+			case FALLING:
+				addAnimation("falling", loop, delay);
+				break;
+			case HANGING:
+				addAnimation("hang", loop, delay);
+				break;
+			case CLIMBING:
+				addAnimation("climbUp", loop, delay);
+				break;
+			case LADDERCLIMBUP:
+				addAnimation("ladderClimbUp", loop, delay);
+				break;
+			case LADDERCLIMBDOWN:
+				addAnimation("ladderClimbDown", loop, delay);
+				break;
+			case LADDERHANG:
+				addAnimation("ladderHang", loop, delay);
+				break;
+			case PUSHING:
+				addAnimation("pushing", loop, delay);
+				break;
+			case LIEDOWN:
+				addAnimation("lieDown", loop, delay);
+				break;
+			case LYINGDOWN:
+				addAnimation("lyingDown", loop, delay);
+				break;
+			case PULLUP:
+				addAnimation("pullUp", loop, delay);
+				break;
+			case SUCKIN:
+				addAnimation("suckIn", loop, delay);
+				break;
+			case STANDUP:
+				addAnimation("standUp", loop, delay);
+				break;
+			case CRAWL:
+				addAnimation("crawling", loop, delay);
+				break;
+			default:
+				break;
+			}
+			//m_skeleton.setToSetupPose();
+		}
+		m_previousState = state;
+	}
+	
+	
+	public void setAnimationState(AnimState state){
+		
 		if(state != m_previousState)
 		{
 			setState(state);
@@ -236,6 +312,9 @@ public class AnimationComponent extends BaseComponent {
 			case LIEDOWN:
 				playAnimation("lieDown", false);
 				break;
+			case LYINGDOWN:
+				playAnimation("lyingDown", false);
+				break;
 			case PULLUP:
 				playAnimation("pullUp", false);
 				break;
@@ -256,6 +335,10 @@ public class AnimationComponent extends BaseComponent {
 		m_previousState = state;
 	}
 
+	public boolean isCompleted(AnimState state){
+		return ((state == m_state) && (m_isCompleted));
+	}
+	
 	public Skeleton getSkeleton(){
 		return m_skeleton;
 	}

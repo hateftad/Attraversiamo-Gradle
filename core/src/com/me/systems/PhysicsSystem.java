@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.me.component.AnimationComponent;
-import com.me.component.AnimationComponent.State;
+import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PhysicsComponent;
 import com.me.listeners.PhysicsContactListener;
 import com.me.utils.GlobalConfig;
@@ -140,7 +140,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 				if(!(comp.getBodyType() == BodyType.StaticBody)){
 					comp.setToStart();
 					if(m_animComponents.has(entities.get(i))){
-						m_animComponents.get(entities.get(i)).setAnimationState(State.IDLE);
+						m_animComponents.get(entities.get(i)).setAnimationState(AnimState.IDLE);
 					}
 				}
 			}

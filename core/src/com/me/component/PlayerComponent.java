@@ -3,7 +3,9 @@ package com.me.component;
 public class PlayerComponent extends BaseComponent{
 	
 	public enum State{
-		WALKING, IDLE, JUMPING, DYING, UPJUMP, HANGING
+		WALKING, IDLE, JUMPING, 
+		DYING, JUMPED, HANGING,
+		CRAWLING, LYINGDOWN, GETTINGUP
 	}
 	
 	private String m_playerNr;

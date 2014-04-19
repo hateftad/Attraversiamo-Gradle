@@ -9,15 +9,17 @@ import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.AnimationComponent;
+import com.me.component.CrawlComponent;
 import com.me.component.GrabComponent;
 import com.me.component.JumpComponent;
 import com.me.component.MovementComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
+import com.me.component.PlayerComponent.State;
 import com.me.component.PlayerTwoComponent;
 import com.me.component.TouchComponent;
 import com.me.component.VelocityLimitComponent;
-import com.me.component.AnimationComponent.State;
+import com.me.component.AnimationComponent.AnimState;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;
@@ -42,6 +44,8 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 	@Mapper ComponentMapper<PhysicsComponent> m_physComps;
 
 	@Mapper ComponentMapper<VelocityLimitComponent> m_velComps;
+	
+	@Mapper ComponentMapper<CrawlComponent> m_crawlComps;
 
 	private InputManager m_inputMgr;
 
@@ -68,6 +72,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		AnimationComponent animation = m_animComps.get(e);
 		GrabComponent g = m_grabComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
+		CrawlComponent crawlComp = m_crawlComps.get(e);
 		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().m_finished;
 
 		if(m_inputMgr.m_playerSelected == PlayerSelection.TWO){
@@ -77,8 +82,8 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		}
 
 		if(!player.isActive() && !finish){
-			if(!g.m_gettingLifted)
-				animation.setAnimationState(State.IDLE);
+			if(!g.m_gettingLifted && touch.m_groundTouch)
+				animation.setAnimationState(AnimState.IDLE);
 		}
 
 		if(m_movComps.has(e)){
@@ -87,73 +92,66 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 			if(player.isActive() && !m.m_lockControls && !g.m_gettingLifted && !finish){
 				VelocityLimitComponent vel = m_velComps.get(e);
 
-				if(touch.m_groundTouch&&!touch.m_boxTouch){
+				if(touch.m_groundTouch && !player.getState().equals(State.LYINGDOWN) ){
 					animation.setupPose();
 				}
 				if(!m.m_left && !m.m_right && touch.m_groundTouch) {
-					if(!g.m_gonnaGrab && !m_jumpComps.get(e).m_jumped){
-						if(!animation.getAnimationState().equals(State.PULLUP)){
-							animation.setAnimationState(State.IDLE);
-						}
-						else{
-							if(animation.isCompleted()){
-								animation.setAnimationState(State.IDLE);
-							}
-						}
+					if(!player.getState().equals(State.JUMPING)){
+						if(!animation.getAnimationState().equals(AnimState.PULLUP) && !player.getState().equals(State.LYINGDOWN)){
+							animation.setAnimationState(AnimState.IDLE);
+						}						
 					}
 					vel.m_velocity = 0;
 				}
 
-
-				if(m.m_left){					
-					if(vel.m_velocity > 0)
-						vel.m_velocity=0;
-					if(touch.m_groundTouch){
-						vel.m_velocity -= 5.5f * world.delta;
-						ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
-						if(ps.getLinearVelocity().x < -vel.m_walkLimit){
-							ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
-							animation.setAnimationState(State.RUNNING);
-							vel.m_velocity=-vel.m_walkLimit;
-						}else{
-							animation.setAnimationState(State.WALKING);
-						}
+				if(m.m_left && touch.m_groundTouch){
+					if(crawlComp.isCrawling){
+						crawlLeft(e);
+					} else{
+						walkLeft(e);
 					}
+					
 					player.setFacingLeft(true);
 				}
-				if(m.m_right){
-					if(vel.m_velocity < 0)
-						vel.m_velocity = 0;
-					if(touch.m_groundTouch){
-						vel.m_velocity += 5.5f * world.delta;
-						ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
-						if(ps.getLinearVelocity().x > vel.m_walkLimit){
-							ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
-							animation.setAnimationState(State.RUNNING);
-							vel.m_velocity = vel.m_walkLimit;
-						}else{
-							animation.setAnimationState(State.WALKING);
-						}
+				
+				if(m.m_right && touch.m_groundTouch){
+					if(crawlComp.isCrawling){
+						crawlRight(e);
+					} else{
+						walkRight(e);
 					}
 					player.setFacingLeft(false);
 				}
+				
 				if(m.m_jump && touch.m_groundTouch && (!m.m_left && !m.m_right)){
 					player.setOnGround(false);
 					m_jumpComps.get(e).m_jumped = true;
-					animation.setAnimationState(State.UPJUMP);
+					animation.setAnimationState(AnimState.UPJUMP);
+					player.setState(State.JUMPING);
 				}
+				
 				if(m_jumpComps.get(e).m_jumped){
 					if(animation.getTime() > 0.2f){
-						ps.setLinearVelocity(ps.getLinearVelocity().x, 8);
+						ps.setLinearVelocity(ps.getLinearVelocity().x, vel.m_jumpLimit);
 						m_jumpComps.get(e).m_jumped = m_playerComps.get(e).isOnGround();
+						player.setState(State.JUMPED);
 					} 
 				}
 				
 				if(m_inputMgr.isDown(action)){
-					animation.setAnimationState(State.LIEDOWN);
+					if(crawlComp.canCrawl){
+						animation.setAnimationState(AnimState.LIEDOWN);
+						player.setState(State.LYINGDOWN);					
+					}
 				} 
-
+				
+				if(animation.isCompleted(AnimState.LIEDOWN) || animation.isCompleted(AnimState.CRAWL)){
+					animation.setAnimationState(AnimState.LYINGDOWN);
+					crawlComp.isCrawling = true;
+					ps.disableBody("center");
+				}
 			}
+			
 			if(finish){
 				animation.setAnimationState(m_playerConfig.m_finishAnimation);
 			}
@@ -162,41 +160,114 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 				world.getSystem(PhysicsSystem.class).onRestartLevel();
 			}
 
-			int rot = player.isFacingLeft() ? -1 : 1;
-			for (Slot slot : animation.getSkeleton().getSlots()) {
-				if (!(slot.getAttachment() instanceof RegionAttachment)) continue;
-				String attachment = slot.getBone().getData().getName();
-				//System.out.println(attachment.getName());
-				if(ps.getBody(attachment) != null){
-					float x = (Converters.ToBox(slot.getBone().getWorldX()));
-					float x2 = (ps.getBody().getPosition().x +  x);
-					float y = Converters.ToBox(slot.getBone().getWorldY());
-					float y2 = (ps.getBody().getPosition().y + y);
-					//if(!touch.m_handTouch){
-					ps.getBody(attachment).setTransform(
-							x2, 
-							animation.getcenter().y + y2, 
-							0
-							);
-					//}else{
-					//	ps.getBody(attachment.getName()).setType(BodyType.StaticBody);
-					/*
-						ps.getBody(attachment.getName()).setTransform(
-								x2, 
-								animation.getcenter().y + y2, 
-								rot * (33f + slot.getBone().getWorldRotation() * MathUtils.degreesToRadians)
-								);
-					 */
-
-				}
-			}
+			animateBody(ps, player, animation);
 
 		}
-
 
 		animation.setFacing(player.isFacingLeft());
 
 
+	}
+	
+	private void crawlLeft(Entity e){
+		PhysicsComponent ps = m_physComps.get(e);
+		PlayerComponent player = m_playerComps.get(e);
+		AnimationComponent animation = m_animComps.get(e);
+		VelocityLimitComponent vel = m_velComps.get(e);
+		
+		vel.m_velocity = -vel.m_crawlLimit;
+		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
+		animation.setAnimationState(AnimState.CRAWL);
+	}
+	
+	private void crawlRight(Entity e){
+		PhysicsComponent ps = m_physComps.get(e);
+		PlayerComponent player = m_playerComps.get(e);
+		AnimationComponent animation = m_animComps.get(e);
+		VelocityLimitComponent vel = m_velComps.get(e);
+		
+		vel.m_velocity = vel.m_crawlLimit;
+		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
+		animation.setAnimationState(AnimState.CRAWL);
+	}
+	
+	private void walkLeft(Entity e){
+		
+		PhysicsComponent ps = m_physComps.get(e);
+		PlayerComponent player = m_playerComps.get(e);
+		AnimationComponent animation = m_animComps.get(e);
+		VelocityLimitComponent vel = m_velComps.get(e);
+		
+		if(vel.m_velocity > 0){
+			vel.m_velocity=0;
+		}
+		vel.m_velocity -= 5.5f * world.delta;
+		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
+		if(ps.getLinearVelocity().x < -vel.m_walkLimit){
+			ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
+			animation.setAnimationState(AnimState.RUNNING);
+			vel.m_velocity=-vel.m_walkLimit;
+		}else{
+			animation.setAnimationState(AnimState.WALKING);
+		}
+		player.setState(State.WALKING);
+		
+	}
+	
+	private void walkRight(Entity e){
+		
+		PhysicsComponent ps = m_physComps.get(e);
+		PlayerComponent player = m_playerComps.get(e);
+		AnimationComponent animation = m_animComps.get(e);
+		VelocityLimitComponent vel = m_velComps.get(e);
+		
+		if(vel.m_velocity < 0){
+			vel.m_velocity = 0;
+		}
+
+		vel.m_velocity += 5.5f * world.delta;
+		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
+		if(ps.getLinearVelocity().x > vel.m_walkLimit){
+			ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
+			animation.setAnimationState(AnimState.RUNNING);
+			vel.m_velocity = vel.m_walkLimit;
+		}else{
+			animation.setAnimationState(AnimState.WALKING);
+		}
+		player.setState(State.WALKING);
+		
+	}
+	
+	private void animateBody(PhysicsComponent ps, PlayerComponent player, AnimationComponent animation){
+		
+		int rot = player.isFacingLeft() ? -1 : 1;
+		for (Slot slot : animation.getSkeleton().getSlots()) {
+			if (!(slot.getAttachment() instanceof RegionAttachment)) continue;
+			String attachment = slot.getBone().getData().getName();
+			//System.out.println(attachment.getName());
+			if(ps.getBody(attachment) != null){
+				float x = (Converters.ToBox(slot.getBone().getWorldX()));
+				float x2 = (ps.getBody().getPosition().x +  x);
+				float y = Converters.ToBox(slot.getBone().getWorldY());
+				float y2 = (ps.getBody().getPosition().y + y);
+				//if(!touch.m_handTouch){
+				ps.getBody(attachment).setTransform(
+						x2, 
+						animation.getcenter().y + y2, 
+						0
+						);
+				//}else{
+				//	ps.getBody(attachment.getName()).setType(BodyType.StaticBody);
+				/*
+					ps.getBody(attachment.getName()).setTransform(
+							x2, 
+							animation.getcenter().y + y2, 
+							rot * (33f + slot.getBone().getWorldRotation() * MathUtils.degreesToRadians)
+							);
+				 */
+
+			}
+		}
 	}
 
 	private boolean isDead(PhysicsComponent ps) {

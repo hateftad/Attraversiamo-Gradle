@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
@@ -38,6 +39,8 @@ public class PhysicsComponent extends BaseComponent {
 	private boolean m_isPlayer;
 
 	private boolean m_isDynamic = true;
+	
+	private	Filter currentFilter;
 
 	public ImmediateModePhysicsListener m_physicsListener;
 
@@ -103,22 +106,13 @@ public class PhysicsComponent extends BaseComponent {
 	{
 		m_body.get(m_name).setType(BodyType.KinematicBody);
 		m_body.get("feet").setType(BodyType.KinematicBody);
-		/*
-		for(Body b : m_body.values())
-		{
-			b.setType(BodyType.KinematicBody);
-			b.setLinearVelocity(0, 0);
-		}
-		 */
+
 		setIsDynamic(false);
 	}
 
 	public void makeDynamic()
 	{
-		//for(Body b : m_body.values())
-		//	if(b.getType() != BodyType.StaticBody){
-		//		b.setType(BodyType.DynamicBody);
-		//	}
+
 		m_body.get(m_name).setType(BodyType.DynamicBody);
 		m_body.get("feet").setType(BodyType.DynamicBody);
 		setIsDynamic(true);
@@ -137,13 +131,24 @@ public class PhysicsComponent extends BaseComponent {
 		}
 		return false;
 	}
+
+	public void disableBody(String name){
+		
+		currentFilter = m_body.get(name).getFixtureList().get(0).getFilterData();
+		
+		Filter t1 = currentFilter;
+		t1.categoryBits = 1;
+		
+		m_body.get(name).getFixtureList().get(0).setFilterData(t1);
+		
+	}
 	
 	public boolean movingForward(){
 		if(Math.abs(m_body.get(m_name).getLinearVelocity().x) > 1){
 			return true;
 		}
 		
-		return false;//(!(m_body.get(m_name).getLinearVelocity().x > 1) || !(m_body.get(m_name).getLinearVelocity().x < 1) );
+		return false;
 	}
 
 	public Body getBody(String name)

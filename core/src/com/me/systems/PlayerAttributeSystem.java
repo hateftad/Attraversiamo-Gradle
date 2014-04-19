@@ -7,7 +7,7 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.me.component.AnimationComponent;
-import com.me.component.AnimationComponent.State;
+import com.me.component.AnimationComponent.AnimState;
 import com.me.component.GrabComponent;
 import com.me.component.HangComponent;
 import com.me.component.JointComponent;
@@ -30,7 +30,10 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 	@Mapper ComponentMapper<GrabComponent> m_grabComps;
 	@Mapper ComponentMapper<PlayerTwoComponent> m_playerTwo;
 	
-
+	private boolean breakBond = false;
+	private boolean boost = false;
+	
+	
 	@SuppressWarnings("unchecked")
 	public PlayerAttributeSystem() {
 		super(Aspect.getAspectForAll(PlayerComponent.class));
@@ -67,8 +70,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					if(h.m_release){
 						release(e);
 					}
-					if(j.getLength())
-					{
+					if(j.getLength()){
 						if(h.m_hangingLeft){
 							p.setLinearVelocity(-4, 0);
 						}
@@ -79,7 +81,6 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					}
 				}
 				if(touch.m_ladderTouch && p.isDynamic()){
-
 					p.setLinearVelocity(0,0);
 					p.makeKinematic();
 				}
@@ -97,11 +98,9 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 				j.setWeldJoint(JointFactory.getInstance().createJoint(j.getWJointDef()));
 			}
 			if(g.m_lifting){
-
 				AnimationComponent anim = e.getComponent(AnimationComponent.class);
 				if(j.getWeldJoint() != null){
-					anim.setAnimationState(State.PULLUP);
-
+					anim.setAnimationState(AnimState.PULLUP);
 					if(anim.getTime() > 1.80f){
 						p.setLinearVelocity(10, 0);
 					}
@@ -125,7 +124,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 		if(m_playerTwo.has(e)){
 			if(g.m_gettingLifted){
 				AnimationComponent anim = e.getComponent(AnimationComponent.class);
-				anim.setAnimationState(State.PULLUP);
+				anim.setAnimationState(AnimState.PULLUP);
 				if(boost){
 					p.setLinearVelocity(2f, 6);
 					boost = false;
@@ -133,10 +132,8 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 				}
 			}
 		}
-
 	}
-	private boolean breakBond = false;
-	private boolean boost = false;
+
 	private void release(Entity e)
 	{
 
