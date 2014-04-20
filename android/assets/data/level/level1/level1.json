@@ -751,7 +751,7 @@
                62.11379241943359
             ]
          },
-         "file" : "Background.png",
+         "file" : "background.png",
          "filter" : 1,
          "flip" : false,
          "glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
@@ -986,7 +986,7 @@
                146.4216918945313
             ]
          },
-         "file" : "Level.png",
+         "file" : "level.png",
          "filter" : 1,
          "flip" : false,
          "glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],

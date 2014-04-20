@@ -58,3 +58,9 @@ nb-configuration.xml
 
 .gradle
 build/
+android/libs/armeabi-v7a/libgdx-box2d.so
+android/libs/armeabi-v7a/libgdx.so
+android/libs/armeabi/libgdx-box2d.so
+android/libs/armeabi/libgdx.so
+android/libs/x86/libgdx-box2d.so
+android/libs/x86/libgdx.so
