@@ -44,7 +44,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 	@Mapper ComponentMapper<PhysicsComponent> m_physComps;
 
 	@Mapper ComponentMapper<VelocityLimitComponent> m_velComps;
-	
+
 	@Mapper ComponentMapper<CrawlComponent> m_crawlComps;
 
 	private InputManager m_inputMgr;
@@ -86,118 +86,144 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 				animation.setAnimationState(AnimState.IDLE);
 		}
 
-		if(m_movComps.has(e)){
-			MovementComponent m = m_movComps.get(e);
-			m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(up), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
-			if(player.isActive() && !m.m_lockControls && !g.m_gettingLifted && !finish){
-				VelocityLimitComponent vel = m_velComps.get(e);
+		MovementComponent m = m_movComps.get(e);
+		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(up), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
+		if(player.isActive() && !m.m_lockControls && !g.m_gettingLifted && !finish && !animation.getAnimationState().equals(AnimState.STANDUP)){
+			VelocityLimitComponent vel = m_velComps.get(e);
+			//animation.printStateChange();
+			if(touch.m_groundTouch && !crawlComp.isCrawling){
+				animation.setupPose();
+			}
+			if(isIdle(e)) {
+				animation.setAnimationState(AnimState.IDLE);
+				vel.m_velocity = 0;
+			}
 
-				if(touch.m_groundTouch && !player.getState().equals(State.LYINGDOWN) ){
-					animation.setupPose();
-				}
-				if(!m.m_left && !m.m_right && touch.m_groundTouch) {
-					if(!player.getState().equals(State.JUMPING)){
-						if(!animation.getAnimationState().equals(AnimState.PULLUP) && !player.getState().equals(State.LYINGDOWN)){
-							animation.setAnimationState(AnimState.IDLE);
-						}						
-					}
-					vel.m_velocity = 0;
+			if(m.m_left && touch.m_groundTouch){
+				if(crawlComp.isCrawling){
+					crawlLeft(e);
+				} else{
+					walkLeft(e);
 				}
 
-				if(m.m_left && touch.m_groundTouch){
-					if(crawlComp.isCrawling){
-						crawlLeft(e);
-					} else{
-						walkLeft(e);
-					}
-					
-					player.setFacingLeft(true);
+				player.setFacingLeft(true);
+			}
+
+			if(m.m_right && touch.m_groundTouch){
+				if(crawlComp.isCrawling){
+					crawlRight(e);
+				} else{
+					walkRight(e);
 				}
-				
-				if(m.m_right && touch.m_groundTouch){
-					if(crawlComp.isCrawling){
-						crawlRight(e);
-					} else{
-						walkRight(e);
-					}
-					player.setFacingLeft(false);
-				}
-				
-				if(m.m_jump && touch.m_groundTouch && (!m.m_left && !m.m_right)){
-					player.setOnGround(false);
-					m_jumpComps.get(e).m_jumped = true;
-					animation.setAnimationState(AnimState.UPJUMP);
-					player.setState(State.JUMPING);
-				}
-				
-				if(m_jumpComps.get(e).m_jumped){
-					if(animation.getTime() > 0.2f){
-						ps.setLinearVelocity(ps.getLinearVelocity().x, vel.m_jumpLimit);
-						m_jumpComps.get(e).m_jumped = m_playerComps.get(e).isOnGround();
-						player.setState(State.JUMPED);
-					} 
-				}
-				
-				if(m_inputMgr.isDown(action)){
-					if(crawlComp.canCrawl){
-						animation.setAnimationState(AnimState.LIEDOWN);
-						player.setState(State.LYINGDOWN);					
-					}
+				player.setFacingLeft(false);
+			}
+
+			if(m.m_jump && touch.m_groundTouch && (!m.m_left && !m.m_right)){
+				player.setOnGround(false);
+				m_jumpComps.get(e).m_jumped = true;
+				animation.setAnimationState(AnimState.UPJUMP);
+				player.setState(State.JUMPING);
+			}
+
+			if(m_jumpComps.get(e).m_jumped){
+				if(animation.getTime() > 0.2f){
+					ps.setLinearVelocity(ps.getLinearVelocity().x, vel.m_jumpLimit);
+					m_jumpComps.get(e).m_jumped = m_playerComps.get(e).isOnGround();
+					player.setState(State.JUMPED);
 				} 
-				
-				if(animation.isCompleted(AnimState.LIEDOWN) || animation.isCompleted(AnimState.CRAWL)){
-					animation.setAnimationState(AnimState.LYINGDOWN);
-					crawlComp.isCrawling = true;
-					ps.disableBody("center");
+			}
+
+			if(m_inputMgr.isDown(action)){
+				if(crawlComp.canCrawl){
+					animation.setAnimationState(AnimState.LIEDOWN);
+					player.setState(State.LYINGDOWN);
+
 				}
+			} 
+
+			if(animation.isCompleted(AnimState.LIEDOWN)){
+				animation.setAnimationState(AnimState.LYINGDOWN);
+				crawlComp.isCrawling = true;
+				ps.disableBody("center");
+			}
+
+			if(player.getState().equals(State.CRAWLING) && !ps.movingForward()){
+				animation.setAnimationState(AnimState.LYINGDOWN);
 			}
 			
-			if(finish){
-				animation.setAnimationState(m_playerConfig.m_finishAnimation);
+			if(!crawlComp.canCrawl && crawlComp.isCrawling){
+				animation.setAnimationState(AnimState.STANDUP);
+				crawlComp.isCrawling = false;
+				ps.enableBody("center");
+				System.out.println("body enabled");
 			}
-
-			if(isDead(ps)){
-				world.getSystem(PhysicsSystem.class).onRestartLevel();
-			}
-
-			animateBody(ps, player, animation);
-
+			
 		}
+
+		if(finish){
+			animation.setAnimationState(m_playerConfig.m_finishAnimation);
+		}
+
+		if(isDead(ps)){
+			world.getSystem(PhysicsSystem.class).onRestartLevel();
+		}
+
+		animateBody(ps, player, animation);
 
 		animation.setFacing(player.isFacingLeft());
 
-
 	}
-	
+
+	private boolean isIdle(Entity e){
+
+		PlayerComponent player = m_playerComps.get(e);
+		AnimationComponent animation = m_animComps.get(e);
+		TouchComponent touch = m_touchComps.get(e);
+		MovementComponent m = m_movComps.get(e);
+
+		if(!m.m_left && !m.m_right && 
+				touch.m_groundTouch && 
+				!player.getState().equals(State.JUMPING) && 
+				!animation.getAnimationState().equals(AnimState.PULLUP) && 
+				!player.getState().equals(State.LYINGDOWN)  && 
+				!player.getState().equals(State.CRAWLING)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void crawlLeft(Entity e){
 		PhysicsComponent ps = m_physComps.get(e);
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
-		
+
 		vel.m_velocity = -vel.m_crawlLimit;
 		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
 		animation.setAnimationState(AnimState.CRAWL);
+		player.setState(State.CRAWLING);
 	}
-	
+
 	private void crawlRight(Entity e){
 		PhysicsComponent ps = m_physComps.get(e);
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
-		
+
 		vel.m_velocity = vel.m_crawlLimit;
 		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
 		animation.setAnimationState(AnimState.CRAWL);
+		player.setState(State.CRAWLING);
 	}
-	
+
 	private void walkLeft(Entity e){
-		
+
 		PhysicsComponent ps = m_physComps.get(e);
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
-		
+
 		if(vel.m_velocity > 0){
 			vel.m_velocity=0;
 		}
@@ -211,16 +237,16 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 			animation.setAnimationState(AnimState.WALKING);
 		}
 		player.setState(State.WALKING);
-		
+
 	}
-	
+
 	private void walkRight(Entity e){
-		
+
 		PhysicsComponent ps = m_physComps.get(e);
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
-		
+
 		if(vel.m_velocity < 0){
 			vel.m_velocity = 0;
 		}
@@ -235,11 +261,11 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 			animation.setAnimationState(AnimState.WALKING);
 		}
 		player.setState(State.WALKING);
-		
+
 	}
-	
+
 	private void animateBody(PhysicsComponent ps, PlayerComponent player, AnimationComponent animation){
-		
+
 		int rot = player.isFacingLeft() ? -1 : 1;
 		for (Slot slot : animation.getSkeleton().getSlots()) {
 			if (!(slot.getAttachment() instanceof RegionAttachment)) continue;

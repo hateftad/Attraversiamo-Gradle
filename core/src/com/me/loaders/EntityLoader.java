@@ -368,12 +368,12 @@ public class EntityLoader {
 				stateData.setMix("walking", "running", 0.6f);
 				stateData.setMix("jumping", "running", 0.2f);
 				stateData.setMix("walking", "jumping", 0.2f);
-				stateData.setMix("lieDown", "lyingDown", 0.2f);
-				//stateData.setMix("pullUp", "idle", 0.5f);
+				//stateData.setMix("lieDown", "lyingDown", 0.2f);
+				//stateData.setMix("crawling", "lyingDown", 0.2f);
 				entity.addComponent(p);
 				entity.addComponent(new MovementComponent());
 				VelocityLimitComponent vel = new VelocityLimitComponent(4.5f, 8);
-				vel.m_crawlLimit = 1.5f;
+				vel.m_crawlLimit = 2.5f;
 				entity.addComponent(vel);
 				entity.addComponent(new TouchComponent());
 				entity.addComponent(new JumpComponent());

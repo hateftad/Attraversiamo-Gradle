@@ -131,15 +131,29 @@ public class PhysicsComponent extends BaseComponent {
 		}
 		return false;
 	}
-
+	
+	private short currentBits;
+	
 	public void disableBody(String name){
 		
-		currentFilter = m_body.get(name).getFixtureList().get(0).getFilterData();
+		if(currentFilter == null){
+			currentFilter = m_body.get(name).getFixtureList().get(0).getFilterData();
+			currentBits = currentFilter.categoryBits;
+		}
 		
 		Filter t1 = currentFilter;
 		t1.categoryBits = 1;
 		
 		m_body.get(name).getFixtureList().get(0).setFilterData(t1);
+		
+	}
+	
+	public void enableBody(String name){
+		
+		if(currentFilter != null){
+			currentFilter.categoryBits = currentBits;
+			m_body.get(name).getFixtureList().get(0).setFilterData(currentFilter);
+		}
 		
 	}
 	

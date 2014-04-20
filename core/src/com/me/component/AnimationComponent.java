@@ -366,5 +366,12 @@ public class AnimationComponent extends BaseComponent {
 		m_atlas.getTextures().clear();
 		m_atlas.dispose();
 	}
+	AnimState prevState = AnimState.DYING;
+	public void printStateChange(){
+		if(prevState != m_state){
+			System.out.println(m_state.name());
+			prevState = m_state;
+		}
+	}
 
 }
