@@ -82,18 +82,25 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		}
 
 		if(!player.isActive() && !finish){
-			if(!g.m_gettingLifted && touch.m_groundTouch)
+			if(!g.m_gettingLifted && touch.m_groundTouch && !crawlComp.isCrawling){
 				animation.setAnimationState(AnimState.IDLE);
+			}
+		}
+		
+		if(crawlComp.isStanding && animation.isCompleted(AnimState.STANDUP)){
+			crawlComp.isStanding = false;
+			player.setState(State.IDLE); 
 		}
 
 		MovementComponent m = m_movComps.get(e);
 		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(up), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
-		if(player.isActive() && !m.m_lockControls && !g.m_gettingLifted && !finish && !animation.getAnimationState().equals(AnimState.STANDUP)){
+		if(player.isActive() && !m.m_lockControls && !g.m_gettingLifted && !finish && !crawlComp.isStanding){
 			VelocityLimitComponent vel = m_velComps.get(e);
 			//animation.printStateChange();
 			if(touch.m_groundTouch && !crawlComp.isCrawling){
 				animation.setupPose();
 			}
+			
 			if(isIdle(e)) {
 				animation.setAnimationState(AnimState.IDLE);
 				vel.m_velocity = 0;
@@ -105,7 +112,6 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 				} else{
 					walkLeft(e);
 				}
-
 				player.setFacingLeft(true);
 			}
 
@@ -137,10 +143,9 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 				if(crawlComp.canCrawl){
 					animation.setAnimationState(AnimState.LIEDOWN);
 					player.setState(State.LYINGDOWN);
-
 				}
 			} 
-
+			
 			if(animation.isCompleted(AnimState.LIEDOWN)){
 				animation.setAnimationState(AnimState.LYINGDOWN);
 				crawlComp.isCrawling = true;
@@ -154,8 +159,8 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 			if(!crawlComp.canCrawl && crawlComp.isCrawling){
 				animation.setAnimationState(AnimState.STANDUP);
 				crawlComp.isCrawling = false;
+				crawlComp.isStanding = true;
 				ps.enableBody("center");
-				System.out.println("body enabled");
 			}
 			
 		}
