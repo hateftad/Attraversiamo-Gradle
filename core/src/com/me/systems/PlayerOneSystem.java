@@ -19,6 +19,7 @@ import com.me.component.LadderClimbComponent;
 import com.me.component.MovementComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
+import com.me.component.PlayerComponent.State;
 import com.me.component.PlayerOneComponent;
 import com.me.component.PushComponent;
 import com.me.component.TouchComponent;
@@ -95,8 +96,8 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		GrabComponent g = m_grabComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		PhysicsComponent ps = m_physComps.get(e);
-		
-		
+
+
 		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().m_finished;
 
 		if(m_inputMgr.m_playerSelected == PlayerSelection.ONE){
@@ -113,111 +114,109 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 				animation.setAnimationState(AnimState.IDLE);
 			}
 		}
-		
-		if(m_animComps.has(e)){
-			if(m_movComps.has(e)){
-				MovementComponent m = m_movComps.get(e);
-				m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(action), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
-				if(m_playerComps.has(e)){
-					//e.getComponent(RagDollComponent.class).m_activated = m_button[rag];
-					VelocityLimitComponent vel = m_velComps.get(e);
 
-					if(player.isActive() && !m.m_lockControls && !g.m_lifting && !finish){
-						if(touch.m_groundTouch&&!touch.m_boxTouch && !touch.m_footEdge){
-							animation.setupPose();
-						}
-						if(!m.m_left && !m.m_right && touch.m_groundTouch && !touch.m_ladderTouch) {
-							vel.m_velocity = 0;
-							if(!g.m_gonnaGrab){
-								if(!animation.getAnimationState().equals(AnimState.PULLUP)){
-									animation.setAnimationState(AnimState.IDLE);
-								}
-							}
-						}
-						if(m_hangComps.has(e)){
 
-							if(m.m_up && h.m_isHanging)
-							{
-								JointComponent j = e.getComponent(JointComponent.class);
-								if(j.getPrismJoint() != null){
-									j.climb();
-									animation.setAnimationState(AnimState.CLIMBING);
-									h.m_climbingUp = true;
-									m.m_lockControls = true;
-								}
-							}
-							if(h.m_isHanging && !h.m_climbingUp){
-								animation.setAnimationState(AnimState.HANGING);
-							}
-						}
-						if(m_ladderComps.has(e)){
-							if(touch.m_ladderTouch){
-								climbLadder(e);
-							}
-						}
-						if(m.m_left){
-							moveLeft(e);
-						}
-						else if(m.m_right){
-							moveRight(e);
-						}
+		MovementComponent m = m_movComps.get(e);
+		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(action), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
 
-						if(m_jumpComps.has(e)){
-							if(m.m_jump && touch.m_groundTouch){
-								player.setOnGround(false);
-								if(m.m_left||m.m_right){
-									animation.setAnimationState(AnimState.JUMPING);
-									ps.setLinearVelocity(ps.getLinearVelocity().x , vel.m_jumpLimit);
-								}
-								else if(!touch.m_boxTouch){
-									ps.setLinearVelocity(ps.getLinearVelocity().x , 8);
-									animation.setAnimationState(AnimState.UPJUMP);
-								}
-							}
-						}
-						if(m_inputMgr.isDown(action)){
-							if(touch.m_footEdgeL){
-								player.setFacingLeft(true);
-								ps.warp("feet", touch.m_touchCenter);
-								animation.setAnimationState(AnimState.LIEDOWN);
-								g.m_gonnaGrab = true;
-							}
-							if(touch.m_ladderTouch){
-								vel.m_ladderClimbVelocity = 3;
-								l.m_goingUp = true;
-							}
-						} 
+		//e.getComponent(RagDollComponent.class).m_activated = m_button[rag];
+		VelocityLimitComponent vel = m_velComps.get(e);
 
-						if(g.m_gonnaGrab){
-							ps.warp("feet", touch.m_touchCenter);
-						}
-						if(m.moved()){
-							g.m_gonnaGrab = false;
-						}
+		if(player.isActive() && !m.m_lockControls && !g.m_lifting && !finish){
+			if(touch.m_groundTouch&&!touch.m_boxTouch && !touch.m_footEdge){
+				animation.setupPose();
+			}
+			if(!m.m_left && !m.m_right && touch.m_groundTouch && !touch.m_ladderTouch) {
+				vel.m_velocity = 0;
+				if(!g.m_gonnaGrab){
+					if(!animation.getAnimationState().equals(AnimState.PULLUP)){
+						animation.setAnimationState(AnimState.IDLE);
 					}
-					if(finish){
-						animation.setAnimationState(m_playerConfig.m_finishAnimation);
-						if(animation.isCompleted()){
-							player.setIsFinishedAnimating(true);
-						}
-					}
-
-					if(ps.isFalling() && ps.movingForward())
-					{
-						animation.setAnimationState(AnimState.FALLING);
-					}
-
-					if(isDead(ps)){
-						world.getSystem(PhysicsSystem.class).onRestartLevel();
-					}
-
-					//TOO MUCH PROCESSING!!
-					animateBody(ps, player, animation);
-
-					animation.setFacing(player.isFacingLeft());
 				}
 			}
+			if(m_hangComps.has(e)){
+
+				if(m.m_up && h.m_isHanging)
+				{
+					JointComponent j = e.getComponent(JointComponent.class);
+					if(j.getPrismJoint() != null){
+						j.climb();
+						animation.setAnimationState(AnimState.CLIMBING);
+						h.m_climbingUp = true;
+						m.m_lockControls = true;
+					}
+				}
+				if(h.m_isHanging && !h.m_climbingUp){
+					animation.setAnimationState(AnimState.HANGING);
+				}
+			}
+			if(m_ladderComps.has(e)){
+				if(touch.m_ladderTouch){
+					climbLadder(e);
+				}
+			}
+			if(m.m_left){
+				moveLeft(e);
+			}
+			if(m.m_right){
+				moveRight(e);
+			}
+
+			if(m_jumpComps.has(e)){
+				if(m.m_jump && touch.m_groundTouch){
+					player.setOnGround(false);
+					if(m.m_left||m.m_right){
+						animation.setAnimationState(AnimState.JUMPING);
+						ps.setLinearVelocity(ps.getLinearVelocity().x , vel.m_jumpLimit);
+					}
+					else if(!touch.m_boxTouch){
+						ps.setLinearVelocity(ps.getLinearVelocity().x , 8);
+						animation.setAnimationState(AnimState.UPJUMP);
+					}
+					player.setState(State.JUMPING);
+				}
+			}
+			if(m_inputMgr.isDown(action)){
+				if(touch.m_footEdgeL){
+					player.setFacingLeft(true);
+					ps.warp("feet", touch.m_touchCenter);
+					animation.setAnimationState(AnimState.LIEDOWN);
+					g.m_gonnaGrab = true;
+				}
+				if(touch.m_ladderTouch){
+					vel.m_ladderClimbVelocity = 3;
+					l.m_goingUp = true;
+				}
+			} 
+
+			if(g.m_gonnaGrab){
+				ps.warp("feet", touch.m_touchCenter);
+			}
+			if(m.moved()){
+				g.m_gonnaGrab = false;
+			}
 		}
+		if(finish){
+			animation.setAnimationState(m_playerConfig.m_finishAnimation);
+			if(animation.isCompleted()){
+				player.setIsFinishedAnimating(true);
+			}
+		}
+
+		if(ps.isFalling() && ps.movingForward())
+		{
+			animation.setAnimationState(AnimState.FALLING);
+		}
+
+		if(isDead(ps)){
+			world.getSystem(PhysicsSystem.class).onRestartLevel();
+		}
+
+		//TOO MUCH PROCESSING!!
+		animateBody(ps, player, animation);
+
+		animation.setFacing(player.isFacingLeft());
+
 	}
 
 	private void moveLeft(Entity e){
@@ -267,6 +266,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 			}
 		}
 		player.setFacingLeft(true);
+		player.setState(State.WALKING);
 	}
 
 	private void moveRight(Entity e){
@@ -317,7 +317,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 			}
 		}
 		player.setFacingLeft(false);
-
+		player.setState(State.WALKING);
 	}
 
 	private void climbLadder(Entity e){
@@ -347,7 +347,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		if(vel.m_ladderClimbVelocity == 0){
 			animation.setAnimationState(AnimState.LADDERHANG);
 		}
-
+		
 	}
 
 	private boolean isDead(PhysicsComponent ps) {
