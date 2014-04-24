@@ -140,7 +140,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 			}
 
 			if(m_inputMgr.isDown(action)){
-				if(crawlComp.canCrawl){
+				if(crawlComp.canCrawl && !crawlComp.isCrawling){
 					animation.setAnimationState(AnimState.LIEDOWN);
 					player.setState(State.LYINGDOWN);
 				}
@@ -192,6 +192,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 				!animation.getAnimationState().equals(AnimState.PULLUP) && 
 				!player.getState().equals(State.LYINGDOWN)  && 
 				!player.getState().equals(State.CRAWLING)) {
+			player.setState(State.IDLE);
 			return true;
 		}
 
