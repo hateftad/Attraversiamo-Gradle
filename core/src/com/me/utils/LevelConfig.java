@@ -15,6 +15,7 @@ public class LevelConfig {
 	private boolean m_finishFacingLeft;
 	private boolean m_hasPortal;
 	private LevelComponent m_levelComponent;
+	public float m_minX, m_maxX, m_minY;
 	
 	
 	public LevelConfig(String name) {
@@ -109,5 +110,11 @@ public class LevelConfig {
 	
 	public boolean hasPortal(){
 		return m_hasPortal;
+	}
+	
+	public void setLimit(float minX, float maxX, float minY){
+		m_minX = minX;
+		m_maxX = maxX;
+		m_minY = minY;
 	}
 }

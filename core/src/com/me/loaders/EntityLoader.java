@@ -201,6 +201,18 @@ public class EntityLoader {
 				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP));
 				entity.addComponent(new TriggerComponent());
 			}
+			if(ud.mName.equals("minX")){
+				config.m_minX = Converters.ToWorld(body.getPosition().x);
+				System.out.println("Minx " + Converters.ToWorld(body.getPosition().x));			
+			}
+			if(ud.mName.equals("maxX")){
+				config.m_maxX = Converters.ToWorld(body.getPosition().x);
+				System.out.println("MaxX " + Converters.ToWorld(body.getPosition().x));
+			}
+			if(ud.mName.equals("minY")){
+				config.m_minY = Converters.ToWorld(body.getPosition().y);
+				System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
+			}
 			
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup));
 			pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);

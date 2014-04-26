@@ -10,45 +10,48 @@ public class CameraComponent extends BaseComponent {
 	private OrthographicCamera m_camera;
 	
 	private Vector3 m_target = new Vector3();
+	
+	private float m_maxX, m_minX, m_minY;
+	private float m_lerp;
 
 	
 	public CameraComponent(OrthographicCamera camera){
 		m_camera = camera;
+		m_lerp = 0.07f;
 	}
 	
-	public OrthographicCamera getCamera()
-	{
+	public OrthographicCamera getCamera(){
 		return m_camera;
+	}
+	
+	public void setLimit(float maxX, float minX, float minY){
+		m_maxX = maxX;
+		m_minX = minX;
+		m_minY = minY;
 	}
 	
 	public void moveTo(Vector2 target){
 		m_target.set(target.x, target.y + 800, 0);
 	}
 	
-	public void update(float delta)
-	{
+	public void update(float delta){
 		
-		
-		float lerp = 0.07f;
 		Vector3 position = this.getCamera().position;
 		
-		position.x += (m_target.x - position.x) * lerp;
-		position.y += (m_target.y - position.y) * lerp;
-		if(getCamera().position.y < 0){
-			getCamera().position.y = 0;
-			position.y = 0;
+		position.x += (m_target.x - position.x) * m_lerp;
+		position.y += (m_target.y - position.y) * m_lerp;
+		if(getCamera().position.y < m_minY){
+			getCamera().position.y = m_minY;
+			position.y = m_minY;
 		}
 		
 		m_camera.update();
 		
-		if(position.x > 8500){
-			position.x = 8500;
-		} else if(position.x < 0){
-			position.x = 0;
+		if(position.x > m_maxX){
+			position.x = m_maxX;
+		} else if(position.x < m_minX){
+			position.x = m_minX;
 		}
-		
-		
-		
 		
 	}
 	
@@ -81,7 +84,6 @@ public class CameraComponent extends BaseComponent {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		
 	}
 	

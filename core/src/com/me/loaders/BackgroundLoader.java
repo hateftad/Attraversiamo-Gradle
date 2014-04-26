@@ -47,6 +47,7 @@ public class BackgroundLoader{
 
 	public void doRun(){
 
+		m_levelConfig = m_configLoader.getLevelConfigByName(LEVEL+m_level);
 		
 		if(m_game.m_gameScreen != null){
 			stopProcessingSystems();
@@ -55,7 +56,7 @@ public class BackgroundLoader{
 			m_game.m_gameScreen = new GameScreen(m_game);
 		}
 
-		m_levelConfig = m_configLoader.getLevelConfigByName(LEVEL+m_level);
+		
 		m_loader.loadLevel(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), 
 				m_game.m_gameScreen.getCameraSystem().getRayHandler());
 		
@@ -71,7 +72,6 @@ public class BackgroundLoader{
 			setupCharacter(m_levelConfig.m_playerTwo, 2);
 		}
 		
-		setupLevel();
 		m_loader.dispose();
 		startProcessingSystems();
 		
@@ -93,18 +93,18 @@ public class BackgroundLoader{
 		}
 			
 	}
-	
-	private void setupLevel(){
+
+	private void startProcessingSystems() {
 		
 		LevelSystem lvlSystem = m_game.m_gameScreen.getEntityWorld().getSystem(LevelSystem.class);
 		lvlSystem.setLevelConfig(m_levelConfig);
 		lvlSystem.setProcessing(true);
 		
-	}
-
-	private void startProcessingSystems() {
 		m_game.m_gameScreen.getPhysicsSystem().toggleProcessing(true);
+		
 		m_game.m_gameScreen.getCameraSystem().toggleProcess(true);
+		m_game.m_gameScreen.getCameraSystem().setLimits(m_levelConfig);
+		
 		m_game.m_gameScreen.getPlayerSystem().toggleProcessing(true);
 		m_game.m_gameScreen.getPlayerSystem().restartSystem();
 	}

@@ -25,6 +25,7 @@ import com.me.component.SpriteComponent;
 import com.me.ui.InputManager;
 import com.me.utils.Converters;
 import com.me.utils.GlobalConfig;
+import com.me.utils.LevelConfig;
 
 public class CameraSystem extends EntityProcessingSystem implements InputProcessor{
 
@@ -57,14 +58,16 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 		camera.viewportWidth = Gdx.graphics.getWidth();  
 		camera.position.set(camera.viewportWidth * .5f, camera.viewportHeight * .5f, 0f);  
 		camera.zoom = GlobalConfig.getInstance().config.zoom;
-		camera.frustum.boundsInFrustum(new BoundingBox(new Vector3(-100, 100, 0), new Vector3(100, 100, 0)));
 		camera.update();
 
 		m_camera = new CameraComponent(camera);
 		m_showUI = GlobalConfig.getInstance().config.showUI;
 		m_inputMgr = InputManager.getInstance();
 	}
-
+	
+	public void setLimits(LevelConfig config){
+		m_camera.setLimit(config.m_maxX, config.m_minX, config.m_minY);
+	}
 
 	public CameraComponent getCameraComponent(){
 		return m_camera;
