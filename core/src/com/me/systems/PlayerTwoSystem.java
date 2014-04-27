@@ -84,6 +84,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		if(!player.isActive() && !finish){
 			if(!g.m_gettingLifted && touch.m_groundTouch && !crawlComp.isCrawling){
 				animation.setAnimationState(AnimState.IDLE);
+				ps.makeStatic("center");
 			}
 		}
 		
@@ -96,6 +97,8 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(up), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
 		if(player.isActive() && !m.m_lockControls && !g.m_gettingLifted && !finish && !crawlComp.isStanding){
 			VelocityLimitComponent vel = m_velComps.get(e);
+			
+			ps.makeDynamic("center", 0.001f);
 			//animation.printStateChange();
 			if(touch.m_groundTouch && !crawlComp.isCrawling){
 				animation.setupPose();

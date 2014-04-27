@@ -44,8 +44,7 @@ public class PhysicsComponent extends BaseComponent {
 
 	public ImmediateModePhysicsListener m_physicsListener;
 
-	public PhysicsComponent(World world, Body b, String name)
-	{
+	public PhysicsComponent(World world, Body b, String name){
 		m_name = name;
 		m_worldPosition = new Vector2();
 		m_body.put(m_name, createBody(world, b));
@@ -67,18 +66,15 @@ public class PhysicsComponent extends BaseComponent {
 		return world.createBody(bodyDef);
 	}
 
-	public void createBody(World world, BodyDef bDef, String name)
-	{
+	public void createBody(World world, BodyDef bDef, String name){
 		m_body.put(name, world.createBody(bDef));
 	}
 
-	public void createFixture(PolygonShape pShape, String name)
-	{
+	public void createFixture(PolygonShape pShape, String name){
 		m_body.get(name).createFixture(pShape, 1);
 	}
 
-	public void createFixture(Fixture fixture, String name)
-	{
+	public void createFixture(Fixture fixture, String name){
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.density = fixture.getDensity();
 		fixtureDef.friction = fixture.getFriction();
@@ -92,8 +88,7 @@ public class PhysicsComponent extends BaseComponent {
 
 	}
 
-	public void addBody(World ps, Body b, String name)
-	{
+	public void addBody(World ps, Body b, String name){
 		m_body.put(name, createBody(ps, b));
 		m_body.get(name).setBullet(b.isBullet());
 		m_body.get(name).setFixedRotation(b.isFixedRotation());
@@ -102,17 +97,14 @@ public class PhysicsComponent extends BaseComponent {
 		m_previousPositions.put(m_body.get(name), m_body.get(name).getPosition());
 	}
 
-	public void makeKinematic()
-	{
+	public void makeKinematic(){
 		m_body.get(m_name).setType(BodyType.KinematicBody);
 		m_body.get("feet").setType(BodyType.KinematicBody);
 
 		setIsDynamic(false);
 	}
 
-	public void makeDynamic()
-	{
-
+	public void makeDynamic(){
 		m_body.get(m_name).setType(BodyType.DynamicBody);
 		m_body.get("feet").setType(BodyType.DynamicBody);
 		setIsDynamic(true);
@@ -123,9 +115,17 @@ public class PhysicsComponent extends BaseComponent {
 			b.setType(BodyType.StaticBody);
 		}
 	}
+	
+	public void makeStatic(String name){
+		m_body.get(name).setType(BodyType.StaticBody);
+	}
+	
+	public void makeDynamic(String name, float mass){
+		m_body.get(name).setType(BodyType.DynamicBody);
+		setMass(mass, name);
+	}
 
-	public boolean isFalling()
-	{
+	public boolean isFalling(){
 		if(m_body.get(m_name).getLinearVelocity().y < -4){
 			return true;
 		}
@@ -165,31 +165,26 @@ public class PhysicsComponent extends BaseComponent {
 		return false;
 	}
 
-	public Body getBody(String name)
-	{
+	public Body getBody(String name){
 		return m_body.get(name);
 	}
 
-	public Body getBody()
-	{
+	public Body getBody(){
 		return m_body.get(m_name);
 	}
 
-	public void setMass(float mass)
-	{
+	public void setMass(float mass, String name){
 		MassData m = new MassData();
 		m.mass = mass;
-		m_body.get(m_name).setMassData(m);
+		m_body.get(name).setMassData(m);
 	}
 
 
-	public Vector2 getWorldPosition()
-	{
+	public Vector2 getWorldPosition(){
 		return m_worldPosition;
 	}
 
-	public Vector2 getPosition()
-	{
+	public Vector2 getPosition(){
 		return m_body.get(m_name).getPosition();
 	}
 
@@ -197,13 +192,11 @@ public class PhysicsComponent extends BaseComponent {
 		m_body.get(name).setTransform(pos, 0);
 	}
 
-	public void setPosition(Vector2 pos)
-	{
+	public void setPosition(Vector2 pos){
 		m_body.get(m_name).setTransform(pos, 0.0f);
 	}
 
-	public void setPosition(float x, float y)
-	{
+	public void setPosition(float x, float y){
 		m_body.get(m_name).setTransform(x, y, 0.0f);
 	}
 
@@ -228,20 +221,17 @@ public class PhysicsComponent extends BaseComponent {
 		warp(m_startPosition.x, m_startPosition.y);
 	}
 
-	public void setLinearVelocity(Vector2 vel)
-	{
+	public void setLinearVelocity(Vector2 vel){
 		for(Body b : m_body.values())
 			b.setLinearVelocity(vel);
 	}
 
-	public void setLinearVelocity(float x, float y)
-	{
+	public void setLinearVelocity(float x, float y){
 		for(Body b : m_body.values())
 			b.setLinearVelocity(x, y);
 	}
 
-	public void applyLinearImpulse(Vector2 imp)
-	{
+	public void applyLinearImpulse(Vector2 imp){
 		m_body.get(m_name).applyLinearImpulse(imp, m_body.get(m_name).getPosition(), true);
 	}
 
@@ -249,18 +239,15 @@ public class PhysicsComponent extends BaseComponent {
 		m_body.get(m_name).applyLinearImpulse(x, y, m_body.get(m_name).getPosition().x, m_body.get(m_name).getPosition().y, true);
 	}
 
-	public Vector2 getLinearVelocity()
-	{
+	public Vector2 getLinearVelocity(){
 		return m_body.get(m_name).getLinearVelocity();
 	}
 
-	public void setRBUserData(Body body, RBUserData ud)
-	{
+	public void setRBUserData(Body body, RBUserData ud){
 		m_userData.put(body, ud);
 	}
 
-	public RBUserData getRBUserData(Body body)
-	{
+	public RBUserData getRBUserData(Body body){
 		return m_userData.get(body);
 	}
 
@@ -268,13 +255,11 @@ public class PhysicsComponent extends BaseComponent {
 		return m_body.values();
 	}
 
-	public Object getUserData(String name)
-	{
+	public Object getUserData(String name){
 		return m_body.get(name).getUserData();
 	}
 
-	public void setUserData(Entity e, String name)
-	{
+	public void setUserData(Entity e, String name){
 		m_body.get(name).setUserData(e);
 	}
 
@@ -313,13 +298,11 @@ public class PhysicsComponent extends BaseComponent {
 		}
 	}
 
-	public void updateWorldPosition()
-	{
+	public void updateWorldPosition(){
 		m_worldPosition.set(Converters.ToWorld(m_body.get(m_name).getPosition().x),Converters.ToWorld(m_body.get(m_name).getPosition().y));
 	}
 
-	public void setPhysicsListener(ImmediateModePhysicsListener listener)
-	{
+	public void setPhysicsListener(ImmediateModePhysicsListener listener){
 		m_physicsListener = listener;
 	}
 

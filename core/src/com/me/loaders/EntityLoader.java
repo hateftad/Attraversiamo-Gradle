@@ -182,7 +182,7 @@ public class EntityLoader {
 
 			BodyUserData ud = (BodyUserData) body.getUserData();
 			if(ud.mName.equals("box")){
-				pComp.setMass(20f);
+				pComp.setMass(20f, ud.mName);
 			}
 			if(ud.mName.equals("portal")){
 				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL));
@@ -288,7 +288,7 @@ public class EntityLoader {
 						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
 					}else{
 						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						pComp.setMass(0.001f);
+						pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
 				} else if(m_scene.getCustom(body, "characterType", "").equals("hand")){
@@ -301,7 +301,7 @@ public class EntityLoader {
 				} else if(m_scene.getCustom(body, "characterType", "").equals("LHand")){
 					if(pComp!=null){
 						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						pComp.setMass(0.01f);
+						pComp.setMass(0.01f, ((BodyUserData) body.getUserData()).mName);
 					}
 					else{
 						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
@@ -372,7 +372,7 @@ public class EntityLoader {
 				p.setCanBecomeInactive(config.m_canDeactivate);
 				
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
-				pComp.setMass(0.001f);
+				pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
 				stateData = anim.setUp(image);
 				anim.setAnimationState(AnimState.IDLE);
