@@ -107,6 +107,7 @@ public class BackgroundLoader{
 		
 		m_game.m_gameScreen.getPlayerSystem().toggleProcessing(true);
 		m_game.m_gameScreen.getPlayerSystem().restartSystem();
+		m_game.m_gameScreen.toggleProcessingOnSystems(true);
 	}
 
 	private void clearLevel(){
@@ -117,11 +118,7 @@ public class BackgroundLoader{
 	}
 	
 	private void stopProcessingSystems(){
-		
-		m_game.m_gameScreen.getPhysicsSystem().toggleProcessing(false);
-		m_game.m_gameScreen.getCameraSystem().toggleProcess(false);
-		m_game.m_gameScreen.getPlayerSystem().toggleProcessing(false);
-		
+		m_game.m_gameScreen.toggleProcessingOnSystems(false);
 	}
 
 }

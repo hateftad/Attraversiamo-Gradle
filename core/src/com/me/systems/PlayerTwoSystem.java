@@ -50,6 +50,8 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 	private InputManager m_inputMgr;
 
 	private PlayerConfig m_playerConfig;
+	
+	private boolean m_process = true;
 
 	private int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5, changePlayer = 6, action = 7; 
 
@@ -310,6 +312,16 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 			return true;
 		}
 		return false;
+	}
+	
+	public void toggleProcessing(boolean process){
+		m_process = process;
+	}
+
+	@Override
+	protected boolean checkProcessing() {
+		// TODO Auto-generated method stub
+		return m_process;
 	}
 
 	@Override

@@ -24,11 +24,11 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 
 	private World m_entityWorld;
 	private PhysicsSystem m_physicsSystem;
-	private PlayerOneSystem m_playerSystem;
+	private PlayerOneSystem m_playerOneSystem;
+	private PlayerTwoSystem m_playerTwoSystem;
 	private RenderSystem m_renderSystem;
 	private CameraSystem m_cameraSystem;
 	private boolean m_loadedNextLevel;
-	private ScriptManager m_scriptMgr;
 
 
 	public GameScreen(Attraversiamo game)
@@ -47,12 +47,12 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		m_entityWorld.setSystem(new LevelSystem(this));
 		m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_camera));
 		
-		m_playerSystem = new PlayerOneSystem(m_physicsSystem);
-		m_entityWorld.setSystem(m_playerSystem);
-		m_entityWorld.setSystem(new PlayerTwoSystem());
+		m_playerOneSystem = new PlayerOneSystem(m_physicsSystem);
+		m_entityWorld.setSystem(m_playerOneSystem);
+		m_playerTwoSystem = m_entityWorld.setSystem(new PlayerTwoSystem());
 		m_entityWorld.initialize();
 		game.m_processors.add(m_cameraSystem);
-		game.m_processors.add(m_playerSystem);
+		game.m_processors.add(m_playerOneSystem);
 		if(GlobalConfig.getInstance().config.platform == Platform.DESKTOP){
 			Gdx.input.setInputProcessor(game.m_multiPlexer);
 		}
@@ -84,7 +84,14 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	}
 	
 	public PlayerOneSystem getPlayerSystem(){
-		return m_playerSystem;
+		return m_playerOneSystem;
+	}
+	
+	public void toggleProcessingOnSystems(boolean state){
+		m_playerOneSystem.toggleProcessing(state);
+		m_playerTwoSystem.toggleProcessing(state);
+		m_cameraSystem.toggleProcess(state);
+		m_physicsSystem.toggleProcessing(state);
 	}
 	
 	public void clear(){
