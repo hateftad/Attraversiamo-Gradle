@@ -22,14 +22,13 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 	private Skin m_skin;
 	private Table m_table;
 	private UIButton m_newGameBtn;
-	private Attraversiamo m_game;
 
 	private AnimationComponent m_animation;
 
 	public MenuScreen(Attraversiamo game) {
 		super(game);
-		m_game = game;
 		init();
+		m_camera.zoom = 1f;
 	}
 	
 	private void init(){
@@ -71,22 +70,22 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 
 	@Override
 	public void show() {
-
-		
 	}
 
 	@Override
 	public void render(float delta) {
+		
 		super.render(delta);
+		m_camera.update();
 		m_stage.act(delta);
 		m_stage.draw();
-		//m_table.drawDebug(m_stage);
+		m_spriteBatch.setProjectionMatrix(m_camera.combined);
 		m_spriteBatch.begin();
 		m_animation.update(m_spriteBatch, delta / 2);
 		m_spriteBatch.end();
 		if(Gdx.input.justTouched()){
 			m_game.m_loadingScreen = new LoadingScreen(m_game);
-			m_game.m_loadingScreen.load(5);
+			m_game.m_loadingScreen.load(1);
 			m_game.setScreen(m_game.m_loadingScreen);
 		}
 	}

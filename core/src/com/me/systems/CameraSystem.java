@@ -48,17 +48,10 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	private InputManager m_inputMgr;
 
 	@SuppressWarnings("unchecked")
-	public CameraSystem(RayHandler rh, World world) {
+	public CameraSystem(RayHandler rh, OrthographicCamera camera) {
 		super(Aspect.getAspectForOne(CameraComponent.class, PlayerComponent.class));
 		m_rayHandler = rh;
 		m_debugDrawer = new Box2DDebugRenderer();
-
-		OrthographicCamera camera = new OrthographicCamera();  
-		camera.viewportHeight = Gdx.graphics.getHeight();  
-		camera.viewportWidth = Gdx.graphics.getWidth();  
-		camera.position.set(camera.viewportWidth * .5f, camera.viewportHeight * .5f, 0f);  
-		camera.zoom = GlobalConfig.getInstance().config.zoom;
-		camera.update();
 
 		m_camera = new CameraComponent(camera);
 		m_showUI = GlobalConfig.getInstance().config.showUI;
@@ -101,11 +94,12 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 
 			if(m_playerComp.get(e).isActive()){
 				PhysicsComponent ps = m_physicsComp.get(e);
+				//System.out.println(ps.getWorldPosition());
 				m_camera.moveTo(ps.getWorldPosition());
 				activePosition = ps.getPosition();
 			}
 			else{
-				PhysicsComponent ps = m_physicsComp.get(e);
+				m_physicsComp.get(e);
 				//zoom = Math.abs((activePosition.x - ps.getPosition().x));
 				if(zoom < 30){
 					zoom = 30;

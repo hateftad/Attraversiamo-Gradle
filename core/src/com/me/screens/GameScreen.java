@@ -45,7 +45,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		m_entityWorld.setSystem(m_physicsSystem);
 		m_entityWorld.setSystem(new PlayerAttributeSystem());
 		m_entityWorld.setSystem(new LevelSystem(this));
-		m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_entityWorld));
+		m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_camera));
 		
 		m_playerSystem = new PlayerOneSystem(m_physicsSystem);
 		m_entityWorld.setSystem(m_playerSystem);
@@ -142,7 +142,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	@Override
 	public void onFinishedLevel(int nr) {
 		//nr++;
-		m_game.m_loadingScreen.load(3);
+		m_game.m_loadingScreen.load(5);
 		m_game.setScreen(m_game.m_loadingScreen);
 		m_loadedNextLevel = true;
 		

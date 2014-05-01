@@ -56,7 +56,6 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 	@SuppressWarnings("unchecked")
 	public PlayerTwoSystem() {
 		super(Aspect.getAspectForOne(PlayerTwoComponent.class));
-
 		m_inputMgr = InputManager.getInstance();
 	}
 
@@ -76,6 +75,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().m_finished;
 
 		if(m_inputMgr.m_playerSelected == PlayerSelection.TWO){
+			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);
 		}else if(player.canDeActivate()){
 			player.setActive(false);
@@ -96,9 +96,8 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		MovementComponent m = m_movComps.get(e);
 		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(up), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
 		if(player.isActive() && !m.m_lockControls && !g.m_gettingLifted && !finish && !crawlComp.isStanding){
-			VelocityLimitComponent vel = m_velComps.get(e);
 			
-			ps.makeDynamic("center", 0.001f);
+			
 			//animation.printStateChange();
 			if(touch.m_groundTouch && !crawlComp.isCrawling){
 				animation.setupPose();
@@ -106,7 +105,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 			
 			if(isIdle(e)) {
 				animation.setAnimationState(AnimState.IDLE);
-				vel.m_velocity = 0;
+				m_velComps.get(e).m_velocity = 0;
 			}
 
 			if(m.m_left && touch.m_groundTouch){
@@ -136,7 +135,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 
 			if(m_jumpComps.get(e).m_jumped){
 				if(animation.getTime() > 0.2f){
-					ps.setLinearVelocity(ps.getLinearVelocity().x, vel.m_jumpLimit);
+					ps.setLinearVelocity(ps.getLinearVelocity().x, m_velComps.get(e).m_jumpLimit);
 					m_jumpComps.get(e).m_jumped = m_playerComps.get(e).isOnGround();
 					player.setState(State.JUMPED);
 				} 

@@ -1,39 +1,34 @@
 package com.me.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 
-public class SplashScreen implements Screen {
+public class SplashScreen extends AbstractScreen {
 
-
-	private SpriteBatch m_spriteBatch;
 	private AnimationComponent m_animation;
-	private Attraversiamo m_myGame;
-
 
 	public SplashScreen(Attraversiamo game){
-		m_myGame = game;
-		m_spriteBatch = new SpriteBatch();
+		
+		super(game);
 		m_animation = new AnimationComponent("data/intro", "data/intro", 1f);
 		m_animation.setUp(new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2.5f), "intro");
+		m_camera.zoom = 1f;
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		super.render(delta);
+		m_camera.update();
+		m_spriteBatch.setProjectionMatrix(m_camera.combined);
 		m_spriteBatch.begin();
 		m_animation.update(m_spriteBatch, delta/2);
 		m_spriteBatch.end();
 
 		if(Gdx.input.justTouched()){
-			m_myGame.setScreen(new MenuScreen(m_myGame));
+			m_game.setScreen(new MenuScreen(m_game));
 		}
 	}
 
@@ -69,7 +64,6 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		m_spriteBatch.dispose();
 		m_animation.dispose();
 
 	}
