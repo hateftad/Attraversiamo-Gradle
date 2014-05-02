@@ -11,7 +11,7 @@ public class PlayerConfig {
  	public boolean m_canDeactivate;
  	public String m_name;
  	public AnimState m_finishAnimation;
- 	
+ 	public float minimumY;
  	public PlayerConfig(){
  		m_playerPosition = new Vector2();
  	}

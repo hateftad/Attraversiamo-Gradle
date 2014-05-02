@@ -5,6 +5,7 @@ import box2dLight.RayHandler;
 import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.physics.JointFactory;
@@ -39,7 +40,9 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -10), true));
 		JointFactory.getInstance().initialize(m_physicsSystem.getWorld());
 		RayHandler rayHandler = new RayHandler(m_physicsSystem.getWorld());
-		rayHandler.setAmbientLight(0.65f);
+		rayHandler.setAmbientLight(0.8f);
+		//rayHandler.setShadows(false);
+		//rayHandler.setAmbientLight(Color.GREEN);
 		
 		m_renderSystem = m_entityWorld.setSystem(new RenderSystem());
 		m_entityWorld.setSystem(m_physicsSystem);

@@ -308,7 +308,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 
 	private boolean isDead(PhysicsComponent ps) {
 
-		if(ps.getPosition().y < -40){
+		if(ps.getPosition().y < m_playerConfig.minimumY){
 			return true;
 		}
 		return false;

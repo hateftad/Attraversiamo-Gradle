@@ -7,6 +7,7 @@ import com.me.systems.LevelSystem;
 import com.me.systems.PlayerOneSystem;
 import com.me.systems.PlayerTwoSystem;
 import com.me.ui.InputManager;
+import com.me.utils.Converters;
 import com.me.utils.LevelConfig;
 import com.me.utils.PlayerConfig;
 
@@ -81,10 +82,12 @@ public class BackgroundLoader{
 		
 		switch (playerNr) {
 		case 1:
+			playerCfg.minimumY = Converters.ToBox(m_levelConfig.m_minY);
 			m_game.m_gameScreen.getEntityWorld().getSystem(PlayerOneSystem.class).setPlayerConfig(playerCfg);
 			InputManager.getInstance().setSelectedPlayer(playerNr, playerCfg.m_active);
 			break;
 		case 2:
+			playerCfg.minimumY = Converters.ToBox(m_levelConfig.m_minY);
 			m_game.m_gameScreen.getEntityWorld().getSystem(PlayerTwoSystem.class).setPlayerConfig(playerCfg);
 			InputManager.getInstance().setSelectedPlayer(playerNr, playerCfg.m_active);
 			break;
