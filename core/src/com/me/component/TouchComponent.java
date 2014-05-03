@@ -22,6 +22,8 @@ public class TouchComponent extends BaseComponent {
 	
 	public boolean m_handTouch;
 	
+	public boolean m_feetToBox;
+	
 	public int m_endReach;
 	
 	public Vector2 m_touchCenter;

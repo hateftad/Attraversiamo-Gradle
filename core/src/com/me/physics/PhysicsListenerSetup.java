@@ -25,8 +25,7 @@ import com.me.utils.Converters;
 
 public class PhysicsListenerSetup {
 
-	public PhysicsListenerSetup()
-	{
+	public PhysicsListenerSetup(){
 
 	}
 
@@ -41,8 +40,6 @@ public class PhysicsListenerSetup {
 			public void preSolve(Entity e, Contact contact, boolean fixtureA) {
 
 			}
-
-			
 
 			@Override
 			public void beginContact(Entity e, Contact contact, boolean fixtureA) {
@@ -71,8 +68,7 @@ public class PhysicsListenerSetup {
 								created = true;
 								e.getComponent(HangComponent.class).m_hangingLeft = true;
 							}
-							if(!pl.isFacingLeft() && otherUd.getType() == Type.RIGHTEDGE)
-							{
+							if(!pl.isFacingLeft() && otherUd.getType() == Type.RIGHTEDGE){
 								JointComponent j = e.getComponent(JointComponent.class);
 								j.createEdgeHang(other.getBody(), player.getBody("rightH"),3, 11, 0);
 								player.setLinearVelocity(player.getLinearVelocity().x, 0);
@@ -103,8 +99,13 @@ public class PhysicsListenerSetup {
 								e.getComponent(TouchComponent.class).m_footEdgeL = true;
 								e.getComponent(TouchComponent.class).m_footEdge = true;
 								e.getComponent(TouchComponent.class).m_touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
-
 							}
+							if(otherUd.getType() == Type.RIGHTPULLUP && fB.isSensor()){
+								e.getComponent(TouchComponent.class).m_footEdgeR = true;
+								e.getComponent(TouchComponent.class).m_footEdge = true;
+								e.getComponent(TouchComponent.class).m_touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
+							}
+							
 							if(otherUd.getType() == Type.HAND){
 								if(e2.getComponent(JointComponent.class) != null){
 									if(e2.getComponent(GrabComponent.class).m_gonnaGrab){
@@ -113,11 +114,12 @@ public class PhysicsListenerSetup {
 										if(!e2.getComponent(PlayerComponent.class).isFacingLeft() && !e.getComponent(PlayerComponent.class).isFacingLeft())
 											return;
 										JointComponent j = e2.getComponent(JointComponent.class);
-										j.createHandHang(fA.getBody(), player.getBody());
+										j.createHandHang(fA.getBody(), player.getBody(), e2.getComponent(TouchComponent.class).m_footEdgeR);
 										e2.getComponent(TouchComponent.class).m_handTouch = true;
 										e.getComponent(TouchComponent.class).m_handTouch = true;
 										e.getComponent(GrabComponent.class).m_grabbed = true;
 										e.getComponent(GrabComponent.class).m_gettingLifted = true;
+										
 										e2.getComponent(GrabComponent.class).m_gonnaGrab = false;
 										e2.getComponent(GrabComponent.class).m_lifting = true;
 									}
@@ -172,6 +174,7 @@ public class PhysicsListenerSetup {
 							
 							if(playerUd.getType() == Type.FEET && otherUd.getType() == Type.BOX){
 								e.getComponent(TouchComponent.class).m_groundTouch = true;
+								e.getComponent(TouchComponent.class).m_feetToBox = true;
 								e.getComponent(MovementComponent.class).m_lockControls = false;
 								e.getComponent(GrabComponent.class).m_grabbed = false;
 								onBox = true;
@@ -248,12 +251,14 @@ public class PhysicsListenerSetup {
 							e.getComponent(TouchComponent.class).m_footEdgeL = false;
 							e.getComponent(TouchComponent.class).m_footEdge = false;
 						}
+						if(otherUd.getType() == Type.RIGHTPULLUP && fB.isSensor()){
+							e.getComponent(TouchComponent.class).m_footEdgeR = false;
+							e.getComponent(TouchComponent.class).m_footEdge = false;
+						}
 
 						if(otherUd.getType() == Type.HAND){
 							if(e.getComponent(JointComponent.class) != null){
 								if(e.getComponent(GrabComponent.class).m_grabbed){
-									JointComponent j = e.getComponent(JointComponent.class);
-									j.createHandHang(fA.getBody(), player.getBody());
 									e.getComponent(TouchComponent.class).m_handTouch = false;
 									e2.getComponent(TouchComponent.class).m_handTouch = false;
 									e.getComponent(GrabComponent.class).m_grabbed = false;
@@ -291,6 +296,7 @@ public class PhysicsListenerSetup {
 							if(playerUd.getType() == Type.FEET && otherUd.getType() == Type.BOX){
 								onBox = false;
 								e.getComponent(MovementComponent.class).m_lockControls = false;
+								e.getComponent(TouchComponent.class).m_feetToBox = false;
 							}
 							if(!onGround && !onBox){
 								e.getComponent(TouchComponent.class).m_groundTouch = false;

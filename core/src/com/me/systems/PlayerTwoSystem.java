@@ -86,7 +86,9 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		if(!player.isActive() && !finish){
 			if(!g.m_gettingLifted && touch.m_groundTouch && !crawlComp.isCrawling){
 				animation.setAnimationState(AnimState.IDLE);
-				ps.makeStatic("center");
+				if(!touch.m_feetToBox){
+					ps.makeStatic("center");
+				}
 			}
 		}
 		

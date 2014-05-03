@@ -26,48 +26,39 @@ public class JointComponent extends BaseComponent{
 	
 	private int m_upperLimit = 0;
 
-	public void setPrismJoint(Joint joint)
-	{
+	public void setPrismJoint(Joint joint){
 		m_pJoint = joint;
 	}
 
-	public Joint getPrismJoint()
-	{
+	public Joint getPrismJoint(){
 		return m_pJoint;
 	}
 	
-	public void setWeldJoint(Joint joint)
-	{
+	public void setWeldJoint(Joint joint){
 		m_wJoint = joint;
 	}
 	
-	public Joint getWeldJoint()
-	{
+	public Joint getWeldJoint(){
 		return m_wJoint;
 	}
 	
-	public void setWJoint(JointDef jDef)
-	{
+	public void setWJoint(JointDef jDef){
 		m_wJointDef = jDef;
 	}
 
-	public JointDef getWJointDef()
-	{
+	public JointDef getWJointDef(){
 		return m_wJointDef;
 	}
 	
-	public void setPJointDef(JointDef jDef)
-	{
+	public void setPJointDef(JointDef jDef){
 		m_pJointDef = jDef;
 	}
 
-	public JointDef getPJointDef()
-	{
+	public JointDef getPJointDef(){
 		return m_pJointDef;
 	}
 	
-	public void createEdgeHang(Body b1, Body b2, float initial, int uL, int lL)
-	{
+	public void createEdgeHang(Body b1, Body b2, float initial, int uL, int lL){
 		//Vector2 bodPos = b2.getBody().getLocalCenter();
 		m_pJointDef = JointFactory.getInstance().createPrismJoint(
 				b1, b2, 
@@ -80,8 +71,7 @@ public class JointComponent extends BaseComponent{
 		m_upperLimit = uL;
 	}
 	
-	public void createLadderHang(Body b1, Body b2, float uL)
-	{
+	public void createLadderHang(Body b1, Body b2, float uL){
 		m_pJointDef = JointFactory.getInstance().createPrismJoint(
 				b1, b2, 
 				Vector2.Zero, 
@@ -93,25 +83,22 @@ public class JointComponent extends BaseComponent{
 		m_lowerLimit = -20;
 	}
 	
-	public void createHandHang(Body b1, Body b2){
+	public void createHandHang(Body b1, Body b2, boolean left){
 		m_wJointDef = JointFactory.getInstance().createPrismJoint(b1, b2, Vector2.Zero, 
-				new Vector2(1.2f,4.3f),3,0, true, false, new Vector2(0,1));
+				new Vector2((left ? -1.2f :1.2f),4.3f),3,0, true, false, new Vector2(0,1));
 		m_created = true;
 		m_destroyed = false;
 	}
 	
-	public void climb()
-	{
-		if(m_pJoint.getType() == JointType.PrismaticJoint)
-		{
+	public void climb(){
+		if(m_pJoint.getType() == JointType.PrismaticJoint){
 			PrismaticJoint j = (PrismaticJoint) m_pJoint;
 			j.enableMotor(true);
 			j.setLimits(m_lowerLimit, m_upperLimit);
 		}
 	}
 
-	public boolean getLength()
-	{
+	public boolean getLength(){
 		if(m_pJoint!=null){
 			if(m_pJoint.getType() == JointType.PrismaticJoint)
 			{
@@ -126,9 +113,6 @@ public class JointComponent extends BaseComponent{
 
 	@Override
 	public void dispose() {
-		
-		
+			
 	}
-
-
 }

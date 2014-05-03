@@ -33,7 +33,6 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 	private boolean breakBond = false;
 	private boolean boost = false;
 	
-	
 	@SuppressWarnings("unchecked")
 	public PlayerAttributeSystem() {
 		super(Aspect.getAspectForAll(PlayerComponent.class));
@@ -47,7 +46,6 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 		TouchComponent touch = m_touchComp.get(e);
 		PhysicsComponent p = m_physComp.get(e);
 		if(m_playerComp.get(e).isActive()){
-
 			if(m_hangComp.has(e)){
 				HangComponent h = m_hangComp.get(e);
 				JointComponent j = m_jointComp.get(e);
@@ -87,13 +85,12 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 				if(!touch.m_ladderTouch && !p.isDynamic()){
 					p.makeDynamic();
 				}
-
 			}
 
 		}
 		if(!m_playerTwo.has(e)){
 			JointComponent j = m_jointComp.get(e);
-			if(!g.m_grabbed && touch.m_handTouch && touch.m_footEdgeL){
+			if(!g.m_grabbed && touch.m_handTouch && touch.m_footEdge){
 				g.m_grabbed = true;
 				j.setWeldJoint(JointFactory.getInstance().createJoint(j.getWJointDef()));
 			}
@@ -126,7 +123,11 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 				AnimationComponent anim = e.getComponent(AnimationComponent.class);
 				anim.setAnimationState(AnimState.PULLUP);
 				if(boost){
-					p.setLinearVelocity(2f, 6);
+					if(m_playerComp.get(e).isFacingLeft()){
+						p.setLinearVelocity(-2f, 7f);
+					}else{
+						p.setLinearVelocity(2f, 7f);
+					}
 					boost = false;
 					g.m_gettingLifted = false;
 				}

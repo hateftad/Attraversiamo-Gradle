@@ -38,8 +38,6 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 
 	private boolean m_process = true;
 
-	public boolean m_canChange;
-
 	private InputManager m_inputMgr;
 
 	private PlayerConfig m_playerConfig;
@@ -177,8 +175,13 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 				}
 			}
 			if(m_inputMgr.isDown(action)){
-				if(touch.m_footEdgeL){
-					player.setFacingLeft(true);
+				if(touch.m_footEdge){
+					if(touch.m_footEdgeL){
+						player.setFacingLeft(true);
+					} 
+					if(touch.m_footEdgeR){
+						player.setFacingLeft(false);
+					}
 					ps.warp("feet", touch.m_touchCenter);
 					animation.setAnimationState(AnimState.LIEDOWN);
 					g.m_gonnaGrab = true;

@@ -105,6 +105,9 @@ public class RBUserData {
 		case 21:
 			setType(Type.CRAWLCANAL);
 			break;
+		case 22:
+			setType(Type.RIGHTPULLUP);
+			break;
 		default:
 			break;
 		}
