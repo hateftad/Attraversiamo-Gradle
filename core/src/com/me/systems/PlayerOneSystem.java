@@ -105,14 +105,19 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		}
 
 		if(!player.isActive() && !finish){
-			if(!h.m_isHanging  && !touch.m_footEdge){
+			
+			if(!g.m_gonnaGrab && !h.m_isHanging && !g.m_lifting){
 				animation.setAnimationState(AnimState.IDLE);
 			}
-			if(animation.getAnimationState().equals(AnimState.PULLUP) && animation.isCompleted() && touch.m_footEdge){
+			
+			/*
+			if((!animation.getAnimationState().equals(AnimState.HANGING) || 
+				!animation.getAnimationState().equals(AnimState.LIEDOWN)) && touch.m_footEdge){
 				animation.setAnimationState(AnimState.IDLE);
 			}
+			*/
 		}
-
+		animation.printStateChange();
 
 		MovementComponent m = m_movComps.get(e);
 		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(action), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
