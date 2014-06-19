@@ -173,7 +173,7 @@ public class EntityLoader {
 				
 				CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
 				entity.addComponent(camComp);
-				PointLight light = new PointLight(rh, 50, config.getLightColor(), 1000, camComp.getCamera().position.x, camComp.getCamera().position.y);				
+				PointLight light = new PointLight(rh, 50, config.getLightColor(), 100000, camComp.getCamera().position.x, camComp.getCamera().position.y);				
 				entity.addComponent(new LightComponent(light, "cameraLight"));
 				entityWorld.getManager(GroupManager.class).add(entity, "lights");
 			}

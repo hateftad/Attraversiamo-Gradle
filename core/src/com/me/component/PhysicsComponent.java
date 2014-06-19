@@ -23,25 +23,15 @@ import com.me.utils.Converters;
 public class PhysicsComponent extends BaseComponent {
 
 	private Map<String, Body> m_body = new HashMap<String, Body>();
-
 	private Map<Body, RBUserData> m_userData = new HashMap<Body, RBUserData>();
-
 	private Vector2 m_worldPosition;
-
 	private Map<Body, Vector2> m_previousPositions;
-
 	private Vector2 m_startPosition;
-
 	private boolean m_isActive;
-
 	private String m_name;
-	
 	private boolean m_isPlayer;
-
 	private boolean m_isDynamic = true;
-	
 	private	Filter currentFilter;
-
 	public ImmediateModePhysicsListener m_physicsListener;
 
 	public PhysicsComponent(World world, Body b, String name){
@@ -178,7 +168,6 @@ public class PhysicsComponent extends BaseComponent {
 		m.mass = mass;
 		m_body.get(name).setMassData(m);
 	}
-
 
 	public Vector2 getWorldPosition(){
 		return m_worldPosition;

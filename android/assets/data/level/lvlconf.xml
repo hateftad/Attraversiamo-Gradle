@@ -145,6 +145,6 @@
         <camera>
             <zoom>7</zoom>
         </camera>
-        <lightColor>Blue</lightColor>
+        <lightColor>Black</lightColor>
     </Level>
 </Levels>

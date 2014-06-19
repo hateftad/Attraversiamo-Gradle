@@ -31,8 +31,8 @@
     <pattern>org.keplerproject.luajava.**</pattern>
   </forceLinkClasses>
   <libs>
-    <lib>liblua.a</lib> 
-    <lib>luajava.o</lib>
+    <lib>build/libs/ios/liblua.a</lib> 
+    <lib>build/libs/ios/luajava.o</lib>
     <lib>build/libs/ios/libgdx-box2d.a</lib>
     <lib>build/libs/ios/libgdx.a</lib>
     <lib>build/libs/ios/libObjectAL.a</lib>

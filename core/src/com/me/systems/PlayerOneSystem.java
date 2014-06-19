@@ -110,14 +110,8 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 				animation.setAnimationState(AnimState.IDLE);
 			}
 			
-			/*
-			if((!animation.getAnimationState().equals(AnimState.HANGING) || 
-				!animation.getAnimationState().equals(AnimState.LIEDOWN)) && touch.m_footEdge){
-				animation.setAnimationState(AnimState.IDLE);
-			}
-			*/
 		}
-		animation.printStateChange();
+		//animation.printStateChange();
 
 		MovementComponent m = m_movComps.get(e);
 		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(action), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
