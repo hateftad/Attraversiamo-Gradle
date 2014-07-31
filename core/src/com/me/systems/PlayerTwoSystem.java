@@ -130,7 +130,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 				player.setFacingLeft(false);
 			}
 
-			if(m.m_jump && touch.m_groundTouch && (!m.m_left && !m.m_right)){
+			if(m.m_jump && touch.m_groundTouch && (!m.m_left && !m.m_right) && !crawlComp.isCrawling){
 				player.setOnGround(false);
 				m_jumpComps.get(e).m_jumped = true;
 				animation.setAnimationState(AnimState.UPJUMP);
@@ -182,7 +182,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		animateBody(ps, player, animation);
 
 		animation.setFacing(player.isFacingLeft());
-
+		
 	}
 
 	private boolean isIdle(Entity e){

@@ -14,6 +14,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.me.component.AnimationComponent;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PhysicsComponent;
+import com.me.component.QueueComponent;
+import com.me.component.RestartComponent;
+import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
 import com.me.utils.GlobalConfig;
 
@@ -22,6 +25,9 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	@Mapper ComponentMapper<PhysicsComponent> m_physicsComponents;
 	
 	@Mapper ComponentMapper<AnimationComponent> m_animComponents;
+	
+	//@Mapper ComponentMapper<QueueComponent> m_queueComps;
+	@Mapper ComponentMapper<RestartComponent> m_restartComps;
 	
 	private World m_world;
 	
@@ -103,8 +109,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 			if(m_physicsComponents.has(e)){
 				m_physicsComponents.get(e).updateSmoothStates(m_fixedAccumulatorRatio, oneMinusRatio);
 			}
-		}
-		
+		}		
 	}
 
 	private void resetSmoothStates() {
@@ -118,7 +123,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 				m_physicsComponents.get(e).updatePreviousPosition();
 			}
 		}
-		
 	}
 
 	private void singleStep(float timeStep){
@@ -136,18 +140,30 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		if(m_restart){
 			for(int i=0; i<entities.size();i++){
-				PhysicsComponent comp = m_physicsComponents.get(entities.get(i));
-				//if(!(comp.getBodyType() == BodyType.StaticBody)){
+				
+				if(m_restartComps.has(entities.get(i))){
+					PhysicsComponent comp = m_physicsComponents.get(entities.get(i));
 					comp.setToStart();
 					if(m_animComponents.has(entities.get(i))){
 						m_animComponents.get(entities.get(i)).setAnimationState(AnimState.IDLE);
 					}
-				//}
+				}
 			}
 			OnStartLevel();
 		}
+		/*
+		for(int i=0; i<entities.size();i++){
+			if(m_queueComps.has(entities.get(i))){
+				 
+			}
+		}
+		*/		
 	}
 	
+	@Override
+	protected void end(){
+		super.end();
+	}
 	
 	@Override
 	protected void removed(Entity e) {
@@ -186,8 +202,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 		m_world.dispose();
 	}
 	
-	
-	
 	public World getWorld(){
 		return m_world;
 	}
@@ -199,13 +213,11 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
 	@Override
 	public void OnStartLevel() {
-		m_restart = false;
-		
+		m_restart = false;	
 	}
 
 	@Override
-	public void onFinishedLevel(int nr) {
-		
+	public void onFinishedLevel(int nr) {	
 		
 	}
 

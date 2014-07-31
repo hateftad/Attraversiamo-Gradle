@@ -56,8 +56,7 @@ public class PhysicsListenerSetup {
 					if(playerUd == null)
 						return;
 
-					if(player.getRBUserData(fB.getBody()).getCollisionGroup() 
-							== otherUd.getCollisionGroup()){
+					if(player.getRBUserData(fB.getBody()).getCollisionGroup() == otherUd.getCollisionGroup()){
 						if(e.getComponent(PlayerComponent.class) != null){
 							PlayerComponent pl = e.getComponent(PlayerComponent.class);
 							boolean created = false;
@@ -125,11 +124,9 @@ public class PhysicsListenerSetup {
 									}
 								}
 							}
-							
 							if(otherUd.getType() == Type.LEFTCRAWL){
 								e.getComponent(CrawlComponent.class).canCrawl = true;
 							}
-
 							if(otherUd.getType() == Type.PORTAL){
 								if(!e2.getComponent(ParticleComponent.class).isStarted())
 									e2.getComponent(ParticleComponent.class).setToStart(true);
@@ -138,7 +135,6 @@ public class PhysicsListenerSetup {
 							if(otherUd.getType() == Type.FINISH){
 								e.getComponent(TouchComponent.class).m_endReach = 1;
 							}
-
 							if(created){
 								e.getComponent(TouchComponent.class).m_edgeTouch = true;
 								e.getComponent(MovementComponent.class).m_lockControls = false;
@@ -180,8 +176,7 @@ public class PhysicsListenerSetup {
 								onBox = true;
 							}
 
-							if(playerUd.getType() == Type.TORSO && otherUd.getType() == Type.GROUND)
-							{
+							if(playerUd.getType() == Type.TORSO && otherUd.getType() == Type.GROUND){
 								if(!e.getComponent(TouchComponent.class).m_groundTouch){
 									if(e.getComponent(HangComponent.class) != null){
 										if(!e.getComponent(HangComponent.class).m_isHanging)
@@ -196,7 +191,8 @@ public class PhysicsListenerSetup {
 								if(e.getComponent(TouchComponent.class).m_groundTouch){
 									
 									Body b = other.getBody("box");
-									b.getFixtureList().get(0).setFriction(0.001f);
+									//b.getFixtureList().get(0).setFriction(0.001f);
+									//other.setMass(0.01f, "box");
 									System.out.println("Box touch and friction" +b.getFixtureList().get(0).getFriction());
 									e.getComponent(TouchComponent.class).m_boxTouch = true;
 									if(e.getComponent(PushComponent.class) != null){
@@ -209,7 +205,6 @@ public class PhysicsListenerSetup {
 										}
 									}
 								}
-								
 							}
 						}
 					}
@@ -222,9 +217,7 @@ public class PhysicsListenerSetup {
 				Fixture fA = contact.getFixtureA();
 				Fixture fB = contact.getFixtureB();
 
-
-				if(fA.isSensor() || fB.isSensor() && !contact.isTouching())
-				{
+				if(fA.isSensor() || fB.isSensor() && !contact.isTouching()){
 					Entity e1 = (Entity) fA.getBody().getUserData();
 					Entity e2 = (Entity) fB.getBody().getUserData();
 					PhysicsComponent other = e1.getComponent(PhysicsComponent.class);
@@ -248,7 +241,6 @@ public class PhysicsListenerSetup {
 						if(otherUd.getType() == Type.TOPLADDER){
 							e.getComponent(LadderClimbComponent.class).m_topLadder = false;
 						}
-
 						if(otherUd.getType() == Type.LEFTPULLUP && fB.isSensor()){
 							e.getComponent(TouchComponent.class).m_footEdgeL = false;
 							e.getComponent(TouchComponent.class).m_footEdge = false;
@@ -257,7 +249,6 @@ public class PhysicsListenerSetup {
 							e.getComponent(TouchComponent.class).m_footEdgeR = false;
 							e.getComponent(TouchComponent.class).m_footEdge = false;
 						}
-
 						if(otherUd.getType() == Type.HAND){
 							if(e.getComponent(JointComponent.class) != null){
 								if(e.getComponent(GrabComponent.class).m_grabbed){
@@ -267,20 +258,17 @@ public class PhysicsListenerSetup {
 								}
 							}
 						}
-						
 						if(otherUd.getType() == Type.LEFTCRAWL){
 							System.out.println("outOfBox");
 							e.getComponent(CrawlComponent.class).canCrawl = false;
 						}
-						
 						if(otherUd.getType() == Type.PORTAL){
 							e.getComponent(TouchComponent.class).m_endReach = 0;
 						}
 					}
 				}
 
-				if(!contact.isTouching())
-				{
+				if(!contact.isTouching()){
 					Entity e1 = (Entity) fA.getBody().getUserData();
 					Entity e2 = (Entity) fB.getBody().getUserData();
 					PhysicsComponent other = e1.getComponent(PhysicsComponent.class);
@@ -296,7 +284,7 @@ public class PhysicsListenerSetup {
 								e.getComponent(MovementComponent.class).m_lockControls = false;
 							}
 							if(playerUd.getType() == Type.FEET && otherUd.getType() == Type.BOX){
-								onBox = false;
+								onBox = false;	
 								e.getComponent(MovementComponent.class).m_lockControls = false;
 								e.getComponent(TouchComponent.class).m_feetToBox = false;
 							}
@@ -313,9 +301,7 @@ public class PhysicsListenerSetup {
 								e.getComponent(PushComponent.class).m_pushLeft = false;
 								e.getComponent(PushComponent.class).m_pushRight = false;
 							}
-
 						}
-
 					}
 				}
 			}

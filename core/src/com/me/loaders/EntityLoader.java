@@ -44,6 +44,7 @@ import com.me.component.PlayerOneComponent;
 import com.me.component.PlayerTwoComponent;
 import com.me.component.PushComponent;
 import com.me.component.RagDollComponent;
+import com.me.component.RestartComponent;
 import com.me.component.TouchComponent;
 import com.me.component.TriggerComponent;
 import com.me.component.VelocityLimitComponent;
@@ -183,6 +184,7 @@ public class EntityLoader {
 			BodyUserData ud = (BodyUserData) body.getUserData();
 			if(ud.mName.equals("box")){
 				pComp.setMass(20f, ud.mName);
+				entity.addComponent(new RestartComponent());
 			}
 			if(ud.mName.equals("portal")){
 				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL));
@@ -348,6 +350,7 @@ public class EntityLoader {
 				entity.addComponent(new GrabComponent());
 				entity.addComponent(new PlayerOneComponent());
 				entity.addComponent(new TriggerComponent());
+				entity.addComponent(new RestartComponent());
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
 				stateData = anim.setUp(image);
@@ -393,6 +396,7 @@ public class EntityLoader {
 				entity.addComponent(new PlayerTwoComponent());
 				entity.addComponent(new TriggerComponent());
 				entity.addComponent(new CrawlComponent());
+				entity.addComponent(new RestartComponent());
 				pComp.setPosition(config.m_playerPosition);
 			}
 

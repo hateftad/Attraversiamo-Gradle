@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.me.systems.LevelEventListener;
+import com.me.listeners.LevelEventListener;
 
 public class InputManager {
 
@@ -121,9 +121,8 @@ public class InputManager {
 		
 		TextButtonStyle btnStyle5 = new TextButtonStyle();
 		btnStyle5.up = m_skin.getDrawable("change.up");
-
 		m_restartBtn = new UIButton(btnStyle5);
-		m_restartBtn.setBounds((widthScr - widthBtn) - (ppcy/3), heightScr - heightOfBtn * 2.5f, widthBtn/1.3f, height/1.3f);
+		m_restartBtn.setBounds((widthScr - widthBtn) - (ppcy/3), heightScr - m_restartBtn.getHeight(), widthBtn/1.3f, height/1.3f);
 		m_restartBtn.debug();
 		m_restartBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
