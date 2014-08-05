@@ -38,6 +38,7 @@ import com.me.component.LevelComponent;
 import com.me.component.LightComponent;
 import com.me.component.MovementComponent;
 import com.me.component.ParticleComponent;
+import com.me.component.QueueComponent;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerOneComponent;
@@ -185,6 +186,7 @@ public class EntityLoader {
 			if(ud.mName.equals("box")){
 				pComp.setMass(20f, ud.mName);
 				entity.addComponent(new RestartComponent());
+				entity.addComponent(new QueueComponent());
 			}
 			if(ud.mName.equals("portal")){
 				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL));

@@ -26,7 +26,8 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	
 	@Mapper ComponentMapper<AnimationComponent> m_animComponents;
 	
-	//@Mapper ComponentMapper<QueueComponent> m_queueComps;
+	@Mapper ComponentMapper<QueueComponent> m_queueComps;
+	
 	@Mapper ComponentMapper<RestartComponent> m_restartComps;
 	
 	private World m_world;
@@ -96,6 +97,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 		
 		m_world.clearForces();
 		smoothStates();
+
 	}
 	
 	private void smoothStates() {
@@ -151,18 +153,16 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 			}
 			OnStartLevel();
 		}
-		/*
-		for(int i=0; i<entities.size();i++){
+		
+		for(int i=0; i<entities.size(); i++){
 			if(m_queueComps.has(entities.get(i))){
-				 
+				if(m_queueComps.get(entities.get(i)).mass != 0){
+					float mass = m_queueComps.get(entities.get(i)).mass;
+					entities.get(i).getComponent(PhysicsComponent.class).setMass(mass, "box");
+				}
 			}
 		}
-		*/		
-	}
-	
-	@Override
-	protected void end(){
-		super.end();
+				
 	}
 	
 	@Override

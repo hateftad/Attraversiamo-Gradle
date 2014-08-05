@@ -17,6 +17,7 @@ import com.me.component.PlayerComponent;
 import com.me.component.PlayerOneComponent;
 import com.me.component.PlayerTwoComponent;
 import com.me.component.PushComponent;
+import com.me.component.QueueComponent;
 import com.me.component.TouchComponent;
 import com.me.component.VelocityLimitComponent;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
@@ -191,6 +192,7 @@ public class PhysicsListenerSetup {
 								if(e.getComponent(TouchComponent.class).m_groundTouch){
 									
 									Body b = other.getBody("box");
+									e1.getComponent(QueueComponent.class).mass = 5f;
 									//b.getFixtureList().get(0).setFriction(0.001f);
 									//other.setMass(0.01f, "box");
 									System.out.println("Box touch and friction" +b.getFixtureList().get(0).getFriction());
@@ -295,6 +297,7 @@ public class PhysicsListenerSetup {
 						if(playerUd.getType() == Type.TORSO && otherUd.getType() == Type.BOX){
 							Body b = other.getBody("box");
 							b.getFixtureList().get(0).setFriction(20f);
+							e1.getComponent(QueueComponent.class).mass = 20f;
 							System.out.println("Box not touching and friction" +b.getFixtureList().get(0).getFriction());
 							e.getComponent(TouchComponent.class).m_boxTouch = false;
 							if(e.getComponent(PushComponent.class) != null){

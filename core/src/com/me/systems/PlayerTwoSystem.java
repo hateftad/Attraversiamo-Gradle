@@ -82,7 +82,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		}else if(player.canDeActivate()){
 			player.setActive(false);
 		}
-
+		
 		if(!player.isActive() && !finish){
 			if(!g.m_gettingLifted && touch.m_groundTouch && !crawlComp.isCrawling){
 				animation.setAnimationState(AnimState.IDLE);
