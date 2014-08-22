@@ -14,6 +14,8 @@ public class JointComponent extends BaseComponent{
 	
 	private Joint m_wJoint;
 	
+	private Joint m_dJoint;
+	
 	private JointDef m_pJointDef;
 	
 	private JointDef m_wJointDef;
@@ -25,6 +27,12 @@ public class JointComponent extends BaseComponent{
 	private int m_lowerLimit = 0;
 	
 	private int m_upperLimit = 0;
+	
+	private String name;
+	
+	public JointComponent(String name){
+		this.name = name;
+	}
 
 	public void setPrismJoint(Joint joint){
 		m_pJoint = joint;
@@ -56,6 +64,14 @@ public class JointComponent extends BaseComponent{
 
 	public JointDef getPJointDef(){
 		return m_pJointDef;
+	}
+	
+	public Joint getDJoint() {
+		return m_dJoint;
+	}
+
+	public void setDJoint(Joint m_dJoint) {
+		this.m_dJoint = m_dJoint;
 	}
 	
 	public void createEdgeHang(Body b1, Body b2, float initial, int uL, int lL){
@@ -98,7 +114,7 @@ public class JointComponent extends BaseComponent{
 		}
 	}
 
-	public boolean getLength(){
+	public boolean isFullLength(){
 		if(m_pJoint!=null){
 			if(m_pJoint.getType() == JointType.PrismaticJoint)
 			{
@@ -109,6 +125,18 @@ public class JointComponent extends BaseComponent{
 				return false;
 		}
 		return false;
+	}
+	
+	public void update(float timeStep){
+		float maxForceSq = 20f;
+		if(m_dJoint != null){
+			Vector2 reactionForce = m_dJoint.getReactionForce(1/timeStep);
+		    float forceModuleSq = reactionForce.len2();
+		    System.out.println(forceModuleSq);
+		    if(forceModuleSq >= maxForceSq){
+		    	JointFactory.getInstance().destroyJoint(m_dJoint);
+		    }
+		}
 	}
 
 	@Override

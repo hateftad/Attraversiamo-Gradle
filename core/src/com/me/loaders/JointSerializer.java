@@ -74,6 +74,7 @@ public class JointSerializer extends ReadOnlySerializer<Joint>
 		JointDef 			jointDef = null;
 		
 		String jointType = json.readValue("type", String.class, jsonData);
+		String jointName = json.readValue("name", String.class, jsonData);
 		
 		if(jointType == null)
 			return null;
@@ -131,7 +132,7 @@ public class JointSerializer extends ReadOnlySerializer<Joint>
 			jointDef.collideConnected = collideCon;
 			
 			joint = world.createJoint(jointDef);
-			
+			joint.setUserData(jointName);
 			scene.setMappedJoints(indexA, indexB, jointDef);
 			
 			if(jointType.equals("mouse"))

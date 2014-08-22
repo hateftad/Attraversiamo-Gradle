@@ -68,7 +68,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					if(h.m_release){
 						release(e);
 					}
-					if(j.getLength()){
+					if(j.isFullLength()){
 						if(h.m_hangingLeft){
 							p.setLinearVelocity(-4, 0);
 						}

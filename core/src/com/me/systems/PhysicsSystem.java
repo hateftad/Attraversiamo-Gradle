@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.me.component.AnimationComponent;
 import com.me.component.AnimationComponent.AnimState;
+import com.me.component.JointComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.QueueComponent;
 import com.me.component.RestartComponent;
@@ -29,6 +30,8 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	@Mapper ComponentMapper<QueueComponent> m_queueComps;
 	
 	@Mapper ComponentMapper<RestartComponent> m_restartComps;
+	
+	@Mapper ComponentMapper<JointComponent> m_jointComps;
 	
 	private World m_world;
 	
@@ -61,7 +64,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	
 	@SuppressWarnings("unchecked")
 	public PhysicsSystem(World physicsWorld, int velocityIterations, int positionIterations) {
-		super(Aspect.getAspectForOne(PhysicsComponent.class));
+		super(Aspect.getAspectForAll(JointComponent.class, PhysicsComponent.class));
 		m_world = physicsWorld;
 		m_world.setAutoClearForces(true);
 		m_world.setContinuousPhysics(true);
@@ -142,12 +145,12 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		if(m_restart){
 			for(int i=0; i<entities.size();i++){
-				
-				if(m_restartComps.has(entities.get(i))){
-					PhysicsComponent comp = m_physicsComponents.get(entities.get(i));
+				Entity e = entities.get(i);
+				if(m_restartComps.has(e)){
+					PhysicsComponent comp = m_physicsComponents.get(e);
 					comp.setToStart();
-					if(m_animComponents.has(entities.get(i))){
-						m_animComponents.get(entities.get(i)).setAnimationState(AnimState.IDLE);
+					if(m_animComponents.has(e)){
+						m_animComponents.get(e).setAnimationState(AnimState.IDLE);
 					}
 				}
 			}
@@ -155,11 +158,16 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 		}
 		
 		for(int i=0; i<entities.size(); i++){
-			if(m_queueComps.has(entities.get(i))){
-				if(m_queueComps.get(entities.get(i)).mass != 0){
-					float mass = m_queueComps.get(entities.get(i)).mass;
-					entities.get(i).getComponent(PhysicsComponent.class).setMass(mass, "box");
+			Entity e = entities.get(i);
+			if(m_queueComps.has(e)){
+				if(m_queueComps.get(e).mass != 0){
+					float mass = m_queueComps.get(e).mass;
+					e.getComponent(PhysicsComponent.class).setMass(mass, "box");
 				}
+			}
+			if(m_jointComps.has(e)){
+				JointComponent joint = m_jointComps.get(e);
+				joint.update(m_timeStep);
 			}
 		}
 				

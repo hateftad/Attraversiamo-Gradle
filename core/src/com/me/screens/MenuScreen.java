@@ -1,12 +1,16 @@
 package com.me.screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -22,22 +26,40 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 	private Skin m_skin;
 	private Table m_table;
 	private UIButton m_newGameBtn;
-
-	private AnimationComponent m_animation;
+	
+	private static final String PONEPATH = "data/character/littleGirl/littleGirl";
+	private static final String PTWOPATH = "data/character/smallCharacter/bigGuy";
+	private static final String SCENEPATH = "data/ui/menu";
+	private static final float SCALE = 0.5f;
+	
+	private ArrayList<AnimationComponent> m_animation;
 
 	public MenuScreen(Attraversiamo game) {
 		super(game);
 		init();
-		m_camera.zoom = 1f;
 	}
 	
 	private void init(){
-		m_animation = new AnimationComponent("data/menu", "data/menu", 1f);
-		m_animation.setUp(
-				new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics
-						.getHeight() / 2), "slideIn");
-		Skeleton skel = m_animation.getSkeleton();
-		skel.getAttachment(0, "");
+		m_animation = new ArrayList<AnimationComponent>();
+
+		Vector2 middlePoint = new Vector2(Gdx.graphics.getWidth()/2, 0);
+		AnimationComponent scene = new AnimationComponent(SCENEPATH, SCENEPATH, SCALE);
+		scene.setUp(middlePoint, "running");
+		
+		AnimationComponent littleGirl = new AnimationComponent(PONEPATH ,"data/ui/littleGirl", SCALE);
+		littleGirl.setUp(middlePoint, "walking");
+		
+		AnimationComponent bigGuy = new AnimationComponent(PTWOPATH, "data/ui/bigGuy", SCALE);
+		bigGuy.setUp(middlePoint, "walking");
+		
+		m_animation.add(scene);
+		m_animation.add(littleGirl);
+		m_animation.add(bigGuy);
+		//m_camera.lookAt(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
+		m_camera.zoom = 0.95f;
+		//Skeleton skel = m_animation.getSkeleton();
+		//skel.getAttachment(0, "");
+		/*
 		m_stage = new Stage();
 		m_game.m_processors.add(m_stage);
 		m_atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.pack"));
@@ -66,6 +88,8 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		m_table.debug();
 		m_stage.addActor(m_table);
 		//m_stage.addActor(m_newGameBtn);
+		*/
+		 
 	}
 
 	@Override
@@ -77,11 +101,13 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		
 		super.render(delta);
 		m_camera.update();
-		m_stage.act(delta);
-		m_stage.draw();
+		//m_stage.act(delta);
+		//m_stage.draw();
 		m_spriteBatch.setProjectionMatrix(m_camera.combined);
 		m_spriteBatch.begin();
-		m_animation.update(m_spriteBatch, delta / 2);
+		for(AnimationComponent comp:m_animation){
+			comp.update(m_spriteBatch, delta);
+		}
 		m_spriteBatch.end();
 		if(Gdx.input.justTouched()){
 			m_game.m_loadingScreen = new LoadingScreen(m_game);
@@ -100,12 +126,12 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		m_spriteBatch.dispose();
 		m_atlas.dispose();
 		m_skin.dispose();
-		m_animation.dispose();
+		//m_animation.dispose();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		super.resize(width, height);
+		//super.resize(width, height);
 
 	}
 
