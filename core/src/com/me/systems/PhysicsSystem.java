@@ -147,7 +147,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 				Entity e = entities.get(i);
 				if(m_restartComps.has(e)){
 					PhysicsComponent comp = m_physicsComponents.get(e);
-					comp.printName();
 					comp.setToStart();
 					if(m_animComponents.has(e)){
 						m_animComponents.get(e).setAnimationState(AnimState.IDLE);
