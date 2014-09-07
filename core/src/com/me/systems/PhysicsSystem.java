@@ -64,7 +64,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	
 	@SuppressWarnings("unchecked")
 	public PhysicsSystem(World physicsWorld, int velocityIterations, int positionIterations) {
-		super(Aspect.getAspectForAll(JointComponent.class, PhysicsComponent.class));
+		super(Aspect.getAspectForAll(PhysicsComponent.class));
 		m_world = physicsWorld;
 		m_world.setAutoClearForces(true);
 		m_world.setContinuousPhysics(true);
@@ -121,7 +121,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 		
 		Array<Body> bodies = new Array<Body>();
 		m_world.getBodies(bodies);
-		
 		for(Body b: bodies){
 			Entity e = (Entity) b.getUserData();
 			if(m_physicsComponents.has(e)){
@@ -132,7 +131,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
 	private void singleStep(float timeStep){
 		if(m_processPhysics){
-			m_world.step(timeStep, m_velocityItr, m_positionItr);
+			m_world.step(world.delta, m_velocityItr, m_positionItr);
 		} 
 	}
 	
@@ -148,6 +147,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 				Entity e = entities.get(i);
 				if(m_restartComps.has(e)){
 					PhysicsComponent comp = m_physicsComponents.get(e);
+					comp.printName();
 					comp.setToStart();
 					if(m_animComponents.has(e)){
 						m_animComponents.get(e).setAnimationState(AnimState.IDLE);
