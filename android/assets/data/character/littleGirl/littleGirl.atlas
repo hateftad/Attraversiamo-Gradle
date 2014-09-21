@@ -3,108 +3,171 @@ littleGirl.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-LFoot
-  rotate: false
-  xy: 1261, 125
-  size: 189, 102
-  orig: 189, 102
-  offset: 0, 0
-  index: -1
-LHand
+Hair 1
   rotate: true
-  xy: 1776, 185
-  size: 77, 145
-  orig: 77, 145
+  xy: 921, 35
+  size: 43, 73
+  orig: 43, 73
   offset: 0, 0
   index: -1
-LLeg
+Hair 2
   rotate: true
-  xy: 1466, 369
-  size: 101, 315
-  orig: 101, 316
-  offset: 0, 1
+  xy: 743, 69
+  size: 57, 91
+  orig: 57, 91
+  offset: 0, 0
   index: -1
-LlowerrArm
+Hair 3
   rotate: true
-  xy: 1783, 404
-  size: 66, 222
-  orig: 66, 222
-  offset: 0, 0
+  xy: 74, 4
+  size: 29, 67
+  orig: 30, 67
+  offset: 1, 0
   index: -1
-LupperArm
+Hair 4
   rotate: false
-  xy: 2, 18
-  size: 249, 207
-  orig: 249, 207
+  xy: 996, 39
+  size: 21, 39
+  orig: 24, 39
   offset: 0, 0
   index: -1
-RFoot
-  rotate: false
-  xy: 1466, 178
-  size: 179, 94
-  orig: 179, 94
-  offset: 0, 0
-  index: -1
-RHand
-  rotate: false
-  xy: 1647, 207
-  size: 127, 65
-  orig: 131, 66
-  offset: 0, 0
-  index: -1
-RLeg
+Hair 5
   rotate: true
-  xy: 1466, 274
-  size: 93, 316
-  orig: 93, 317
-  offset: 0, 1
-  index: -1
-RLowerArm
-  rotate: false
-  xy: 253, 2
-  size: 246, 128
-  orig: 246, 128
+  xy: 577, 2
+  size: 54, 46
+  orig: 54, 46
   offset: 0, 0
   index: -1
-RupperArm
+Hair 6
   rotate: true
-  xy: 253, 132
-  size: 93, 298
-  orig: 93, 298
+  xy: 2, 2
+  size: 31, 70
+  orig: 31, 70
   offset: 0, 0
   index: -1
-frontSkirt
-  rotate: false
-  xy: 1261, 229
-  size: 203, 241
-  orig: 204, 241
+back of skirt
+  rotate: true
+  xy: 639, 68
+  size: 58, 102
+  orig: 59, 102
+  offset: 1, 0
+  index: -1
+front of skirt
+  rotate: true
+  xy: 921, 80
+  size: 46, 93
+  orig: 46, 93
   offset: 0, 0
   index: -1
 head
-  rotate: false
-  xy: 935, 142
-  size: 324, 328
-  orig: 324, 328
+  rotate: true
+  xy: 836, 49
+  size: 77, 83
+  orig: 77, 83
   offset: 0, 0
+  index: -1
+left foot
+  rotate: false
+  xy: 639, 30
+  size: 69, 36
+  orig: 70, 36
+  offset: 0, 0
+  index: -1
+left hand
+  rotate: true
+  xy: 143, 12
+  size: 21, 53
+  orig: 21, 53
+  offset: 0, 0
+  index: -1
+left lower arm
+  rotate: true
+  xy: 220, 2
+  size: 38, 78
+  orig: 38, 78
+  offset: 0, 0
+  index: -1
+left lower leg
+  rotate: true
+  xy: 220, 79
+  size: 47, 154
+  orig: 47, 154
+  offset: 0, 0
+  index: -1
+left upper arm
+  rotate: true
+  xy: 220, 42
+  size: 35, 104
+  orig: 36, 104
+  offset: 0, 0
+  index: -1
+left upper leg
+  rotate: true
+  xy: 451, 3
+  size: 39, 57
+  orig: 40, 57
+  offset: 1, 0
+  index: -1
+middle of skirt
+  rotate: true
+  xy: 533, 58
+  size: 68, 104
+  orig: 68, 112
+  offset: 0, 8
   index: -1
 neck
-  rotate: false
-  xy: 1784, 264
-  size: 169, 138
-  orig: 169, 138
+  rotate: true
+  xy: 511, 2
+  size: 54, 64
+  orig: 54, 64
   offset: 0, 0
   index: -1
-skirt
+right foot
+  rotate: false
+  xy: 300, 2
+  size: 69, 38
+  orig: 70, 38
+  offset: 0, 0
+  index: -1
+right hand
+  rotate: false
+  xy: 710, 19
+  size: 27, 47
+  orig: 27, 47
+  offset: 0, 0
+  index: -1
+right lower arm
   rotate: true
-  xy: 569, 133
-  size: 337, 364
-  orig: 338, 364
-  offset: 1, 0
+  xy: 326, 42
+  size: 35, 79
+  orig: 35, 79
+  offset: 0, 0
+  index: -1
+right lower leg
+  rotate: true
+  xy: 376, 80
+  size: 46, 155
+  orig: 56, 155
+  offset: 0, 0
+  index: -1
+right upper arm
+  rotate: true
+  xy: 407, 44
+  size: 34, 102
+  orig: 34, 102
+  offset: 0, 0
+  index: -1
+right upper leg
+  rotate: false
+  xy: 407, 2
+  size: 42, 40
+  orig: 42, 40
+  offset: 0, 0
   index: -1
 torso
   rotate: true
-  xy: 2, 227
-  size: 243, 565
-  orig: 243, 565
+  xy: 2, 35
+  size: 91, 216
+  orig: 91, 216
   offset: 0, 0
   index: -1
