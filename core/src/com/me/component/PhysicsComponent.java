@@ -184,6 +184,14 @@ public class PhysicsComponent extends BaseComponent {
 	public void setPosition(Vector2 pos){
 		m_body.get(m_name).setTransform(pos, 0.0f);
 	}
+	
+	public void setAllBodiesPosition(Vector2 pos){
+		
+		for(Body b : m_body.values()){
+			b.setTransform(pos, 0.0f);
+		}
+	}
+	
 
 	public void setPosition(float x, float y){
 		m_body.get(m_name).setTransform(x, y, 0.0f);
@@ -262,6 +270,12 @@ public class PhysicsComponent extends BaseComponent {
 
 	public void setIsPlayer(boolean player){
 		m_isPlayer = player;
+	}
+	
+	public void setBodyActive(boolean active){
+		for(Body b: m_body.values()){
+			b.setActive(active);
+		}
 	}
 	
 	private float m_previousAngle = 0;

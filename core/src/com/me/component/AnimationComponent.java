@@ -13,6 +13,7 @@ import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonData;
 import com.esotericsoftware.spine.SkeletonJson;
 import com.esotericsoftware.spine.SkeletonRenderer;
+import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.AtlasAttachmentLoader;
 import com.me.loaders.RubeImage;
 import com.me.utils.Converters;
@@ -346,6 +347,21 @@ public class AnimationComponent extends BaseComponent {
 	public void setupPose(){
 		m_skeleton.setBonesToSetupPose();
 	}
+	
+	public float getX(){
+		return m_skeleton.getX();
+	}
+	
+	public float getY(){
+		return m_skeleton.getY();
+	}
+	
+	public Vector2 getPosition(Vector2 position){
+		Slot slot = m_skeleton.getSlots().get(0);
+		
+		System.out.println("X " + Converters.ToBox(slot.getBone().getWorldX()) + " Y " + Converters.ToBox(m_skeleton.getY()));
+		return new Vector2(position.x + Converters.ToBox(slot.getBone().getWorldX()), position.y + Converters.ToBox(slot.getBone().getWorldY()));
+	}
 
 	public void update(SpriteBatch sb, float dt){
 		m_animationState.update(dt);
@@ -366,7 +382,7 @@ public class AnimationComponent extends BaseComponent {
 		m_atlas.getTextures().clear();
 		m_atlas.dispose();
 	}
-	AnimState prevState = AnimState.DYING;
+	private AnimState prevState = AnimState.DYING;
 	public void printStateChange(){
 		if(prevState != m_state){
 			System.out.println(m_state.name());

@@ -142,7 +142,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		if(m_restart){
+		if (m_restart){
 			for(int i=0; i<entities.size();i++){
 				Entity e = entities.get(i);
 				if(m_restartComps.has(e)){
@@ -176,11 +176,10 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	protected void removed(Entity e) {
 		PhysicsComponent physicsComponent = m_physicsComponents.get(e);
 
-		if (physicsComponent == null)
+		if (physicsComponent == null){
 			return;
-		
+		}
 		world.deleteEntity(e);
-		
 	}
 	
 	public void clearSystem(){
