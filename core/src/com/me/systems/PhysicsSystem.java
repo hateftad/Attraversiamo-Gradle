@@ -13,12 +13,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.me.component.AnimationComponent;
 import com.me.component.AnimationComponent.AnimState;
+import com.me.component.QueueComponent.QueueType;
 import com.me.component.JointComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.QueueComponent;
 import com.me.component.RestartComponent;
 import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
+import com.me.physics.JointFactory;
 import com.me.utils.GlobalConfig;
 
 public class PhysicsSystem extends EntitySystem implements Disposable, LevelEventListener {
@@ -159,14 +161,15 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 		for(int i=0; i<entities.size(); i++){
 			Entity e = entities.get(i);
 			if(m_queueComps.has(e)){
-				if(m_queueComps.get(e).mass != 0){
-					float mass = m_queueComps.get(e).mass;
-					e.getComponent(PhysicsComponent.class).setMass(mass, "box");
+				QueueComponent comp = m_queueComps.get(e);
+				if(comp.type == QueueType.MASS){
+					m_physicsComponents.get(e).setMass(comp.mass, "box");
+				} else if(comp.type == QueueType.JOINT){
+					JointComponent joint = m_jointComps.get(e);
+					JointFactory.getInstance().destroyJoint(joint.getDJoint());
+					e.removeComponent(comp);
+					//e.getComponent(JointComponent.class).
 				}
-			}
-			if(m_jointComps.has(e)){
-				JointComponent joint = m_jointComps.get(e);
-				joint.update(m_timeStep);
 			}
 		}
 				

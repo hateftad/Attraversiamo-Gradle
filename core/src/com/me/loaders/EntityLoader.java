@@ -173,7 +173,7 @@ public class EntityLoader {
 				
 				CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
 				entity.addComponent(camComp);
-				PointLight light = new PointLight(rh, 50, config.getLightColor(), 100000, camComp.getCamera().position.x, camComp.getCamera().position.y);				
+				PointLight light = new PointLight(rh, 50, config.getLightColor(), 10000, camComp.getCamera().position.x, camComp.getCamera().position.y);				
 				entity.addComponent(new LightComponent(light, "cameraLight"));
 				entityWorld.getManager(GroupManager.class).add(entity, "lights");
 			}
@@ -215,8 +215,9 @@ public class EntityLoader {
 				config.m_minY = Converters.ToWorld(body.getPosition().y);
 				System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
 			}
-			/*
+			
 			if(ud.mName.equals("branch")){
+				/*
 				JointComponent j = new JointComponent("branchJoint");
 				Array<JointEdge> jList = body.getJointList();
 				DistanceJointDef jDef = JointFactory.getInstance().createDistanceJoint(jList.items[0].other, jList.items[1].other, 
@@ -225,8 +226,9 @@ public class EntityLoader {
 				
 				//j.setDJoint();
 				entity.addComponent(j);
+				*/
 			}
-			*/
+			
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup));
 			pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
 			tempList.add(pComp.getBody(ud.mName));
@@ -437,7 +439,7 @@ public class EntityLoader {
 			if (joint.getType() == JointType.DistanceJoint) {
 
 				DistanceJointDef jDef = (DistanceJointDef) ind.jointDef;
-				/*
+				
 				if(joint.getUserData() != null){
 					String name = (String) joint.getUserData();
 					if(name.equals("branchJoint")){
@@ -447,6 +449,8 @@ public class EntityLoader {
 								tempList.get(ind.first), 
 								tempList.get(ind.second),
 								jDef, physicsWorld));
+						ent.addComponent(new TriggerComponent());
+						ent.addComponent(new QueueComponent());
 						ent.addComponent(comp);
 						ent.addToWorld();
 					}
@@ -456,15 +460,35 @@ public class EntityLoader {
 							tempList.get(ind.first), 
 							tempList.get(ind.second),
 							jDef, physicsWorld);
-							*/
-				//}
+							
+				}
 			}
 			if (joint.getType() == JointType.RevoluteJoint){
+				
 				RevoluteJointDef jDef = (RevoluteJointDef) ind.jointDef;
-				JointFactory.getInstance().createJoint(
-						tempList.get(ind.first), 
-						tempList.get(ind.second),
-						jDef,physicsWorld);
+				
+				if(joint.getUserData() != null){
+					String name = (String) joint.getUserData();
+					if(name.equals("branchJoint")){
+						Entity ent = entityWorld.createEntity();
+						JointComponent comp = new JointComponent(name);
+						comp.setDJoint(JointFactory.getInstance().createJoint(
+								tempList.get(ind.first), 
+								tempList.get(ind.second),
+								jDef, physicsWorld));
+						ent.addComponent(new TriggerComponent());
+						ent.addComponent(new QueueComponent());
+						ent.addComponent(comp);
+						ent.addToWorld();
+					} else {
+						
+						JointFactory.getInstance().createJoint(
+								tempList.get(ind.first), 
+								tempList.get(ind.second),
+								jDef, physicsWorld);
+								
+					}
+				} 
 			}
 			if (joint.getType() == JointType.WheelJoint){
 				WheelJointDef jDef = (WheelJointDef) ind.jointDef;

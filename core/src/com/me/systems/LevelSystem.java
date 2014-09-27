@@ -6,17 +6,21 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
+import com.me.component.JointComponent;
 import com.me.component.LevelComponent;
 import com.me.component.LightComponent;
 import com.me.component.ParticleComponent;
+import com.me.component.QueueComponent;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.PlayerComponent;
+import com.me.component.QueueComponent.QueueType;
 import com.me.component.TouchComponent;
 import com.me.component.TriggerComponent;
 import com.me.listeners.LevelEventListener;
 import com.me.scripting.ScriptManager;
 import com.me.ui.InputManager;
 import com.me.utils.LevelConfig;
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 public class LevelSystem extends EntityProcessingSystem{
 
@@ -33,6 +37,8 @@ public class LevelSystem extends EntityProcessingSystem{
 	@Mapper ComponentMapper<PlayerComponent> m_players;
 	@Mapper ComponentMapper<TouchComponent> m_touch;
 	@Mapper ComponentMapper<ParticleComponent> m_particles;
+	@Mapper ComponentMapper<JointComponent> m_joints;
+	@Mapper ComponentMapper<QueueComponent> m_queue;
 
 
 	@SuppressWarnings("unchecked")
@@ -73,8 +79,16 @@ public class LevelSystem extends EntityProcessingSystem{
 		if(first + second == m_levelComponent.m_nrOfFinishers){
 			m_levelComponent.m_finished = true;
 		}
-		
-
+		if(m_joints.has(e)){
+			JointComponent joint = m_joints.get(e);
+			joint.update(world.delta);
+			if(joint.shouldDestroy()){
+				if(m_queue.has(e)){
+					QueueComponent queue = m_queue.get(e);
+					queue.type = QueueType.JOINT;
+				}	
+			}
+		}
 	}
 
 	@Override
@@ -104,7 +118,6 @@ public class LevelSystem extends EntityProcessingSystem{
 	}
 	
 	private void updateParticles(ParticleComponent particle){
-
 
 		if(particle.getType() == ParticleType.PORTAL){
 			if(particle.isSetToStart() && m_levelComponent.m_finished){
