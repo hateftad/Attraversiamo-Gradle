@@ -20,7 +20,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef.JointType;
-import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
@@ -173,7 +172,7 @@ public class EntityLoader {
 				
 				CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
 				entity.addComponent(camComp);
-				PointLight light = new PointLight(rh, 50, config.getLightColor(), 100000, camComp.getCamera().position.x, camComp.getCamera().position.y);				
+				PointLight light = new PointLight(rh, 500, config.getLightColor(), 1000, camComp.getCamera().position.x, camComp.getCamera().position.y);				
 				entity.addComponent(new LightComponent(light, "cameraLight"));
 				entityWorld.getManager(GroupManager.class).add(entity, "lights");
 			}
@@ -390,13 +389,13 @@ public class EntityLoader {
 				anim.setAnimationState(AnimState.IDLE);
 				stateData.setMix("idle", "walking", 0.3f);
 				stateData.setMix("walking", "running", 0.6f);
-				stateData.setMix("jumping", "running", 0.2f);
-				stateData.setMix("walking", "jumping", 0.2f);
+				//stateData.setMix("jumping", "running", 0.2f);
+				//stateData.setMix("walking", "jumping", 0.2f);
 				//stateData.setMix("lieDown", "lyingDown", 0.2f);
 				//stateData.setMix("crawling", "lyingDown", 0.2f);
 				entity.addComponent(p);
 				entity.addComponent(new MovementComponent());
-				VelocityLimitComponent vel = new VelocityLimitComponent(4.5f, 8);
+				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f, 8);
 				vel.m_crawlLimit = 2.5f;
 				entity.addComponent(vel);
 				entity.addComponent(new TouchComponent());
