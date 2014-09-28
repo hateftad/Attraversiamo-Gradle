@@ -278,7 +278,7 @@ public class AnimationComponent extends BaseComponent {
 				playAnimation("running", true);
 				break;
 			case JUMPING:
-				playAnimation("runjumping", false);
+				playAnimation("runJumping", false);
 				break;
 			case JOGJUMP:
 				playAnimation("jogjumping", false);

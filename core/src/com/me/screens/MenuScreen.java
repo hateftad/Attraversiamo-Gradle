@@ -49,12 +49,12 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		//AnimationComponent littleGirl = new AnimationComponent(PONEPATH ,"data/ui/littleGirl", SCALE);
 		//littleGirl.setUp(middlePoint, "walking");
 		
-		AnimationComponent bigGuy = new AnimationComponent(PTWOPATH, "data/ui/bigGuy", SCALE);
-		bigGuy.setUp(middlePoint, "walking");
+		//AnimationComponent bigGuy = new AnimationComponent(PTWOPATH, "data/ui/bigGuy", SCALE);
+		//bigGuy.setUp(middlePoint, "walking");
 		
 		m_animation.add(scene);
 		//m_animation.add(littleGirl);
-		m_animation.add(bigGuy);
+		//m_animation.add(bigGuy);
 		//m_camera.lookAt(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
 		m_camera.zoom = 0.95f;
 		//Skeleton skel = m_animation.getSkeleton();

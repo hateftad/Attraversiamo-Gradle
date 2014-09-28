@@ -3,101 +3,150 @@ bigGuy.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-OpenRightHand
-  rotate: true
-  xy: 252, 15
-  size: 77, 103
-  orig: 77, 103
-  offset: 0, 0
-  index: -1
-RightHandC
-  rotate: true
-  xy: 164, 2
-  size: 51, 75
-  orig: 51, 75
-  offset: 0, 0
-  index: -1
-RightLowerArm
-  rotate: true
-  xy: 252, 145
-  size: 50, 168
-  orig: 50, 168
-  offset: 0, 0
-  index: -1
-RightUpperrArm
+back torso
   rotate: false
-  xy: 425, 355
-  size: 66, 153
-  orig: 66, 153
+  xy: 92, 24
+  size: 59, 198
+  orig: 59, 198
   offset: 0, 0
   index: -1
-angledArm
+hair
   rotate: false
-  xy: 277, 337
-  size: 146, 171
-  orig: 146, 171
-  offset: 0, 0
-  index: -1
-foot
-  rotate: true
-  xy: 164, 55
-  size: 142, 86
-  orig: 142, 86
+  xy: 416, 146
+  size: 74, 76
+  orig: 74, 76
   offset: 0, 0
   index: -1
 head
-  rotate: true
-  xy: 277, 197
-  size: 138, 158
-  orig: 138, 158
-  offset: 0, 0
-  index: -1
-leftHandC
   rotate: false
-  xy: 357, 15
-  size: 56, 77
-  orig: 56, 77
+  xy: 416, 146
+  size: 74, 76
+  orig: 74, 76
   offset: 0, 0
   index: -1
-leftLowerArm
-  rotate: true
-  xy: 252, 94
-  size: 49, 168
-  orig: 49, 168
-  offset: 0, 0
-  index: -1
-leftUpperrArm
-  rotate: true
-  xy: 2, 18
-  size: 134, 160
-  orig: 134, 160
-  offset: 0, 0
-  index: -1
-lowerLeg
+hooked arm
   rotate: false
-  xy: 437, 132
-  size: 67, 221
-  orig: 67, 221
+  xy: 153, 92
+  size: 117, 130
+  orig: 117, 130
+  offset: 0, 0
+  index: -1
+ledge
+  rotate: false
+  xy: 2, 224
+  size: 512, 30
+  orig: 512, 30
+  offset: 0, 0
+  index: -1
+left closed hand
+  rotate: true
+  xy: 761, 153
+  size: 34, 50
+  orig: 34, 50
+  offset: 0, 0
+  index: -1
+left lower arm
+  rotate: true
+  xy: 153, 44
+  size: 46, 110
+  orig: 46, 110
+  offset: 0, 0
+  index: -1
+left lower leg
+  rotate: true
+  xy: 835, 200
+  size: 54, 148
+  orig: 54, 148
+  offset: 0, 0
+  index: -1
+left shoe
+  rotate: false
+  xy: 684, 142
+  size: 75, 45
+  orig: 75, 45
+  offset: 0, 0
+  index: -1
+left upper arm
+  rotate: true
+  xy: 265, 19
+  size: 49, 126
+  orig: 49, 126
+  offset: 0, 0
+  index: -1
+left upper leg
+  rotate: true
+  xy: 676, 189
+  size: 65, 157
+  orig: 65, 157
   offset: 0, 0
   index: -1
 neck
+  rotate: true
+  xy: 620, 136
+  size: 49, 62
+  orig: 50, 62
+  offset: 1, 0
+  index: -1
+right closed hand
   rotate: false
-  xy: 422, 94
-  size: 67, 36
-  orig: 67, 36
+  xy: 985, 203
+  size: 34, 51
+  orig: 34, 51
+  offset: 0, 0
+  index: -1
+right hooked arm
+  rotate: true
+  xy: 272, 126
+  size: 96, 142
+  orig: 96, 142
+  offset: 0, 0
+  index: -1
+right lower arm
+  rotate: true
+  xy: 835, 152
+  size: 46, 109
+  orig: 46, 109
+  offset: 0, 0
+  index: -1
+right lower leg
+  rotate: true
+  xy: 272, 70
+  size: 54, 148
+  orig: 54, 148
+  offset: 0, 0
+  index: -1
+right open hand
+  rotate: true
+  xy: 153, 2
+  size: 40, 70
+  orig: 40, 70
+  offset: 0, 0
+  index: -1
+right shoe
+  rotate: true
+  xy: 422, 69
+  size: 75, 45
+  orig: 75, 45
+  offset: 0, 0
+  index: -1
+right upper arm
+  rotate: true
+  xy: 492, 137
+  size: 48, 126
+  orig: 48, 126
+  offset: 0, 0
+  index: -1
+right upper leg
+  rotate: true
+  xy: 516, 187
+  size: 67, 158
+  orig: 67, 158
   offset: 0, 0
   index: -1
 torso
   rotate: false
-  xy: 2, 154
-  size: 135, 354
-  orig: 135, 354
-  offset: 0, 0
-  index: -1
-upperLeg
-  rotate: false
-  xy: 139, 199
-  size: 136, 309
-  orig: 136, 309
+  xy: 2, 8
+  size: 88, 214
+  orig: 88, 214
   offset: 0, 0
   index: -1

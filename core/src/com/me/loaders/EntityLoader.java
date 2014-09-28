@@ -364,15 +364,16 @@ public class EntityLoader {
 				stateData = anim.setUp(image);
 				anim.setAnimationState(AnimState.IDLE);
 				stateData.setMix("idle", "jogging", 0.4f);
-				stateData.setMix("runjumping", "running", 0.6f);
+				//stateData.setMix("runjumping", "running", 0.6f);
 				stateData.setMix("jogging", "running", 0.4f);
 				//stateData.setMix("falling", "idle", 0.1f);
-				stateData.setMix("runjumping", "upJump", 0.1f);
+				//stateData.setMix("falling", "running", 0.1f);
+				//stateData.setMix("runjumping", "upJump", 0.1f);
 				stateData.setMix("upJump", "running", 0.2f);
-				stateData.setMix("idle", "climbUp", 0.6f);
-				stateData.setMix("jogging", "pushing", 0.5f);
-				stateData.setMix("idle", "pushing", 0.4f);
-				stateData.setMix("ladderHang", "running", 0.1f);
+				//stateData.setMix("idle", "climbUp", 0.6f);
+				//stateData.setMix("jogging", "pushing", 0.5f);
+				//stateData.setMix("idle", "pushing", 0.4f);
+				//stateData.setMix("ladderHang", "running", 0.1f);
 				pComp.setPosition(config.m_playerPosition);
 				//stateData.setMix("lieDown", "running", 0.3f);
 

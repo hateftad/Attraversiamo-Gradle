@@ -6,6 +6,7 @@
    [
       
       {
+         "allowSleep" : false,
          "angle" : 0,
          "angularVelocity" : 0,
          "awake" : true,
@@ -13,13 +14,18 @@
          [
             
             {
-               "int" : 7,
+               "int" : 3,
                "name" : "boxIndex"
             },
             
             {
-               "int" : 4,
+               "int" : 3,
                "name" : "collisionGroup"
+            },
+            
+            {
+               "name" : "characterType",
+               "string" : "hand"
             }
          ],
          "fixture" : 
@@ -35,18 +41,18 @@
                "filter-categoryBits" : 4,
                "filter-maskBits" : 64,
                "friction" : 0.2000000029802322,
-               "name" : "fixture4",
+               "name" : "fixture2",
                "sensor" : true
             }
          ],
          "linearVelocity" : 0,
          "massData-I" : 0.09817477315664291,
          "massData-mass" : 0.7853981852531433,
-         "name" : "pelvis",
+         "name" : "leftH",
          "position" : 
          {
-            "x" : 0.1038627624511719,
-            "y" : 4.876979827880859
+            "x" : -1.206836700439453,
+            "y" : 9.901439666748047
          },
          "type" : 2
       },
@@ -105,12 +111,12 @@
          [
             
             {
-               "int" : 14,
+               "int" : 15,
                "name" : "boxIndex"
             },
             
             {
-               "int" : 5,
+               "int" : 1,
                "name" : "collisionGroup"
             }
          ],
@@ -124,21 +130,124 @@
                   "radius" : 0.50
                },
                "density" : 1,
-               "filter-categoryBits" : 2,
-               "filter-maskBits" : 2,
                "friction" : 0.2000000029802322,
-               "name" : "fixture6",
+               "name" : "fixture5",
                "sensor" : true
             }
          ],
          "linearVelocity" : 0,
-         "name" : "r_hand",
+         "massData-I" : 0.09817477315664291,
+         "massData-mass" : 0.7853981852531433,
+         "name" : "ladderSensor",
          "position" : 
          {
-            "x" : -0.1904373168945313,
-            "y" : 4.005749702453613
+            "x" : 0.03916100040078163,
+            "y" : 5.459939956665039
          },
-         "type" : 0
+         "type" : 2
+      },
+      
+      {
+         "allowSleep" : false,
+         "angle" : 0,
+         "angularVelocity" : 0,
+         "awake" : true,
+         "customProperties" : 
+         [
+            
+            {
+               "int" : 4,
+               "name" : "boxIndex"
+            },
+            
+            {
+               "int" : 1,
+               "name" : "collisionGroup"
+            },
+            
+            {
+               "name" : "characterType",
+               "string" : "leg"
+            }
+         ],
+         "fixture" : 
+         [
+            
+            {
+               "circle" : 
+               {
+                  "center" : 0,
+                  "radius" : 0.6582249402999878
+               },
+               "density" : 2.0,
+               "filter-categoryBits" : 4,
+               "filter-maskBits" : 64,
+               "name" : "fixture1",
+               "restitution" : 0.001000000047497451
+            }
+         ],
+         "linearVelocity" : 0,
+         "massData-I" : 0.5897218585014343,
+         "massData-mass" : 2.722253322601318,
+         "name" : "feet",
+         "position" : 
+         {
+            "x" : 0.04271945729851723,
+            "y" : 0.9289635419845581
+         },
+         "type" : 2
+      },
+      
+      {
+         "allowSleep" : false,
+         "angle" : 0,
+         "angularVelocity" : 0,
+         "awake" : true,
+         "customProperties" : 
+         [
+            
+            {
+               "int" : 3,
+               "name" : "boxIndex"
+            },
+            
+            {
+               "int" : 3,
+               "name" : "collisionGroup"
+            },
+            
+            {
+               "name" : "characterType",
+               "string" : "hand"
+            }
+         ],
+         "fixture" : 
+         [
+            
+            {
+               "circle" : 
+               {
+                  "center" : 0,
+                  "radius" : 0.50
+               },
+               "density" : 1,
+               "filter-categoryBits" : 4,
+               "filter-maskBits" : 64,
+               "friction" : 0.2000000029802322,
+               "name" : "fixture2",
+               "sensor" : true
+            }
+         ],
+         "linearVelocity" : 0,
+         "massData-I" : 0.09817477315664291,
+         "massData-mass" : 0.7853981852531433,
+         "name" : "rightH",
+         "position" : 
+         {
+            "x" : 1.614459991455078,
+            "y" : 9.927140235900879
+         },
+         "type" : 2
       },
       
       {
@@ -233,7 +342,6 @@
       },
       
       {
-         "allowSleep" : false,
          "angle" : 0,
          "angularVelocity" : 0,
          "awake" : true,
@@ -241,166 +349,12 @@
          [
             
             {
-               "int" : 3,
+               "int" : 7,
                "name" : "boxIndex"
             },
-            
-            {
-               "int" : 3,
-               "name" : "collisionGroup"
-            },
-            
-            {
-               "name" : "characterType",
-               "string" : "hand"
-            }
-         ],
-         "fixture" : 
-         [
-            
-            {
-               "circle" : 
-               {
-                  "center" : 0,
-                  "radius" : 0.50
-               },
-               "density" : 1,
-               "filter-categoryBits" : 4,
-               "filter-maskBits" : 64,
-               "friction" : 0.2000000029802322,
-               "name" : "fixture2",
-               "sensor" : true
-            }
-         ],
-         "linearVelocity" : 0,
-         "massData-I" : 0.09817477315664291,
-         "massData-mass" : 0.7853981852531433,
-         "name" : "rightH",
-         "position" : 
-         {
-            "x" : 1.614459991455078,
-            "y" : 9.927140235900879
-         },
-         "type" : 2
-      },
-      
-      {
-         "allowSleep" : false,
-         "angle" : 0,
-         "angularVelocity" : 0,
-         "awake" : true,
-         "customProperties" : 
-         [
-            
-            {
-               "int" : 3,
-               "name" : "boxIndex"
-            },
-            
-            {
-               "int" : 3,
-               "name" : "collisionGroup"
-            },
-            
-            {
-               "name" : "characterType",
-               "string" : "hand"
-            }
-         ],
-         "fixture" : 
-         [
-            
-            {
-               "circle" : 
-               {
-                  "center" : 0,
-                  "radius" : 0.50
-               },
-               "density" : 1,
-               "filter-categoryBits" : 4,
-               "filter-maskBits" : 64,
-               "friction" : 0.2000000029802322,
-               "name" : "fixture2",
-               "sensor" : true
-            }
-         ],
-         "linearVelocity" : 0,
-         "massData-I" : 0.09817477315664291,
-         "massData-mass" : 0.7853981852531433,
-         "name" : "leftH",
-         "position" : 
-         {
-            "x" : -1.206836700439453,
-            "y" : 9.901439666748047
-         },
-         "type" : 2
-      },
-      
-      {
-         "allowSleep" : false,
-         "angle" : 0,
-         "angularVelocity" : 0,
-         "awake" : true,
-         "customProperties" : 
-         [
             
             {
                "int" : 4,
-               "name" : "boxIndex"
-            },
-            
-            {
-               "int" : 1,
-               "name" : "collisionGroup"
-            },
-            
-            {
-               "name" : "characterType",
-               "string" : "leg"
-            }
-         ],
-         "fixture" : 
-         [
-            
-            {
-               "circle" : 
-               {
-                  "center" : 0,
-                  "radius" : 0.6582249402999878
-               },
-               "density" : 2.0,
-               "filter-categoryBits" : 4,
-               "filter-maskBits" : 64,
-               "name" : "fixture1",
-               "restitution" : 0.001000000047497451
-            }
-         ],
-         "linearVelocity" : 0,
-         "massData-I" : 0.5897218585014343,
-         "massData-mass" : 2.722253322601318,
-         "name" : "feet",
-         "position" : 
-         {
-            "x" : 0.04271945729851723,
-            "y" : 0.9289635419845581
-         },
-         "type" : 2
-      },
-      
-      {
-         "angle" : 0,
-         "angularVelocity" : 0,
-         "awake" : true,
-         "customProperties" : 
-         [
-            
-            {
-               "int" : 15,
-               "name" : "boxIndex"
-            },
-            
-            {
-               "int" : 1,
                "name" : "collisionGroup"
             }
          ],
@@ -414,21 +368,67 @@
                   "radius" : 0.50
                },
                "density" : 1,
+               "filter-categoryBits" : 4,
+               "filter-maskBits" : 64,
                "friction" : 0.2000000029802322,
-               "name" : "fixture5",
+               "name" : "fixture4",
                "sensor" : true
             }
          ],
          "linearVelocity" : 0,
          "massData-I" : 0.09817477315664291,
          "massData-mass" : 0.7853981852531433,
-         "name" : "ladderSensor",
+         "name" : "pelvis",
          "position" : 
          {
-            "x" : 0.03916100040078163,
-            "y" : 5.459939956665039
+            "x" : 0.1038627624511719,
+            "y" : 4.876979827880859
          },
          "type" : 2
+      },
+      
+      {
+         "angle" : 0,
+         "angularVelocity" : 0,
+         "awake" : true,
+         "customProperties" : 
+         [
+            
+            {
+               "int" : 14,
+               "name" : "boxIndex"
+            },
+            
+            {
+               "int" : 5,
+               "name" : "collisionGroup"
+            }
+         ],
+         "fixture" : 
+         [
+            
+            {
+               "circle" : 
+               {
+                  "center" : 0,
+                  "radius" : 0.50
+               },
+               "density" : 1,
+               "filter-categoryBits" : 2,
+               "filter-maskBits" : 2,
+               "friction" : 0.2000000029802322,
+               "name" : "fixture6",
+               "sensor" : true
+            }
+         ],
+         "linearVelocity" : 0,
+         "name" : "rightHand",
+         "position" : 
+         {
+            "x" : -0.1904373168945313,
+            "y" : 4.005749702453613
+         },
+         "type" : 0
       }
    ],
    "continuousPhysics" : true,
@@ -442,7 +442,7 @@
       
       {
          "angle" : 0,
-         "body" : 3,
+         "body" : 5,
          "center" : 
          {
             "x" : -0.2257583439350128,
@@ -501,8 +501,8 @@
             "x" : 0.0004458948969841003,
             "y" : 0.7034727334976196
          },
-         "bodyA" : 3,
-         "bodyB" : 6,
+         "bodyA" : 5,
+         "bodyB" : 3,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint1",
@@ -521,8 +521,8 @@
             "x" : -0.05540001392364502,
             "y" : -0.2794241905212402
          },
-         "bodyA" : 7,
-         "bodyB" : 3,
+         "bodyA" : 2,
+         "bodyB" : 5,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint4",
@@ -542,10 +542,30 @@
             "y" : 3.440609931945801
          },
          "bodyA" : 4,
-         "bodyB" : 3,
+         "bodyB" : 5,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint2",
+         "refAngle" : 0,
+         "type" : "weld"
+      },
+      
+      {
+         "anchorA" : 
+         {
+            "x" : 0.02242289483547211,
+            "y" : 0
+         },
+         "anchorB" : 
+         {
+            "x" : 0.06573849916458130,
+            "y" : -0.8399949073791504
+         },
+         "bodyA" : 6,
+         "bodyB" : 5,
+         "dampingRatio" : 0,
+         "frequency" : 0,
+         "name" : "joint3",
          "refAngle" : 0,
          "type" : "weld"
       },
@@ -562,7 +582,7 @@
             "y" : 0.001510739326477051
          },
          "bodyA" : 1,
-         "bodyB" : 6,
+         "bodyB" : 3,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint6",
@@ -581,31 +601,11 @@
             "x" : 0.3374860286712647,
             "y" : -0.7131271362304688
          },
-         "bodyA" : 3,
-         "bodyB" : 5,
+         "bodyA" : 5,
+         "bodyB" : 0,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint0",
-         "refAngle" : 0,
-         "type" : "weld"
-      },
-      
-      {
-         "anchorA" : 
-         {
-            "x" : 0.02242289483547211,
-            "y" : 0
-         },
-         "anchorB" : 
-         {
-            "x" : 0.06573849916458130,
-            "y" : -0.8399949073791504
-         },
-         "bodyA" : 0,
-         "bodyB" : 3,
-         "dampingRatio" : 0,
-         "frequency" : 0,
-         "name" : "joint3",
          "refAngle" : 0,
          "type" : "weld"
       }
