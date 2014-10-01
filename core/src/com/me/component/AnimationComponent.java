@@ -358,9 +358,16 @@ public class AnimationComponent extends BaseComponent {
 	
 	public Vector2 getPosition(Vector2 position){
 		Slot slot = m_skeleton.getSlots().get(0);
+		for(Slot s : m_skeleton.getSlots()){
+			System.out.println(s.getAttachment().getName());
+			if(s.getAttachment().getName().equals("right lower leg")){
+				slot = s;
+				break;
+			}
+		}
 		
-		System.out.println("X " + Converters.ToBox(slot.getBone().getWorldX()) + " Y " + Converters.ToBox(m_skeleton.getY()));
-		return new Vector2(position.x + Converters.ToBox(slot.getBone().getWorldX()), position.y + Converters.ToBox(slot.getBone().getWorldY()));
+		System.out.println("X " + position.x + Converters.ToBox(slot.getBone().getWorldX()) + " Y " + position.y + Converters.ToBox(slot.getBone().getWorldY()));
+		return new Vector2(position.x + Converters.ToBox(slot.getBone().getWorldX()),  Converters.ToBox(slot.getBone().getWorldY()));
 	}
 
 	public void update(SpriteBatch sb, float dt){

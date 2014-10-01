@@ -2,7 +2,9 @@ package com.me.component;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-
 import com.me.physics.RBUserData;
 import com.me.utils.Converters;
 
@@ -144,6 +145,28 @@ public class PhysicsComponent extends BaseComponent {
 			currentFilter.categoryBits = currentBits;
 			m_body.get(name).getFixtureList().get(0).setFilterData(currentFilter);
 		}
+		
+	}
+	private HashMap<String, Filter> filterData = new HashMap<String, Filter>();
+	public void disableAllFilters(){
+		
+		Iterator<Entry<String, Body>> it = m_body.entrySet().iterator();
+	    while (it.hasNext()) {
+	        @SuppressWarnings("rawtypes")
+			Map.Entry pairs = (Map.Entry)it.next();
+	        Body b = (Body) pairs.getValue();
+	        filterData.put((String) pairs.getKey(), b.getFixtureList().get(0).getFilterData());
+	    }
+	}
+	
+	public void enableAllFilters(){
+		Iterator<Entry<String, Filter>> it = filterData.entrySet().iterator();
+	    while (it.hasNext()) {
+	        @SuppressWarnings("rawtypes")
+			Map.Entry pairs = (Map.Entry)it.next();
+	        Filter filter = (Filter) pairs.getValue();
+	        m_body.get((String) pairs.getKey()).getFixtureList().get(0).setFilterData(filter);
+	    }
 		
 	}
 	

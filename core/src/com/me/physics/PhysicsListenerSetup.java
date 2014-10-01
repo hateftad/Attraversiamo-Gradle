@@ -119,7 +119,7 @@ public class PhysicsListenerSetup {
 										e.getComponent(TouchComponent.class).m_handTouch = true;
 										e.getComponent(GrabComponent.class).m_grabbed = true;
 										e.getComponent(GrabComponent.class).m_gettingLifted = true;
-										
+										e.getComponent(GrabComponent.class).handPositionX = fA.getBody().getPosition().x;
 										e2.getComponent(GrabComponent.class).m_gonnaGrab = false;
 										e2.getComponent(GrabComponent.class).m_lifting = true;
 									}

@@ -92,16 +92,11 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 			JointComponent j = m_jointComp.get(e);
 			if(!g.m_grabbed && touch.m_handTouch && touch.m_footEdge){
 				g.m_grabbed = true;
-				//j.setWeldJoint(JointFactory.getInstance().createJoint(j.getWJointDef()));
 			}
 			if(g.m_lifting){
 				AnimationComponent anim = m_animComps.get(e);
-				//if(j.getWeldJoint() != null){
 				anim.setAnimationState(AnimState.PULLUP);
-				//	if(anim.getTime() > 1.72f){
-				//		breakBond = true;
-				//	}
-				//}
+
 				if(anim.isCompleted(AnimState.PULLUP)){
 					g.m_lifting = false;
 				}
@@ -118,34 +113,29 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 		}
 		if(m_playerTwo.has(e)){
 			if(g.m_gettingLifted){
+				
 				AnimationComponent anim = m_animComps.get(e);
 				anim.setAnimationState(AnimState.PULLUP);
 				PhysicsComponent pComp = m_physComp.get(e);
-				pComp.setBodyActive(false);
+				if(!already){
+					pComp.setPosition(g.handPositionX, pComp.getPosition().y);
+					already = true;
+				}
+				pComp.disableAllFilters();
+				//pComp.setBodyActive(false);
 				if(anim.isCompleted(AnimState.PULLUP)){
-					pComp.setBodyActive(true);
+					//pComp.setBodyActive(true);
 					System.out.println("lifted done");
-					pComp.setAllBodiesPosition(anim.getPosition(pComp.getPosition()));
+					pComp.enableAllFilters();
+					//pComp.setAllBodiesPosition(anim.getPosition(pComp.getPosition()));
 					anim.setAnimationState(AnimState.IDLE);
 					g.m_gettingLifted = false;
-				}
-				/*
-				if(boost){
-					if(m_playerComp.get(e).isFacingLeft()){
-						p.setLinearVelocity(-2f, 7f);
-					}else{
-						p.setLinearVelocity(2f, 7f);
-					}
-					boost = false;
-					g.m_gettingLifted = false;
-				}
-				*/
+				}				
 			}
 		}
 	}
-
-	private void release(Entity e)
-	{
+	private boolean already = false;
+	private void release(Entity e){
 
 		HangComponent h = m_hangComp.get(e);
 		JointComponent j = m_jointComp.get(e);
