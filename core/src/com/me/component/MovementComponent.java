@@ -14,8 +14,7 @@ public class MovementComponent extends BaseComponent {
 	public Vector2 m_movement;
 	public boolean m_lockControls = false;
 	
-	public void set(boolean left, boolean right, boolean up, boolean down, boolean jump)
-	{
+	public void set(boolean left, boolean right, boolean up, boolean down, boolean jump){
 		m_left = left;
 		m_right = right;
 		m_up = up;
@@ -24,31 +23,40 @@ public class MovementComponent extends BaseComponent {
 		
 	}
 	
-	public void stopUpDown()
-	{
+	public void stopUpDown(){
 		m_movingDown = false;
 		m_movingUp =false;
 	}
 	
-	public float getX()
-	{
+	public float getX(){
 		return m_movement.x;
 	}
 	
-	public float getY()
-	{
+	public float getY(){
 		return m_movement.y;
 	}
 	
-	public boolean moved()
-	{
+	public boolean moved(){
 		return (m_left) || (m_right) || (m_jump);
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void restart() {
 		
+		m_left = false;
+		m_right = false;
+		m_down = false;
+		m_up = false;
+		m_jump = false;
+		m_movingUp = false;
+		m_movingDown = false;
+		m_movement = Vector2.Zero;
+		m_lockControls = false;
 	}
 	
 }

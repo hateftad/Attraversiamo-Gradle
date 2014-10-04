@@ -5,4 +5,5 @@ import com.artemis.Component;
 public abstract class BaseComponent extends Component {
 
 	public abstract void dispose();
+	public abstract void restart();
 }

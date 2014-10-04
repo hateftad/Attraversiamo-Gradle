@@ -24,6 +24,8 @@ public class JointComponent extends BaseComponent{
 	
 	public boolean m_destroyed;
 	
+	private boolean setToDestroy;
+	
 	private int m_lowerLimit = 0;
 	
 	private int m_upperLimit = 0;
@@ -127,14 +129,18 @@ public class JointComponent extends BaseComponent{
 		return false;
 	}
 	
+	public boolean shouldDestroy(){
+		return setToDestroy;
+	}
+	
 	public void update(float timeStep){
-		float maxForceSq = 20f;
+		float maxForceSq = 5f;
 		if(m_dJoint != null){
 			Vector2 reactionForce = m_dJoint.getReactionForce(1/timeStep);
 		    float forceModuleSq = reactionForce.len2();
-		    System.out.println(forceModuleSq);
+		    System.out.println(" force" +forceModuleSq);
 		    if(forceModuleSq >= maxForceSq){
-		    	JointFactory.getInstance().destroyJoint(m_dJoint);
+		    	setToDestroy = true;
 		    }
 		}
 	}
@@ -142,5 +148,11 @@ public class JointComponent extends BaseComponent{
 	@Override
 	public void dispose() {
 			
+	}
+
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		
 	}
 }

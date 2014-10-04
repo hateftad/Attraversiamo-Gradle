@@ -9,4 +9,10 @@ public class TriggerComponent extends BaseComponent{
 		
 	}
 
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

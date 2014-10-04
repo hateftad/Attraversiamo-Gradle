@@ -9,4 +9,10 @@ public class RagDollComponent extends BaseComponent {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		m_activated = true;
+	}
 }

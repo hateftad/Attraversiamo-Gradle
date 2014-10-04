@@ -66,4 +66,10 @@ public class LightComponent extends BaseComponent {
 		
 		m_light.remove();
 	}
+
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		
+	}
 }

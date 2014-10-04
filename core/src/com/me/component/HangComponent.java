@@ -14,4 +14,15 @@ public class HangComponent extends BaseComponent {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		m_hangingLeft = false;
+		m_hangingRight = false;
+		m_isHanging = false;
+		m_release = false;
+		m_climbingUp = false;
+	}
 }

@@ -16,4 +16,15 @@ public class GrabComponent extends BaseComponent {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void restart() {
+
+		m_gonnaGrab = false;
+		m_grabbed = false;
+		m_lifting = false;
+		m_gettingLifted = false;
+		handPositionX = 0;
+		aligned = false;
+	}
 }

@@ -102,4 +102,12 @@ public class PlayerComponent extends BaseComponent{
 	public boolean hasReachedEnd(){
 		return m_reachedEnd;
 	}
+
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		m_facingLeft = false;
+		m_reachedEnd = false;
+		m_isFinishedAnimating = false;
+	}
 }

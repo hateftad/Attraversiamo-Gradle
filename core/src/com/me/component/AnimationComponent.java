@@ -398,4 +398,10 @@ public class AnimationComponent extends BaseComponent {
 		}
 	}
 
+	@Override
+	public void restart() {
+		setAnimationState(AnimState.IDLE);
+		setFacing(false);
+	}
+
 }

@@ -374,6 +374,12 @@ public class PhysicsComponent extends BaseComponent {
 	public void dispose() {
 		destroy();
 	}
+	
+	@Override
+	public void restart() {
+		m_isDynamic = true;
+		m_isActive = true;
+	}
 
 	public interface ImmediateModePhysicsListener {
 
@@ -383,6 +389,5 @@ public class PhysicsComponent extends BaseComponent {
 
 		public void preSolve(Entity e, Contact contact, boolean fixtureA);
 	}
-
 
 }

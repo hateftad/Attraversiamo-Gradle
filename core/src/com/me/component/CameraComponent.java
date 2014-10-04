@@ -86,5 +86,11 @@ public class CameraComponent extends BaseComponent {
 	public void dispose() {
 		
 	}
+
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

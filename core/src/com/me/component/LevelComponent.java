@@ -21,4 +21,9 @@ public class LevelComponent extends BaseComponent {
 		
 	}
 
+	@Override
+	public void restart() {
+		m_finished = false;
+	}
+
 }

@@ -18,7 +18,7 @@ public class AndroidLauncher extends AndroidApplication {
 		cfg.platform = Platform.ANDROID;
 		cfg.timeStep = 1/60f;
 		cfg.showUI = true;
-		cfg.zoom = 5f;
+		cfg.zoom = 9f;
 		
 		initialize(new Attraversiamo(cfg), config);
 	}

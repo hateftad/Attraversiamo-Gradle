@@ -8,6 +8,12 @@ public class JumpComponent extends BaseComponent {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void restart() {
+		m_jumped = false;
+		
 	} 
 	
 	

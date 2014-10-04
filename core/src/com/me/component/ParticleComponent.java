@@ -63,4 +63,11 @@ public class ParticleComponent extends BaseComponent {
 		m_particles.dispose();
 	}
 
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		m_start = false;
+		m_setToStart = false;
+	}
+
 }

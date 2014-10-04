@@ -15,4 +15,18 @@ public class LadderClimbComponent extends BaseComponent {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public void restart() {
+		
+		m_rightClimb = false;
+		m_leftClimb = false;
+		m_topLadder = false;
+		m_bottomLadder = false;
+		m_goingUp = false;
+		
+		
+	}
 }

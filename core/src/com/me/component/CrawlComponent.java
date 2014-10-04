@@ -12,4 +12,12 @@ public class CrawlComponent extends BaseComponent {
 
 	}
 
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		canCrawl = false;
+		isCrawling = false;
+		isStanding = false;
+	}
+
 }

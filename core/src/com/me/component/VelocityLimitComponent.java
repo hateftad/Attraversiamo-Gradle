@@ -27,4 +27,10 @@ public class VelocityLimitComponent extends BaseComponent{
 		
 	}
 
+	@Override
+	public void restart() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
