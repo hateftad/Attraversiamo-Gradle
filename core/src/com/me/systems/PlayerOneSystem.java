@@ -65,7 +65,8 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 
 	@Mapper ComponentMapper<PlayerComponent> m_players;
 
-	private float VEL = 7.0f;
+	private float VELOCITY = 9.0f;
+	private float VELOCITYINR = 3.0f;
 
 	@SuppressWarnings("unchecked")
 	public PlayerOneSystem(LevelEventListener listener)
@@ -136,13 +137,13 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 
 				if(m.m_up && h.m_isHanging)
 				{
-					JointComponent j = e.getComponent(JointComponent.class);
-					if(j.getPrismJoint() != null){
-						j.climb();
+					//JointComponent j = e.getComponent(JointComponent.class);
+					//if(j.getPrismJoint() != null){
+						//j.climb();
 						animation.setAnimationState(AnimState.CLIMBING);
 						h.m_climbingUp = true;
 						m.m_lockControls = true;
-					}
+					//}
 				}
 				if(h.m_isHanging && !h.m_climbingUp){
 					animation.setAnimationState(AnimState.HANGING);
@@ -233,14 +234,14 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		PlayerComponent player = m_playerComps.get(e);
 
 		if(vel.m_velocity > 0)
-			vel.m_velocity=-2;
+			vel.m_velocity=-VELOCITYINR;
 		if(touch.m_groundTouch){
 			if(m_hangComps.has(e)){
 				PushComponent push = e.getComponent(PushComponent.class);
 				if(!h.m_isHanging){
 					if(m_ladderComps.has(e)){
 						if(!ladderComp.m_leftClimb && !touch.m_boxTouch){
-							vel.m_velocity -= VEL * world.delta;
+							vel.m_velocity -= VELOCITY * world.delta;
 							ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
 							if(ps.getLinearVelocity().x < -vel.m_walkLimit){
 								ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
@@ -284,14 +285,14 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 
 
 		if(vel.m_velocity < 0)
-			vel.m_velocity=2;
+			vel.m_velocity=VELOCITYINR;
 		if(touch.m_groundTouch){
 			if(m_hangComps.has(e)){
 				PushComponent push = e.getComponent(PushComponent.class);
 				if(!h.m_isHanging){
 					if(m_ladderComps.has(e)){										
 						if(!l.m_rightClimb && !touch.m_boxTouch){
-							vel.m_velocity += VEL * world.delta;
+							vel.m_velocity += VELOCITY * world.delta;
 							ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
 							if(ps.getLinearVelocity().x > vel.m_walkLimit){
 								ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);

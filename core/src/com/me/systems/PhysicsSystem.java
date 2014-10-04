@@ -15,6 +15,7 @@ import com.me.component.AnimationComponent;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.JointComponent;
 import com.me.component.PhysicsComponent;
+import com.me.component.PlayerTwoComponent;
 import com.me.component.QueueComponent;
 import com.me.component.RestartComponent;
 import com.me.listeners.LevelEventListener;
@@ -150,6 +151,9 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 					comp.setToStart();
 					if(m_animComponents.has(e)){
 						m_animComponents.get(e).setAnimationState(AnimState.IDLE);
+						if(e.getComponent(PlayerTwoComponent.class) != null){
+							comp.makeDynamic("center", 0.001f);
+						}
 					}
 				}
 			}

@@ -88,9 +88,9 @@ public class LevelSystem extends EntityProcessingSystem{
 			if(!m_levelComponent.m_finished){
 				if(a >= 1){
 					light.setColor(Color.RED);
-					inc = -0.008f;
+					inc = -0.01f;
 				}else if(a < 0.1f){
-					inc = 0.008f;
+					inc = 0.01f;
 				}
 				light.setAlpha(a + inc);
 

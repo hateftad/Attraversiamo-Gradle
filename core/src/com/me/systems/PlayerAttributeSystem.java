@@ -31,7 +31,6 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 	@Mapper ComponentMapper<AnimationComponent> m_animComps;
 	
 	private boolean breakBond = false;
-	private boolean boost = false;
 	
 	@SuppressWarnings("unchecked")
 	public PlayerAttributeSystem() {
@@ -49,6 +48,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 			if(m_hangComp.has(e)){
 				HangComponent h = m_hangComp.get(e);
 				JointComponent j = m_jointComp.get(e);
+				
 				if(!h.m_isHanging && touch.m_edgeTouch){
 					h.m_isHanging = true;
 					j.setPrismJoint(JointFactory.getInstance().createJoint(j.getPJointDef()));
@@ -68,14 +68,16 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					if(h.m_release){
 						release(e);
 					}
-					if(j.isFullLength()){
-						if(h.m_hangingLeft){
-							p.setLinearVelocity(-4, 0);
+					if(h.m_climbingUp){
+						PhysicsComponent pComp = m_physComp.get(e);
+						pComp.setBodyActive(false);
+						AnimationComponent anim = m_animComps.get(e);
+						if(anim.isCompleted(AnimState.CLIMBING)){
+							pComp.setAllBodiesPosition(anim.getAttachmentPositionRelative(pComp.getPosition(), "left upper leg"));
+							pComp.setBodyActive(true);
+							anim.setAnimationState(AnimState.IDLE);
+							release(e);
 						}
-						if(h.m_hangingRight){
-							p.setLinearVelocity(4, 0);
-						}
-						release(e);
 					}
 				}
 				if(touch.m_ladderTouch && p.isDynamic()){
@@ -101,15 +103,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					g.m_lifting = false;
 				}
 			}
-			if(breakBond){
-				if(j.getWeldJoint()!= null){
-					JointFactory.getInstance().destroyJoint(j.getWeldJoint());
-					p.setLinearVelocity(5.5f, 0);
-					j.setWeldJoint(null);
-					breakBond = false;
-					boost = true;
-				}
-			}
+			
 		}
 		if(m_playerTwo.has(e)){
 			if(g.m_gettingLifted){
@@ -121,15 +115,15 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					pComp.setPosition(g.handPositionX, pComp.getPosition().y);
 					already = true;
 				}
-				pComp.disableAllFilters();
-				//pComp.setBodyActive(false);
+				pComp.setBodyActive(false);
 				if(anim.isCompleted(AnimState.PULLUP)){
-					//pComp.setBodyActive(true);
+					
 					System.out.println("lifted done");
-					pComp.enableAllFilters();
-					//pComp.setAllBodiesPosition(anim.getPosition(pComp.getPosition()));
+					pComp.setAllBodiesPosition(anim.getAttachmentPositionRelative(pComp.getPosition(), "left foot"));
+					pComp.setBodyActive(true);
 					anim.setAnimationState(AnimState.IDLE);
 					g.m_gettingLifted = false;
+					already = false;
 				}				
 			}
 		}

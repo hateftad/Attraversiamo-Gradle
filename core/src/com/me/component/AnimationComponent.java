@@ -164,7 +164,7 @@ public class AnimationComponent extends BaseComponent {
 	public void addAnimation(String name, boolean loop, float delay){
 		m_animationState.addAnimation(0, name, loop, delay);
 	}
-	
+
 	public boolean isCompleted(){		
 		return m_isCompleted;
 	}
@@ -186,7 +186,7 @@ public class AnimationComponent extends BaseComponent {
 	}
 
 	public void addAnimation(AnimState state, boolean loop, float delay){
-		
+
 		if(state != m_previousState)
 		{
 			setState(state);
@@ -259,10 +259,10 @@ public class AnimationComponent extends BaseComponent {
 		}
 		m_previousState = state;
 	}
-	
-	
+
+
 	public void setAnimationState(AnimState state){
-		
+
 		if(state != m_previousState)
 		{
 			setState(state);
@@ -339,7 +339,7 @@ public class AnimationComponent extends BaseComponent {
 	public boolean isCompleted(AnimState state){
 		return ((state == m_state) && (m_isCompleted));
 	}
-	
+
 	public Skeleton getSkeleton(){
 		return m_skeleton;
 	}
@@ -347,27 +347,43 @@ public class AnimationComponent extends BaseComponent {
 	public void setupPose(){
 		m_skeleton.setBonesToSetupPose();
 	}
-	
+
 	public float getX(){
 		return m_skeleton.getX();
 	}
-	
+
 	public float getY(){
 		return m_skeleton.getY();
 	}
-	
-	public Vector2 getPosition(Vector2 position){
-		Slot slot = m_skeleton.getSlots().get(0);
+
+	public Vector2 getAttachmentPositionRelative(Vector2 position, String attachmentName){
+		Slot slot = null;
 		for(Slot s : m_skeleton.getSlots()){
-			System.out.println(s.getAttachment().getName());
-			if(s.getAttachment().getName().equals("right lower leg")){
-				slot = s;
-				break;
+			if(s.getAttachment() != null){
+				//System.out.println(s.getAttachment().getName());
+				if(s.getAttachment().getName().equals(attachmentName)){
+					slot = s;
+					break;
+				}
 			}
 		}
 		
-		System.out.println("X " + position.x + Converters.ToBox(slot.getBone().getWorldX()) + " Y " + position.y + Converters.ToBox(slot.getBone().getWorldY()));
-		return new Vector2(position.x + Converters.ToBox(slot.getBone().getWorldX()),  Converters.ToBox(slot.getBone().getWorldY()));
+		return new Vector2(position.x + Converters.ToBox(slot.getBone().getWorldX()), Converters.ToBox(slot.getBone().getWorldY()));
+	}
+	
+	public Vector2 getPositionRelative(Vector2 position, String attachmentName){
+		Slot slot = null;
+		for(Slot s : m_skeleton.getSlots()){
+			if(s.getAttachment() != null){
+				//System.out.println(s.getAttachment().getName());
+				if(s.getAttachment().getName().equals(attachmentName)){
+					slot = s;
+					break;
+				}
+			}
+		}
+		
+		return new Vector2(position.x + Converters.ToBox(slot.getBone().getWorldX()), position.y + Converters.ToBox(slot.getBone().getWorldY()));
 	}
 
 	public void update(SpriteBatch sb, float dt){

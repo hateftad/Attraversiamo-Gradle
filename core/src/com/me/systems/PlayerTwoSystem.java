@@ -306,28 +306,6 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		}
 		
 	}
-	
-	private void animationMoveBody(PhysicsComponent ps, AnimationComponent animation){
-		
-		for (Slot slot : animation.getSkeleton().getSlots()) {
-			String attachment = slot.getBone().getData().getName();
-			System.out.println(attachment);
-			if(attachment.equals("spine")){
-				System.out.println("moving other way");
-				float x = (Converters.ToBox(slot.getBone().getWorldX()));
-				float x2 = (ps.getBody().getPosition().x +  x);
-				float y = Converters.ToBox(slot.getBone().getWorldY());
-				float y2 = (ps.getBody().getPosition().y + y);
-				ps.getBody("center").setTransform(
-						x2, 
-						animation.getcenter().y + y2, 
-						0
-						);
-				
-			}
-		}
-		
-	}
 
 	private boolean isDead(PhysicsComponent ps) {
 

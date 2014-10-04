@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.me.component.AnimationComponent;
 import com.me.component.CameraComponent;
 import com.me.component.LightComponent;
 import com.me.component.PhysicsComponent;
@@ -31,6 +32,7 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	@Mapper ComponentMapper<PhysicsComponent> m_physicsComp;
 	@Mapper ComponentMapper<LightComponent> m_lightComps;
 	@Mapper ComponentMapper<SpriteComponent> m_spriteComps;
+	@Mapper ComponentMapper<AnimationComponent> m_animComps;
 
 	private Vector3 m_camPos = new Vector3();
 
@@ -91,8 +93,9 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 
 			if(m_playerComp.get(e).isActive()){
 				PhysicsComponent ps = m_physicsComp.get(e);
+				AnimationComponent anim = m_animComps.get(e);
 				//System.out.println(ps.getWorldPosition());
-				m_camera.moveTo(ps.getWorldPosition());
+				m_camera.moveTo(Converters.ToWorld(anim.getPositionRelative(ps.getPosition(), "torso")));
 				activePosition = ps.getPosition();
 			}
 			else{

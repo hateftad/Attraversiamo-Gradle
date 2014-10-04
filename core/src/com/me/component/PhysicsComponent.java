@@ -156,6 +156,9 @@ public class PhysicsComponent extends BaseComponent {
 			Map.Entry pairs = (Map.Entry)it.next();
 	        Body b = (Body) pairs.getValue();
 	        filterData.put((String) pairs.getKey(), b.getFixtureList().get(0).getFilterData());
+	        Filter t1 = b.getFixtureList().get(0).getFilterData();
+			t1.categoryBits = 1;
+			b.getFixtureList().get(0).setFilterData(t1);
 	    }
 	}
 	

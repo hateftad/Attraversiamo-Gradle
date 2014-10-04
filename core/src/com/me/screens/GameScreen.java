@@ -37,7 +37,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		super(game);
 		m_entityWorld = new World();
 		m_entityWorld.setManager(new GroupManager());
-		m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -10), true));
+		m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -14), true));
 		JointFactory.getInstance().initialize(m_physicsSystem.getWorld());
 		RayHandler rayHandler = new RayHandler(m_physicsSystem.getWorld());
 		rayHandler.setAmbientLight(0.8f);

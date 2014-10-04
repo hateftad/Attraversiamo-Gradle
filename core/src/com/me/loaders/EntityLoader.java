@@ -352,7 +352,7 @@ public class EntityLoader {
 				entity.addComponent(new HangComponent());
 				entity.addComponent(new RagDollComponent());
 				entity.addComponent(new LadderClimbComponent());
-				entity.addComponent(new VelocityLimitComponent(8, 12, 5));
+				entity.addComponent(new VelocityLimitComponent(8, 13, 5));
 				entity.addComponent(new PushComponent());
 				entity.addComponent(new JumpComponent());
 				entity.addComponent(new GrabComponent());
@@ -396,7 +396,7 @@ public class EntityLoader {
 				//stateData.setMix("crawling", "lyingDown", 0.2f);
 				entity.addComponent(p);
 				entity.addComponent(new MovementComponent());
-				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f, 8);
+				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f, 10);
 				vel.m_crawlLimit = 2.5f;
 				entity.addComponent(vel);
 				entity.addComponent(new TouchComponent());
