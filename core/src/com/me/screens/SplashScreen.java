@@ -2,12 +2,15 @@ package com.me.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 
 public class SplashScreen extends AbstractScreen {
 
 	private AnimationComponent m_animation;
+	private boolean timerIsOn = false;
 
 	public SplashScreen(Attraversiamo game){
 		
@@ -27,9 +30,28 @@ public class SplashScreen extends AbstractScreen {
 		m_animation.update(m_spriteBatch, delta/2);
 		m_spriteBatch.end();
 
-		if(Gdx.input.justTouched()){
-			m_game.setScreen(new MenuScreen(m_game));
-		}
+		 if(!timerIsOn) {
+	         timerIsOn = true;
+	         
+	         Timer.schedule(new Task() {
+	            
+	            @Override
+	            public void run() {
+	               changeScreen();
+	            }
+
+	         }, 3);
+	             
+	      } else if(Gdx.input.isTouched()) {
+	           // Remove the task so we don't call changeScreen twice: 
+	           Timer.instance().clear(); 
+	           changeScreen();
+	      }
+	}
+	
+	private void changeScreen(){
+		m_game.setScreen(new MenuScreen(m_game));
+    	System.out.println("starting");
 	}
 
 	@Override

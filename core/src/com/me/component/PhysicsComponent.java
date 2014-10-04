@@ -147,7 +147,7 @@ public class PhysicsComponent extends BaseComponent {
 		}
 		
 	}
-	private HashMap<String, Filter> filterData = new HashMap<String, Filter>();
+	private HashMap<String, Short> filterData = new HashMap<String, Short>();
 	public void disableAllFilters(){
 		
 		Iterator<Entry<String, Body>> it = m_body.entrySet().iterator();
@@ -155,19 +155,23 @@ public class PhysicsComponent extends BaseComponent {
 	        @SuppressWarnings("rawtypes")
 			Map.Entry pairs = (Map.Entry)it.next();
 	        Body b = (Body) pairs.getValue();
-	        filterData.put((String) pairs.getKey(), b.getFixtureList().get(0).getFilterData());
-	        Filter t1 = b.getFixtureList().get(0).getFilterData();
-			t1.categoryBits = 1;
-			b.getFixtureList().get(0).setFilterData(t1);
+	        short bits;
+	        Filter filter = b.getFixtureList().get(0).getFilterData();
+	        bits = filter.categoryBits;
+	        filterData.put((String) pairs.getKey(), new Short(bits));
+	        filter.categoryBits = 1;
+			b.getFixtureList().get(0).setFilterData(filter);
 	    }
 	}
 	
 	public void enableAllFilters(){
-		Iterator<Entry<String, Filter>> it = filterData.entrySet().iterator();
+		Iterator<Entry<String, Short>> it = filterData.entrySet().iterator();
 	    while (it.hasNext()) {
 	        @SuppressWarnings("rawtypes")
 			Map.Entry pairs = (Map.Entry)it.next();
-	        Filter filter = (Filter) pairs.getValue();
+	        Filter filter = m_body.get((String) pairs.getKey()).getFixtureList().get(0).getFilterData();
+	        short bits = (Short) pairs.getValue();
+	        filter.categoryBits = bits;
 	        m_body.get((String) pairs.getKey()).getFixtureList().get(0).setFilterData(filter);
 	    }
 		
@@ -212,12 +216,20 @@ public class PhysicsComponent extends BaseComponent {
 	}
 	
 	public void setAllBodiesPosition(Vector2 pos){
-		
 		for(Body b : m_body.values()){
 			b.setTransform(pos, 0.0f);
 		}
 	}
 	
+	public void warp(Vector2 pos){
+		disableAllFilters();
+		Vector2 cent = m_body.get("center").getPosition();
+		m_body.get("feet").setTransform(pos, 0.0f);
+		cent.y = cent.y + pos.y;
+		cent.x = pos.x;
+		m_body.get("center").setTransform(cent, 0.0f);
+		enableAllFilters();
+	}
 
 	public void setPosition(float x, float y){
 		m_body.get(m_name).setTransform(x, y, 0.0f);

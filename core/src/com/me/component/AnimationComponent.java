@@ -355,23 +355,8 @@ public class AnimationComponent extends BaseComponent {
 	public float getY(){
 		return m_skeleton.getY();
 	}
-
-	public Vector2 getAttachmentPositionRelative(Vector2 position, String attachmentName){
-		Slot slot = null;
-		for(Slot s : m_skeleton.getSlots()){
-			if(s.getAttachment() != null){
-				//System.out.println(s.getAttachment().getName());
-				if(s.getAttachment().getName().equals(attachmentName)){
-					slot = s;
-					break;
-				}
-			}
-		}
-		
-		return new Vector2(position.x + Converters.ToBox(slot.getBone().getWorldX()), Converters.ToBox(slot.getBone().getWorldY()));
-	}
 	
-	public Vector2 getPositionRelative(Vector2 position, String attachmentName){
+	public Vector2 getPositionRelative(String attachmentName){
 		Slot slot = null;
 		for(Slot s : m_skeleton.getSlots()){
 			if(s.getAttachment() != null){
@@ -383,7 +368,7 @@ public class AnimationComponent extends BaseComponent {
 			}
 		}
 		
-		return new Vector2(position.x + Converters.ToBox(slot.getBone().getWorldX()), position.y + Converters.ToBox(slot.getBone().getWorldY()));
+		return new Vector2(Converters.ToBox(m_skeleton.getX() + slot.getBone().getWorldX()), Converters.ToBox(m_skeleton.getY() + slot.getBone().getWorldY()));
 	}
 
 	public void update(SpriteBatch sb, float dt){

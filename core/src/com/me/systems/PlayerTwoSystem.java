@@ -178,7 +178,6 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		}
 
 		animateBody(ps, player, animation);
-		
 		animation.setFacing(player.isFacingLeft());
 		
 	}

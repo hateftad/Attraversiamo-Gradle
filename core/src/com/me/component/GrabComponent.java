@@ -8,7 +8,8 @@ public class GrabComponent extends BaseComponent {
 	public boolean m_grabbed = false;
 	public boolean m_lifting = false;
 	public boolean m_gettingLifted = false;
-	public float handPositionX; 
+	public float handPositionX;
+	public boolean aligned;
 	
 	@Override
 	public void dispose() {

@@ -95,7 +95,7 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 				PhysicsComponent ps = m_physicsComp.get(e);
 				AnimationComponent anim = m_animComps.get(e);
 				//System.out.println(ps.getWorldPosition());
-				m_camera.moveTo(Converters.ToWorld(anim.getPositionRelative(ps.getPosition(), "torso")));
+				m_camera.moveTo(Converters.ToWorld(anim.getPositionRelative("torso")));
 				activePosition = ps.getPosition();
 			}
 			else{

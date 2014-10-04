@@ -374,7 +374,7 @@ public class EntityLoader {
 				//stateData.setMix("jogging", "pushing", 0.5f);
 				//stateData.setMix("idle", "pushing", 0.4f);
 				//stateData.setMix("ladderHang", "running", 0.1f);
-				pComp.setPosition(config.m_playerPosition);
+				pComp.setPosition(Converters.ToBox(config.m_playerPosition));
 				//stateData.setMix("lieDown", "running", 0.3f);
 
 			}else if(m_scene.getCustom(body, "characterType","").equals("playerTwo")){
@@ -406,7 +406,7 @@ public class EntityLoader {
 				entity.addComponent(new TriggerComponent());
 				entity.addComponent(new CrawlComponent());
 				entity.addComponent(new RestartComponent());
-				pComp.setPosition(config.m_playerPosition);
+				pComp.setPosition(Converters.ToBox(config.m_playerPosition));
 			}
 
 			BodyUserData ud = (BodyUserData) body.getUserData();

@@ -73,7 +73,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 						pComp.setBodyActive(false);
 						AnimationComponent anim = m_animComps.get(e);
 						if(anim.isCompleted(AnimState.CLIMBING)){
-							pComp.setAllBodiesPosition(anim.getAttachmentPositionRelative(pComp.getPosition(), "left upper leg"));
+							pComp.setAllBodiesPosition(anim.getPositionRelative("left upper leg"));
 							pComp.setBodyActive(true);
 							anim.setAnimationState(AnimState.IDLE);
 							release(e);
@@ -91,7 +91,6 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 
 		}
 		if(!m_playerTwo.has(e)){
-			JointComponent j = m_jointComp.get(e);
 			if(!g.m_grabbed && touch.m_handTouch && touch.m_footEdge){
 				g.m_grabbed = true;
 			}
@@ -111,24 +110,26 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 				AnimationComponent anim = m_animComps.get(e);
 				anim.setAnimationState(AnimState.PULLUP);
 				PhysicsComponent pComp = m_physComp.get(e);
-				if(!already){
+				if(!g.aligned){
 					pComp.setPosition(g.handPositionX, pComp.getPosition().y);
-					already = true;
+					g.aligned = true;
 				}
 				pComp.setBodyActive(false);
 				if(anim.isCompleted(AnimState.PULLUP)){
 					
 					System.out.println("lifted done");
-					pComp.setAllBodiesPosition(anim.getAttachmentPositionRelative(pComp.getPosition(), "left foot"));
+					System.out.println("Before " + pComp.getPosition());
+					pComp.warp(anim.getPositionRelative("left foot"));
+					System.out.println("After " + pComp.getPosition());
 					pComp.setBodyActive(true);
 					anim.setAnimationState(AnimState.IDLE);
 					g.m_gettingLifted = false;
-					already = false;
+					g.aligned = false;
 				}				
 			}
 		}
 	}
-	private boolean already = false;
+
 	private void release(Entity e){
 
 		HangComponent h = m_hangComp.get(e);
