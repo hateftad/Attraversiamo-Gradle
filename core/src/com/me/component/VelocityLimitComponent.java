@@ -8,12 +8,14 @@ public class VelocityLimitComponent extends BaseComponent{
 	public float m_velocity = 0;
 	public float m_ladderClimbVelocity;
 	public float m_crawlLimit;
+	public float m_pushlimit;
 	
-	public VelocityLimitComponent(float walkLimit, float jumpLimit, float ladderLimit)
+	public VelocityLimitComponent(float walkLimit, float jumpLimit, float ladderLimit, float pushLimit)
 	{
 		m_walkLimit = walkLimit;
 		m_jumpLimit = jumpLimit;
 		m_ladderLimit = ladderLimit;
+		m_pushlimit = pushLimit;
 	}
 	
 	public VelocityLimitComponent(float walkLimit, float jumpLimit){

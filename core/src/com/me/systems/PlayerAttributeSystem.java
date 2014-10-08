@@ -66,6 +66,8 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 						}
 					}
 					if(h.m_release){
+						AnimationComponent anim = m_animComps.get(e);
+						anim.setAnimationState(AnimState.FALLING);
 						release(e);
 					}
 					if(h.m_climbingUp){

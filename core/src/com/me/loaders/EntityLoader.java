@@ -355,7 +355,7 @@ public class EntityLoader {
 				entity.addComponent(new HangComponent());
 				entity.addComponent(new RagDollComponent());
 				entity.addComponent(new LadderClimbComponent());
-				entity.addComponent(new VelocityLimitComponent(8, 14, 5));
+				entity.addComponent(new VelocityLimitComponent(8, 14, 5, 5));
 				entity.addComponent(new PushComponent());
 				entity.addComponent(new JumpComponent());
 				entity.addComponent(new GrabComponent());
@@ -375,6 +375,8 @@ public class EntityLoader {
 				stateData.setMix("idle", "climbUp", 0.6f);
 				stateData.setMix("jogging", "pushing", 0.5f);
 				stateData.setMix("idle", "pushing", 0.4f);
+				stateData.setMix("running", "pushing", 0.3f);
+				//dstateData.setMix("pushing", "idle", 0.6f);
 				//stateData.setMix("ladderHang", "running", 0.1f);
 				pComp.setPosition(config.m_playerPosition);
 				//stateData.setMix("lieDown", "running", 0.3f);
