@@ -6,15 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.esotericsoftware.spine.Skeleton;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 import com.me.ui.UIButton;
@@ -40,6 +34,9 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 	}
 	
 	private void init(){
+		m_camera.viewportWidth = 1024;
+		m_camera.viewportHeight = 768;
+		
 		m_animation = new ArrayList<AnimationComponent>();
 
 		Vector2 middlePoint = new Vector2(Gdx.graphics.getWidth()/2, 0);
@@ -56,7 +53,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		//m_animation.add(littleGirl);
 		//m_animation.add(bigGuy);
 		//m_camera.lookAt(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
-		m_camera.zoom = 0.95f;
+		m_camera.zoom = 1f;
 		//Skeleton skel = m_animation.getSkeleton();
 		//skel.getAttachment(0, "");
 		/*
@@ -89,7 +86,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		m_stage.addActor(m_table);
 		//m_stage.addActor(m_newGameBtn);
 		*/
-		 
+
 	}
 
 	@Override

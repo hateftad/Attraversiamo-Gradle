@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.me.listeners.LevelEventListener;
+import com.me.systems.CameraSystem;
 
 public class InputManager {
 
@@ -33,7 +37,8 @@ public class InputManager {
 	public PlayerSelection m_playerSelected;
 	public boolean playerOneActive;
 	private ArrayList<LevelEventListener> m_levelListeners;
-	
+	private Table m_bottomBtnsTable;
+	private Table m_topBtnsTable;
 	private boolean[] m_button  = new boolean[10];
 	
 	
@@ -66,7 +71,8 @@ public class InputManager {
 	private InputManager(){
 		
 		m_levelListeners = new ArrayList<LevelEventListener>(); 
-		
+		m_bottomBtnsTable = new Table();
+		m_topBtnsTable = new Table();
 		for (@SuppressWarnings("unused") boolean b : m_button) {
 			b = false;
 		}
@@ -88,7 +94,6 @@ public class InputManager {
 		btnStyle.up = m_skin.getDrawable("left.up");
 
 		m_leftBtn = new UIButton(btnStyle);
-		m_leftBtn.setBounds(ppcy/3, heightOfBtn, widthBtn, height);
 		m_leftBtn.debug();
 		m_leftBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -158,7 +163,6 @@ public class InputManager {
 		btnStyle3.up = m_skin.getDrawable("up.up");
 		
 		m_jumpBtn = new UIButton(btnStyle3);
-		m_jumpBtn.setBounds((m_charSwitchBtn.getX() - widthBtn), heightOfBtn, widthBtn, height);
 		m_jumpBtn.debug();
 		m_jumpBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -175,7 +179,6 @@ public class InputManager {
 		btnStyle6.up = m_skin.getDrawable("up.up");
 		
 		m_actionBtn = new UIButton(btnStyle6);
-		m_actionBtn.setBounds((m_jumpBtn.getX() - widthBtn) , heightOfBtn, widthBtn, height);
 		m_actionBtn.debug();
 		m_actionBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -187,24 +190,28 @@ public class InputManager {
 				m_button[action] = false;
 			}
 		});
-	
-		m_stage.addActor(m_leftBtn);
-		m_stage.addActor(m_rightBtn);
-		m_stage.addActor(m_restartBtn);
-		m_stage.addActor(m_jumpBtn);
-		m_stage.addActor(m_actionBtn);
-		m_stage.addActor(m_charSwitchBtn);
+		m_bottomBtnsTable.setFillParent(true);
+		m_bottomBtnsTable.bottom().left();
+		m_bottomBtnsTable.add(m_leftBtn).bottom().left();
+		m_bottomBtnsTable.add(m_rightBtn).bottom().left();
+		m_bottomBtnsTable.add(m_actionBtn).expand().bottom().right();
+		m_bottomBtnsTable.add(m_jumpBtn).bottom().right();
+		m_bottomBtnsTable.add(m_charSwitchBtn).bottom().right();
 		
+		m_topBtnsTable.setFillParent(true);
+		m_topBtnsTable.top().right();
+		m_topBtnsTable.add(m_restartBtn).top().right();
+
+		m_stage.addActor(m_topBtnsTable);
+		m_stage.addActor(m_bottomBtnsTable);
 		Gdx.input.setInputProcessor(m_stage);
 	}
 	
 	public void reset(){
 		
-		for (boolean b : m_button) {
+		for (@SuppressWarnings("unused") boolean b : m_button) {
 			b = false;
 		}
-		//playerOneActive = false;
-		
 	}
 	
 	public void update(float delta, boolean showUI){
@@ -212,7 +219,8 @@ public class InputManager {
 		if(showUI){
 			m_stage.act(delta);
 			m_stage.draw();
-			//Table.drawDebug(m_stage);
+			Table.drawDebug(m_stage);
+			
 		}
 		m_playerSelected = (playerOneActive ? PlayerSelection.ONE : PlayerSelection.TWO);
 	}
