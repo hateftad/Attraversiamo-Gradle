@@ -37,7 +37,8 @@ public class InputManager {
 	public PlayerSelection m_playerSelected;
 	public boolean playerOneActive;
 	private ArrayList<LevelEventListener> m_levelListeners;
-	private Table m_bottomBtnsTable;
+	private Table m_bottomLeftBtnsTable;
+	private Table m_bottomRightBtnsTable;
 	private Table m_topBtnsTable;
 	private boolean[] m_button  = new boolean[10];
 	
@@ -71,7 +72,8 @@ public class InputManager {
 	private InputManager(){
 		
 		m_levelListeners = new ArrayList<LevelEventListener>(); 
-		m_bottomBtnsTable = new Table();
+		m_bottomLeftBtnsTable = new Table();
+		m_bottomRightBtnsTable = new Table();
 		m_topBtnsTable = new Table();
 		for (@SuppressWarnings("unused") boolean b : m_button) {
 			b = false;
@@ -190,20 +192,24 @@ public class InputManager {
 				m_button[action] = false;
 			}
 		});
-		m_bottomBtnsTable.setFillParent(true);
-		m_bottomBtnsTable.bottom().left();
-		m_bottomBtnsTable.add(m_leftBtn).bottom().left();
-		m_bottomBtnsTable.add(m_rightBtn).bottom().left();
-		m_bottomBtnsTable.add(m_actionBtn).expand().bottom().right();
-		m_bottomBtnsTable.add(m_jumpBtn).bottom().right();
-		m_bottomBtnsTable.add(m_charSwitchBtn).bottom().right();
+		m_bottomLeftBtnsTable.setFillParent(true);
+		m_bottomLeftBtnsTable.bottom().left();
+		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left();
+		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left();
+		
+		m_bottomRightBtnsTable.setFillParent(true);
+		m_bottomRightBtnsTable.bottom().right();
+		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right();
+		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right();
+		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right();
 		
 		m_topBtnsTable.setFillParent(true);
 		m_topBtnsTable.top().right();
 		m_topBtnsTable.add(m_restartBtn).top().right();
 
 		m_stage.addActor(m_topBtnsTable);
-		m_stage.addActor(m_bottomBtnsTable);
+		m_stage.addActor(m_bottomLeftBtnsTable);
+		m_stage.addActor(m_bottomRightBtnsTable);
 		Gdx.input.setInputProcessor(m_stage);
 	}
 	
