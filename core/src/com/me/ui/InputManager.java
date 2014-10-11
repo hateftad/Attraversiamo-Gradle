@@ -204,8 +204,8 @@ public class InputManager {
 		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right();
 		
 		m_topBtnsTable.setFillParent(true);
-		m_topBtnsTable.top().right();
-		m_topBtnsTable.add(m_restartBtn).top().right();
+		m_topBtnsTable.top().left();
+		m_topBtnsTable.add(m_restartBtn);
 
 		m_stage.addActor(m_topBtnsTable);
 		m_stage.addActor(m_bottomLeftBtnsTable);

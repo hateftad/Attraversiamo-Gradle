@@ -1,6 +1,5 @@
 package com.me.screens;
 
-import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 import com.me.ui.UIButton;
@@ -26,7 +26,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 	private static final String SCENEPATH = "data/ui/menu";
 	private static final float SCALE = 0.5f;
 	
-	private ArrayList<AnimationComponent> m_animation;
+	private Array<AnimationComponent> m_animation;
 
 	public MenuScreen(Attraversiamo game) {
 		super(game);
@@ -37,7 +37,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		m_camera.viewportWidth = 1024;
 		m_camera.viewportHeight = 768;
 		
-		m_animation = new ArrayList<AnimationComponent>();
+		m_animation = new Array<AnimationComponent>();
 
 		Vector2 middlePoint = new Vector2(Gdx.graphics.getWidth()/2, 0);
 		AnimationComponent scene = new AnimationComponent(SCENEPATH, SCENEPATH, SCALE);

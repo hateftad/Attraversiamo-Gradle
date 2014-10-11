@@ -1,7 +1,5 @@
 package com.me.loaders;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.WeakHashMap;
 
 import box2dLight.ConeLight;
@@ -20,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef.JointType;
-import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
@@ -112,7 +109,7 @@ public class EntityLoader {
 		SpriteComponent sComp = null;
 		Entity entity = null;
 		RubeImage image = null;
-		List<Body> tempList = new ArrayList<Body>();
+		Array<Body> tempList = new Array<Body>();
 
 		for (int i = 0; i < bodies.size; i++) {
 
@@ -256,7 +253,7 @@ public class EntityLoader {
 		SpriteComponent sComp = null;
 		Entity entity = entityWorld.createEntity();
 		RubeImage image = null;
-		List<Body> tempList = new ArrayList<Body>();
+		Array<Body> tempList = new Array<Body>();
 
 		for (int i = 0; i < bodies.size; i++) {
 
@@ -428,7 +425,7 @@ public class EntityLoader {
 		return entity;
 	}
 
-	private void loadBodyJoints(com.badlogic.gdx.physics.box2d.World physicsWorld, List<Body> tempList, World entityWorld)
+	private void loadBodyJoints(com.badlogic.gdx.physics.box2d.World physicsWorld, Array<Body> tempList, World entityWorld)
 	{
 		Array<Joint> joints = m_scene.getJoints();
 		if(joints == null)
