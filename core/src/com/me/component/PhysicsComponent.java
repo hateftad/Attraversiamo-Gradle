@@ -18,15 +18,17 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectMap.Values;
 import com.me.physics.RBUserData;
 import com.me.utils.Converters;
 
 public class PhysicsComponent extends BaseComponent {
 
-	private Map<String, Body> m_body = new HashMap<String, Body>();
-	private Map<Body, RBUserData> m_userData = new HashMap<Body, RBUserData>();
+	private ObjectMap<String, Body> m_body = new ObjectMap<String, Body>();
+	private ObjectMap<Body, RBUserData> m_userData = new ObjectMap<Body, RBUserData>();
 	private Vector2 m_worldPosition;
-	private Map<Body, Vector2> m_previousPositions;
+	private ObjectMap<Body, Vector2> m_previousPositions;
 	private Vector2 m_startPosition;
 	private boolean m_isActive;
 	private String m_name;
@@ -43,7 +45,7 @@ public class PhysicsComponent extends BaseComponent {
 		m_body.get(m_name).setBullet(b.isBullet());
 		m_body.get(m_name).setFixedRotation(b.isFixedRotation());
 		m_body.get(m_name).setSleepingAllowed(b.isSleepingAllowed());
-		m_previousPositions = new HashMap<Body, Vector2>();
+		m_previousPositions = new ObjectMap<Body, Vector2>();
 		m_previousPositions.put(m_body.get(name), m_body.get(name).getPosition());
 		m_startPosition = new Vector2(m_body.get(name).getPosition());
 	}
@@ -150,15 +152,16 @@ public class PhysicsComponent extends BaseComponent {
 	private HashMap<String, Short> filterData = new HashMap<String, Short>();
 	public void disableAllFilters(){
 		
-		Iterator<Entry<String, Body>> it = m_body.entrySet().iterator();
+		Iterator<ObjectMap.Entry<String, Body>> it = m_body.entries().iterator();
+		
 	    while (it.hasNext()) {
 	        @SuppressWarnings("rawtypes")
-			Map.Entry pairs = (Map.Entry)it.next();
-	        Body b = (Body) pairs.getValue();
+			ObjectMap.Entry<String, Body> pairs = (ObjectMap.Entry<String, Body>)it.next();
+	        Body b = (Body) pairs.value;
 	        short bits;
 	        Filter filter = b.getFixtureList().get(0).getFilterData();
 	        bits = filter.categoryBits;
-	        filterData.put((String) pairs.getKey(), new Short(bits));
+	        filterData.put((String) pairs.key, new Short(bits));
 	        filter.categoryBits = 1;
 			b.getFixtureList().get(0).setFilterData(filter);
 	    }
@@ -286,7 +289,7 @@ public class PhysicsComponent extends BaseComponent {
 		return m_userData.get(body);
 	}
 
-	public Collection<Body> getBodyMap(){
+	public Values<Body> getBodyMap(){
 		return m_body.values();
 	}
 

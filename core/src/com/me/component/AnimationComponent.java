@@ -1,5 +1,6 @@
 package com.me.component;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -284,7 +285,7 @@ public class AnimationComponent extends BaseComponent {
 				playAnimation("jogjumping", false);
 				break;
 			case IDLE:
-				playAnimation("idle", true);
+				playAnimation("idle1", true);
 				break;
 			case UPJUMP:
 				playAnimation("upJump", false);

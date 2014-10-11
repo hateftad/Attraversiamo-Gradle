@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.InputProcessor;
+import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.AnimationComponent;
@@ -171,6 +172,10 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 
 		if(finish){
 			animation.setAnimationState(m_playerConfig.m_finishAnimation);
+		}
+		
+		if(ps.isFalling() && ps.movingForward()){
+			animation.setAnimationState(AnimState.FALLING);
 		}
 
 		if(isDead(ps)){

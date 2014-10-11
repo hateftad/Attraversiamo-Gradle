@@ -5,147 +5,140 @@ filter: Linear,Linear
 repeat: none
 back torso
   rotate: false
-  xy: 92, 24
+  xy: 92, 54
   size: 59, 198
   orig: 59, 198
   offset: 0, 0
   index: -1
 hair
-  rotate: false
-  xy: 416, 146
+  rotate: true
+  xy: 281, 32
   size: 74, 76
   orig: 74, 76
   offset: 0, 0
   index: -1
 head
-  rotate: false
-  xy: 416, 146
+  rotate: true
+  xy: 281, 32
   size: 74, 76
   orig: 74, 76
   offset: 0, 0
   index: -1
 hooked arm
   rotate: false
-  xy: 153, 92
+  xy: 153, 122
   size: 117, 130
   orig: 117, 130
   offset: 0, 0
   index: -1
-ledge
-  rotate: false
-  xy: 2, 224
-  size: 512, 30
-  orig: 512, 30
-  offset: 0, 0
-  index: -1
 left closed hand
   rotate: true
-  xy: 761, 153
+  xy: 55, 2
   size: 34, 50
   orig: 34, 50
   offset: 0, 0
   index: -1
 left lower arm
   rotate: true
-  xy: 153, 44
+  xy: 153, 24
   size: 46, 110
   orig: 46, 110
   offset: 0, 0
   index: -1
 left lower leg
   rotate: true
-  xy: 835, 200
+  xy: 735, 198
   size: 54, 148
   orig: 54, 148
   offset: 0, 0
   index: -1
 left shoe
-  rotate: false
-  xy: 684, 142
+  rotate: true
+  xy: 359, 31
   size: 75, 45
   orig: 75, 45
   offset: 0, 0
   index: -1
 left upper arm
   rotate: true
-  xy: 265, 19
+  xy: 885, 203
   size: 49, 126
   orig: 49, 126
   offset: 0, 0
   index: -1
 left upper leg
   rotate: true
-  xy: 676, 189
+  xy: 576, 187
   size: 65, 157
   orig: 65, 157
   offset: 0, 0
   index: -1
 neck
   rotate: true
-  xy: 620, 136
+  xy: 406, 31
   size: 49, 62
   orig: 50, 62
   offset: 1, 0
   index: -1
 right closed hand
-  rotate: false
-  xy: 985, 203
+  rotate: true
+  xy: 2, 2
   size: 34, 51
   orig: 34, 51
   offset: 0, 0
   index: -1
 right hooked arm
   rotate: true
-  xy: 272, 126
+  xy: 272, 156
   size: 96, 142
   orig: 96, 142
   offset: 0, 0
   index: -1
 right lower arm
   rotate: true
-  xy: 835, 152
+  xy: 281, 108
   size: 46, 109
   orig: 46, 109
   offset: 0, 0
   index: -1
 right lower leg
   rotate: true
-  xy: 272, 70
+  xy: 416, 129
   size: 54, 148
   orig: 54, 148
   offset: 0, 0
   index: -1
 right open hand
   rotate: true
-  xy: 153, 2
+  xy: 483, 87
   size: 40, 70
   orig: 40, 70
   offset: 0, 0
   index: -1
 right shoe
-  rotate: true
-  xy: 422, 69
+  rotate: false
+  xy: 406, 82
   size: 75, 45
   orig: 75, 45
   offset: 0, 0
   index: -1
 right upper arm
   rotate: true
-  xy: 492, 137
+  xy: 153, 72
   size: 48, 126
   orig: 48, 126
   offset: 0, 0
   index: -1
 right upper leg
   rotate: true
-  xy: 516, 187
+  xy: 416, 185
   size: 67, 158
   orig: 67, 158
   offset: 0, 0
   index: -1
 torso
   rotate: false
-  xy: 2, 8
+  xy: 2, 38
   size: 88, 214
   orig: 88, 214
   offset: 0, 0

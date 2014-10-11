@@ -135,15 +135,10 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 			}
 			if(m_hangComps.has(e)){
 
-				if(m.m_up && h.m_isHanging)
-				{
-					//JointComponent j = e.getComponent(JointComponent.class);
-					//if(j.getPrismJoint() != null){
-						//j.climb();
-						animation.setAnimationState(AnimState.CLIMBING);
-						h.m_climbingUp = true;
-						m.m_lockControls = true;
-					//}
+				if(m.m_up && h.m_isHanging){
+					animation.setAnimationState(AnimState.CLIMBING);
+					h.m_climbingUp = true;
+					m.m_lockControls = true;
 				}
 				if(h.m_isHanging && !h.m_climbingUp){
 					animation.setAnimationState(AnimState.HANGING);
@@ -232,7 +227,9 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		LadderClimbComponent ladderComp = m_ladderComps.get(e);
 		HangComponent h = m_hangComps.get(e);
 		PlayerComponent player = m_playerComps.get(e);
-
+		if(h.m_hangingLeft || h.m_hangingRight){
+			vel.m_velocity = 0;
+		}
 		if(vel.m_velocity > 0)
 			vel.m_velocity=-VELOCITYINR;
 		if(touch.m_groundTouch){
