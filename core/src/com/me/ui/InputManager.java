@@ -225,7 +225,7 @@ public class InputManager {
 		if(showUI){
 			m_stage.act(delta);
 			m_stage.draw();
-			Table.drawDebug(m_stage);
+			//Table.drawDebug(m_stage);
 			
 		}
 		m_playerSelected = (playerOneActive ? PlayerSelection.ONE : PlayerSelection.TWO);

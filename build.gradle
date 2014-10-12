@@ -1,13 +1,12 @@
 buildscript {
     repositories {
         mavenCentral()
-        mavenLocal()
-        maven { url 'https://github.com/steffenschaefer/gwt-gradle-plugin/raw/maven-repo/' }
+        jcenter()
     }
     dependencies {
-        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.3'
-        classpath 'com.android.tools.build:gradle:+'
-        classpath 'com.github.jtakakura:gradle-robovm-plugin:+'
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.5'
+        classpath 'com.android.tools.build:gradle:0.13+'
+        classpath 'org.robovm:robovm-gradle-plugin:1.0.0-alpha-04'
     }
 }
 
@@ -18,14 +17,14 @@ allprojects {
     version = '1.0'
     ext {
         appName = 'Attraversiamo'
-        gdxVersion = '1.0.0'
-        roboVMVersion = '0.0.14'
+        gdxVersion = '1.4.1'
+        roboVMVersion = '1.0.0-alpha-04'
     }
 
     repositories {
-        mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
 }
 
@@ -100,7 +99,6 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:1.2"
-        compile fileTree(dir: 'build/libs', include: '*.jar')
     }
 }
 
