@@ -25,7 +25,8 @@ public class AbstractScreen implements Screen {
 		m_camera = new OrthographicCamera();  
 		m_camera.viewportHeight = Gdx.graphics.getHeight();  
 		m_camera.viewportWidth = Gdx.graphics.getWidth();  
-		m_camera.position.set(m_camera.viewportWidth * .5f, m_camera.viewportHeight * .5f, 0f);  
+		m_camera.position.set(m_camera.viewportWidth * .5f, m_camera.viewportHeight * .5f, 0f); 
+		GlobalConfig.getInstance().updateZoom();
 		m_camera.zoom = GlobalConfig.getInstance().config.zoom;
 		m_camera.update();
 		

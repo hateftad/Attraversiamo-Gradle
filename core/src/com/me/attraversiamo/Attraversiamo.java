@@ -30,6 +30,7 @@ public class Attraversiamo extends Game implements ApplicationListener {
 			conf.showUI = false;
 			conf.timeStep = 1/60f;
 		}		
+		
 	}
 	
 	public Attraversiamo(){

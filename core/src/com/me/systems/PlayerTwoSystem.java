@@ -119,6 +119,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 					walkLeft(e);
 				}
 				player.setFacingLeft(true);
+				m_jumpComps.get(e).m_jumped = false;
 			}
 
 			if(m.m_right && touch.m_groundTouch){
@@ -128,6 +129,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 					walkRight(e);
 				}
 				player.setFacingLeft(false);
+				m_jumpComps.get(e).m_jumped = false;
 			}
 
 			if(m.m_jump && touch.m_groundTouch && (!m.m_left && !m.m_right) && !crawlComp.isCrawling){

@@ -3,52 +3,31 @@ buttons.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-exit.up
-  rotate: false
-  xy: 1, 261
-  size: 256, 128
-  orig: 256, 128
-  offset: 0, 0
-  index: -1
-newgame.up
-  rotate: false
-  xy: 1, 131
-  size: 256, 128
-  orig: 256, 128
-  offset: 0, 0
-  index: -1
-settings.up
-  rotate: false
-  xy: 259, 261
-  size: 256, 128
-  orig: 256, 128
-  offset: 0, 0
-  index: -1
 change.up
   rotate: false
-  xy: 1, 1
-  size: 128, 128
-  orig: 128, 128
+  xy: 1, 517
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 left.up
   rotate: false
-  xy: 259, 131
-  size: 128, 128
-  orig: 128, 128
+  xy: 1, 259
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 right.up
   rotate: false
-  xy: 517, 261
-  size: 128, 128
-  orig: 128, 128
+  xy: 259, 517
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
 up.up
   rotate: false
-  xy: 131, 1
-  size: 128, 128
-  orig: 128, 128
+  xy: 1, 1
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1

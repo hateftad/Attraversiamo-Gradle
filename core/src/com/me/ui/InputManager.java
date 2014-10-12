@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -78,14 +79,6 @@ public class InputManager {
 		for (@SuppressWarnings("unused") boolean b : m_button) {
 			b = false;
 		}
-		int widthBtn = (int) (Gdx.graphics.getWidth() / 8f);
-		int height = (int) (Gdx.graphics.getHeight() / 6f);
-		float ppcx = Gdx.graphics.getPpcX();
-		float ppcy = Gdx.graphics.getPpcY();
-		
-		float heightOfBtn = 0.3f*ppcx;
-		float widthScr = Gdx.graphics.getWidth();
-		float heightScr = Gdx.graphics.getHeight();
 		
 		m_stage = new Stage();
 		
@@ -96,7 +89,7 @@ public class InputManager {
 		btnStyle.up = m_skin.getDrawable("left.up");
 
 		m_leftBtn = new UIButton(btnStyle);
-		m_leftBtn.debug();
+		//m_leftBtn.debug();
 		m_leftBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				m_button[left] = true;
@@ -112,8 +105,7 @@ public class InputManager {
 		btnStyle2.up = m_skin.getDrawable("right.up");
 
 		m_rightBtn = new UIButton(btnStyle2);
-		m_rightBtn.setBounds((m_leftBtn.getX() + widthBtn) + (ppcy/5), heightOfBtn, widthBtn, height);
-		m_rightBtn.debug();
+		//m_rightBtn.debug();
 		m_rightBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				m_button[right] = true;
@@ -129,8 +121,7 @@ public class InputManager {
 		TextButtonStyle btnStyle5 = new TextButtonStyle();
 		btnStyle5.up = m_skin.getDrawable("change.up");
 		m_restartBtn = new UIButton(btnStyle5);
-		m_restartBtn.setBounds((widthScr - widthBtn) - (ppcy/3), heightScr - m_restartBtn.getHeight(), widthBtn/1.3f, height/1.3f);
-		m_restartBtn.debug();
+		//m_restartBtn.debug();
 		m_restartBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				callRestart();
@@ -146,8 +137,7 @@ public class InputManager {
 		btnStyle4.up = m_skin.getDrawable("change.up");
 		
 		m_charSwitchBtn = new UIButton(btnStyle4);
-		m_charSwitchBtn.setBounds((widthScr - widthBtn) - (ppcy/3), heightOfBtn, widthBtn, height);
-		m_charSwitchBtn.debug();
+		//m_charSwitchBtn.debug();
 		m_charSwitchBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				m_button[first] = true;
@@ -165,7 +155,7 @@ public class InputManager {
 		btnStyle3.up = m_skin.getDrawable("up.up");
 		
 		m_jumpBtn = new UIButton(btnStyle3);
-		m_jumpBtn.debug();
+		//m_jumpBtn.debug();
 		m_jumpBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				m_button[jump] = true;
@@ -181,7 +171,7 @@ public class InputManager {
 		btnStyle6.up = m_skin.getDrawable("up.up");
 		
 		m_actionBtn = new UIButton(btnStyle6);
-		m_actionBtn.debug();
+		//m_actionBtn.debug();
 		m_actionBtn.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				m_button[action] = true;
@@ -194,14 +184,14 @@ public class InputManager {
 		});
 		m_bottomLeftBtnsTable.setFillParent(true);
 		m_bottomLeftBtnsTable.bottom().left();
-		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left().width(120).height(120);
-		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left().width(120).height(120);
+		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left().width(200).height(200);
+		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left().width(200).height(200);
 		
 		m_bottomRightBtnsTable.setFillParent(true);
-		m_bottomRightBtnsTable.bottom().right();
-		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right().width(120).height(120);
-		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right().width(120).height(120);
-		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right().width(120).height(120);
+		m_bottomRightBtnsTable.bottom().right().setHeight(200);
+		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right().width(200).height(200);
+		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right().width(200).height(200);
+		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right().width(200).height(200);
 		
 		m_topBtnsTable.setFillParent(true);
 		m_topBtnsTable.top().left();
