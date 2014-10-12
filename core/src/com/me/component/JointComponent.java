@@ -138,7 +138,7 @@ public class JointComponent extends BaseComponent{
 		if(m_dJoint != null){
 			Vector2 reactionForce = m_dJoint.getReactionForce(1/timeStep);
 		    float forceModuleSq = reactionForce.len2();
-		    System.out.println(" force" +forceModuleSq);
+		    //System.out.println(" force" +forceModuleSq);
 		    if(forceModuleSq >= maxForceSq){
 		    	setToDestroy = true;
 		    }

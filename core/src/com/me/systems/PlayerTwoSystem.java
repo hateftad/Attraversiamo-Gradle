@@ -96,7 +96,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 			crawlComp.isStanding = false;
 			player.setState(State.IDLE); 
 		}
-		//System.out.println("Position "+ps.getPosition());
+
 		MovementComponent m = m_movComps.get(e);
 		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right), m_inputMgr.isDown(up), m_inputMgr.isDown(down), m_inputMgr.isDown(jump));
 		if(player.isActive() && !m.m_lockControls && !g.m_gettingLifted && !finish && !crawlComp.isStanding){

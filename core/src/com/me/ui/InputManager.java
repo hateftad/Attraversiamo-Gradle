@@ -194,18 +194,18 @@ public class InputManager {
 		});
 		m_bottomLeftBtnsTable.setFillParent(true);
 		m_bottomLeftBtnsTable.bottom().left();
-		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left();
-		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left();
+		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left().width(120).height(120);
+		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left().width(120).height(120);
 		
 		m_bottomRightBtnsTable.setFillParent(true);
 		m_bottomRightBtnsTable.bottom().right();
-		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right();
-		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right();
-		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right();
+		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right().width(120).height(120);
+		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right().width(120).height(120);
+		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right().width(120).height(120);
 		
 		m_topBtnsTable.setFillParent(true);
 		m_topBtnsTable.top().left();
-		m_topBtnsTable.add(m_restartBtn);
+		m_topBtnsTable.add(m_restartBtn).width(100).height(100);
 
 		m_stage.addActor(m_topBtnsTable);
 		m_stage.addActor(m_bottomLeftBtnsTable);
