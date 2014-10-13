@@ -12,7 +12,7 @@
             <playerName>smallCharacter</playerName>
             <playerNr>one</playerNr>
 	        <position name = "pos">
-	        	<x name = "x">100.0</x> 
+	        	<x name = "x">0.0</x> 
 	        	<y name = "y">0.0</y>
 	        </position>
 	        <facingLeft>false</facingLeft>
