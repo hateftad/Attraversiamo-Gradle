@@ -13,7 +13,6 @@ import com.me.component.AnimationComponent;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.GrabComponent;
 import com.me.component.HangComponent;
-import com.me.component.JointComponent;
 import com.me.component.JumpComponent;
 import com.me.component.LadderClimbComponent;
 import com.me.component.MovementComponent;

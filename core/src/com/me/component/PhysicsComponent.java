@@ -382,6 +382,7 @@ public class PhysicsComponent extends BaseComponent {
 	public void restart() {
 		m_isDynamic = true;
 		m_isActive = true;
+		setBodyActive(true);
 	}
 
 	public interface ImmediateModePhysicsListener {

@@ -153,6 +153,14 @@ public class JointComponent extends BaseComponent{
 	@Override
 	public void restart() {
 		// TODO Auto-generated method stub
-		
+		if(m_pJoint != null){
+			JointFactory.getInstance().destroyJoint(m_pJoint);
+		}
+		if(m_wJoint != null){
+			JointFactory.getInstance().destroyJoint(m_wJoint);
+		}
+		if(m_dJoint != null){
+			JointFactory.getInstance().destroyJoint(m_dJoint);
+		}
 	}
 }

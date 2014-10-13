@@ -56,11 +56,11 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 				MovementComponent m = m_movComp.get(e);
 				if(!touch.m_edgeTouch && !j.m_destroyed){
 					if(h.m_isHanging){
-						if(m.m_left && h.m_hangingRight){
+						if(m.m_left && h.m_hangingRight && !h.m_climbingUp){
 							h.m_release = true;
 							h.m_isHanging=false;
 						}
-						if(m.m_right && h.m_hangingLeft){
+						if(m.m_right && h.m_hangingLeft && !h.m_climbingUp){
 							h.m_release = true;
 							h.m_isHanging = false;
 						}
