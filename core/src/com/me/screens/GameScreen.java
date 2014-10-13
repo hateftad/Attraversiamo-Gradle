@@ -4,6 +4,7 @@ import box2dLight.RayHandler;
 
 import com.artemis.World;
 import com.artemis.managers.GroupManager;
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +19,8 @@ import com.me.systems.PlayerOneSystem;
 import com.me.systems.PlayerTwoSystem;
 import com.me.systems.RenderSystem;
 import com.me.systems.LevelSystem;
+import com.me.ui.InputManager;
+import com.me.ui.UserInterface;
 import com.me.utils.GameConfig.Platform;
 import com.me.utils.GlobalConfig;
 
@@ -29,6 +32,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	private PlayerTwoSystem m_playerTwoSystem;
 	private RenderSystem m_renderSystem;
 	private CameraSystem m_cameraSystem;
+	private UserInterface m_userInterface;
 	private boolean m_loadedNextLevel;
 
 
@@ -60,6 +64,11 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 			Gdx.input.setInputProcessor(game.m_multiPlexer);
 		}
 		
+		//if(Gdx.app.getType() != Application.ApplicationType.Desktop){
+			m_userInterface = new UserInterface();
+			m_userInterface.init();
+		//}
+		
 	}
 	
 	@Override
@@ -68,6 +77,12 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		
 		m_entityWorld.setDelta(Gdx.graphics.getDeltaTime());
 		m_entityWorld.process();
+		
+		InputManager.getInstance().update();
+		
+		if(m_userInterface != null){
+			m_userInterface.update(delta);
+		}
 		
 		if(m_loadedNextLevel){		
 			OnStartLevel();

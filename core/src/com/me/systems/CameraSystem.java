@@ -20,9 +20,7 @@ import com.me.component.LightComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
 import com.me.component.SpriteComponent;
-import com.me.ui.InputManager;
 import com.me.utils.Converters;
-import com.me.utils.GlobalConfig;
 import com.me.utils.LevelConfig;
 
 public class CameraSystem extends EntityProcessingSystem implements InputProcessor{
@@ -43,8 +41,6 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	private Box2DDebugRenderer m_debugDrawer;
 	private boolean debug;
 	private boolean m_process;
-	private boolean m_showUI;
-	private InputManager m_inputMgr;
 
 	@SuppressWarnings("unchecked")
 	public CameraSystem(RayHandler rh, OrthographicCamera camera) {
@@ -53,8 +49,6 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 		m_debugDrawer = new Box2DDebugRenderer();
 
 		m_camera = new CameraComponent(camera);
-		m_showUI = GlobalConfig.getInstance().config.showUI;
-		m_inputMgr = InputManager.getInstance();
 	}
 	
 	public void setLimits(LevelConfig config){
@@ -80,7 +74,6 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	float zoom;
 	@Override
 	protected void process(Entity e) {
-		m_inputMgr.update(world.delta, m_showUI);
 		
 		if(m_cameraComp.has(e)){
 			m_camera = m_cameraComp.get(e);
