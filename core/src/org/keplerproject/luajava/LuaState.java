@@ -24,6 +24,9 @@
 
 package org.keplerproject.luajava;
 
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
+
 /**
  * LuaState if the main class of LuaJava for the Java developer.
  * LuaState is a mapping of most of Lua's C API functions.
@@ -33,7 +36,8 @@ package org.keplerproject.luajava;
  */
 public class LuaState
 {
-  private final static String LUAJAVA_LIB = "luajava";
+	
+  private final static String LUAJAVA_LIB = Gdx.app.getType() == ApplicationType.Android ? "luajava" : "libluajava";
 
   final public static Integer LUA_GLOBALSINDEX  = new Integer(-10002);
   final public static Integer LUA_REGISTRYINDEX = new Integer(-10000);
