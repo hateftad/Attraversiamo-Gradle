@@ -174,6 +174,10 @@ public class EntityLoader {
 				entity.addComponent(new LightComponent(light, "cameraLight"));
 				entityWorld.getManager(GroupManager.class).add(entity, "lights");
 			}
+			if(m_scene.getCustom(body, "bodyType", "").equals("behindLight")){
+				
+				//entity.addComponent(component);
+			}
 
 			loadFixtures(pComp, body);
 

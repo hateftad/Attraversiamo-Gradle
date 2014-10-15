@@ -14,14 +14,16 @@ public class SpriteComponent extends BaseComponent {
 	public enum Layer
 	{
 		DEFAULT,
-		BACKGROUND1,
+		BACKGROUND3,
 		BACKGROUND2,
+		BACKGROUND1,
+		BACKGROUND0,
 		ACTOR1,
 		ACTOR2,
 		FOREGROUND1,
 		FOREGROUND2,
 		FOREGROUND3,
-		FOREGROUND4
+		FOREGROUND4,
 	}
 	
 	private float m_width;
@@ -102,27 +104,33 @@ public class SpriteComponent extends BaseComponent {
 		
 		switch (layer) {
 		case 0:
-			m_layer = Layer.BACKGROUND1;
+			m_layer = Layer.BACKGROUND3;
 			break;
 		case 1:
 			m_layer = Layer.BACKGROUND2;
 			break;
 		case 2:
-			m_layer = Layer.ACTOR1;
+			m_layer = Layer.BACKGROUND1;
 			break;
 		case 3:
-			m_layer = Layer.ACTOR2;
+			m_layer = Layer.BACKGROUND0;
 			break;
 		case 4:
-			m_layer = Layer.FOREGROUND1;
+			m_layer = Layer.ACTOR1;
 			break;
 		case 5:
-			m_layer = Layer.FOREGROUND2;
+			m_layer = Layer.ACTOR2;
 			break;
 		case 6:
-			m_layer = Layer.FOREGROUND3;
+			m_layer = Layer.FOREGROUND1;
 			break;
 		case 7:
+			m_layer = Layer.FOREGROUND2;
+			break;
+		case 8:
+			m_layer = Layer.FOREGROUND3;
+			break;
+		case 9:
 			m_layer = Layer.FOREGROUND4;
 			break;
 		default:
