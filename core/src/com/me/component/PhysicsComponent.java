@@ -383,6 +383,9 @@ public class PhysicsComponent extends BaseComponent {
 		m_isDynamic = true;
 		m_isActive = true;
 		setBodyActive(true);
+		if(m_physicsListener != null){
+			m_physicsListener.onRestart();
+		}
 	}
 
 	public interface ImmediateModePhysicsListener {
@@ -392,6 +395,8 @@ public class PhysicsComponent extends BaseComponent {
 		public void endContact(Entity e, Contact contact, boolean fixtureA);
 
 		public void preSolve(Entity e, Contact contact, boolean fixtureA);
+		
+		public void onRestart();
 	}
 
 }

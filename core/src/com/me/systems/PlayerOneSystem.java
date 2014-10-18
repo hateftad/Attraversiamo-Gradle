@@ -64,7 +64,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 
 	@Mapper ComponentMapper<PlayerComponent> m_players;
 
-	private float VELOCITY = 10.0f;
+	private float VELOCITY = 11.0f;
 	private float VELOCITYINR = 3.0f;
 
 	@SuppressWarnings("unchecked")

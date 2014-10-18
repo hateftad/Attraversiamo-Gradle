@@ -311,6 +311,15 @@ public class PhysicsListenerSetup {
 					}
 				}
 			}
+
+			@Override
+			public void onRestart() {
+
+				onBox = false;
+				onGround = false;				
+			}
+			
+			
 		});
 	}
 }
