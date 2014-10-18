@@ -16,6 +16,7 @@ public class LevelConfig {
 	private boolean m_hasPortal;
 	private LevelComponent m_levelComponent;
 	public float m_minX, m_maxX, m_minY;
+
 	
 	
 	public LevelConfig(String name) {

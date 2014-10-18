@@ -14,6 +14,7 @@ import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.SkeletonData;
 import com.esotericsoftware.spine.SkeletonJson;
 import com.esotericsoftware.spine.SkeletonRenderer;
+import com.esotericsoftware.spine.Skin;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.AtlasAttachmentLoader;
 import com.me.loaders.RubeImage;
@@ -93,6 +94,8 @@ public class AnimationComponent extends BaseComponent {
 		m_skeleton = new Skeleton(m_skeletonData);
 		m_skeleton.setX(m_center.x);
 		m_skeleton.setY(m_center.y);
+		Skin skin = m_skeletonData.findSkin("silhouette");
+		m_skeleton.setSkin(skin);
 		m_center = Converters.ToBox(m_center);
 		m_skeleton.updateWorldTransform();
 		return stateData;
@@ -260,7 +263,10 @@ public class AnimationComponent extends BaseComponent {
 		}
 		m_previousState = state;
 	}
-
+	
+	public void setSkin(String skinName){
+		m_skeleton.setSkin(m_skeletonData.findSkin(skinName));
+	}
 
 	public void setAnimationState(AnimState state){
 
@@ -359,6 +365,11 @@ public class AnimationComponent extends BaseComponent {
 	
 	public Vector2 getPositionRelative(String attachmentName){
 		Slot slot = null;
+		
+		if(!m_skeleton.getSkin().getName().equals("color")){
+			attachmentName = "silhouette/"+attachmentName;
+		}
+		
 		for(Slot s : m_skeleton.getSlots()){
 			if(s.getAttachment() != null){
 				//System.out.println(s.getAttachment().getName());

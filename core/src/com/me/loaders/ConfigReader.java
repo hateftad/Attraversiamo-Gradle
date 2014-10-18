@@ -33,6 +33,7 @@ public class ConfigReader {
 				for(Element gChild : children){
 					if(gChild.get("playerNr").equals("one")){
 						PlayerConfig pConfig = new PlayerConfig();
+						pConfig.setSkinName(gChild.get("skinName"));
 						pConfig.m_active = gChild.getBoolean("active");
 						pConfig.m_canDeactivate = gChild.getBoolean("canDeactivate");
 						pConfig.m_playerPosition.x = gChild.getChildByName("position").getFloat("x");
@@ -44,6 +45,7 @@ public class ConfigReader {
 					}
 					if(gChild.get("playerNr").equals("two")){
 						PlayerConfig pConfig = new PlayerConfig();
+						pConfig.setSkinName(gChild.get("skinName"));
 						pConfig.m_active = gChild.getBoolean("active");
 						pConfig.m_canDeactivate = gChild.getBoolean("canDeactivate");
 						pConfig.m_playerPosition.x = gChild.getChildByName("position").getFloat("x");
@@ -60,6 +62,7 @@ public class ConfigReader {
 				config.setNrOfPlayers(child.getInt("nrOfPlayers"));
 				config.finishFacingLeft(child.getBoolean("finishFacingLeft"));
 				config.setHasPortal(child.getBoolean("hasPortal"));
+				
 				m_levelConfigs.put(child.getAttribute("name"), config);
 				
 			}

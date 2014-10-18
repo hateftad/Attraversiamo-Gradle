@@ -7,7 +7,7 @@ import com.me.listeners.LevelEventListener;
 
 public class InputManager {
 
-	private int left = 0, right = 1, restart = 2, down = 3, jump = 4, rag = 5, first = 6, action = 7; 
+	private int left = 0, right = 1, restart = 2, down = 3, jump = 4, rag = 5, first = 6, action = 7, skinChange = 8; 
 	
 	public enum PlayerSelection{
 		ONE,
@@ -81,6 +81,22 @@ public class InputManager {
 	public boolean isDown(int nr){
 		return m_button[nr];
 	}
+	private String skinName = "color";
+	public String toggleSkins(){
+		if(skinName.equals("color")){
+			skinName = "silhouette";
+			return skinName;
+		}
+		else if(skinName.equals("silhouette")){
+			skinName = "color";
+			return skinName;
+		}
+		return skinName;
+	}
+	
+	public String getSkinName(){
+		return skinName;
+	}
 
 	public void keyDown(int keycode){
 	
@@ -114,6 +130,11 @@ public class InputManager {
 		if(keycode == Input.Keys.R){
 			callRestart();
 		}
+		if(keycode == Input.Keys.Q){
+			m_button[skinChange] = true;
+			toggleSkins();
+		}
+		
 	
 	}
 	
@@ -147,6 +168,9 @@ public class InputManager {
 		
 		if(keycode == Input.Keys.F){
 			m_button[action] = false;
+		}
+		if(keycode == Input.Keys.Q){
+			m_button[skinChange] = false;
 		}
 		
 	}

@@ -34,7 +34,7 @@ import com.me.utils.PlayerConfig;
 public class PlayerOneSystem extends EntityProcessingSystem implements InputProcessor {
 
 
-	private int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5, changePlayer = 6, action = 7; 
+	private int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5, changePlayer = 6, action = 7, skinChange = 8; 
 
 	private boolean m_process = true;
 
@@ -99,6 +99,10 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 
 		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().m_finished;
 
+		if(m_inputMgr.isDown(skinChange)){
+			animation.setSkin(m_inputMgr.toggleSkins());;
+		}
+		
 		if(m_inputMgr.m_playerSelected == PlayerSelection.ONE){
 			player.setActive(true);
 		}else if(player.canDeActivate()){

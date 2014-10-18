@@ -382,6 +382,7 @@ public class EntityLoader {
 				stateData.setMix("runJumping", "falling", 0.4f);
 				//dstateData.setMix("pushing", "idle", 0.6f);
 				//stateData.setMix("ladderHang", "running", 0.1f);
+				anim.setSkin(config.getSkinName());
 				pComp.setPosition(config.m_playerPosition);
 				//stateData.setMix("lieDown", "running", 0.3f);
 
@@ -411,6 +412,7 @@ public class EntityLoader {
 				stateData.setMix("standUp", "idle1", 0.2f);
 				stateData.setMix("lyingDown", "standUp", 0.2f);
 				entity.addComponent(p);
+				anim.setSkin(config.getSkinName());
 				entity.addComponent(new MovementComponent());
 				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f, 10);
 				vel.m_crawlLimit = 2.5f;

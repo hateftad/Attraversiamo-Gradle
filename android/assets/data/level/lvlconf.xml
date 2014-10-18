@@ -7,6 +7,7 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>true</hasPortal>
         <player>
+            <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
@@ -19,6 +20,7 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
+            <skinName>color</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
@@ -41,6 +43,7 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
         <player>
+            <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
@@ -53,6 +56,7 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
+            <skinName>color</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
@@ -74,7 +78,9 @@
         <nrOfPlayers>1</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
+         <skins>color</skins>
         <player>
+            <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>false</canDeactivate>
             <playerName>smallCharacter</playerName>
@@ -97,6 +103,7 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
         <player>
+            <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>false</canDeactivate>
             <playerName>smallCharacter</playerName>
@@ -118,7 +125,9 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
+        
         <player>
+            <skinName>silhouette</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
@@ -131,6 +140,7 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
+            <skinName>silhouette</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>

@@ -12,6 +12,8 @@ public class PlayerConfig {
  	public String m_name;
  	public AnimState m_finishAnimation;
  	public float minimumY;
+ 	private String m_skinName;
+ 	
  	public PlayerConfig(){
  		m_playerPosition = new Vector2();
  	}
@@ -29,4 +31,12 @@ public class PlayerConfig {
  			m_finishAnimation = AnimState.WALKOUT;
  		}
  	}
+ 	
+	public void setSkinName(String name){
+		m_skinName = name;
+	}
+	
+	public String getSkinName(){
+		return m_skinName;
+	}
 }

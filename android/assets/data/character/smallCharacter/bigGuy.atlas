@@ -1,5 +1,5 @@
 
-bigGuy.png
+bigGuy-1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -141,5 +141,143 @@ torso
   xy: 2, 38
   size: 88, 214
   orig: 88, 214
+  offset: 0, 0
+  index: -1
+
+bigGuy-2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+silhouette/back torso
+  rotate: false
+  xy: 91, 56
+  size: 58, 194
+  orig: 58, 194
+  offset: 0, 0
+  index: -1
+silhouette/head
+  rotate: false
+  xy: 277, 77
+  size: 74, 76
+  orig: 74, 76
+  offset: 0, 0
+  index: -1
+silhouette/hooked arm
+  rotate: false
+  xy: 151, 121
+  size: 116, 129
+  orig: 116, 129
+  offset: 0, 0
+  index: -1
+silhouette/left closed hand
+  rotate: true
+  xy: 55, 3
+  size: 33, 49
+  orig: 33, 49
+  offset: 0, 0
+  index: -1
+silhouette/left lower arm
+  rotate: true
+  xy: 151, 24
+  size: 45, 107
+  orig: 45, 107
+  offset: 0, 0
+  index: -1
+silhouette/left lower leg
+  rotate: true
+  xy: 727, 196
+  size: 54, 148
+  orig: 54, 148
+  offset: 0, 0
+  index: -1
+silhouette/right lower leg
+  rotate: true
+  xy: 727, 196
+  size: 54, 148
+  orig: 54, 148
+  offset: 0, 0
+  index: -1
+silhouette/left shoe
+  rotate: true
+  xy: 353, 79
+  size: 74, 45
+  orig: 74, 45
+  offset: 0, 0
+  index: -1
+silhouette/right shoe
+  rotate: true
+  xy: 353, 79
+  size: 74, 45
+  orig: 74, 45
+  offset: 0, 0
+  index: -1
+silhouette/left upper arm
+  rotate: true
+  xy: 151, 71
+  size: 48, 124
+  orig: 48, 124
+  offset: 0, 0
+  index: -1
+silhouette/left upper leg
+  rotate: true
+  xy: 411, 185
+  size: 65, 157
+  orig: 65, 157
+  offset: 0, 0
+  index: -1
+silhouette/neck
+  rotate: true
+  xy: 400, 89
+  size: 49, 62
+  orig: 50, 62
+  offset: 1, 0
+  index: -1
+silhouette/right closed hand
+  rotate: true
+  xy: 2, 2
+  size: 34, 51
+  orig: 34, 51
+  offset: 0, 0
+  index: -1
+silhouette/right hooked arm
+  rotate: true
+  xy: 269, 155
+  size: 95, 140
+  orig: 95, 140
+  offset: 0, 0
+  index: -1
+silhouette/right lower arm
+  rotate: true
+  xy: 411, 140
+  size: 43, 109
+  orig: 43, 109
+  offset: 0, 0
+  index: -1
+silhouette/right open hand
+  rotate: true
+  xy: 464, 99
+  size: 39, 68
+  orig: 39, 68
+  offset: 0, 0
+  index: -1
+silhouette/right upper arm
+  rotate: true
+  xy: 877, 201
+  size: 49, 124
+  orig: 49, 124
+  offset: 0, 0
+  index: -1
+silhouette/right upper leg
+  rotate: true
+  xy: 570, 184
+  size: 66, 155
+  orig: 66, 155
+  offset: 0, 0
+  index: -1
+silhouette/torso
+  rotate: false
+  xy: 2, 38
+  size: 87, 212
+  orig: 87, 212
   offset: 0, 0
   index: -1
