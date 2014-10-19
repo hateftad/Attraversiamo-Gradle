@@ -30,7 +30,7 @@ public class InputManager {
 	      return instance;
 	   }
 	
-	public void setListener(LevelEventListener listener){
+	public void addEventListener(LevelEventListener listener){
 		m_levelListeners.add(listener);
 	}
 	

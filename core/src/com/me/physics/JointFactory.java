@@ -35,8 +35,7 @@ public class JointFactory {
 	}
 	
 	public RevoluteJointDef createRevoluteJoint(Body b1, Body b2, 
-							Vector2 anchor1, Vector2 anchor2, float LLimit, float ULimit, boolean motor)
-	{
+							Vector2 anchor1, Vector2 anchor2, float LLimit, float ULimit, boolean motor){
 		RevoluteJointDef jDef = new RevoluteJointDef();
 		jDef.bodyA = b1;
 		jDef.bodyB = b2;
@@ -52,8 +51,7 @@ public class JointFactory {
 		return jDef;
 	}
 	
-	public DistanceJointDef createDistanceJoint(Body b1, Body b2, Vector2 anchor1, Vector2 anchor2, boolean col, float length)
-	{
+	public DistanceJointDef createDistanceJoint(Body b1, Body b2, Vector2 anchor1, Vector2 anchor2, boolean col, float length){
 		DistanceJointDef jDef = new DistanceJointDef();
 		jDef.bodyA = b1;
 		jDef.bodyB = b2;
@@ -65,8 +63,7 @@ public class JointFactory {
 		return jDef;
 	}
 	
-	public WeldJointDef createWeldJoint(Body b1, Body b2, Vector2 anchor1, Vector2 anchor2, boolean col)
-	{
+	public WeldJointDef createWeldJoint(Body b1, Body b2, Vector2 anchor1, Vector2 anchor2, boolean col){
 		WeldJointDef jDef = new WeldJointDef();
 		jDef.bodyA = b1;
 		jDef.bodyB = b2;
@@ -76,8 +73,7 @@ public class JointFactory {
 		return jDef;
 	}
 	
-	public PrismaticJointDef createPrismJoint(Body b1, Body b2, Vector2 anchor1, Vector2 anchor2, float uL, float lL, boolean col, boolean m, Vector2 lAxis)
-	{
+	public PrismaticJointDef createPrismJoint(Body b1, Body b2, Vector2 anchor1, Vector2 anchor2, float uL, float lL, boolean col, boolean m, Vector2 lAxis){
 		PrismaticJointDef jDef = new PrismaticJointDef();
 		jDef.bodyA = b1;
 		jDef.bodyB = b2;
@@ -94,15 +90,13 @@ public class JointFactory {
 		
 	}
 	
-	public Joint createJoint(Body bodyA, Body bodyB, JointDef jDef, World world )
-	{
+	public Joint createJoint(Body bodyA, Body bodyB, JointDef jDef, World world ){
 		jDef.bodyA = bodyA;
 		jDef.bodyB = bodyB;
 		return	world.createJoint(jDef);
 	}
 	
-	public Joint createJoint(JointDef jDef)
-	{
+	public Joint createJoint(JointDef jDef){
 		if(m_joints.contains(jDef)){
 			System.out.println("already is one");
 			return null;
@@ -115,15 +109,18 @@ public class JointFactory {
 		}
 	}
 	
-	public void destroyJoint(Joint j)
-	{
+	public void destroyJoint(Joint j){
 		m_world.destroyJoint(j);
 	}
 	
-	public void printInfo()
-	{
+	public void printInfo(){
 		System.out.println("Nr of joints "+ m_world.getJointCount());
 	}
+	
+	public void destroy(){
+		m_world.dispose();
+	}
+	
 	
 	
 }

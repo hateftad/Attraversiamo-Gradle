@@ -21,7 +21,7 @@ public class DimensionsHelper {
 		}
 		//ipad mini & other
 		if(height == 768 && width == 1024){
-			zoom = 5f;
+			zoom = 6f;
 		}
 		if(height == 800 && width == 1280){
 			zoom = 6f;
@@ -33,7 +33,6 @@ public class DimensionsHelper {
 		if(height == 1536 && width == 2048){
 			zoom = 4f;
 		}
-		
 		
 		return zoom;
 	}

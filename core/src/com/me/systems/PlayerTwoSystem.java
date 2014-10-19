@@ -181,7 +181,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		}
 
 		if(isDead(ps)){
-			world.getSystem(PhysicsSystem.class).onRestartLevel();
+			m_inputMgr.callRestart();
 		}
 
 		animateBody(ps, player, animation);

@@ -73,7 +73,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		super(Aspect.getAspectForOne(PlayerOneComponent.class));
 
 		m_inputMgr = InputManager.getInstance();
-		InputManager.getInstance().setListener(listener);
+		InputManager.getInstance().addEventListener(listener);
 
 		if(GlobalConfig.getInstance().config.platform == Platform.DESKTOP){
 			Gdx.input.setInputProcessor(this);
@@ -211,7 +211,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		}
 
 		if(isDead(ps)){
-			world.getSystem(PhysicsSystem.class).onRestartLevel();
+			m_inputMgr.callRestart();
 		}
 
 		//TOO MUCH PROCESSING!!

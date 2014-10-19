@@ -148,26 +148,28 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		if (m_restart){
-			for(int i=0; i<entities.size();i++){
-				Entity e = entities.get(i);
-				if(m_restartComps.has(e)){
-					PhysicsComponent comp = m_physicsComponents.get(e);
-					comp.setToStart();
-					if(m_animComponents.has(e)){
-						m_animComponents.get(e).setAnimationState(AnimState.IDLE);
-						if(e.getComponent(PlayerTwoComponent.class) != null){
-							comp.makeDynamic("center", 0.001f);
+			if(!world.getSystem(LevelSystem.class).getLevelComponent().m_finished){
+				for(int i=0; i<entities.size();i++){
+					Entity e = entities.get(i);
+					if(m_restartComps.has(e)){
+						PhysicsComponent comp = m_physicsComponents.get(e);
+						comp.setToStart();
+						if(m_animComponents.has(e)){
+							m_animComponents.get(e).setAnimationState(AnimState.IDLE);
+							if(e.getComponent(PlayerTwoComponent.class) != null){
+								comp.makeDynamic("center", 0.001f);
+							}
 						}
 					}
+					Bag<Component> fillBag = new Bag<Component>();
+					e.getComponents(fillBag);
+					for(int x=0; x<fillBag.size(); x++){
+						BaseComponent comp = (BaseComponent) fillBag.get(x);
+						comp.restart();
+					}
 				}
-				Bag<Component> fillBag = new Bag<Component>();
-				e.getComponents(fillBag);
-				for(int x=0; x<fillBag.size(); x++){
-					BaseComponent comp = (BaseComponent) fillBag.get(x);
-					comp.restart();
-				}
+				OnStartLevel();
 			}
-			OnStartLevel();
 		}
 		
 		for(int i=0; i<entities.size(); i++){
@@ -180,7 +182,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 					JointComponent joint = m_jointComps.get(e);
 					JointFactory.getInstance().destroyJoint(joint.getDJoint());
 					e.removeComponent(comp);
-					//e.getComponent(JointComponent.class).
 				}
 			}
 		}

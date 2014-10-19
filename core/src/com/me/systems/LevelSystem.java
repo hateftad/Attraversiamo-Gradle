@@ -50,8 +50,8 @@ public class LevelSystem extends EntityProcessingSystem{
 	public void setLevelConfig(LevelConfig levelCfg){
 		m_levelConfig = levelCfg;
 		m_levelNr = levelCfg.getLevelNr();
-		m_scriptMgr = new ScriptManager("data/script.lua");
-		m_scriptMgr.runScriptFunction("init", levelCfg);
+		//m_scriptMgr = new ScriptManager("data/script.lua");
+		//m_scriptMgr.runScriptFunction("init", levelCfg);
 		m_levelComponent = levelCfg.getLevelComponent();
 	}
 
@@ -133,7 +133,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void checkFinished(PlayerComponent player, TouchComponent touch){
 		if(player.getPlayerNr().equals("playerOne")){
 			first = touch.m_endReach;
-		} else{
+		} else {
 			second = touch.m_endReach;
 		}
 		if(m_levelComponent.m_finished){

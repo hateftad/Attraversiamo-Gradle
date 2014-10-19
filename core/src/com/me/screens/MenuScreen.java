@@ -91,6 +91,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 
 	@Override
 	public void show() {
+		
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		//m_stage.draw();
 		m_spriteBatch.setProjectionMatrix(m_camera.combined);
 		m_spriteBatch.begin();
-		for(AnimationComponent comp:m_animation){
+		for(AnimationComponent comp: m_animation){
 			comp.update(m_spriteBatch, delta);
 		}
 		m_spriteBatch.end();
@@ -115,6 +116,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 
 	@Override
 	public void pause() {
+		
 	}
 
 	@Override
