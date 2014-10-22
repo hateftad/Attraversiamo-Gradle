@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.WorldManifold;
+import com.gushikustudios.box2d.controllers.B2Controller;
 import com.me.component.CrawlComponent;
 import com.me.component.GrabComponent;
 import com.me.component.HangComponent;
@@ -33,7 +34,7 @@ public class PhysicsListenerSetup {
 
 	public void setPlayerPhysics(PhysicsComponent ps)
 	{
-		
+
 		ps.setPhysicsListener(new ImmediateModePhysicsListener() {
 
 			public boolean onGround = false;
@@ -106,7 +107,7 @@ public class PhysicsListenerSetup {
 								e.getComponent(TouchComponent.class).m_footEdge = true;
 								e.getComponent(TouchComponent.class).m_touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
 							}
-							
+
 							if(otherUd.getType() == Type.HAND){
 								if(e2.getComponent(JointComponent.class) != null){
 									if(e2.getComponent(GrabComponent.class).m_gonnaGrab){
@@ -142,7 +143,7 @@ public class PhysicsListenerSetup {
 								e.getComponent(MovementComponent.class).m_lockControls = false;
 							}
 						}
-						
+
 					}
 				} else if(fB.isSensor()){
 
@@ -169,7 +170,7 @@ public class PhysicsListenerSetup {
 								e.getComponent(GrabComponent.class).m_grabbed = false;
 								onGround = true;
 							}
-							
+
 							if(playerUd.getType() == Type.FEET && otherUd.getType() == Type.BOX){
 								e.getComponent(TouchComponent.class).m_groundTouch = true;
 								e.getComponent(TouchComponent.class).m_feetToBox = true;
@@ -191,7 +192,7 @@ public class PhysicsListenerSetup {
 
 							if(playerUd.getType() == Type.TORSO && otherUd.getType() == Type.BOX){
 								if(e.getComponent(TouchComponent.class).m_groundTouch){
-									
+
 									Body b = other.getBody("box");
 									QueueComponent queueComp = e1.getComponent(QueueComponent.class);
 									queueComp.mass = 5f;
@@ -215,7 +216,7 @@ public class PhysicsListenerSetup {
 					}
 				}
 			}
-			
+
 			@Override
 			public void endContact(Entity e, Contact contact, boolean fixtureA) {
 
@@ -318,8 +319,62 @@ public class PhysicsListenerSetup {
 				onBox = false;
 				onGround = false;				
 			}
-			
-			
+
+
+		});
+	}
+
+	public void setLevelPhysics(PhysicsComponent pComp) {
+		// TODO Auto-generated method stub
+		pComp.setPhysicsListener(new ImmediateModePhysicsListener() {
+
+			@Override
+			public void preSolve(Entity e, Contact contact, boolean fixtureA) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onRestart() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void endContact(Entity e, Contact contact, boolean fixtureA) {
+				// TODO Auto-generated method stub
+				Fixture fixA = contact.getFixtureA();
+				Fixture fixB = contact.getFixtureB();
+
+				if ((fixA.isSensor()) && (fixA.getUserData() != null))
+				{
+					B2Controller b2c = (B2Controller) fixA.getUserData();
+					b2c.removeBody(fixB.getBody());
+				}
+				else if ((fixB.isSensor()) && (fixB.getUserData() != null))
+				{
+					B2Controller b2c = (B2Controller) fixB.getUserData();
+					b2c.removeBody(fixA.getBody());
+				}
+			}
+
+			@Override
+			public void beginContact(Entity e, Contact contact, boolean fixtureA) {
+				// TODO Auto-generated method stub
+				Fixture fixA = contact.getFixtureA();
+				Fixture fixB = contact.getFixtureB();
+
+				if ((fixA.isSensor()) && (fixA.getUserData() != null))
+				{
+					B2Controller b2c = (B2Controller) fixA.getUserData();
+					b2c.addBody(fixB.getBody());
+				}
+				else if ((fixB.isSensor()) && (fixB.getUserData() != null))
+				{
+					B2Controller b2c = (B2Controller) fixB.getUserData();
+					b2c.addBody(fixA.getBody());
+				}
+			}
 		});
 	}
 }

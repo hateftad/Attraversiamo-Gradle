@@ -8,14 +8,20 @@ import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.Bag;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.gushikustudios.box2d.controllers.B2BuoyancyController;
+import com.gushikustudios.box2d.controllers.B2Controller;
 import com.me.component.AnimationComponent;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.BaseComponent;
 import com.me.component.QueueComponent.QueueType;
+import com.me.component.BouyancyComponent;
 import com.me.component.JointComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerTwoComponent;
@@ -24,51 +30,65 @@ import com.me.component.RestartComponent;
 import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
+import com.me.physics.PhysicsListenerSetup;
 import com.me.utils.GlobalConfig;
 
-public class PhysicsSystem extends EntitySystem implements Disposable, LevelEventListener {
+public class PhysicsSystem extends EntitySystem implements Disposable,
+		LevelEventListener {
 
-	@Mapper ComponentMapper<PhysicsComponent> m_physicsComponents;
-	
-	@Mapper ComponentMapper<AnimationComponent> m_animComponents;
-	
-	@Mapper ComponentMapper<QueueComponent> m_queueComps;
-	
-	@Mapper ComponentMapper<RestartComponent> m_restartComps;
-	
-	@Mapper ComponentMapper<JointComponent> m_jointComps;
-	
+	@Mapper
+	ComponentMapper<PhysicsComponent> m_physicsComponents;
+
+	@Mapper
+	ComponentMapper<AnimationComponent> m_animComponents;
+
+	@Mapper
+	ComponentMapper<QueueComponent> m_queueComps;
+
+	@Mapper
+	ComponentMapper<RestartComponent> m_restartComps;
+
+	@Mapper
+	ComponentMapper<JointComponent> m_jointComps;
+
+	@Mapper
+	ComponentMapper<BouyancyComponent> m_bouyComps;
+
 	private World m_world;
-	
+
 	private int m_velocityItr;
-	
+
 	private int m_positionItr;
-	
+
 	private float m_timeStep;
-	
+
 	private PhysicsContactListener m_physicsContactListener;
 
 	private boolean m_restart;
-	
+
 	private boolean m_processPhysics = true;
-	
+
 	private double m_currentTime = System.currentTimeMillis();
-	
+
 	private float m_fixedAccumulator = 0;
-	
+
 	private float m_fixedAccumulatorRatio = 0;
-	
+
+	private Array<B2Controller> m_b2Controllers;
+
 	public PhysicsSystem(World physicsWorld) {
 		this(physicsWorld, 6, 6);
 		m_timeStep = GlobalConfig.getInstance().config.timeStep;
+		m_b2Controllers = new Array<B2Controller>();
 	}
 
-	public void toggleProcessing(boolean process){
+	public void toggleProcessing(boolean process) {
 		m_processPhysics = process;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public PhysicsSystem(World physicsWorld, int velocityIterations, int positionIterations) {
+	public PhysicsSystem(World physicsWorld, int velocityIterations,
+			int positionIterations) {
 		super(Aspect.getAspectForAll(PhysicsComponent.class));
 		m_world = physicsWorld;
 		m_world.setAutoClearForces(true);
@@ -80,66 +100,71 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	}
 
 	private static final int MAXSTEPS = 2;
+
 	@Override
 	protected void begin() {
-		
+
 		double now = System.currentTimeMillis();
 		double dt = now - m_currentTime;
 		m_currentTime = now;
-		
+
 		m_fixedAccumulator += dt;
-		
+
 		final int nSteps = (int) Math.floor(m_fixedAccumulator / m_timeStep);
-		
-		if(nSteps > 0){
+
+		if (nSteps > 0) {
 			m_fixedAccumulator -= nSteps * m_timeStep;
 		}
 		m_fixedAccumulatorRatio = m_fixedAccumulator / m_timeStep;
-		
+
 		int nStepsClamped = Math.min(nSteps, MAXSTEPS);
-		
-		for(int i=0; i < nStepsClamped; i++){
+
+		for (int i = 0; i < nStepsClamped; i++) {
 			resetSmoothStates();
+			for (int x = 0; x < m_b2Controllers.size; x++) {
+				m_b2Controllers.get(x).step(m_timeStep);
+			}
 			singleStep(m_timeStep);
 		}
-		
+
 		m_world.clearForces();
 		smoothStates();
 
 	}
-	
+
 	private void smoothStates() {
-		
+
 		final double oneMinusRatio = 1.0 - m_fixedAccumulatorRatio;
 		Array<Body> bodies = new Array<Body>();
 		m_world.getBodies(bodies);
-		
-		for(Body b: bodies){
+
+		for (Body b : bodies) {
 			Entity e = (Entity) b.getUserData();
-			if(m_physicsComponents.has(e)){
-				m_physicsComponents.get(e).updateSmoothStates(m_fixedAccumulatorRatio, oneMinusRatio);
+			if (m_physicsComponents.has(e)) {
+				m_physicsComponents.get(e).updateSmoothStates(
+						m_fixedAccumulatorRatio, oneMinusRatio);
 			}
-		}		
+		}
 	}
 
 	private void resetSmoothStates() {
-		
+
 		Array<Body> bodies = new Array<Body>();
 		m_world.getBodies(bodies);
-		for(Body b: bodies){
+		for (Body b : bodies) {
 			Entity e = (Entity) b.getUserData();
-			if(m_physicsComponents.has(e)){
+			if (m_physicsComponents.has(e)) {
 				m_physicsComponents.get(e).updatePreviousPosition();
 			}
 		}
 	}
 
-	private void singleStep(float timeStep){
-		if(m_processPhysics){
+	private void singleStep(float timeStep) {
+		if (m_processPhysics) {
 			m_world.step(world.delta, m_velocityItr, m_positionItr);
-		} 
+		}
 	}
-	
+
 	@Override
 	protected boolean checkProcessing() {
 		return m_processPhysics;
@@ -147,23 +172,24 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		if (m_restart){
-			if(!world.getSystem(LevelSystem.class).getLevelComponent().m_finished){
-				for(int i=0; i<entities.size();i++){
+		if (m_restart) {
+			if (!world.getSystem(LevelSystem.class).getLevelComponent().m_finished) {
+				for (int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
-					if(m_restartComps.has(e)){
+					if (m_restartComps.has(e)) {
 						PhysicsComponent comp = m_physicsComponents.get(e);
 						comp.setToStart();
-						if(m_animComponents.has(e)){
-							m_animComponents.get(e).setAnimationState(AnimState.IDLE);
-							if(e.getComponent(PlayerTwoComponent.class) != null){
+						if (m_animComponents.has(e)) {
+							m_animComponents.get(e).setAnimationState(
+									AnimState.IDLE);
+							if (e.getComponent(PlayerTwoComponent.class) != null) {
 								comp.makeDynamic("center", 0.001f);
 							}
 						}
 					}
 					Bag<Component> fillBag = new Bag<Component>();
 					e.getComponents(fillBag);
-					for(int x=0; x<fillBag.size(); x++){
+					for (int x = 0; x < fillBag.size(); x++) {
 						BaseComponent comp = (BaseComponent) fillBag.get(x);
 						comp.restart();
 					}
@@ -171,60 +197,102 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 				OnStartLevel();
 			}
 		}
-		
-		for(int i=0; i<entities.size(); i++){
+
+		for (int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
-			if(m_queueComps.has(e)){
+			if (m_queueComps.has(e)) {
 				QueueComponent comp = m_queueComps.get(e);
-				if(comp.type == QueueType.MASS){
+				if (comp.type == QueueType.MASS) {
 					m_physicsComponents.get(e).setMass(comp.mass, "box");
-				} else if(comp.type == QueueType.JOINT){
+				} else if (comp.type == QueueType.JOINT) {
 					JointComponent joint = m_jointComps.get(e);
 					JointFactory.getInstance().destroyJoint(joint.getDJoint());
 					e.removeComponent(comp);
 				}
 			}
 		}
-				
+
 	}
-	
+
 	@Override
 	protected void removed(Entity e) {
 		PhysicsComponent physicsComponent = m_physicsComponents.get(e);
 
-		if (physicsComponent == null){
+		if (physicsComponent == null) {
 			return;
 		}
 		world.deleteEntity(e);
 	}
-	
-	public void clearSystem(){
-		//m_physicsContactListener = new PhysicsContactListener();
+
+	public void clearSystem() {
+		// m_physicsContactListener = new PhysicsContactListener();
 		Array<Body> bodies = new Array<Body>();
 		m_world.getBodies(bodies);
-		
-		for(Body b: bodies){
+
+		for (Body b : bodies) {
 			m_world.destroyBody(b);
 		}
 		m_world.setContactListener(null);
 		dispose();
 	}
-	
-	public void printInfo(){
-		System.out.println(" Bodies in the world: "+ m_world.getBodyCount());
+
+	@Override
+	protected void inserted(Entity e) {
+
+		if (m_bouyComps.has(e)) {
+
+			PhysicsComponent pComp = m_physicsComponents.get(e);
+			Fixture fixture = pComp.getBody().getFixtureList().first();
+			final Vector2 mTmp = new Vector2();
+			float bodyHeight = fixture.getBody().getPosition().y;
+			// B2BuoyancyController b2c = new B2BuoyancyController();
+
+			// need to calculate the fluid surface height for the buoyancy
+			// controller
+			PolygonShape shape = (PolygonShape) fixture.getShape();
+			shape.getVertex(0, mTmp);
+			float maxHeight = mTmp.y + bodyHeight; // initialize the height,
+													// transforming to 'world'
+													// coordinates
+
+			// find the maxHeight
+			for (int j = 1; j < shape.getVertexCount(); j++) {
+				shape.getVertex(j, mTmp);
+				maxHeight = Math.max(maxHeight, mTmp.y + bodyHeight); // transform
+																		// to
+																		// world
+																		// coordinates
+			}
+			B2BuoyancyController b2c = new B2BuoyancyController(
+					B2BuoyancyController.DEFAULT_SURFACE_NORMAL, // assume up
+					new Vector2(0, 10), m_world.getGravity(), maxHeight,
+					fixture.getDensity(), 100f, 200);
+			fixture.setUserData(b2c); // reference back to the controller from
+										// the fixture (see
+										// beginContact/endContact)
+			m_b2Controllers.add(b2c); // add it to the list so it can be stepped
+										// later
+			PhysicsListenerSetup setup = new PhysicsListenerSetup();
+			setup.setLevelPhysics(pComp);
+		}
+		System.out.println("adding " + e);
 	}
-	
+
+	public void printInfo() {
+		System.out.println(" Bodies in the world: " + m_world.getBodyCount());
+	}
+
 	@Override
 	public void initialize() {
 		m_world.setContactListener(m_physicsContactListener);
 	}
-	
+
 	@Override
 	public void dispose() {
 		m_world.dispose();
 	}
-	
-	public World getWorld(){
+
+	public World getWorld() {
 		return m_world;
 	}
 
@@ -235,12 +303,12 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
 	@Override
 	public void OnStartLevel() {
-		m_restart = false;	
+		m_restart = false;
 	}
 
 	@Override
-	public void onFinishedLevel(int nr) {	
-		
+	public void onFinishedLevel(int nr) {
+
 	}
 
 }

@@ -25,6 +25,7 @@ import com.badlogic.gdx.physics.box2d.joints.WheelJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.me.component.AnimationComponent;
+import com.me.component.BouyancyComponent;
 import com.me.component.CameraComponent;
 import com.me.component.CrawlComponent;
 import com.me.component.GrabComponent;
@@ -228,6 +229,10 @@ public class EntityLoader {
 				//j.setDJoint();
 				entity.addComponent(j);
 				*/
+			}
+			
+			if(ud.mName.equals("water")){
+				entity.addComponent(new BouyancyComponent());
 			}
 			
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup));
