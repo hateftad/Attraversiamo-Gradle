@@ -40,7 +40,7 @@ public class AbstractScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		 // the following code clears the screen with the given RGB color (black)
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//m_camera.update();
         // update and draw the stage actors

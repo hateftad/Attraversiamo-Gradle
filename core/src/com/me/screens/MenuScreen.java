@@ -109,7 +109,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		m_spriteBatch.end();
 		if(Gdx.input.justTouched()){
 			m_game.m_loadingScreen = new LoadingScreen(m_game);
-			m_game.m_loadingScreen.load(1);
+			m_game.m_loadingScreen.load(6);
 			m_game.setScreen(m_game.m_loadingScreen);
 		}
 	}

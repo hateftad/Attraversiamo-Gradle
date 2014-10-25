@@ -140,9 +140,11 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 
 		for (Body b : bodies) {
 			Entity e = (Entity) b.getUserData();
-			if (m_physicsComponents.has(e)) {
-				m_physicsComponents.get(e).updateSmoothStates(
-						m_fixedAccumulatorRatio, oneMinusRatio);
+			if(e != null){
+				if (m_physicsComponents.has(e)) {
+					m_physicsComponents.get(e).updateSmoothStates(
+							m_fixedAccumulatorRatio, oneMinusRatio);
+				}
 			}
 		}
 	}
@@ -153,8 +155,10 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 		m_world.getBodies(bodies);
 		for (Body b : bodies) {
 			Entity e = (Entity) b.getUserData();
-			if (m_physicsComponents.has(e)) {
-				m_physicsComponents.get(e).updatePreviousPosition();
+			if(e != null){
+				if (m_physicsComponents.has(e)) {
+					m_physicsComponents.get(e).updatePreviousPosition();
+				}
 			}
 		}
 	}
@@ -265,8 +269,8 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 			}
 			B2BuoyancyController b2c = new B2BuoyancyController(
 					B2BuoyancyController.DEFAULT_SURFACE_NORMAL, // assume up
-					new Vector2(0, 10), m_world.getGravity(), maxHeight,
-					fixture.getDensity(), 100f, 200);
+					new Vector2(0, 5), m_world.getGravity(), maxHeight,
+					fixture.getDensity(), 0.5f, 2);
 			fixture.setUserData(b2c); // reference back to the controller from
 										// the fixture (see
 										// beginContact/endContact)

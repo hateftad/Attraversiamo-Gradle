@@ -10,59 +10,50 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.me.utils.Converters;
 
 public class SpriteComponent extends BaseComponent {
-	
-	public enum Layer
-	{
-		DEFAULT,
-		BACKGROUND3,
-		BACKGROUND2,
-		BACKGROUND1,
-		BACKGROUND0,
-		ACTOR1,
-		ACTOR2,
-		FOREGROUND1,
-		FOREGROUND2,
-		FOREGROUND3,
-		FOREGROUND4,
+
+	public enum Layer {
+		DEFAULT, BACKGROUND3, BACKGROUND2, BACKGROUND1, BACKGROUND0, ACTOR1, ACTOR2, FOREGROUND1, FOREGROUND2, FOREGROUND3, FOREGROUND4,
 	}
-	
+
 	private float m_width;
-	
+
 	private float m_height;
-	
+
 	private Vector2 m_position = new Vector2();
-	
+
 	private Vector2 m_scale = new Vector2();
-	
+
 	private float m_rotation;
-	
+
 	private Sprite m_sprite;
-	
+
 	private final Vector2 m_center = new Vector2();
-	
+
 	private final Vector2 m_halfSize = new Vector2();
-	
+
 	private float m_rot;
-	
+
 	private static final Vector2 m_tmp = new Vector2();
-	
+
 	private int m_drawOrder;
-	
+
+	private Texture m_texture;
+
 	public Layer m_layer = Layer.DEFAULT;
-	
-	public SpriteComponent(Texture texture, boolean flip, Body body, Color color, Vector2 size,
-			Vector2 center, float rotationInDegrees, int drawOrder) {
-		
+
+	public SpriteComponent(Texture texture, boolean flip, Body body,
+			Color color, Vector2 size, Vector2 center, float rotationInDegrees,
+			int drawOrder) {
+		m_texture = texture;
 		m_sprite = new Sprite(texture);
 		size.set(Converters.ToWorld(size));
 		center.set(Converters.ToWorld(center));
 		initTexture(flip, color, body, size, center, rotationInDegrees);
 		setLayer(drawOrder);
 	}
-	
-	private void initTexture(boolean flip, Color color, Body body, Vector2 size,
-			Vector2 center, float rotationInDegrees)
-	{
+
+	private void initTexture(boolean flip, Color color, Body body,
+			Vector2 size, Vector2 center, float rotationInDegrees) {
 		Vector2 s = new Vector2(size.x, size.y);
 		m_sprite.flip(flip, false);
 		m_sprite.setColor(color);
@@ -71,7 +62,7 @@ public class SpriteComponent extends BaseComponent {
 		m_sprite.setOrigin(size.x / 2, size.y / 2);
 		m_halfSize.set(size.x / 2, size.y / 2);
 		m_center.set(center.x, center.y);
-		
+
 		if (body != null) {
 			m_tmp.set(body.getPosition());
 			m_sprite.setPosition(m_tmp.x - s.x / 2, m_tmp.y - s.y / 2);
@@ -86,22 +77,23 @@ public class SpriteComponent extends BaseComponent {
 		}
 
 		m_sprite.setPosition(m_tmp.x, m_tmp.y);
-		
+
 	}
 	
-	public void draw(SpriteBatch sb)
-	{
+	public Texture getTexture(){
+		return m_texture;
+	}
+
+	public void draw(SpriteBatch sb) {
 		float angle = m_rotation * MathUtils.radiansToDegrees;
-		m_tmp.set(m_center).rotate(angle).add(m_position)
-				.sub(m_halfSize);
+		m_tmp.set(m_center).rotate(angle).add(m_position).sub(m_halfSize);
 		m_sprite.setPosition(m_tmp.x, m_tmp.y);
 		m_sprite.setRotation(m_rot + angle);
 		m_sprite.draw(sb);
 	}
-	
-	public void setLayer(int layer)
-	{
-		
+
+	public void setLayer(int layer) {
+
 		switch (layer) {
 		case 0:
 			m_layer = Layer.BACKGROUND3;
@@ -138,79 +130,69 @@ public class SpriteComponent extends BaseComponent {
 			break;
 		}
 	}
-	
-	public float getWidth()
-	{
+
+	public float getWidth() {
 		return m_width;
 	}
-	
-	public void setWidth(float width)
-	{
+
+	public void setWidth(float width) {
 		m_width = width;
 	}
-	
-	public float getHeight()
-	{
+
+	public float getHeight() {
 		return m_height;
 	}
-	
-	public void setHeight(float height)
-	{
+
+	public void setHeight(float height) {
 		m_height = height;
 	}
-	
-	public void setPosition(Vector2 pos)
-	{
+
+	public void setPosition(Vector2 pos) {
 		this.m_position = pos;
 	}
-	
-	public Vector2 getPosition()
-	{
+
+	public Vector2 getPosition() {
 		return m_position;
 	}
-	
-	public void setScale(float x, float y)
-	{
+
+	public void setScale(float x, float y) {
 		m_scale.set(x, y);
 	}
-	
-	public void setRotation(float r)
-	{
+
+	public void setRotation(float r) {
 		this.m_rotation = r;
 	}
-	
-	public float getRotation()
-	{
+
+	public float getRotation() {
 		return m_rotation;
 	}
-	
-	public void setDrawOrder(int order)
-	{
+
+	public void setDrawOrder(int order) {
 		m_drawOrder = order;
 	}
-	
-	public int getDrawOrder()
-	{
+
+	public int getDrawOrder() {
 		return m_drawOrder;
 	}
 
 	@Override
 	public void dispose() {
-		
+
 		m_sprite.getTexture().dispose();
 		m_sprite = null;
+		m_texture.dispose();
 	}
 
 	public void addTexture(Texture texture, boolean flip, Body body,
 			Color color, Vector2 tmp, Vector2 center, float f, int renderOrder) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void restart() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

@@ -157,4 +157,41 @@
         </camera>
         <lightColor>Black</lightColor>
     </Level>
+    <Level name="level6">
+        <levelNr>6</levelNr>
+        <nrOfPlayers>2</nrOfPlayers>
+        <finishFacingLeft>false</finishFacingLeft>
+        <hasPortal>false</hasPortal>
+        
+        <player>
+            <skinName>silhouette</skinName>
+            <active>true</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>smallCharacter</playerName>
+            <playerNr>one</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x> 
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>false</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player>
+        <player>
+            <skinName>silhouette</skinName>
+            <active>false</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>littleGirl</playerName>
+            <playerNr>two</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x> 
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>false</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player>
+        <camera>
+            <zoom>5</zoom>
+        </camera>
+        <lightColor>Black</lightColor>
+    </Level>
 </Levels>

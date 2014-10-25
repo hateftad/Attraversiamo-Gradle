@@ -21,6 +21,7 @@ import com.me.component.AnimationComponent;
 import com.me.component.BaseComponent;
 import com.me.component.ParticleComponent;
 import com.me.component.PhysicsComponent;
+import com.me.component.ShaderComponent;
 import com.me.component.SpriteComponent;
 
 public class RenderSystem extends EntitySystem {
@@ -33,6 +34,8 @@ public class RenderSystem extends EntitySystem {
 
 	@Mapper ComponentMapper<ParticleComponent> m_particles;
 
+	@Mapper ComponentMapper<ShaderComponent> m_shaderComps;
+	
 	private List<Entity> m_sortedEntities;
 
 	private SpriteBatch m_batch;
@@ -59,14 +62,13 @@ public class RenderSystem extends EntitySystem {
 	@Override
 	protected void begin() {
 		m_batch.setProjectionMatrix(world.getSystem(CameraSystem.class).getCameraComponent().getCamera().combined);
-		m_batch.begin();
+		//m_batch.begin();
 
 	}
 
 	@Override
-	protected void end()
-	{
-		m_batch.end();
+	protected void end(){
+		
 	}
 
 	@Override
@@ -78,22 +80,29 @@ public class RenderSystem extends EntitySystem {
 	}
 
 	protected void process(Entity e) {
+		
+		
+		
+		m_batch.begin();
 		if(m_physics.has(e)) {
 			PhysicsComponent physics = m_physics.getSafe(e);
 			physics.updateWorldPosition();
 			if(m_sprites.has(e)){
+
 				SpriteComponent sprite = m_sprites.get(e);
 				sprite.setPosition(physics.getWorldPosition());
 				sprite.setRotation(physics.getBody().getAngle());
 				if(m_animation.has(e)){
-					
 					AnimationComponent anim = m_animation.get(e);
 					anim.setPosition(physics.getPosition().x, physics.getPosition().y);
 					anim.update(m_batch, world.delta);
-				}
-				else
+				} else {
 					sprite.draw(m_batch);
+
+				}
+				
 			}
+			
 			if(m_particles.has(e)){
 				ParticleComponent p = m_particles.get(e);
 				p.setPosition(physics.getWorldPosition().x, physics.getWorldPosition().y);
@@ -102,8 +111,15 @@ public class RenderSystem extends EntitySystem {
 					p.setStart(false);
 				}
 			}
+			
+			
 		}
-		
+
+		m_batch.end();
+		if(m_shaderComps.has(e)){
+			ShaderComponent sComp = m_shaderComps.get(e);
+			sComp.render(m_batch, world.getSystem(CameraSystem.class).getCameraComponent().getCamera(), m_sprites.get(e));
+		}
 	}
 
 	@Override

@@ -45,6 +45,7 @@ import com.me.component.PlayerTwoComponent;
 import com.me.component.PushComponent;
 import com.me.component.RagDollComponent;
 import com.me.component.RestartComponent;
+import com.me.component.ShaderComponent;
 import com.me.component.TouchComponent;
 import com.me.component.TriggerComponent;
 import com.me.component.VelocityLimitComponent;
@@ -159,8 +160,7 @@ public class EntityLoader {
 				entity = entityWorld.createEntity();
 				entity.addComponent(pComp);
 			}
-			if(m_scene.getCustom(body, "bodyType", "").equals("light"))
-			{
+			if(m_scene.getCustom(body, "bodyType", "").equals("light")){
 				ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x),Converters.ToWorld(body.getPosition().y),180, 180);
 				entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
 				entity.addComponent(new TriggerComponent());
@@ -233,6 +233,7 @@ public class EntityLoader {
 			
 			if(ud.mName.equals("water")){
 				entity.addComponent(new BouyancyComponent());
+				entity.addComponent(new ShaderComponent(""));
 			}
 			
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup));

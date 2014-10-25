@@ -39,7 +39,7 @@ public class BackgroundLoader{
 		try{
 			doRun();
 		} catch(Exception e){
-			e.printStackTrace();
+			System.out.println("Exceptio while loading " + e.getMessage());
 		}
 		finally{
 			m_listener.onComplete();
