@@ -131,6 +131,7 @@ public class EntityLoader {
 					if(!tName.contains("common")){
 						textureFileName = LVLPATH +levelDirectory+"/" + tName;
 					}else{
+						tName = tName.substring(tName.indexOf("/") + 1);
 						textureFileName = LVLPATH + tName;
 					}
 					System.out.println(textureFileName);
@@ -409,7 +410,7 @@ public class EntityLoader {
 				stateData.setMix("walking", "running", 0.4f);
 				//stateData.setMix("jumping", "running", 0.2f);
 				//stateData.setMix("walking", "jumping", 0.2f);
-				stateData.setMix("falling", "idle1", 0.2f);
+				//stateData.setMix("falling", "idle1", 0.2f);
 				stateData.setMix("running", "falling", 0.6f);
 				stateData.setMix("idle1", "falling", 0.6f);
 				stateData.setMix("lieDown", "lyingDown", 0.2f);

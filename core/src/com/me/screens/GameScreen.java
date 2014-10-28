@@ -6,12 +6,10 @@ import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.listeners.LevelEventListener;
 import com.me.physics.JointFactory;
-import com.me.scripting.ScriptManager;
 import com.me.systems.CameraSystem;
 import com.me.systems.PhysicsSystem;
 import com.me.systems.PlayerAttributeSystem;
@@ -21,8 +19,6 @@ import com.me.systems.RenderSystem;
 import com.me.systems.LevelSystem;
 import com.me.ui.InputManager;
 import com.me.ui.UserInterface;
-import com.me.utils.GameConfig.Platform;
-import com.me.utils.GlobalConfig;
 
 public class GameScreen extends AbstractScreen implements LevelEventListener{
 
@@ -39,12 +35,15 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	public GameScreen(Attraversiamo game)
 	{
 		super(game);
+		m_camera.viewportWidth = 1024;
+		m_camera.viewportHeight = 768;
+		m_camera.zoom = 7.0f;
 		m_entityWorld = new World();
 		m_entityWorld.setManager(new GroupManager());
 		m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -14), true));
 		JointFactory.getInstance().initialize(m_physicsSystem.getWorld());
 		RayHandler rayHandler = new RayHandler(m_physicsSystem.getWorld());
-		rayHandler.setAmbientLight(0.8f);
+		rayHandler.setAmbientLight(1f);
 		//rayHandler.setShadows(false);
 		//rayHandler.setAmbientLight(Color.GREEN);
 		

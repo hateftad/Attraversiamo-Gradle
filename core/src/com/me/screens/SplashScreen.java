@@ -15,9 +15,11 @@ public class SplashScreen extends AbstractScreen {
 	public SplashScreen(Attraversiamo game){
 		
 		super(game);
+		m_camera.viewportWidth = 800;
+		m_camera.viewportHeight = 600;
 		m_animation = new AnimationComponent("data/intro", "data/intro", 1f);
-		m_animation.setUp(new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2.5f), "intro");
-		m_camera.zoom = 1f;
+		m_animation.setUp(new Vector2(0, 0), "intro");
+		m_camera.zoom = 2f;
 	}
 
 	@Override

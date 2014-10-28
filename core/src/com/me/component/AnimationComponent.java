@@ -77,6 +77,7 @@ public class AnimationComponent extends BaseComponent {
 
 			@Override
 			public void event(int trackIndex, Event event) {
+				
 			}
 
 			@Override

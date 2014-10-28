@@ -249,37 +249,22 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 			Fixture fixture = pComp.getBody().getFixtureList().first();
 			final Vector2 mTmp = new Vector2();
 			float bodyHeight = fixture.getBody().getPosition().y;
-			// B2BuoyancyController b2c = new B2BuoyancyController();
-
-			// need to calculate the fluid surface height for the buoyancy
-			// controller
 			PolygonShape shape = (PolygonShape) fixture.getShape();
 			shape.getVertex(0, mTmp);
-			float maxHeight = mTmp.y + bodyHeight; // initialize the height,
-													// transforming to 'world'
-													// coordinates
-
-			// find the maxHeight
+			float maxHeight = mTmp.y + bodyHeight;
 			for (int j = 1; j < shape.getVertexCount(); j++) {
 				shape.getVertex(j, mTmp);
-				maxHeight = Math.max(maxHeight, mTmp.y + bodyHeight); // transform
-																		// to
-																		// world
-																		// coordinates
+				maxHeight = Math.max(maxHeight, mTmp.y + bodyHeight);
 			}
 			B2BuoyancyController b2c = new B2BuoyancyController(
-					B2BuoyancyController.DEFAULT_SURFACE_NORMAL, // assume up
+					B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
 					new Vector2(0, 5), m_world.getGravity(), maxHeight,
 					fixture.getDensity(), 0.5f, 2);
-			fixture.setUserData(b2c); // reference back to the controller from
-										// the fixture (see
-										// beginContact/endContact)
-			m_b2Controllers.add(b2c); // add it to the list so it can be stepped
-										// later
+			fixture.setUserData(b2c);
+			m_b2Controllers.add(b2c);
 			PhysicsListenerSetup setup = new PhysicsListenerSetup();
 			setup.setLevelPhysics(pComp);
 		}
-		System.out.println("adding " + e);
 	}
 
 	public void printInfo() {

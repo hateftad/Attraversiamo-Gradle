@@ -34,12 +34,12 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 	}
 	
 	private void init(){
-		m_camera.viewportWidth = 1024;
-		m_camera.viewportHeight = 768;
-		
+		m_camera.viewportWidth = 800;
+		m_camera.viewportHeight = 600;
+		m_camera.zoom = 2f;
 		m_animation = new Array<AnimationComponent>();
 
-		Vector2 middlePoint = new Vector2(Gdx.graphics.getWidth()/2, 0);
+		Vector2 middlePoint = new Vector2(0, 0);
 		AnimationComponent scene = new AnimationComponent(SCENEPATH, SCENEPATH, SCALE);
 		scene.setUp(middlePoint, "running");
 		
@@ -53,7 +53,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		//m_animation.add(littleGirl);
 		//m_animation.add(bigGuy);
 		//m_camera.lookAt(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
-		m_camera.zoom = 1f;
+		
 		//Skeleton skel = m_animation.getSkeleton();
 		//skel.getAttachment(0, "");
 		/*
@@ -109,7 +109,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		m_spriteBatch.end();
 		if(Gdx.input.justTouched()){
 			m_game.m_loadingScreen = new LoadingScreen(m_game);
-			m_game.m_loadingScreen.load(6);
+			m_game.m_loadingScreen.load(5);
 			m_game.setScreen(m_game.m_loadingScreen);
 		}
 	}

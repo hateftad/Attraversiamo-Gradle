@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.me.attraversiamo.Attraversiamo;
-import com.me.utils.GlobalConfig;
 
 public class AbstractScreen implements Screen {
 
@@ -23,11 +22,9 @@ public class AbstractScreen implements Screen {
 		this.m_stage = new Stage( );
 		
 		m_camera = new OrthographicCamera();  
-		m_camera.viewportHeight = Gdx.graphics.getHeight();  
-		m_camera.viewportWidth = Gdx.graphics.getWidth();  
+
 		m_camera.position.set(m_camera.viewportWidth * .5f, m_camera.viewportHeight * .5f, 0f); 
-		GlobalConfig.getInstance().updateZoom();
-		m_camera.zoom = GlobalConfig.getInstance().config.zoom;
+		
 		m_camera.update();
 		
 	}
@@ -40,7 +37,7 @@ public class AbstractScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		 // the following code clears the screen with the given RGB color (black)
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//m_camera.update();
         // update and draw the stage actors
