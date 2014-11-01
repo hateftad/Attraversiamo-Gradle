@@ -35,9 +35,9 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	public GameScreen(Attraversiamo game)
 	{
 		super(game);
-		m_camera.viewportWidth = 1024;
-		m_camera.viewportHeight = 768;
-		m_camera.zoom = 7.0f;
+		m_camera.viewportWidth = 800;
+		m_camera.viewportHeight = 600;
+		m_camera.zoom = 9.0f;
 		m_entityWorld = new World();
 		m_entityWorld.setManager(new GroupManager());
 		m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -14), true));
