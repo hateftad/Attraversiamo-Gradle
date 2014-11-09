@@ -13,6 +13,7 @@ import com.me.component.ParticleComponent;
 import com.me.component.QueueComponent;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.PlayerComponent.PlayerNumber;
+import com.me.component.PlayerComponent.Tasks;
 import com.me.component.PlayerComponent;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.TouchComponent;
@@ -31,7 +32,6 @@ public class LevelSystem extends EntityProcessingSystem{
 	private LevelConfig m_levelConfig;
 	private ScriptManager m_scriptMgr;
 	private LevelComponent m_levelComponent;
-	private int first = 0, second = 0;
 	private boolean m_enable;
 
 	@Mapper ComponentMapper<LightComponent> m_lightComps;
@@ -86,6 +86,11 @@ public class LevelSystem extends EntityProcessingSystem{
 					queue.type = QueueType.JOINT;
 				}
 			}
+			if(joint.hasMotor()){
+				if(m_levelComponent.isTaskDone(Tasks.OPENDOOR)){
+					joint.enableMotor(true);
+				}
+			}
 		}
 	}
 
@@ -97,7 +102,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateLights(LightComponent light){
 		if(light.getName().equals("portalLight")){
 			float a = light.getAlpha();
-			if(!m_levelComponent.allFinished()){
+			if(!m_levelComponent.isTaskDone(Tasks.TOUCHEDEND)){
 				if(a >= 1){
 					light.setColor(Color.RED);
 					inc = -0.01f;
@@ -117,11 +122,11 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateParticles(ParticleComponent particle){
 
 		if(particle.getType() == ParticleType.PORTAL){
-			if(particle.isSetToStart() && m_levelComponent.allFinished()){
+			if(particle.isSetToStart() && m_levelComponent.isTaskDone(Tasks.TOUCHEDEND)){
 				particle.start();
 				particle.setToStart(false);
 			}
-			if(particle.isCompleted() && m_levelComponent.allFinished()){
+			if(particle.isCompleted() && m_levelComponent.isTaskDone(Tasks.TOUCHEDEND)){
 				m_levelListener.onFinishedLevel(m_levelNr);
 			}
 		}
@@ -130,9 +135,11 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void checkFinished(PlayerComponent player, TouchComponent touch){
 		
 		if(touch.m_endReach == 1){
-			m_levelComponent.addFinisher(player);
+			player.doneTask(Tasks.TOUCHEDEND, true);
+		} else if (touch.m_endReach == 0){
+			player.doneTask(Tasks.TOUCHEDEND, false);
 		}
-		if(m_levelComponent.allFinished()){
+		if(m_levelComponent.isTaskDone(Tasks.TOUCHEDEND)){
 			player.setFacingLeft(m_levelComponent.m_finishFacingLeft);    
 			if(!m_levelComponent.m_hasPortal && player.isFinishedAnimating()){
 				m_levelListener.onFinishedLevel(m_levelNr);

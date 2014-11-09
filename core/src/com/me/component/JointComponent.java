@@ -134,6 +134,10 @@ public class JointComponent extends BaseComponent{
 		}
 	}
 	
+	public boolean hasMotor(){
+		return m_pJoint != null;
+	}
+	
 	public boolean shouldDestroy(){
 		return setToDestroy;
 	}

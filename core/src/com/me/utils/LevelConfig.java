@@ -1,7 +1,9 @@
 package com.me.utils;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Array;
 import com.me.component.LevelComponent;
+import com.me.component.PlayerComponent.Tasks;
 
 public class LevelConfig {
 
@@ -16,11 +18,22 @@ public class LevelConfig {
 	private boolean m_hasPortal;
 	private LevelComponent m_levelComponent;
 	public float m_minX, m_maxX, m_minY;
+	private Array<Tasks> m_tasks = new Array<Tasks>();
 
-	
-	
 	public LevelConfig(String name) {
 		m_name = name;
+	}
+	
+	public void setTask(String task){
+		if(task.equalsIgnoreCase("OpenDoor")){
+			m_tasks.add(Tasks.OPENDOOR);
+		} else if(task.equalsIgnoreCase("TouchEnd")){
+			m_tasks.add(Tasks.TOUCHEDEND);
+		}
+	}
+	
+	public Array<Tasks> getTasks(){
+		return m_tasks;
 	}
 	
 	public void setLevelComponent(LevelComponent lvlComp){

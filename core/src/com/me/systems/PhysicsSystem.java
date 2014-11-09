@@ -20,6 +20,7 @@ import com.gushikustudios.box2d.controllers.B2Controller;
 import com.me.component.AnimationComponent;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.BaseComponent;
+import com.me.component.PlayerComponent.Tasks;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.BouyancyComponent;
 import com.me.component.JointComponent;
@@ -177,7 +178,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		if (m_restart) {
-			if (!world.getSystem(LevelSystem.class).getLevelComponent().allFinished()) {
+			if (!world.getSystem(LevelSystem.class).getLevelComponent().isTaskDone(Tasks.TOUCHEDEND)) {
 				for (int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
 					if (m_restartComps.has(e)) {

@@ -19,6 +19,7 @@ import com.me.component.MovementComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
 import com.me.component.PlayerComponent.State;
+import com.me.component.PlayerComponent.Tasks;
 import com.me.component.PlayerOneComponent;
 import com.me.component.PushComponent;
 import com.me.component.TouchComponent;
@@ -97,7 +98,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		PhysicsComponent ps = m_physComps.get(e);
 
 
-		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().allFinished();
+		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().isTaskDone(Tasks.TOUCHEDEND);
 
 		if(m_inputMgr.isDown(skinChange)){
 			animation.setSkin(m_inputMgr.toggleSkins());;

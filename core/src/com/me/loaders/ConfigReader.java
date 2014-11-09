@@ -63,6 +63,14 @@ public class ConfigReader {
 				config.finishFacingLeft(child.getBoolean("finishFacingLeft"));
 				config.setHasPortal(child.getBoolean("hasPortal"));
 				
+				Array<Element> tasks = child.getChildrenByName("tasks");
+				for(Element task : tasks){
+					Element t = task.getChildByName("task");
+					if(t.getText() != null){
+						config.setTask(t.getText());
+					}
+				}
+				
 				m_levelConfigs.put(child.getAttribute("name"), config);
 				
 			}

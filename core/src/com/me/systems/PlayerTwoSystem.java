@@ -17,6 +17,7 @@ import com.me.component.MovementComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
 import com.me.component.PlayerComponent.State;
+import com.me.component.PlayerComponent.Tasks;
 import com.me.component.PlayerTwoComponent;
 import com.me.component.TouchComponent;
 import com.me.component.VelocityLimitComponent;
@@ -75,7 +76,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		GrabComponent g = m_grabComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		CrawlComponent crawlComp = m_crawlComps.get(e);
-		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().allFinished();
+		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().isTaskDone(Tasks.TOUCHEDEND);
 		if(m_inputMgr.m_playerSelected == PlayerSelection.TWO){
 			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);

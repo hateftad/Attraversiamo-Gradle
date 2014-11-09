@@ -38,6 +38,8 @@ import com.me.component.LevelComponent;
 import com.me.component.LightComponent;
 import com.me.component.MovementComponent;
 import com.me.component.ParticleComponent;
+import com.me.component.PlayerComponent.PlayerNumber;
+import com.me.component.PlayerComponent.Tasks;
 import com.me.component.QueueComponent;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.PhysicsComponent;
@@ -61,7 +63,6 @@ import com.me.physics.RBUserData;
 import com.me.systems.CameraSystem;
 import com.me.utils.Converters;
 import com.me.utils.LevelConfig;
-import com.me.utils.PlayerConfig;
 
 public class EntityLoader {
 
@@ -251,13 +252,22 @@ public class EntityLoader {
 	}
 
 
-	public Entity loadCharacter(PlayerConfig config, World entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh)
+	public Entity loadCharacter(LevelConfig config, World entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh, PlayerNumber playerNumber)
 	{
-
-		String characterPath = config.m_name + "/";
+		String characterPath = "";
+		String characterName = "";
+		if(playerNumber == PlayerNumber.ONE){
+			characterPath = config.m_playerOne.m_name + "/";
+			characterName = config.m_playerOne.m_name;
+		} else if(playerNumber == PlayerNumber.TWO){
+			characterPath = config.m_playerTwo.m_name + "/";
+			characterName = config.m_playerTwo.m_name;
+		}
+		
+		 
 		clearLoader();
 
-		m_scene = m_loader.loadScene(Gdx.files.internal(CHARPATH+characterPath+"/"+config.getName()+".json"));
+		m_scene = m_loader.loadScene(Gdx.files.internal(CHARPATH+characterPath+"/"+characterName+".json"));
 		Array<Body> bodies = m_scene.getBodies();
 
 		Vector2 bodyPos = new Vector2();
@@ -354,9 +364,13 @@ public class EntityLoader {
 			if(m_scene.getCustom(body, "characterType", "").equals("playerOne"))
 			{
 				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
-				p.setActive(config.m_active);
-				p.setFacingLeft(config.m_facingleft);
-				p.setCanBecomeInactive(config.m_canDeactivate);
+				p.setActive(config.m_playerOne.m_active);
+				p.setFacingLeft(config.m_playerOne.m_facingleft);
+				p.setCanBecomeInactive(config.m_playerOne.m_canDeactivate);
+				for(Tasks task : config.getTasks()){
+					p.addTask(task);
+				}
+				config.getLevelComponent().addFinisher(p);
 				//entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
 				entity.addComponent(p);
 				entity.addComponent(new TouchComponent());
@@ -391,16 +405,19 @@ public class EntityLoader {
 				stateData.setMix("runJumping", "falling", 0.4f);
 				//dstateData.setMix("pushing", "idle", 0.6f);
 				//stateData.setMix("ladderHang", "running", 0.1f);
-				anim.setSkin(config.getSkinName());
-				pComp.setPosition(config.m_playerPosition);
+				anim.setSkin(config.m_playerOne.getSkinName());
+				pComp.setPosition(config.m_playerOne.m_playerPosition);
 				//stateData.setMix("lieDown", "running", 0.3f);
 
 			}else if(m_scene.getCustom(body, "characterType","").equals("playerTwo")){
 				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
-				p.setActive(config.m_active);
-				p.setFacingLeft(config.m_facingleft);
-				p.setCanBecomeInactive(config.m_canDeactivate);
-				
+				p.setActive(config.m_playerTwo.m_active);
+				p.setFacingLeft(config.m_playerTwo.m_facingleft);
+				p.setCanBecomeInactive(config.m_playerTwo.m_canDeactivate);
+				for(Tasks task : config.getTasks()){
+					p.addTask(task);
+				}
+				config.getLevelComponent().addFinisher(p);
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
@@ -421,7 +438,7 @@ public class EntityLoader {
 				stateData.setMix("standUp", "idle1", 0.2f);
 				stateData.setMix("lyingDown", "standUp", 0.2f);
 				entity.addComponent(p);
-				anim.setSkin(config.getSkinName());
+				anim.setSkin(config.m_playerTwo.getSkinName());
 				entity.addComponent(new MovementComponent());
 				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f, 10);
 				vel.m_crawlLimit = 2.5f;
@@ -433,7 +450,7 @@ public class EntityLoader {
 				entity.addComponent(new TriggerComponent());
 				entity.addComponent(new CrawlComponent());
 				entity.addComponent(new RestartComponent());
-				pComp.setPosition(config.m_playerPosition);
+				pComp.setPosition(config.m_playerTwo.m_playerPosition);
 			}
 
 			BodyUserData ud = (BodyUserData) body.getUserData();

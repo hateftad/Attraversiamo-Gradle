@@ -1,6 +1,7 @@
 package com.me.loaders;
 
 import com.me.attraversiamo.Attraversiamo;
+import com.me.component.PlayerComponent.PlayerNumber;
 import com.me.listeners.LoadCompletionListener;
 import com.me.screens.GameScreen;
 import com.me.systems.LevelSystem;
@@ -62,14 +63,14 @@ public class BackgroundLoader{
 				m_game.m_gameScreen.getCameraSystem().getRayHandler());
 		
 		if(m_levelConfig.m_playerOne != null){
-			m_loader.loadCharacter(m_levelConfig.m_playerOne, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), 
-					m_game.m_gameScreen.getCameraSystem().getRayHandler());
+			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), 
+					m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.ONE);
 			setupCharacter(m_levelConfig.m_playerOne, 1);
 		}	
 			
 		if(m_levelConfig.m_playerTwo != null){
-			m_loader.loadCharacter(m_levelConfig.m_playerTwo, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(),
-					m_game.m_gameScreen.getCameraSystem().getRayHandler());
+			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(),
+					m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.TWO);
 			setupCharacter(m_levelConfig.m_playerTwo, 2);
 		}
 		

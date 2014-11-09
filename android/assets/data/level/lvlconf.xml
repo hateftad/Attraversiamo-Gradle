@@ -6,6 +6,9 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>true</hasPortal>
+        <tasks>
+            <task>TouchEnd</task>
+        </tasks>
         <player>
             <skinName>color</skinName>
             <active>true</active>
@@ -42,6 +45,9 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
+         <tasks>
+            <task></task>
+        </tasks>
         <player>
             <skinName>color</skinName>
             <active>true</active>
@@ -78,7 +84,9 @@
         <nrOfPlayers>1</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
-         <skins>color</skins>
+		 <tasks>
+            <task></task>
+        </tasks>
         <player>
             <skinName>color</skinName>
             <active>true</active>
@@ -102,6 +110,9 @@
         <nrOfPlayers>1</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
+         <tasks>
+            <task></task>
+        </tasks>
         <player>
             <skinName>color</skinName>
             <active>true</active>
@@ -125,7 +136,9 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
-        
+         <tasks>
+            <task>OpenDoor</task>
+        </tasks>
         <player>
             <skinName>silhouette</skinName>
             <active>true</active>
@@ -162,7 +175,9 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
-        
+        <tasks>
+            <task>OpenDoor</task>
+        </tasks>
         <player>
             <skinName>silhouette</skinName>
             <active>true</active>
