@@ -62,13 +62,13 @@ public class RenderSystem extends EntitySystem {
 	@Override
 	protected void begin() {
 		m_batch.setProjectionMatrix(world.getSystem(CameraSystem.class).getCameraComponent().getCamera().combined);
-		m_batch.begin();
+		//m_batch.begin();
 
 	}
 
 	@Override
 	protected void end(){
-		m_batch.end();
+		//m_batch.end();
 	}
 
 	@Override
@@ -79,11 +79,9 @@ public class RenderSystem extends EntitySystem {
 
 	}
 
-	protected void process(Entity e) {
+	protected void process(Entity e) {	
+		m_batch.begin();
 		
-		
-		
-
 		if(m_physics.has(e)) {
 			PhysicsComponent physics = m_physics.getSafe(e);
 			physics.updateWorldPosition();
@@ -111,11 +109,9 @@ public class RenderSystem extends EntitySystem {
 					p.setStart(false);
 				}
 			}
-			
-			
-		}
 
-		
+		}
+		m_batch.end();
 		/*
 		if(m_shaderComps.has(e)){
 			ShaderComponent sComp = m_shaderComps.get(e);
@@ -128,7 +124,7 @@ public class RenderSystem extends EntitySystem {
 	protected void inserted(Entity e) {
 
 		m_sortedEntities.add(e);
-
+		
 		Collections.sort(m_sortedEntities, new Comparator<Entity>() {
 			@Override
 			public int compare(Entity e1, Entity e2) {
@@ -138,6 +134,7 @@ public class RenderSystem extends EntitySystem {
 
 			}
 		});
+		
 	}
 
 	@Override

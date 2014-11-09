@@ -12,6 +12,7 @@ import com.me.component.LightComponent;
 import com.me.component.ParticleComponent;
 import com.me.component.QueueComponent;
 import com.me.component.ParticleComponent.ParticleType;
+import com.me.component.PlayerComponent.PlayerNumber;
 import com.me.component.PlayerComponent;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.TouchComponent;
@@ -75,10 +76,7 @@ public class LevelSystem extends EntityProcessingSystem{
 		if(m_particles.has(e)){
 			updateParticles(m_particles.get(e));
 		}
-
-		if(first + second == m_levelComponent.m_nrOfFinishers){
-			m_levelComponent.m_finished = true;
-		}
+		
 		if(m_joints.has(e)){
 			JointComponent joint = m_joints.get(e);
 			joint.update(world.delta);
@@ -86,7 +84,7 @@ public class LevelSystem extends EntityProcessingSystem{
 				if(m_queue.has(e)){
 					QueueComponent queue = m_queue.get(e);
 					queue.type = QueueType.JOINT;
-				}	
+				}
 			}
 		}
 	}
@@ -99,7 +97,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateLights(LightComponent light){
 		if(light.getName().equals("portalLight")){
 			float a = light.getAlpha();
-			if(!m_levelComponent.m_finished){
+			if(!m_levelComponent.allFinished()){
 				if(a >= 1){
 					light.setColor(Color.RED);
 					inc = -0.01f;
@@ -108,35 +106,33 @@ public class LevelSystem extends EntityProcessingSystem{
 				}
 				light.setAlpha(a + inc);
 
-			}else{
+			} else {
 				light.setAlpha(1);
 				light.setColor(Color.GREEN);
 				world.getSystem(CameraSystem.class).getRayHandler().setAmbientLight(1f);
 			}
-
 		}
 	}
 	
 	private void updateParticles(ParticleComponent particle){
 
 		if(particle.getType() == ParticleType.PORTAL){
-			if(particle.isSetToStart() && m_levelComponent.m_finished){
+			if(particle.isSetToStart() && m_levelComponent.allFinished()){
 				particle.start();
 				particle.setToStart(false);
 			}
-			if(particle.isCompleted() && m_levelComponent.m_finished){
+			if(particle.isCompleted() && m_levelComponent.allFinished()){
 				m_levelListener.onFinishedLevel(m_levelNr);
 			}
 		}
 	}
 	
 	private void checkFinished(PlayerComponent player, TouchComponent touch){
-		if(player.getPlayerNr().equals("playerOne")){
-			first = touch.m_endReach;
-		} else {
-			second = touch.m_endReach;
+		
+		if(touch.m_endReach == 1){
+			m_levelComponent.addFinisher(player);
 		}
-		if(m_levelComponent.m_finished){
+		if(m_levelComponent.allFinished()){
 			player.setFacingLeft(m_levelComponent.m_finishFacingLeft);    
 			if(!m_levelComponent.m_hasPortal && player.isFinishedAnimating()){
 				m_levelListener.onFinishedLevel(m_levelNr);

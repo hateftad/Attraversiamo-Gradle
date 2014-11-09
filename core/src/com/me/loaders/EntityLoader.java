@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef.JointType;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
+import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WheelJointDef;
@@ -487,6 +488,7 @@ public class EntityLoader {
 							
 				}
 			}
+			
 			if (joint.getType() == JointType.RevoluteJoint){
 				
 				RevoluteJointDef jDef = (RevoluteJointDef) ind.jointDef;
@@ -514,6 +516,7 @@ public class EntityLoader {
 					}
 				} 
 			}
+			
 			if (joint.getType() == JointType.WheelJoint){
 				WheelJointDef jDef = (WheelJointDef) ind.jointDef;
 				JointFactory.getInstance().createJoint(
@@ -522,6 +525,7 @@ public class EntityLoader {
 						jDef,physicsWorld);
 				//	m_wheels.add((WheelJoint)jD);
 			}
+			
 			if(joint.getType() == JointType.WeldJoint){
 				WeldJointDef jDef = (WeldJointDef) ind.jointDef;
 				JointFactory.getInstance().createJoint(
@@ -529,8 +533,27 @@ public class EntityLoader {
 						tempList.get(ind.second),
 						jDef, physicsWorld);
 			}
-
-
+			
+			if(joint.getType() == JointType.PrismaticJoint){
+				String name = (String) joint.getUserData();
+				PrismaticJointDef jDef = (PrismaticJointDef) ind.jointDef;
+				if(name.equals("doorMotor")){
+					Entity ent = entityWorld.createEntity();
+					JointComponent comp = new JointComponent(name);
+					comp.setPrismJoint(JointFactory.getInstance().createJoint(
+							tempList.get(ind.first), 
+							tempList.get(ind.second),
+							jDef, physicsWorld));
+					ent.addComponent(new TriggerComponent());
+					ent.addComponent(comp);
+					ent.addToWorld();
+				} else {
+					JointFactory.getInstance().createJoint(
+							tempList.get(ind.first),
+							tempList.get(ind.second),
+							jDef, physicsWorld);
+				}
+			}
 		}
 	}
 	/*

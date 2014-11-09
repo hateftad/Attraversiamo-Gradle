@@ -97,7 +97,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements InputProc
 		PhysicsComponent ps = m_physComps.get(e);
 
 
-		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().m_finished;
+		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().allFinished();
 
 		if(m_inputMgr.isDown(skinChange)){
 			animation.setSkin(m_inputMgr.toggleSkins());;

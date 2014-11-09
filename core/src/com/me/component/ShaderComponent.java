@@ -40,7 +40,7 @@ public class ShaderComponent extends BaseComponent {
 		m_matrix = new Matrix4();
 		m_waterShader.setUniformMatrix("u_projTrans", m_matrix);
 		
-		m_waterMesh = createQuad(-0.6f, -0.6f, 0.6f, -0.6f, 0.6f, -0.3f, -0.6f, -0.3f);
+		m_waterMesh = createQuad(-0.8f, -0.8f, 0.8f, -0.8f, 0.8f, -0.3f, -0.8f, -0.3f);
 	}
 	
 	float time;
@@ -52,7 +52,7 @@ public class ShaderComponent extends BaseComponent {
 		if (angle > (2 * MathUtils.PI))
 			angle -= (2 * MathUtils.PI);
 
-		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		batch.setShader(m_waterShader);
 		batch.begin();
@@ -71,12 +71,15 @@ public class ShaderComponent extends BaseComponent {
 
 		m_shader.setUniformi("u_texture", 1);
 		m_shader.setUniformi("u_texture2", 2);
-		m_shader.setUniformf("timedelta", -angle * 2);
+		m_shader.setUniformf("timedelta", -angle * 2 );
 		m_waterMesh.render(m_shader, GL20.GL_TRIANGLE_FAN);
 		m_shader.end();
-		//sprite.getTexture().bind(0);
+		
 		m_displacementTexture.bind(0);
-		//batch.disableBlending();
+		m_displacementTexture.dispose();
+		Gdx.gl20.glDisable(GL20.GL_BLEND);
+		//Gdx.gl20.glBlendFunc(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_SRC_ALPHA);
+		
 		
 	}
 	float x;

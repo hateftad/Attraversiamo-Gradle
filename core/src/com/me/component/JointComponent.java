@@ -118,15 +118,20 @@ public class JointComponent extends BaseComponent{
 
 	public boolean isFullLength(){
 		if(m_pJoint!=null){
-			if(m_pJoint.getType() == JointType.PrismaticJoint)
-			{
+			if(m_pJoint.getType() == JointType.PrismaticJoint){
 				PrismaticJoint j = (PrismaticJoint) m_pJoint;
 				return j.getJointTranslation() >= j.getUpperLimit();
 			}
-			else
-				return false;
 		}
 		return false;
+	}
+	
+	public void enableMotor(boolean enable){
+		
+		if(m_pJoint != null){
+			PrismaticJoint j = (PrismaticJoint) m_pJoint;
+			j.enableMotor(enable);
+		}
 	}
 	
 	public boolean shouldDestroy(){

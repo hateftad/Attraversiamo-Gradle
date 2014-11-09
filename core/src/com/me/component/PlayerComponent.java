@@ -8,7 +8,13 @@ public class PlayerComponent extends BaseComponent{
 		CRAWLING, LYINGDOWN, GETTINGUP
 	}
 	
-	private String m_playerNr;
+	public enum PlayerNumber{
+		ONE,
+		TWO,
+		THREE
+	}
+	
+	private PlayerNumber m_playerNr;
 	
 	private State m_state = State.IDLE;
 	
@@ -73,12 +79,17 @@ public class PlayerComponent extends BaseComponent{
 		this.m_onGround = onGround;
 	}
 
-	public String getPlayerNr() {
+	public PlayerNumber getPlayerNr() {
 		return m_playerNr;
 	}
 
-	public void setPlayerNr(String m_playerNr) {
-		this.m_playerNr = m_playerNr;
+	public void setPlayerNr(String playerNr) {
+		if(playerNr.equalsIgnoreCase("playerOne")){
+			m_playerNr = PlayerNumber.ONE;
+		}else if(playerNr.equalsIgnoreCase("playerTwo")){
+			m_playerNr = PlayerNumber.TWO;
+		}
+		
 	}
 
 	@Override

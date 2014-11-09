@@ -1,11 +1,14 @@
 package com.me.component;
 
+import java.util.HashMap;
+
+import com.me.component.PlayerComponent.PlayerNumber;
 import com.me.utils.LevelConfig;
 
 public class LevelComponent extends BaseComponent {
 
+	public HashMap<PlayerNumber, PlayerComponent> m_finishers = new HashMap<PlayerNumber, PlayerComponent>();
 	public int m_nrOfFinishers;
-	public boolean m_finished;
 	public boolean m_hasPortal;
 	public boolean m_finishFacingLeft;
 	
@@ -13,6 +16,14 @@ public class LevelComponent extends BaseComponent {
 		m_nrOfFinishers = lvlConf.getNrOfPlayers();
 		m_hasPortal = lvlConf.hasPortal();
 		m_finishFacingLeft = lvlConf.finishLeft();
+	}
+	
+	public void addFinisher(PlayerComponent player){
+		m_finishers.put(player.getPlayerNr(), player);
+	}
+	
+	public boolean allFinished(){
+		return m_finishers.size() == m_nrOfFinishers;
 	}
 	
 	@Override
@@ -23,7 +34,7 @@ public class LevelComponent extends BaseComponent {
 
 	@Override
 	public void restart() {
-		m_finished = false;
+		m_finishers.clear();
 	}
 
 }

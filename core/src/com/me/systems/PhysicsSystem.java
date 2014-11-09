@@ -177,7 +177,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		if (m_restart) {
-			if (!world.getSystem(LevelSystem.class).getLevelComponent().m_finished) {
+			if (!world.getSystem(LevelSystem.class).getLevelComponent().allFinished()) {
 				for (int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
 					if (m_restartComps.has(e)) {

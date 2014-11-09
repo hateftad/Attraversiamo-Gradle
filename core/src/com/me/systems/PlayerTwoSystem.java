@@ -75,7 +75,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements InputProc
 		GrabComponent g = m_grabComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		CrawlComponent crawlComp = m_crawlComps.get(e);
-		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().m_finished;
+		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().allFinished();
 		if(m_inputMgr.m_playerSelected == PlayerSelection.TWO){
 			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);

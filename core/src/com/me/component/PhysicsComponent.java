@@ -28,6 +28,7 @@ public class PhysicsComponent extends BaseComponent {
 	private ObjectMap<Body, RBUserData> m_userData = new ObjectMap<Body, RBUserData>();
 	private Vector2 m_worldPosition;
 	private ObjectMap<Body, Vector2> m_previousPositions;
+	private float m_previousAngle = 0;
 	private Vector2 m_startPosition;
 	private boolean m_isActive;
 	private String m_name;
@@ -138,7 +139,6 @@ public class PhysicsComponent extends BaseComponent {
 
 		Filter t1 = currentFilter;
 		t1.categoryBits = 1;
-
 		m_body.get(name).getFixtureList().get(0).setFilterData(t1);
 
 	}
@@ -150,20 +150,17 @@ public class PhysicsComponent extends BaseComponent {
 			m_body.get(name).getFixtureList().get(0)
 					.setFilterData(currentFilter);
 		}
-
 	}
 
 	private HashMap<String, Short> filterData = new HashMap<String, Short>();
 
 	public void disableAllFilters() {
 
-		Iterator<ObjectMap.Entry<String, Body>> it = m_body.entries()
-				.iterator();
+		Iterator<ObjectMap.Entry<String, Body>> it = m_body.entries().iterator();
 
 		while (it.hasNext()) {
 			@SuppressWarnings("rawtypes")
-			ObjectMap.Entry<String, Body> pairs = (ObjectMap.Entry<String, Body>) it
-					.next();
+			ObjectMap.Entry<String, Body> pairs = (ObjectMap.Entry<String, Body>) it.next();
 			Body b = (Body) pairs.value;
 			short bits;
 			Filter filter = b.getFixtureList().get(0).getFilterData();
@@ -179,8 +176,7 @@ public class PhysicsComponent extends BaseComponent {
 		while (it.hasNext()) {
 			@SuppressWarnings("rawtypes")
 			Map.Entry pairs = (Map.Entry) it.next();
-			Filter filter = m_body.get((String) pairs.getKey())
-					.getFixtureList().get(0).getFilterData();
+			Filter filter = m_body.get((String) pairs.getKey()).getFixtureList().get(0).getFilterData();
 			short bits = (Short) pairs.getValue();
 			filter.categoryBits = bits;
 			m_body.get((String) pairs.getKey()).getFixtureList().get(0)
@@ -193,7 +189,6 @@ public class PhysicsComponent extends BaseComponent {
 		if (Math.abs(m_body.get(m_name).getLinearVelocity().x) > 1) {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -259,7 +254,6 @@ public class PhysicsComponent extends BaseComponent {
 	}
 
 	public void warp(String name, Vector2 pos) {
-
 		m_body.get(name).setLinearVelocity(0, 0);
 		m_body.get(name).setTransform(pos.x, pos.y, 0);
 	}
@@ -334,8 +328,6 @@ public class PhysicsComponent extends BaseComponent {
 			b.setActive(active);
 		}
 	}
-
-	private float m_previousAngle = 0;
 
 	public void updateSmoothStates(float accumulatorRatio, double oneMinusRatio) {
 
