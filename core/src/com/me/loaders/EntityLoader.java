@@ -72,39 +72,39 @@ public class EntityLoader {
 	private static final String LVLPATH = "data/level/";
 	private static final String CHARPATH = "data/character/";
 
-	public EntityLoader()
-	{
+	public EntityLoader() {
 		m_textureMap = new WeakHashMap<String, Texture>();
 		m_loader = new RubeSceneLoader();
 	}
 
-	private void clearLoader(){
-		
-		if(m_scene!=null){
+	private void clearLoader() {
+
+		if (m_scene != null) {
 			m_scene.clear();
 		}
-		if(m_textureMap.size() > 0){	
+		if (m_textureMap.size() > 0) {
 			m_textureMap.clear();
 		}
 
 	}
-	
-	public void dispose(){
+
+	public void dispose() {
 		m_scene.dispose();
 		m_scene.clear();
-		for(Texture t: m_textureMap.values()){
+		for (Texture t : m_textureMap.values()) {
 			t.dispose();
 		}
 		m_textureMap.clear();
-		
+
 	}
 
-	public void loadLevel(LevelConfig config, World entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh)
-	{
+	public void loadLevel(LevelConfig config, World entityWorld,
+			com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh) {
 		String levelDirectory = config.getLevelName();
 		clearLoader();
-		
-		m_scene = m_loader.loadScene(Gdx.files.internal("data/level/"+levelDirectory+"/"+config.getLevelName()+".json"));
+
+		m_scene = m_loader.loadScene(Gdx.files.internal("data/level/"
+				+ levelDirectory + "/" + config.getLevelName() + ".json"));
 		Array<Body> bodies = m_scene.getBodies();
 
 		Vector2 bodyPos = new Vector2();
@@ -120,36 +120,38 @@ public class EntityLoader {
 			Body body = bodies.get(i);
 
 			Array<RubeImage> images = m_scene.getMappedImage(body);
-			if (images!=null) {
+			if (images != null) {
 
 				bodyPos.set(body.getPosition());
-				image =  images.get(0);
+				image = images.get(0);
 				String tName = image.file;
-				
-				if (tName != null)
-				{
+
+				if (tName != null) {
 					tmp.set(image.width, image.height);
 					String textureFileName = null;
-					if(!tName.contains("common")){
-						textureFileName = LVLPATH +levelDirectory+"/" + tName;
-					}else{
+					if (!tName.contains("common")) {
+						textureFileName = LVLPATH + levelDirectory + "/"
+								+ tName;
+					} else {
 						tName = tName.substring(tName.indexOf("/") + 1);
 						textureFileName = LVLPATH + tName;
 					}
 					System.out.println(textureFileName);
 					Texture texture = m_textureMap.get(textureFileName);
-					if (texture == null)
-					{
+					if (texture == null) {
 						texture = new Texture(textureFileName);
-						texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Nearest);
+						texture.setFilter(Texture.TextureFilter.Linear,
+								Texture.TextureFilter.Nearest);
 						m_textureMap.put(textureFileName, texture);
 					}
 					if (image.body != null) {
-						sComp = new SpriteComponent(texture, image.flip, image.body, 
-								image.color, tmp, image.center, 
-								image.angleInRads * MathUtils.radiansToDegrees, image.renderOrder);
+						sComp = new SpriteComponent(texture, image.flip,
+								image.body, image.color, tmp, image.center,
+								image.angleInRads * MathUtils.radiansToDegrees,
+								image.renderOrder);
 
-						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+						pComp = new PhysicsComponent(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
 						entity = entityWorld.createEntity();
 						entity.addComponent(pComp);
 						entity.addComponent(sComp);
@@ -157,117 +159,135 @@ public class EntityLoader {
 					}
 				}
 
-			}
-			else{
-				pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+			} else {
+				pComp = new PhysicsComponent(physicsWorld, body,
+						((BodyUserData) body.getUserData()).mName);
 				entity = entityWorld.createEntity();
 				entity.addComponent(pComp);
 			}
-			if(m_scene.getCustom(body, "bodyType", "").equals("light")){
-				ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x),Converters.ToWorld(body.getPosition().y),180, 180);
-				entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
+			if (m_scene.getCustom(body, "bodyType", "").equals("light")) {
+				ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500,
+						Converters.ToWorld(body.getPosition().x),
+						Converters.ToWorld(body.getPosition().y), 180, 180);
+				entity.addComponent(new LightComponent(light,
+						((BodyUserData) body.getUserData()).mName));
 				entity.addComponent(new TriggerComponent());
-				entityWorld.getManager(GroupManager.class).add(entity, "lights");
+				entityWorld.getManager(GroupManager.class)
+						.add(entity, "lights");
 			}
-			
-			if(m_scene.getCustom(body, "bodyType", "").equals("skyLight")){
-				
-				CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
+
+			if (m_scene.getCustom(body, "bodyType", "").equals("skyLight")) {
+
+				CameraComponent camComp = entityWorld.getSystem(
+						CameraSystem.class).getCameraComponent();
 				entity.addComponent(camComp);
-				PointLight light = new PointLight(rh, 500, config.getLightColor(), 1000, camComp.getCamera().position.x, camComp.getCamera().position.y);				
+				PointLight light = new PointLight(rh, 500,
+						config.getLightColor(), 1000,
+						camComp.getCamera().position.x,
+						camComp.getCamera().position.y);
 				entity.addComponent(new LightComponent(light, "cameraLight"));
-				entityWorld.getManager(GroupManager.class).add(entity, "lights");
+				entityWorld.getManager(GroupManager.class)
+						.add(entity, "lights");
 			}
-			if(m_scene.getCustom(body, "bodyType", "").equals("behindLight")){
-				
-				//entity.addComponent(component);
+			if (m_scene.getCustom(body, "bodyType", "").equals("behindLight")) {
+
+				// entity.addComponent(component);
 			}
 
 			loadFixtures(pComp, body);
 
 			BodyUserData ud = (BodyUserData) body.getUserData();
-			if(ud.mName.equals("box")){
+			if (ud.mName.equals("box")) {
 				pComp.setMass(20f, ud.mName);
 				pComp.setFriction(20.0f);
 				entity.addComponent(new RestartComponent());
 				entity.addComponent(new QueueComponent());
 			}
-			if(ud.mName.equals("portal")){
-				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL));
+			if (ud.mName.equals("portal")) {
+				entity.addComponent(new ParticleComponent("fire",
+						ParticleType.PORTAL));
 				entity.addComponent(new TriggerComponent());
 				LevelComponent levelComp = new LevelComponent(config);
 				config.setLevelComponent(levelComp);
 				entity.addComponent(levelComp);
 			}
-			if(ud.mName.equals("finish")){
+			if (ud.mName.equals("finish")) {
 				entity.addComponent(new TriggerComponent());
 				LevelComponent levelComp = new LevelComponent(config);
 				config.setLevelComponent(levelComp);
 				entity.addComponent(levelComp);
 			}
-			if(ud.mName.equals("point")){
-				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP));
+			if (ud.mName.equals("point")) {
+				entity.addComponent(new ParticleComponent("point",
+						ParticleType.PICKUP));
 				entity.addComponent(new TriggerComponent());
 			}
-			if(ud.mName.equals("minX")){
+			if (ud.mName.equals("minX")) {
 				config.m_minX = Converters.ToWorld(body.getPosition().x);
-				System.out.println("Minx " + Converters.ToWorld(body.getPosition().x));			
+				System.out.println("Minx "
+						+ Converters.ToWorld(body.getPosition().x));
 			}
-			if(ud.mName.equals("maxX")){
+			if (ud.mName.equals("maxX")) {
 				config.m_maxX = Converters.ToWorld(body.getPosition().x);
-				System.out.println("MaxX " + Converters.ToWorld(body.getPosition().x));
+				System.out.println("MaxX "
+						+ Converters.ToWorld(body.getPosition().x));
 			}
-			if(ud.mName.equals("minY")){
+			if (ud.mName.equals("minY")) {
 				config.m_minY = Converters.ToWorld(body.getPosition().y);
-				System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
+				System.out.println("MinY "
+						+ Converters.ToWorld(body.getPosition().y));
 			}
-			
-			if(ud.mName.equals("branch")){
+
+			if (ud.mName.equals("branch")) {
 				/*
-				JointComponent j = new JointComponent("branchJoint");
-				Array<JointEdge> jList = body.getJointList();
-				DistanceJointDef jDef = JointFactory.getInstance().createDistanceJoint(jList.items[0].other, jList.items[1].other, 
-						jList.items[0].joint.getAnchorA(), jList.items[0].joint.getAnchorB(), false, 10f);
-				j.setDJoint(JointFactory.getInstance().createJoint(jDef));
-				
-				//j.setDJoint();
-				entity.addComponent(j);
-				*/
+				 * JointComponent j = new JointComponent("branchJoint");
+				 * Array<JointEdge> jList = body.getJointList();
+				 * DistanceJointDef jDef =
+				 * JointFactory.getInstance().createDistanceJoint
+				 * (jList.items[0].other, jList.items[1].other,
+				 * jList.items[0].joint.getAnchorA(),
+				 * jList.items[0].joint.getAnchorB(), false, 10f);
+				 * j.setDJoint(JointFactory.getInstance().createJoint(jDef));
+				 * 
+				 * //j.setDJoint(); entity.addComponent(j);
+				 */
 			}
-			
-			if(ud.mName.equals("water")){
+
+			if (ud.mName.equals("water")) {
 				entity.addComponent(new BouyancyComponent());
 				entity.addComponent(new ShaderComponent(""));
 			}
-			
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup));
+
+			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(
+					ud.mBoxIndex, ud.mCollisionGroup));
 			pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
 			tempList.add(pComp.getBody(ud.mName));
 			entity.addToWorld();
-			entityWorld.getManager(GroupManager.class).add(entity, "worldObjects");
+			entityWorld.getManager(GroupManager.class).add(entity,
+					"worldObjects");
 		}
 
 		loadBodyJoints(physicsWorld, tempList, entityWorld);
 		tempList.clear();
 	}
 
-
-	public Entity loadCharacter(LevelConfig config, World entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh, PlayerNumber playerNumber)
-	{
+	public Entity loadCharacter(LevelConfig config, World entityWorld,
+			com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh,
+			PlayerNumber playerNumber) {
 		String characterPath = "";
 		String characterName = "";
-		if(playerNumber == PlayerNumber.ONE){
+		if (playerNumber == PlayerNumber.ONE) {
 			characterPath = config.m_playerOne.m_name + "/";
 			characterName = config.m_playerOne.m_name;
-		} else if(playerNumber == PlayerNumber.TWO){
+		} else if (playerNumber == PlayerNumber.TWO) {
 			characterPath = config.m_playerTwo.m_name + "/";
 			characterName = config.m_playerTwo.m_name;
 		}
-		
-		 
+
 		clearLoader();
 
-		m_scene = m_loader.loadScene(Gdx.files.internal(CHARPATH+characterPath+"/"+characterName+".json"));
+		m_scene = m_loader.loadScene(Gdx.files.internal(CHARPATH
+				+ characterPath + "/" + characterName + ".json"));
 		Array<Body> bodies = m_scene.getBodies();
 
 		Vector2 bodyPos = new Vector2();
@@ -283,68 +303,81 @@ public class EntityLoader {
 			Body body = bodies.get(i);
 
 			Array<RubeImage> images = m_scene.getMappedImage(body);
-			if (images!=null) {
+			if (images != null) {
 
 				bodyPos.set(body.getPosition());
-				image =  images.get(0);; 
+				image = images.get(0);
+				;
 				String tName = image.file;
-				if (tName != null)
-				{
+				if (tName != null) {
 					tmp.set(image.width, image.height);
-					String textureFileName = CHARPATH+characterPath + tName;
+					String textureFileName = CHARPATH + characterPath + tName;
 					Texture texture = m_textureMap.get(textureFileName);
-					if (texture == null)
-					{
+					if (texture == null) {
 						texture = new Texture(textureFileName);
-						texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Nearest);
+						texture.setFilter(Texture.TextureFilter.Linear,
+								Texture.TextureFilter.Nearest);
 						m_textureMap.put(textureFileName, texture);
 					}
 					if (image.body != null) {
-						sComp = new SpriteComponent(texture, image.flip, image.body, 
-								image.color, tmp, image.center, 
-								image.angleInRads * MathUtils.radiansToDegrees, image.renderOrder);
-						if(pComp!=null){
-							pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						}else{
-							pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+						sComp = new SpriteComponent(texture, image.flip,
+								image.body, image.color, tmp, image.center,
+								image.angleInRads * MathUtils.radiansToDegrees,
+								image.renderOrder);
+						if (pComp != null) {
+							pComp.addBody(physicsWorld, body,
+									((BodyUserData) body.getUserData()).mName);
+						} else {
+							pComp = new PhysicsComponent(physicsWorld, body,
+									((BodyUserData) body.getUserData()).mName);
 							entity.addComponent(pComp);
 						}
 						entity.addComponent(sComp);
 					}
 				}
 
-			}
-			else{
-				if(m_scene.getCustom(body, "characterType", "").equals("leg")){
+			} else {
+				if (m_scene.getCustom(body, "characterType", "").equals("leg")) {
 
-					if(pComp!=null){
-						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-					}else{
-						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
+					if (pComp != null) {
+						pComp.addBody(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
+					} else {
+						pComp = new PhysicsComponent(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
+						pComp.setMass(0.001f,
+								((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
-				} else if(m_scene.getCustom(body, "characterType", "").equals("hand")){
-					if(pComp!=null)
-						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-					else{
-						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+				} else if (m_scene.getCustom(body, "characterType", "").equals(
+						"hand")) {
+					if (pComp != null)
+						pComp.addBody(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
+					else {
+						pComp = new PhysicsComponent(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
-				} else if(m_scene.getCustom(body, "characterType", "").equals("LHand")){
-					if(pComp!=null){
-						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						pComp.setMass(0.01f, ((BodyUserData) body.getUserData()).mName);
-					}
-					else{
-						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+				} else if (m_scene.getCustom(body, "characterType", "").equals(
+						"LHand")) {
+					if (pComp != null) {
+						pComp.addBody(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
+						pComp.setMass(0.01f,
+								((BodyUserData) body.getUserData()).mName);
+					} else {
+						pComp = new PhysicsComponent(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
-				}else{
-					if(pComp!=null)
-						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-					else{
-						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+				} else {
+					if (pComp != null)
+						pComp.addBody(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
+					else {
+						pComp = new PhysicsComponent(physicsWorld, body,
+								((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
 				}
@@ -356,22 +389,24 @@ public class EntityLoader {
 			String atlasName = m_scene.getCustom(body, "atlas", "failed");
 			AnimationComponent anim = null;
 			AnimationStateData stateData = null;
-			if(!skelName.equals("failed") && !atlasName.equals("failed"))
-			{
-				anim = new AnimationComponent(CHARPATH+characterPath+atlasName, CHARPATH+characterPath+skelName, 1.3f);
+			if (!skelName.equals("failed") && !atlasName.equals("failed")) {
+				anim = new AnimationComponent(CHARPATH + characterPath
+						+ atlasName, CHARPATH + characterPath + skelName, 1.3f);
 				entity.addComponent(anim);
 			}
-			if(m_scene.getCustom(body, "characterType", "").equals("playerOne"))
-			{
-				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
+			if (m_scene.getCustom(body, "characterType", "")
+					.equals("playerOne")) {
+				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body,
+						"characterType", ""));
 				p.setActive(config.m_playerOne.m_active);
 				p.setFacingLeft(config.m_playerOne.m_facingleft);
 				p.setCanBecomeInactive(config.m_playerOne.m_canDeactivate);
-				for(Tasks task : config.getTasks()){
+				for (Tasks task : config.getTasks()) {
 					p.addTask(task);
 				}
 				config.getLevelComponent().addFinisher(p);
-				//entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
+				// entity.addComponent(new LightComponent(light, ((BodyUserData)
+				// body.getUserData()).mName));
 				entity.addComponent(p);
 				entity.addComponent(new TouchComponent());
 				entity.addComponent(new MovementComponent());
@@ -395,7 +430,6 @@ public class EntityLoader {
 				stateData.setMix("running", "idle1", 0.4f);
 				stateData.setMix("runJumping", "running", 0.6f);
 				stateData.setMix("jogging", "running", 0.4f);
-				//stateData.setMix("falling", "idle", 0.1f);
 				stateData.setMix("runJumping", "running", 0.1f);
 				stateData.setMix("upJump", "running", 0.2f);
 				stateData.setMix("idle1", "climbUp", 0.6f);
@@ -403,18 +437,20 @@ public class EntityLoader {
 				stateData.setMix("idle1", "pushing", 0.4f);
 				stateData.setMix("running", "pushing", 0.3f);
 				stateData.setMix("runJumping", "falling", 0.4f);
-				//dstateData.setMix("pushing", "idle", 0.6f);
-				//stateData.setMix("ladderHang", "running", 0.1f);
+				// dstateData.setMix("pushing", "idle", 0.6f);
+				// stateData.setMix("ladderHang", "running", 0.1f);
 				anim.setSkin(config.m_playerOne.getSkinName());
 				pComp.setPosition(config.m_playerOne.m_playerPosition);
-				//stateData.setMix("lieDown", "running", 0.3f);
+				// stateData.setMix("lieDown", "running", 0.3f);
 
-			}else if(m_scene.getCustom(body, "characterType","").equals("playerTwo")){
-				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
+			} else if (m_scene.getCustom(body, "characterType", "").equals(
+					"playerTwo")) {
+				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body,
+						"characterType", ""));
 				p.setActive(config.m_playerTwo.m_active);
 				p.setFacingLeft(config.m_playerTwo.m_facingleft);
 				p.setCanBecomeInactive(config.m_playerTwo.m_canDeactivate);
-				for(Tasks task : config.getTasks()){
+				for (Tasks task : config.getTasks()) {
 					p.addTask(task);
 				}
 				config.getLevelComponent().addFinisher(p);
@@ -427,9 +463,9 @@ public class EntityLoader {
 				stateData.setMix("running", "idle1", 0.4f);
 				stateData.setMix("walking", "idle1", 0.4f);
 				stateData.setMix("walking", "running", 0.4f);
-				//stateData.setMix("jumping", "running", 0.2f);
-				//stateData.setMix("walking", "jumping", 0.2f);
-				//stateData.setMix("falling", "idle1", 0.2f);
+				// stateData.setMix("jumping", "running", 0.2f);
+				// stateData.setMix("walking", "jumping", 0.2f);
+				// stateData.setMix("falling", "idle1", 0.2f);
 				stateData.setMix("running", "falling", 0.6f);
 				stateData.setMix("idle1", "falling", 0.6f);
 				stateData.setMix("lieDown", "lyingDown", 0.2f);
@@ -440,7 +476,8 @@ public class EntityLoader {
 				entity.addComponent(p);
 				anim.setSkin(config.m_playerTwo.getSkinName());
 				entity.addComponent(new MovementComponent());
-				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f, 10);
+				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f,
+						10);
 				vel.m_crawlLimit = 2.5f;
 				entity.addComponent(vel);
 				entity.addComponent(new TouchComponent());
@@ -454,12 +491,13 @@ public class EntityLoader {
 			}
 
 			BodyUserData ud = (BodyUserData) body.getUserData();
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup));
+			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(
+					ud.mBoxIndex, ud.mCollisionGroup));
 			pComp.setUserData(entity, ud.mName);
 			tempList.add(pComp.getBody(ud.mName));
 		}
 		loadBodyJoints(physicsWorld, tempList, entityWorld);
-		//loadBodyParts(entity, ps);
+		// loadBodyParts(entity, ps);
 		PhysicsListenerSetup setup = new PhysicsListenerSetup();
 		setup.setPlayerPhysics(pComp);
 		tempList.clear();
@@ -468,10 +506,11 @@ public class EntityLoader {
 		return entity;
 	}
 
-	private void loadBodyJoints(com.badlogic.gdx.physics.box2d.World physicsWorld, Array<Body> tempList, World entityWorld)
-	{
+	private void loadBodyJoints(
+			com.badlogic.gdx.physics.box2d.World physicsWorld,
+			Array<Body> tempList, World entityWorld) {
 		Array<Joint> joints = m_scene.getJoints();
-		if(joints == null)
+		if (joints == null)
 			return;
 		for (int j = 0; j < joints.size; j++) {
 
@@ -481,144 +520,128 @@ public class EntityLoader {
 			if (joint.getType() == JointType.DistanceJoint) {
 
 				DistanceJointDef jDef = (DistanceJointDef) ind.jointDef;
-				
-				if(joint.getUserData() != null){
+
+				if (joint.getUserData() != null) {
 					String name = (String) joint.getUserData();
-					if(name.equals("branchJoint")){
+					if (name.equals("branchJoint")) {
 						Entity ent = entityWorld.createEntity();
 						JointComponent comp = new JointComponent(name);
 						comp.setDJoint(JointFactory.getInstance().createJoint(
-								tempList.get(ind.first), 
-								tempList.get(ind.second),
-								jDef, physicsWorld));
+								tempList.get(ind.first),
+								tempList.get(ind.second), jDef, physicsWorld));
 						ent.addComponent(new TriggerComponent());
 						ent.addComponent(new QueueComponent());
 						ent.addComponent(comp);
 						ent.addToWorld();
 					}
 				} else {
-				
+
 					JointFactory.getInstance().createJoint(
-							tempList.get(ind.first), 
-							tempList.get(ind.second),
+							tempList.get(ind.first), tempList.get(ind.second),
 							jDef, physicsWorld);
-							
+
 				}
 			}
-			
-			if (joint.getType() == JointType.RevoluteJoint){
-				
+
+			if (joint.getType() == JointType.RevoluteJoint) {
+
 				RevoluteJointDef jDef = (RevoluteJointDef) ind.jointDef;
-				
-				if(joint.getUserData() != null){
+
+				if (joint.getUserData() != null) {
 					String name = (String) joint.getUserData();
-					if(name.equals("branchJoint")){
+					if (name.equals("branchJoint")) {
 						Entity ent = entityWorld.createEntity();
 						JointComponent comp = new JointComponent(name);
 						comp.setDJoint(JointFactory.getInstance().createJoint(
-								tempList.get(ind.first), 
-								tempList.get(ind.second),
-								jDef, physicsWorld));
+								tempList.get(ind.first),
+								tempList.get(ind.second), jDef, physicsWorld));
 						ent.addComponent(new TriggerComponent());
 						ent.addComponent(new QueueComponent());
 						ent.addComponent(comp);
 						ent.addToWorld();
 					} else {
-						
+
 						JointFactory.getInstance().createJoint(
-								tempList.get(ind.first), 
-								tempList.get(ind.second),
-								jDef, physicsWorld);
-								
+								tempList.get(ind.first),
+								tempList.get(ind.second), jDef, physicsWorld);
+
 					}
-				} 
+				}
 			}
-			
-			if (joint.getType() == JointType.WheelJoint){
+
+			if (joint.getType() == JointType.WheelJoint) {
 				WheelJointDef jDef = (WheelJointDef) ind.jointDef;
-				JointFactory.getInstance().createJoint(
-						tempList.get(ind.first), 
-						tempList.get(ind.second),
-						jDef,physicsWorld);
-				//	m_wheels.add((WheelJoint)jD);
+				JointFactory.getInstance().createJoint(tempList.get(ind.first),
+						tempList.get(ind.second), jDef, physicsWorld);
+				// m_wheels.add((WheelJoint)jD);
 			}
-			
-			if(joint.getType() == JointType.WeldJoint){
+
+			if (joint.getType() == JointType.WeldJoint) {
 				WeldJointDef jDef = (WeldJointDef) ind.jointDef;
-				JointFactory.getInstance().createJoint(
-						tempList.get(ind.first),
-						tempList.get(ind.second),
-						jDef, physicsWorld);
+				JointFactory.getInstance().createJoint(tempList.get(ind.first),
+						tempList.get(ind.second), jDef, physicsWorld);
 			}
-			
-			if(joint.getType() == JointType.PrismaticJoint){
+
+			if (joint.getType() == JointType.PrismaticJoint) {
 				String name = (String) joint.getUserData();
 				PrismaticJointDef jDef = (PrismaticJointDef) ind.jointDef;
-				if(name.equals("doorMotor")){
+				if (name.equals("doorMotor")) {
 					Entity ent = entityWorld.createEntity();
 					JointComponent comp = new JointComponent(name);
 					comp.setPrismJoint(JointFactory.getInstance().createJoint(
-							tempList.get(ind.first), 
-							tempList.get(ind.second),
+							tempList.get(ind.first), tempList.get(ind.second),
 							jDef, physicsWorld));
 					ent.addComponent(new TriggerComponent());
 					ent.addComponent(comp);
 					ent.addToWorld();
 				} else {
 					JointFactory.getInstance().createJoint(
-							tempList.get(ind.first),
-							tempList.get(ind.second),
+							tempList.get(ind.first), tempList.get(ind.second),
 							jDef, physicsWorld);
 				}
 			}
 		}
 	}
+
 	/*
-	private Vector2 vector = new Vector2();
-	private void loadBodyParts(Entity e, PhysicsSystem pSystem)
-	{
-		AnimationComponent anim = e.getComponent(AnimationComponent.class);
-		PhysicsComponent ps = e.getComponent(PhysicsComponent.class);
-		final TextureAtlas atlas = anim.getAtlas();
-
-		AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(atlas);
-		SkeletonJson json = new SkeletonJson(atlasLoader);
-		json.setScale(1.3f);
-		SkeletonData skeletonData = json.readSkeletonData(Gdx.files.internal("skeleton.json"));
-
-		Skeleton skeleton = new Skeleton(skeletonData);
-
-		for (Slot slot : skeleton.getSlots()) {
-			if (!(slot.getAttachment() instanceof RegionAttachment)) continue;
-			RegionAttachment attachment = (RegionAttachment)slot.getAttachment();
-
-			PolygonShape boxPoly = new PolygonShape();
-			boxPoly.setAsBox(
-					Converters.ToBox(attachment.getWidth() / 2 * attachment.getScaleX()),
-					Converters.ToBox(attachment.getHeight() / 2 * attachment.getScaleY()),
-					Converters.ToBox(vector.set(attachment.getX(), attachment.getY())),
-					attachment.getRotation() * MathUtils.degRad);
-			System.out.println(attachment.getName());
-			BodyDef boxBodyDef = new BodyDef();
-			boxBodyDef.type = BodyType.StaticBody;
-			ps.createBody(pSystem.getWorld(),boxBodyDef, attachment.getName());
-			ps.createFixture(boxPoly, attachment.getName());
-
-			boxPoly.dispose();
-		}
-	}
+	 * private Vector2 vector = new Vector2(); private void loadBodyParts(Entity
+	 * e, PhysicsSystem pSystem) { AnimationComponent anim =
+	 * e.getComponent(AnimationComponent.class); PhysicsComponent ps =
+	 * e.getComponent(PhysicsComponent.class); final TextureAtlas atlas =
+	 * anim.getAtlas();
+	 * 
+	 * AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(atlas);
+	 * SkeletonJson json = new SkeletonJson(atlasLoader); json.setScale(1.3f);
+	 * SkeletonData skeletonData =
+	 * json.readSkeletonData(Gdx.files.internal("skeleton.json"));
+	 * 
+	 * Skeleton skeleton = new Skeleton(skeletonData);
+	 * 
+	 * for (Slot slot : skeleton.getSlots()) { if (!(slot.getAttachment()
+	 * instanceof RegionAttachment)) continue; RegionAttachment attachment =
+	 * (RegionAttachment)slot.getAttachment();
+	 * 
+	 * PolygonShape boxPoly = new PolygonShape(); boxPoly.setAsBox(
+	 * Converters.ToBox(attachment.getWidth() / 2 * attachment.getScaleX()),
+	 * Converters.ToBox(attachment.getHeight() / 2 * attachment.getScaleY()),
+	 * Converters.ToBox(vector.set(attachment.getX(), attachment.getY())),
+	 * attachment.getRotation() * MathUtils.degRad);
+	 * System.out.println(attachment.getName()); BodyDef boxBodyDef = new
+	 * BodyDef(); boxBodyDef.type = BodyType.StaticBody;
+	 * ps.createBody(pSystem.getWorld(),boxBodyDef, attachment.getName());
+	 * ps.createFixture(boxPoly, attachment.getName());
+	 * 
+	 * boxPoly.dispose(); } }
 	 */
-	private void loadFixtures(PhysicsComponent pComp, Body body)
-	{
+	private void loadFixtures(PhysicsComponent pComp, Body body) {
 		Array<Fixture> fixtures = body.getFixtureList();
 
-		if ((fixtures != null) && (fixtures.size > 0))
-		{
+		if ((fixtures != null) && (fixtures.size > 0)) {
 			// for each fixture on the body...
-			for (int j = 0; j < fixtures.size; j++)
-			{
+			for (int j = 0; j < fixtures.size; j++) {
 				Fixture fixture = fixtures.get(j);
-				pComp.createFixture(fixture, ((BodyUserData) body.getUserData()).mName);
+				pComp.createFixture(fixture,
+						((BodyUserData) body.getUserData()).mName);
 			}
 		}
 	}

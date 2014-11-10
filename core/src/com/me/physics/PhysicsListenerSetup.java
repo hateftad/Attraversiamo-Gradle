@@ -107,6 +107,15 @@ public class PhysicsListenerSetup {
 								e.getComponent(TouchComponent.class).m_footEdge = true;
 								e.getComponent(TouchComponent.class).m_touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
 							}
+							
+							if(otherUd.getType() == Type.LPUSHAREA){
+								System.out.println("left push area");
+								e.getComponent(TouchComponent.class).m_leftPushArea = true;
+							}
+							if(otherUd.getType() == Type.RPUSHAREA){
+								System.out.println("right push area");
+								e.getComponent(TouchComponent.class).m_rightPushArea = true;
+							}
 
 							if(otherUd.getType() == Type.HAND){
 								if(e2.getComponent(JointComponent.class) != null){
@@ -270,6 +279,12 @@ public class PhysicsListenerSetup {
 						}
 						if(otherUd.getType() == Type.PORTAL){
 							e.getComponent(TouchComponent.class).m_endReach = 0;
+						}
+						if(otherUd.getType() == Type.LPUSHAREA){
+							e.getComponent(TouchComponent.class).m_leftPushArea = false;
+						}
+						if(otherUd.getType() == Type.RPUSHAREA){
+							e.getComponent(TouchComponent.class).m_rightPushArea = false;
 						}
 					}
 				}

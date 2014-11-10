@@ -2,45 +2,25 @@ package com.me.physics;
 
 public class RBUserData {
 
-	public enum Type
-	{
-		GROUND,
-		WALL,
-		TORSO,
-		FEET,
-		PELVIS,
-		LEFTEDGE,
-		RIGHTEDGE,
-		LADDER,
-		LEFTLADDER,
-		RIGHTLADDER,
-		TOPLADDER,
-		BOTTOMLADDER,
-		BOX,
-		LEFTPULLUP,
-		RIGHTPULLUP,
-		HAND,
-		BOXHAND,
-		PORTAL,
-		BOXFOOT,
-		FINISH,
-		LEFTCRAWL,
-		RIGHTCRAWL,
-		CRAWLCANAL
+	public enum Type {
+		GROUND, WALL, TORSO, FEET, PELVIS, LEFTEDGE, RIGHTEDGE, 
+		LADDER, LEFTLADDER, RIGHTLADDER, TOPLADDER, BOTTOMLADDER,
+		BOX, LEFTPULLUP, RIGHTPULLUP, HAND, BOXHAND, PORTAL, BOXFOOT, 
+		FINISH, LEFTCRAWL, RIGHTCRAWL, CRAWLCANAL, LPUSHAREA, RPUSHAREA
 	}
-	
+
 	private int m_collisionGroup;
 	private int m_boxId;
 	private Type m_type;
-	public RBUserData(int boxId, int collisionGroup)
-	{
+
+	public RBUserData(int boxId, int collisionGroup) {
 		set(boxId, collisionGroup);
 	}
-	
-	public void set(int boxid,int collisiongroup){
-		this.m_boxId=boxid;
-		this.m_collisionGroup=collisiongroup;
-		
+
+	public void set(int boxid, int collisiongroup) {
+		this.m_boxId = boxid;
+		this.m_collisionGroup = collisiongroup;
+
 		switch (boxid) {
 		case 1:
 			setType(Type.GROUND);
@@ -108,21 +88,30 @@ public class RBUserData {
 		case 22:
 			setType(Type.RIGHTPULLUP);
 			break;
+		case 23:
+			setType(Type.RPUSHAREA);
+			break;
+		case 24:
+			setType(Type.LPUSHAREA);
+			break;
 		default:
 			break;
 		}
-		
+
 	}
-	public int getBoxId(){
+
+	public int getBoxId() {
 		return this.m_boxId;
 	}
-	
-	public int getCollisionGroup(){ 
+
+	public int getCollisionGroup() {
 		return this.m_collisionGroup;
 	}
+
 	public Type getType() {
 		return m_type;
 	}
+
 	public void setType(Type m_type) {
 		this.m_type = m_type;
 	}
