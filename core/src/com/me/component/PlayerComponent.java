@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class PlayerComponent extends BaseComponent {
 
 	public enum State {
-		WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP
+		WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE
 	}
 
 	public enum PlayerNumber {

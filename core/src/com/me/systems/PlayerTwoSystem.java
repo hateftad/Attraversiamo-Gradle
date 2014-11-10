@@ -113,7 +113,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 				m_inputMgr.isDown(up), m_inputMgr.isDown(down),
 				m_inputMgr.isDown(jump));
 		if (player.isActive() && !m.m_lockControls && !g.m_gettingLifted
-				&& !finish && !crawlComp.isStanding) {
+				&& !finish && !crawlComp.isStanding && player.getState() != State.WAITTILDONE) {
 
 			// animation.printStateChange();
 			if (touch.m_groundTouch && !crawlComp.isCrawling) {
@@ -168,6 +168,22 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 					animation.setAnimationState(AnimState.LIEDOWN);
 					player.setState(State.LYINGDOWN);
 				}
+				if(touch.m_pushArea){
+					
+					if(touch.m_leftPushArea){
+						player.setFacingLeft(false);
+						animation.setAnimationState(AnimState.PRESSBUTTON);
+						player.doneTask(Tasks.OPENDOOR, true);
+						player.setState(State.WAITTILDONE);
+					}
+					if(touch.m_rightPushArea){
+						player.setFacingLeft(true);
+						animation.setAnimationState(AnimState.PRESSBUTTON);
+						player.doneTask(Tasks.OPENDOOR, true);
+						player.setState(State.WAITTILDONE);
+					}
+					
+				}
 			}
 
 			if (animation.isCompleted(AnimState.LIEDOWN)) {
@@ -186,6 +202,10 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 				crawlComp.isStanding = true;
 				ps.enableBody("center");
 			}
+		}
+		
+		if(animation.isCompleted() && player.getState() == State.WAITTILDONE){
+			player.setState(State.IDLE);
 		}
 
 		if (finish) {

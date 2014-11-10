@@ -138,7 +138,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		// e.getComponent(RagDollComponent.class).m_activated = m_button[rag];
 		VelocityLimitComponent vel = m_velComps.get(e);
 
-		if (player.isActive() && !m.m_lockControls && !g.m_lifting && !finish) {
+		if (player.isActive() && !m.m_lockControls && !g.m_lifting && !finish && player.getState() != State.WAITTILDONE) {
 			if (touch.m_groundTouch && !touch.m_boxTouch && !touch.m_footEdge) {
 				animation.setupPose();
 			}
@@ -204,6 +204,20 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					vel.m_ladderClimbVelocity = 3;
 					l.m_goingUp = true;
 				}
+				if(touch.m_pushArea){
+					if(touch.m_leftPushArea){
+						player.setFacingLeft(false);
+						animation.setAnimationState(AnimState.PRESSBUTTON);
+						player.doneTask(Tasks.OPENDOOR, true);
+						player.setState(State.WAITTILDONE);
+					}
+					if(touch.m_rightPushArea){
+						player.setFacingLeft(true);
+						animation.setAnimationState(AnimState.PRESSBUTTON);
+						player.doneTask(Tasks.OPENDOOR, true);
+						player.setState(State.WAITTILDONE);
+					}
+				}
 			}
 
 			if (g.m_gonnaGrab) {
@@ -213,6 +227,11 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 				g.m_gonnaGrab = false;
 			}
 		}
+		
+		if(animation.isCompleted() && player.getState() == State.WAITTILDONE){
+			player.setState(State.IDLE);
+		}
+		
 		if (finish) {
 			animation.setAnimationState(m_playerConfig.m_finishAnimation);
 			if (animation.isCompleted()) {

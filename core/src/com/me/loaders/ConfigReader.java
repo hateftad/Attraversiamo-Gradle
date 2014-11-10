@@ -67,7 +67,7 @@ public class ConfigReader {
 				for(Element task : tasks){
 					Element t = task.getChildByName("task");
 					if(t.getText() != null){
-						config.setTask(t.getText());
+						config.addTask(t.getText());
 					}
 				}
 				

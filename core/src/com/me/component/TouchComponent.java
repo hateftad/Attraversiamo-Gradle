@@ -11,9 +11,10 @@ public class TouchComponent extends BaseComponent {
 	public boolean m_boxTouch;
 	public boolean m_footEdgeL;
 	public boolean m_footEdgeR;
+	public boolean m_footEdge;
 	public boolean m_rightPushArea;
 	public boolean m_leftPushArea;
-	public boolean m_footEdge;
+	public boolean m_pushArea;
 	public boolean m_handTouch;
 	public boolean m_feetToBox;
 	public int m_endReach;

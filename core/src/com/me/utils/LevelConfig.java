@@ -24,7 +24,7 @@ public class LevelConfig {
 		m_name = name;
 	}
 	
-	public void setTask(String task){
+	public void addTask(String task){
 		if(task.equalsIgnoreCase("OpenDoor")){
 			m_tasks.add(Tasks.OPENDOOR);
 		} else if(task.equalsIgnoreCase("TouchEnd")){

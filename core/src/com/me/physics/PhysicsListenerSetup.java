@@ -110,10 +110,12 @@ public class PhysicsListenerSetup {
 							
 							if(otherUd.getType() == Type.LPUSHAREA){
 								System.out.println("left push area");
+								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_leftPushArea = true;
 							}
 							if(otherUd.getType() == Type.RPUSHAREA){
 								System.out.println("right push area");
+								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_rightPushArea = true;
 							}
 
@@ -281,9 +283,11 @@ public class PhysicsListenerSetup {
 							e.getComponent(TouchComponent.class).m_endReach = 0;
 						}
 						if(otherUd.getType() == Type.LPUSHAREA){
+							e.getComponent(TouchComponent.class).m_pushArea = false;
 							e.getComponent(TouchComponent.class).m_leftPushArea = false;
 						}
 						if(otherUd.getType() == Type.RPUSHAREA){
+							e.getComponent(TouchComponent.class).m_pushArea = false;
 							e.getComponent(TouchComponent.class).m_rightPushArea = false;
 						}
 					}
