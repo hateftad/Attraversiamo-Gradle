@@ -45,7 +45,7 @@ public class AnimationComponent extends BaseComponent {
 		CLIMBING, LADDERCLIMBUP, LADDERCLIMBDOWN, 
 		LADDERHANG, FALLING, PUSHING,
 		LIEDOWN, PULLUP, SUCKIN, WALKOUT, CRAWL, STANDUP,
-		LYINGDOWN, PRESSBUTTON
+		LYINGDOWN, PRESSBUTTON, RUNOUT
 	}
 
 	public AnimationComponent(String atlas, String skeleton, float scale){
@@ -337,6 +337,9 @@ public class AnimationComponent extends BaseComponent {
 				break;
 			case PRESSBUTTON:
 				playAnimation("pressButton", false);
+				break;
+			case RUNOUT:
+				playAnimation("runOut", false);
 				break;
 			default:
 				break;

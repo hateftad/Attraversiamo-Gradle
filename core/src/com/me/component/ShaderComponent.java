@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.me.utils.Converters;
 
 
 public class ShaderComponent extends BaseComponent {
@@ -26,6 +27,11 @@ public class ShaderComponent extends BaseComponent {
 	private String vertexShader;
 	private String fragmentShader;
 	private String fragmentShader2;
+	
+	Matrix4 projection = new Matrix4();
+	Matrix4 view = new Matrix4();
+	Matrix4 model = new Matrix4();
+	Matrix4 combined = new Matrix4();
 	
 	public ShaderComponent(String extraTexture){
 		m_displacementTexture = new Texture(Gdx.files.internal("data/level/common/waterdisplacement.png"));
@@ -44,19 +50,28 @@ public class ShaderComponent extends BaseComponent {
 	}
 	
 	float time;
-	
+	float xPosition = 0;
+	Vector3 axis = new Vector3(1, 0, 1).nor();
 	public void render(SpriteBatch batch, OrthographicCamera camera, SpriteComponent sprite){
 		float dt = Gdx.graphics.getDeltaTime();
 		time += dt;
 		float angle = time * (2 * MathUtils.PI);
 		if (angle > (2 * MathUtils.PI))
 			angle -= (2 * MathUtils.PI);
-
+		
+		float aspect = camera.viewportWidth / (float)camera.viewportHeight;
+		projection.setToProjection(camera.near, camera.far, 60f, aspect);
 		//Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		view.idt().trn(0, 0, -2.0f);
+		//model.setToRotation(axis, angle);
+		//System.out.println(Converters.ToBox(sprite.getPosition().x) / 100 + " y "+Converters.ToBox(sprite.getPosition().y));
+		model.setToTranslation(Converters.ToBox(sprite.getPosition().x) / 100, 0, 0);
+		//model.setToTranslation(Converters.ToBox(camera.position.x) / 10 + Converters.ToBox(sprite.getPosition().x) / 100, 0, 0);
+		combined.set(projection).mul(view).mul(model);
 		
 		batch.setShader(m_waterShader);
 		batch.begin();
-		m_waterShader.setUniformMatrix("u_worldView", camera.combined);
+		m_waterShader.setUniformMatrix("u_mvpMatrix", combined);
 		sprite.draw(batch);
 		batch.end();
 		
@@ -67,7 +82,7 @@ public class ShaderComponent extends BaseComponent {
 		m_displacementTexture.bind(2);
 		batch.setShader(null);
 		m_shader.begin();
-		m_shader.setUniformMatrix("u_worldView",  m_matrix);
+		m_shader.setUniformMatrix("u_mvpMatrix", combined);
 
 		m_shader.setUniformi("u_texture", 1);
 		m_shader.setUniformi("u_texture2", 2);

@@ -399,6 +399,7 @@ public class PhysicsComponent extends BaseComponent {
 		if (m_physicsListener != null) {
 			m_physicsListener.onRestart();
 		}
+		enableBody("center");
 	}
 
 	public interface ImmediateModePhysicsListener {

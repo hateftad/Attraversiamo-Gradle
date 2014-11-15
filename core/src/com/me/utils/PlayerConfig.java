@@ -30,6 +30,9 @@ public class PlayerConfig {
  		if(state.equals("walkout")){
  			m_finishAnimation = AnimState.WALKOUT;
  		}
+ 		if(state.equals("runOut")){
+ 			m_finishAnimation = AnimState.RUNOUT;
+ 		}
  	}
  	
 	public void setSkinName(String name){

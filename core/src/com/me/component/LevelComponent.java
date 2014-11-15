@@ -40,7 +40,7 @@ public class LevelComponent extends BaseComponent {
 
 	@Override
 	public void restart() {
-		m_finishers.clear();
+		//m_finishers.clear();
 	}
 
 }

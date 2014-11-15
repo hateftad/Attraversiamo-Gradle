@@ -7,7 +7,7 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>true</hasPortal>
         <tasks>
-            <task>TouchEnd</task>
+            <task name="TouchEnd"/>
         </tasks>
         <player>
             <skinName>color</skinName>
@@ -46,7 +46,7 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
          <tasks>
-            <task></task>
+            <task name="TouchEnd"/>
         </tasks>
         <player>
             <skinName>color</skinName>
@@ -85,7 +85,7 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
 		 <tasks>
-            <task></task>
+            <task name="TouchEnd"/>
         </tasks>
         <player>
             <skinName>color</skinName>
@@ -111,7 +111,7 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
          <tasks>
-            <task></task>
+            <task name="TouchEnd"/>
         </tasks>
         <player>
             <skinName>color</skinName>
@@ -137,7 +137,8 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
          <tasks>
-            <task>OpenDoor</task>
+            <task name="OpenDoor"/>
+            <task name="TouchEnd"/>
         </tasks>
         <player>
             <skinName>silhouette</skinName>
@@ -150,7 +151,7 @@
 	        	<y name = "y">0.0</y>
 	        </position>
 	        <facingLeft>false</facingLeft>
-	        <finishAnim>suckin</finishAnim>
+	        <finishAnim>runOut</finishAnim>
         </player>
         <player>
             <skinName>silhouette</skinName>
@@ -163,7 +164,7 @@
 	        	<y name = "y">0.0</y>
 	        </position>
 	        <facingLeft>false</facingLeft>
-	        <finishAnim>suckin</finishAnim>
+	        <finishAnim>runOut</finishAnim>
         </player>
         <camera>
             <zoom>5</zoom>
@@ -176,7 +177,7 @@
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
         <tasks>
-            <task>OpenDoor</task>
+           <task name="OpenDoor"/>
         </tasks>
         <player>
             <skinName>silhouette</skinName>
