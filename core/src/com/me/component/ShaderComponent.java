@@ -1,5 +1,7 @@
 package com.me.component;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
@@ -14,6 +16,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.me.utils.Converters;
 
 
@@ -33,7 +37,7 @@ public class ShaderComponent extends BaseComponent {
 	Matrix4 model = new Matrix4();
 	Matrix4 combined = new Matrix4();
 	
-	public ShaderComponent(String extraTexture){
+	public ShaderComponent(String extraTexture, Body body){
 		m_displacementTexture = new Texture(Gdx.files.internal("data/level/common/waterdisplacement.png"));
 		m_displacementTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		m_displacementTexture.bind();
@@ -45,8 +49,17 @@ public class ShaderComponent extends BaseComponent {
 		m_waterShader = new ShaderProgram(vertexShader, fragmentShader2);
 		m_matrix = new Matrix4();
 		m_waterShader.setUniformMatrix("u_projTrans", m_matrix);
-		
-		m_waterMesh = createQuad(-0.8f, -0.8f, 0.8f, -0.8f, 0.8f, -0.3f, -0.8f, -0.3f);
+		PolygonShape shape = (PolygonShape) body.getFixtureList().get(0).getShape();
+		ArrayList<Vector2> vertices = new ArrayList<Vector2>();
+		for(int i = 0; i < shape.getVertexCount(); i++){
+			Vector2 vertex = new Vector2();
+			shape.getVertex(i, vertex);
+			vertices.add(vertex);
+		}
+		m_waterMesh = createQuad(vertices.get(3).x * 100, vertices.get(3).y* 100, 
+								vertices.get(0).x* 100, vertices.get(0).y* 100, 
+								vertices.get(1).x* 100, vertices.get(1).y* 160,
+								vertices.get(2).x* 100, vertices.get(2).y* 160);
 	}
 	
 	float time;
@@ -60,12 +73,14 @@ public class ShaderComponent extends BaseComponent {
 			angle -= (2 * MathUtils.PI);
 		
 		float aspect = camera.viewportWidth / (float)camera.viewportHeight;
-		projection.setToProjection(camera.near, camera.far, 60f, aspect);
+		//projection.setToProjection(camera.near, camera.far, 100f, aspect);
+		projection.set(camera.projection);
 		//Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		view.idt().trn(0, 0, -2.0f);
+		System.out.println("camera "+projection);
+		view.setToTranslation(-camera.position.x, -camera.position.y, -2.0f);
 		//model.setToRotation(axis, angle);
-		//System.out.println(Converters.ToBox(sprite.getPosition().x) / 100 + " y "+Converters.ToBox(sprite.getPosition().y));
-		model.setToTranslation(Converters.ToBox(sprite.getPosition().x) / 100, 0, 0);
+		System.out.println(Converters.ToBox(sprite.getPosition().x) / 10 + " y "+Converters.ToBox(sprite.getPosition().y));
+		model.setToTranslation(sprite.getPosition().x, sprite.getPosition().y, 0);
 		//model.setToTranslation(Converters.ToBox(camera.position.x) / 10 + Converters.ToBox(sprite.getPosition().x) / 100, 0, 0);
 		combined.set(projection).mul(view).mul(model);
 		

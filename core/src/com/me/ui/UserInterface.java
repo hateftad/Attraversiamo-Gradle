@@ -138,23 +138,22 @@ public class UserInterface {
 			}
 		});
 		
-		
+		int size = 120;
 		
 		m_bottomLeftBtnsTable.setFillParent(true);
 		m_bottomLeftBtnsTable.bottom().left();
-		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left().width(200).height(200);
-		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left().width(200).height(200);
+		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left().width(size).height(size).padRight(20);
+		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left().width(size).height(size);
 		
 		m_bottomRightBtnsTable.setFillParent(true);
-		m_bottomRightBtnsTable.bottom().right().setHeight(200);
-		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right().width(200).height(200);
-		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right().width(200).height(200);
-		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right().width(200).height(200);
+		m_bottomRightBtnsTable.bottom().right().setHeight(size);
+		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right().width(size).height(size);
+		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right().width(size).height(size);
+		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right().width(size).height(size);
 		
 		m_topBtnsTable.setFillParent(true);
 		m_topBtnsTable.top().left();
 		m_topBtnsTable.add(m_restartBtn).width(100).height(100);
-	
 		
 		m_stage.addActor(m_topBtnsTable);
 		m_stage.addActor(m_bottomLeftBtnsTable);

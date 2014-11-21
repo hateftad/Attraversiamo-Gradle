@@ -255,7 +255,7 @@ public class EntityLoader {
 
 			if (ud.mName.equals("water")) {
 				entity.addComponent(new BouyancyComponent());
-				entity.addComponent(new ShaderComponent(""));
+				entity.addComponent(new ShaderComponent("",body));
 			}
 
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(

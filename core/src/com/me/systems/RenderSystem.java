@@ -117,12 +117,13 @@ public class RenderSystem extends EntitySystem {
 			}
 		}
 		m_batch.end();
-		/*
-		 * if(m_shaderComps.has(e)){ ShaderComponent sComp =
-		 * m_shaderComps.get(e); sComp.render(m_batch,
-		 * world.getSystem(CameraSystem.class).getCameraComponent().getCamera(),
-		 * m_sprites.get(e)); }
-		 */
+
+		if (m_shaderComps.has(e)) {
+			ShaderComponent sComp = m_shaderComps.get(e);
+			sComp.render(m_batch, world.getSystem(CameraSystem.class)
+					.getCameraComponent().getCamera(), m_sprites.get(e));
+		}
+
 	}
 
 	@Override
