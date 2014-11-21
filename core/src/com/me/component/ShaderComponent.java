@@ -72,16 +72,9 @@ public class ShaderComponent extends BaseComponent {
 		if (angle > (2 * MathUtils.PI))
 			angle -= (2 * MathUtils.PI);
 		
-		float aspect = camera.viewportWidth / (float)camera.viewportHeight;
-		//projection.setToProjection(camera.near, camera.far, 100f, aspect);
 		projection.set(camera.projection);
-		//Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		System.out.println("camera "+projection);
 		view.setToTranslation(-camera.position.x, -camera.position.y, -2.0f);
-		//model.setToRotation(axis, angle);
-		System.out.println(Converters.ToBox(sprite.getPosition().x) / 10 + " y "+Converters.ToBox(sprite.getPosition().y));
 		model.setToTranslation(sprite.getPosition().x, sprite.getPosition().y, 0);
-		//model.setToTranslation(Converters.ToBox(camera.position.x) / 10 + Converters.ToBox(sprite.getPosition().x) / 100, 0, 0);
 		combined.set(projection).mul(view).mul(model);
 		
 		batch.setShader(m_waterShader);

@@ -154,6 +154,7 @@ public class EntityLoader {
 								((BodyUserData) body.getUserData()).mName);
 						entity = entityWorld.createEntity();
 						entity.addComponent(pComp);
+						sComp.m_shouldDraw = m_scene.getCustom(image, "shouldDraw", true);
 						entity.addComponent(sComp);
 
 					}

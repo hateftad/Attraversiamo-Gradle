@@ -100,8 +100,9 @@ public class RenderSystem extends EntitySystem {
 							physics.getPosition().y);
 					anim.update(m_batch, world.delta);
 				} else {
-					sprite.draw(m_batch);
-
+					if(sprite.m_shouldDraw){
+						sprite.draw(m_batch);
+					}
 				}
 
 			}
