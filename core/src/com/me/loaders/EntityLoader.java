@@ -421,6 +421,7 @@ public class EntityLoader {
 				entity.addComponent(new PlayerOneComponent());
 				entity.addComponent(new TriggerComponent());
 				entity.addComponent(new RestartComponent());
+				
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
 				stateData = anim.setUp(image);
@@ -468,6 +469,8 @@ public class EntityLoader {
 				// stateData.setMix("falling", "idle1", 0.2f);
 				stateData.setMix("running", "falling", 0.6f);
 				stateData.setMix("idle1", "falling", 0.6f);
+				stateData.setMix("idle1", "pushing", 0.6f);
+				stateData.setMix("running", "pushing", 0.6f);
 				stateData.setMix("lieDown", "lyingDown", 0.2f);
 				stateData.setMix("crawling", "lyingDown", 0.2f);
 				stateData.setMix("lyingDown", "crawling", 0.2f);
@@ -487,6 +490,7 @@ public class EntityLoader {
 				entity.addComponent(new TriggerComponent());
 				entity.addComponent(new CrawlComponent());
 				entity.addComponent(new RestartComponent());
+				entity.addComponent(new PushComponent());
 				pComp.setPosition(config.m_playerTwo.m_playerPosition);
 			}
 

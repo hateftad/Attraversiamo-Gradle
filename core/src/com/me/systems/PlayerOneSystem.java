@@ -76,6 +76,9 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 
 	@Mapper
 	ComponentMapper<PlayerComponent> m_players;
+	
+	@Mapper
+	ComponentMapper<PushComponent> m_pushComps;
 
 	private float VELOCITY = 11.0f;
 	private float VELOCITYINR = 3.0f;
@@ -270,7 +273,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 			vel.m_velocity = -VELOCITYINR;
 		if (touch.m_groundTouch) {
 			if (m_hangComps.has(e)) {
-				PushComponent push = e.getComponent(PushComponent.class);
+				PushComponent push = m_pushComps.get(e);
 				if (!h.m_isHanging) {
 					if (m_ladderComps.has(e)) {
 						if (!ladderComp.m_leftClimb && !touch.m_boxTouch) {
@@ -327,7 +330,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 			vel.m_velocity = VELOCITYINR;
 		if (touch.m_groundTouch) {
 			if (m_hangComps.has(e)) {
-				PushComponent push = e.getComponent(PushComponent.class);
+				PushComponent push = m_pushComps.get(e);
 				if (!h.m_isHanging) {
 					if (m_ladderComps.has(e)) {
 						if (!l.m_rightClimb && !touch.m_boxTouch) {

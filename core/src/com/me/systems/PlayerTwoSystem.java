@@ -15,6 +15,7 @@ import com.me.component.JumpComponent;
 import com.me.component.MovementComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
+import com.me.component.PushComponent;
 import com.me.component.PlayerComponent.State;
 import com.me.component.PlayerComponent.Tasks;
 import com.me.component.PlayerTwoComponent;
@@ -55,6 +56,9 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 
 	@Mapper
 	ComponentMapper<CrawlComponent> m_crawlComps;
+	
+	@Mapper
+	ComponentMapper<PushComponent> m_pushComps;
 
 	private InputManager m_inputMgr;
 
@@ -274,18 +278,28 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
-
-		if (vel.m_velocity > 0) {
-			vel.m_velocity = 0;
-		}
-		vel.m_velocity -= 5.5f * world.delta;
-		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
-		if (ps.getLinearVelocity().x < -vel.m_walkLimit) {
-			ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
-			animation.setAnimationState(AnimState.RUNNING);
-			vel.m_velocity = -vel.m_walkLimit;
-		} else {
-			animation.setAnimationState(AnimState.WALKING);
+		TouchComponent touch = m_touchComps.get(e);
+		if(!touch.m_boxTouch){
+			if (vel.m_velocity > 0) {
+				vel.m_velocity = 0;
+			}
+			vel.m_velocity -= 5.5f * world.delta;
+			ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
+			if (ps.getLinearVelocity().x < -vel.m_walkLimit) {
+				ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
+				animation.setAnimationState(AnimState.RUNNING);
+				vel.m_velocity = -vel.m_walkLimit;
+			} else {
+				animation.setAnimationState(AnimState.WALKING);
+			}
+		} else{
+			PushComponent push = m_pushComps.get(e);
+			if(touch.m_boxTouch && push.m_pushLeft){
+				animation.setAnimationState(AnimState.PUSHING);
+			}
+			if(touch.m_boxTouch && !push.m_pushLeft){
+				ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
+			}
 		}
 		player.setState(State.WALKING);
 
@@ -297,19 +311,30 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
-
-		if (vel.m_velocity < 0) {
-			vel.m_velocity = 0;
-		}
-
-		vel.m_velocity += 5.5f * world.delta;
-		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
-		if (ps.getLinearVelocity().x > vel.m_walkLimit) {
-			ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
-			animation.setAnimationState(AnimState.RUNNING);
-			vel.m_velocity = vel.m_walkLimit;
-		} else {
-			animation.setAnimationState(AnimState.WALKING);
+		TouchComponent touch = m_touchComps.get(e);
+		
+		if(!touch.m_boxTouch){
+			if (vel.m_velocity < 0) {
+				vel.m_velocity = 0;
+			}
+	
+			vel.m_velocity += 5.5f * world.delta;
+			ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
+			if (ps.getLinearVelocity().x > vel.m_walkLimit) {
+				ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
+				animation.setAnimationState(AnimState.RUNNING);
+				vel.m_velocity = vel.m_walkLimit;
+			} else {
+				animation.setAnimationState(AnimState.WALKING);
+			}
+		} else{
+			PushComponent push = m_pushComps.get(e);
+			if(touch.m_boxTouch && !push.m_pushLeft){
+				animation.setAnimationState(AnimState.PUSHING);
+			}
+			if(touch.m_boxTouch && push.m_pushLeft){
+				ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
+			}
 		}
 		player.setState(State.WALKING);
 
