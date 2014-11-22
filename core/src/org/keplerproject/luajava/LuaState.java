@@ -94,7 +94,9 @@ public class LuaState
   
   static
   {
-    System.loadLibrary(LUAJAVA_LIB);
+	  if(Gdx.app.getType() != ApplicationType.iOS){
+		  System.loadLibrary(LUAJAVA_LIB);
+	  }
   }
   
   private CPtr luaState;

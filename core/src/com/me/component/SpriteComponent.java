@@ -38,6 +38,8 @@ public class SpriteComponent extends BaseComponent {
 	private int m_drawOrder;
 
 	private Texture m_texture;
+	
+	public boolean m_shouldDraw = true;
 
 	public Layer m_layer = Layer.DEFAULT;
 

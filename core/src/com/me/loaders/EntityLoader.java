@@ -154,6 +154,7 @@ public class EntityLoader {
 								((BodyUserData) body.getUserData()).mName);
 						entity = entityWorld.createEntity();
 						entity.addComponent(pComp);
+						sComp.m_shouldDraw = m_scene.getCustom(image, "shouldDraw", true);
 						entity.addComponent(sComp);
 
 					}
@@ -255,7 +256,7 @@ public class EntityLoader {
 
 			if (ud.mName.equals("water")) {
 				entity.addComponent(new BouyancyComponent());
-				entity.addComponent(new ShaderComponent(""));
+				entity.addComponent(new ShaderComponent("",body));
 			}
 
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(
