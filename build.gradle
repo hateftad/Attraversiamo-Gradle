@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:0.14.4'
+        classpath 'com.android.tools.build:gradle:1.0.0'
         classpath 'org.robovm:robovm-gradle-plugin:1.0.0-beta-01'
     }
 }
@@ -59,6 +59,9 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
+        compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile fileTree(dir: '../libs', include: '*.jar')
     }
 }
 
@@ -76,14 +79,6 @@ project(":ios") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
     }
-    robovm {
-        // Configure robovm
-        iosSignIdentity = "27ED67FAAADBD757C62F5D9E248D13E4E1B10EE4"
-        iosProvisioningProfile = "6f412089-d9aa-4994-ab49-2d46bf66939a"
-        iosSkipSigning = false
-        stdoutFifo = null
-        stderrFifo = null
-    }
 }
 
 project(":html") {
@@ -99,6 +94,9 @@ project(":html") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion:sources"
+        compile "com.badlogicgames.ashley:ashley:$ashleyVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
+
     }
 }
 
@@ -110,7 +108,9 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
-        compile fileTree(dir: 'libs', include: ['*.jar'])
+        compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile fileTree(dir: 'libs', include: '*.jar')
     }
 }
 
