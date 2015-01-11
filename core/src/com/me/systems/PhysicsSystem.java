@@ -46,7 +46,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 	ComponentMapper<JointComponent> m_jointComps;
 
 	@Mapper
-	ComponentMapper<BouyancyComponent> m_bouyComps;
+	ComponentMapper<BuoyancyComponent> m_bouyComps;
 
 	@Mapper
 	ComponentMapper<PlayerComponent> m_playerComps;
@@ -253,14 +253,14 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 				shape.getVertex(j, mTmp);
 				maxHeight = Math.max(maxHeight, mTmp.y + bodyHeight);
 			}
-			BouyancyComponent bouyancyComponent = m_bouyComps.get(e);
+			BuoyancyComponent buoyancyComponent = m_bouyComps.get(e);
 			B2BuoyancyController b2c = new B2BuoyancyController(B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
-					bouyancyComponent.getFluidVelocity(),
+					buoyancyComponent.getFluidVelocity(),
 					m_world.getGravity(),
 					maxHeight,
 					fixture.getDensity(),
-					bouyancyComponent.getLinearDrag(),
-					bouyancyComponent.getAngularDrag());
+					buoyancyComponent.getLinearDrag(),
+					buoyancyComponent.getAngularDrag());
 			fixture.setUserData(b2c);
 			m_b2Controllers.add(b2c);
 			PhysicsListenerSetup setup = new PhysicsListenerSetup();

@@ -26,7 +26,7 @@ import com.badlogic.gdx.physics.box2d.joints.WheelJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.me.component.AnimationComponent;
-import com.me.component.BouyancyComponent;
+import com.me.component.BuoyancyComponent;
 import com.me.component.CameraComponent;
 import com.me.component.CrawlComponent;
 import com.me.component.GrabComponent;
@@ -255,11 +255,11 @@ public class EntityLoader {
 			}
 
 			if (ud.mName.equals("characterWater")) {
-				entity.addComponent(new BouyancyComponent(new Vector2(0, 5),  1.5f, 2));
+				entity.addComponent(new BuoyancyComponent(new Vector2(0, 5),  1.5f, 2));
 				entity.addComponent(new ShaderComponent("",body));
 			}
 			if(ud.mName.equals("boxWater")){
-				entity.addComponent(new BouyancyComponent(new Vector2(0, 5), 1.5f, 2));
+				entity.addComponent(new BuoyancyComponent(new Vector2(1, 2), 1.5f, 2));
 			}
 
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(
