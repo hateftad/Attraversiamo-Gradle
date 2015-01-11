@@ -22,8 +22,7 @@ public class RBUserData {
 		this.m_collisionGroup = collisiongroup;
 
 		switch (boxid) {
-		case 1:
-			setType(Type.GROUND);
+		case 1: setType(Type.GROUND);
 			break;
 		case 2:
 			setType(Type.WALL);

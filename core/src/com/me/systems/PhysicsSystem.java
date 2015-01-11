@@ -15,19 +15,12 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.gushikustudios.box2d.controllers.B2BuoyancyController;
-import com.gushikustudios.box2d.controllers.B2Controller;
-import com.me.component.AnimationComponent;
+import com.me.component.*;
+import com.me.controllers.B2BuoyancyController;
+import com.me.controllers.B2Controller;
 import com.me.component.AnimationComponent.AnimState;
-import com.me.component.BaseComponent;
 import com.me.component.PlayerComponent.Tasks;
 import com.me.component.QueueComponent.QueueType;
-import com.me.component.BouyancyComponent;
-import com.me.component.JointComponent;
-import com.me.component.PhysicsComponent;
-import com.me.component.PlayerTwoComponent;
-import com.me.component.QueueComponent;
-import com.me.component.RestartComponent;
 import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
@@ -54,6 +47,9 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 
 	@Mapper
 	ComponentMapper<BouyancyComponent> m_bouyComps;
+
+	@Mapper
+	ComponentMapper<PlayerComponent> m_playerComps;
 
 	private World m_world;
 
@@ -230,7 +226,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 	}
 
 	public void clearSystem() {
-		// m_physicsContactListener = new PhysicsContactListener();
+		m_b2Controllers.clear();
 		Array<Body> bodies = new Array<Body>();
 		m_world.getBodies(bodies);
 
@@ -257,10 +253,14 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 				shape.getVertex(j, mTmp);
 				maxHeight = Math.max(maxHeight, mTmp.y + bodyHeight);
 			}
-			B2BuoyancyController b2c = new B2BuoyancyController(
-					B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
-					new Vector2(0, 5), m_world.getGravity(), maxHeight,
-					fixture.getDensity(), 0.5f, 2);
+			BouyancyComponent bouyancyComponent = m_bouyComps.get(e);
+			B2BuoyancyController b2c = new B2BuoyancyController(B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
+					bouyancyComponent.getFluidVelocity(),
+					m_world.getGravity(),
+					maxHeight,
+					fixture.getDensity(),
+					bouyancyComponent.getLinearDrag(),
+					bouyancyComponent.getAngularDrag());
 			fixture.setUserData(b2c);
 			m_b2Controllers.add(b2c);
 			PhysicsListenerSetup setup = new PhysicsListenerSetup();
@@ -270,6 +270,9 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 
 	public void printInfo() {
 		System.out.println(" Bodies in the world: " + m_world.getBodyCount());
+		System.out.println(" Fixtures in the world: " + m_world.getFixtureCount());
+		System.out.println(" Number of Contacts: " + m_world.getContactCount());
+		System.out.println(" Joints in the world: " + m_world.getJointCount());
 	}
 
 	@Override

@@ -145,8 +145,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 			if (touch.m_groundTouch && !touch.m_boxTouch && !touch.m_footEdge) {
 				animation.setupPose();
 			}
-			if (!m.m_left && !m.m_right && touch.m_groundTouch
-					&& !touch.m_ladderTouch) {
+			if (!m.m_left && !m.m_right && touch.m_groundTouch && !touch.m_ladderTouch) {
 				vel.m_velocity = 0;
 				if (!g.m_gonnaGrab) {
 					if (!animation.getAnimationState().equals(AnimState.PULLUP)) {
@@ -243,7 +242,13 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		}
 
 		if (ps.isFalling() && ps.movingForward()) {
-			animation.setAnimationState(AnimState.FALLING);
+			if(!ps.isSubmerged() && !touch.m_feetToBox) {
+				animation.setAnimationState(AnimState.FALLING);
+			}
+		}
+
+		if(ps.isSubmerged()){
+			animation.setAnimationState(AnimState.IDLE);
 		}
 
 		if (isDead(ps)) {

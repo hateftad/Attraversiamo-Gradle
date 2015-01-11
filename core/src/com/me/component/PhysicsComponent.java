@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Values;
@@ -23,6 +22,9 @@ import com.me.physics.RBUserData;
 import com.me.utils.Converters;
 
 public class PhysicsComponent extends BaseComponent {
+
+	public static float LOW_FRICTION = 0.1f;
+	public static float HIGH_FRICTION = 20f;
 
 	private ObjectMap<String, Body> m_body = new ObjectMap<String, Body>();
 	private ObjectMap<Body, RBUserData> m_userData = new ObjectMap<Body, RBUserData>();
@@ -36,6 +38,7 @@ public class PhysicsComponent extends BaseComponent {
 	private boolean m_isDynamic = true;
 	private Filter currentFilter;
 	public ImmediateModePhysicsListener m_physicsListener;
+	private boolean m_submerged;
 
 	public PhysicsComponent(World world, Body b, String name) {
 		m_name = name;
@@ -46,8 +49,7 @@ public class PhysicsComponent extends BaseComponent {
 		m_body.get(m_name).setFixedRotation(b.isFixedRotation());
 		m_body.get(m_name).setSleepingAllowed(b.isSleepingAllowed());
 		m_previousPositions = new ObjectMap<Body, Vector2>();
-		m_previousPositions.put(m_body.get(name), m_body.get(name)
-				.getPosition());
+		m_previousPositions.put(m_body.get(name), m_body.get(name).getPosition());
 		m_startPosition = new Vector2(m_body.get(name).getPosition());
 	}
 
@@ -58,14 +60,6 @@ public class PhysicsComponent extends BaseComponent {
 		bodyDef.position.set(b.getPosition().x, b.getPosition().y);
 		bodyDef.angle = b.getAngle();
 		return world.createBody(bodyDef);
-	}
-
-	public void createBody(World world, BodyDef bDef, String name) {
-		m_body.put(name, world.createBody(bDef));
-	}
-
-	public void createFixture(PolygonShape pShape, String name) {
-		m_body.get(name).createFixture(pShape, 1);
 	}
 
 	public void createFixture(Fixture fixture, String name) {
@@ -400,6 +394,14 @@ public class PhysicsComponent extends BaseComponent {
 			m_physicsListener.onRestart();
 		}
 		enableBody("center");
+	}
+
+	public boolean isSubmerged() {
+		return m_submerged;
+	}
+
+	public void setSubmerged(boolean submerged) {
+		this.m_submerged = submerged;
 	}
 
 	public interface ImmediateModePhysicsListener {

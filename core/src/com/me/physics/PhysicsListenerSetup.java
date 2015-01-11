@@ -1,11 +1,12 @@
 package com.me.physics;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.WorldManifold;
-import com.gushikustudios.box2d.controllers.B2Controller;
+import com.me.controllers.B2BuoyancyController;
+import com.me.controllers.B2Controller;
 import com.me.component.CrawlComponent;
 import com.me.component.GrabComponent;
 import com.me.component.HangComponent;
@@ -15,8 +16,6 @@ import com.me.component.MovementComponent;
 import com.me.component.ParticleComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
-import com.me.component.PlayerOneComponent;
-import com.me.component.PlayerTwoComponent;
 import com.me.component.PushComponent;
 import com.me.component.QueueComponent;
 import com.me.component.QueueComponent.QueueType;
@@ -24,7 +23,6 @@ import com.me.component.TouchComponent;
 import com.me.component.VelocityLimitComponent;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
 import com.me.physics.RBUserData.Type;
-import com.me.utils.Converters;
 
 public class PhysicsListenerSetup {
 
@@ -203,14 +201,9 @@ public class PhysicsListenerSetup {
 
 							if(playerUd.getType() == Type.TORSO && otherUd.getType() == Type.BOX){
 								if(e.getComponent(TouchComponent.class).m_groundTouch){
-
-									Body b = other.getBody("box");
 									QueueComponent queueComp = e1.getComponent(QueueComponent.class);
 									queueComp.mass = 5f;
 									queueComp.type = QueueType.MASS;
-									//b.getFixtureList().get(0).setFriction(0.001f);
-									//other.setMass(0.01f, "box");
-									System.out.println("Box touch and friction" +b.getFixtureList().get(0).getFriction());
 									e.getComponent(TouchComponent.class).m_boxTouch = true;
 									if(e.getComponent(PushComponent.class) != null){
 										if(e.getComponent(PlayerComponent.class).isFacingLeft()){
@@ -319,9 +312,8 @@ public class PhysicsListenerSetup {
 						}
 						if(playerUd.getType() == Type.TORSO && otherUd.getType() == Type.BOX){
 							Body b = other.getBody("box");
-							b.getFixtureList().get(0).setFriction(20f);
+							b.getFixtureList().get(0).setFriction(PhysicsComponent.HIGH_FRICTION);
 							e1.getComponent(QueueComponent.class).mass = 20f;
-							System.out.println("Box not touching and friction" +b.getFixtureList().get(0).getFriction());
 							e.getComponent(TouchComponent.class).m_boxTouch = false;
 							if(e.getComponent(PushComponent.class) != null){
 								e.getComponent(PushComponent.class).m_pushLeft = false;
@@ -334,34 +326,29 @@ public class PhysicsListenerSetup {
 
 			@Override
 			public void onRestart() {
-
 				onBox = false;
 				onGround = false;				
 			}
-
-
 		});
 	}
 
 	public void setLevelPhysics(PhysicsComponent pComp) {
-		// TODO Auto-generated method stub
+
 		pComp.setPhysicsListener(new ImmediateModePhysicsListener() {
 
 			@Override
 			public void preSolve(Entity e, Contact contact, boolean fixtureA) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void onRestart() {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void endContact(Entity e, Contact contact, boolean fixtureA) {
-				// TODO Auto-generated method stub
+
 				Fixture fixA = contact.getFixtureA();
 				Fixture fixB = contact.getFixtureB();
 
@@ -369,29 +356,50 @@ public class PhysicsListenerSetup {
 				{
 					B2Controller b2c = (B2Controller) fixA.getUserData();
 					b2c.removeBody(fixB.getBody());
+					if(b2c instanceof B2BuoyancyController) {
+						treatBouyancy(fixB.getBody(), false);
+					}
 				}
 				else if ((fixB.isSensor()) && (fixB.getUserData() != null))
 				{
 					B2Controller b2c = (B2Controller) fixB.getUserData();
 					b2c.removeBody(fixA.getBody());
+					if(b2c instanceof B2BuoyancyController){
+						treatBouyancy(fixA.getBody(), false);
+					}
 				}
 			}
 
 			@Override
 			public void beginContact(Entity e, Contact contact, boolean fixtureA) {
-				// TODO Auto-generated method stub
 				Fixture fixA = contact.getFixtureA();
 				Fixture fixB = contact.getFixtureB();
-
 				if ((fixA.isSensor()) && (fixA.getUserData() != null))
 				{
 					B2Controller b2c = (B2Controller) fixA.getUserData();
 					b2c.addBody(fixB.getBody());
+					if(b2c instanceof B2BuoyancyController) {
+						treatBouyancy(fixB.getBody(), true);
+					}
 				}
 				else if ((fixB.isSensor()) && (fixB.getUserData() != null))
 				{
 					B2Controller b2c = (B2Controller) fixB.getUserData();
 					b2c.addBody(fixA.getBody());
+					if(b2c instanceof B2BuoyancyController) {
+						treatBouyancy(fixA.getBody(), true);
+					}
+				}
+			}
+			private void treatBouyancy(Body body, boolean submerged){
+				Entity entity = (Entity) body.getUserData();
+				PhysicsComponent ps = entity.getComponent(PhysicsComponent.class);
+				ps.setSubmerged(submerged);
+				RBUserData otherUd = ps.getRBUserData(body);
+				if (otherUd.getType() == Type.BOX && submerged) {
+					ps.setFriction(PhysicsComponent.LOW_FRICTION);
+				} else if(otherUd.getType() == Type.BOX && !submerged){
+					ps.setFriction(PhysicsComponent.HIGH_FRICTION);
 				}
 			}
 		});

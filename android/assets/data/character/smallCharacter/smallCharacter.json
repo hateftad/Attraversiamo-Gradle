@@ -48,11 +48,62 @@
          "linearVelocity" : 0,
          "massData-I" : 0.09817477315664291,
          "massData-mass" : 0.7853981852531433,
-         "name" : "rightH",
+         "name" : "leftH",
          "position" : 
          {
-            "x" : 1.614459991455078,
-            "y" : 9.927140235900879
+            "x" : -1.206836700439453,
+            "y" : 9.901439666748047
+         },
+         "type" : 2
+      },
+      
+      {
+         "allowSleep" : false,
+         "angle" : 0,
+         "angularVelocity" : 0,
+         "awake" : true,
+         "customProperties" : 
+         [
+            
+            {
+               "int" : 4,
+               "name" : "boxIndex"
+            },
+            
+            {
+               "int" : 1,
+               "name" : "collisionGroup"
+            },
+            
+            {
+               "name" : "characterType",
+               "string" : "leg"
+            }
+         ],
+         "fixture" : 
+         [
+            
+            {
+               "circle" : 
+               {
+                  "center" : 0,
+                  "radius" : 0.6582249402999878
+               },
+               "density" : 2.0,
+               "filter-categoryBits" : 4,
+               "filter-maskBits" : 65,
+               "name" : "fixture1",
+               "restitution" : 0.001000000047497451
+            }
+         ],
+         "linearVelocity" : 0,
+         "massData-I" : 0.5897218585014343,
+         "massData-mass" : 2.722253322601318,
+         "name" : "feet",
+         "position" : 
+         {
+            "x" : 0.04271949827671051,
+            "y" : 0.9289640188217163
          },
          "type" : 2
       },
@@ -155,12 +206,12 @@
          [
             
             {
-               "int" : 14,
+               "int" : 12,
                "name" : "boxIndex"
             },
             
             {
-               "int" : 5,
+               "int" : 4,
                "name" : "collisionGroup"
             }
          ],
@@ -171,24 +222,26 @@
                "circle" : 
                {
                   "center" : 0,
-                  "radius" : 0.50
+                  "radius" : 0.3253350555896759
                },
                "density" : 1,
-               "filter-categoryBits" : 2,
-               "filter-maskBits" : 2,
+               "filter-categoryBits" : 32,
+               "filter-maskBits" : 128,
                "friction" : 0.2000000029802322,
-               "name" : "fixture6",
+               "name" : "fixture0",
                "sensor" : true
             }
          ],
          "linearVelocity" : 0,
-         "name" : "rightHand",
+         "massData-I" : 0.01759719103574753,
+         "massData-mass" : 0.3325152695178986,
+         "name" : "sensorFeet",
          "position" : 
          {
-            "x" : -0.1904373168945313,
-            "y" : 4.005749702453613
+            "x" : 0.03696060180664063,
+            "y" : 0.9296698570251465
          },
-         "type" : 0
+         "type" : 2
       },
       
       {
@@ -232,7 +285,7 @@
             {
                "density" : 1,
                "filter-categoryBits" : 4,
-               "filter-maskBits" : 68,
+               "filter-maskBits" : 65,
                "friction" : 9.999999974752427e-007,
                "name" : "fixture3",
                "polygon" : 
@@ -283,52 +336,6 @@
       },
       
       {
-         "angle" : 0,
-         "angularVelocity" : 0,
-         "awake" : true,
-         "customProperties" : 
-         [
-            
-            {
-               "int" : 12,
-               "name" : "boxIndex"
-            },
-            
-            {
-               "int" : 4,
-               "name" : "collisionGroup"
-            }
-         ],
-         "fixture" : 
-         [
-            
-            {
-               "circle" : 
-               {
-                  "center" : 0,
-                  "radius" : 0.3253350555896759
-               },
-               "density" : 1,
-               "filter-categoryBits" : 32,
-               "filter-maskBits" : 128,
-               "friction" : 0.2000000029802322,
-               "name" : "fixture0",
-               "sensor" : true
-            }
-         ],
-         "linearVelocity" : 0,
-         "massData-I" : 0.01759719103574753,
-         "massData-mass" : 0.3325152695178986,
-         "name" : "sensorFeet",
-         "position" : 
-         {
-            "x" : 0.03696060180664063,
-            "y" : 0.9296698570251465
-         },
-         "type" : 2
-      },
-      
-      {
          "allowSleep" : false,
          "angle" : 0,
          "angularVelocity" : 0,
@@ -371,17 +378,16 @@
          "linearVelocity" : 0,
          "massData-I" : 0.09817477315664291,
          "massData-mass" : 0.7853981852531433,
-         "name" : "leftH",
+         "name" : "rightH",
          "position" : 
          {
-            "x" : -1.206836700439453,
-            "y" : 9.901439666748047
+            "x" : 1.614459991455078,
+            "y" : 9.927140235900879
          },
          "type" : 2
       },
       
       {
-         "allowSleep" : false,
          "angle" : 0,
          "angularVelocity" : 0,
          "awake" : true,
@@ -389,18 +395,13 @@
          [
             
             {
-               "int" : 4,
+               "int" : 14,
                "name" : "boxIndex"
             },
             
             {
-               "int" : 1,
+               "int" : 5,
                "name" : "collisionGroup"
-            },
-            
-            {
-               "name" : "characterType",
-               "string" : "leg"
             }
          ],
          "fixture" : 
@@ -410,25 +411,24 @@
                "circle" : 
                {
                   "center" : 0,
-                  "radius" : 0.6582249402999878
+                  "radius" : 0.50
                },
-               "density" : 2.0,
-               "filter-categoryBits" : 4,
-               "filter-maskBits" : 64,
-               "name" : "fixture1",
-               "restitution" : 0.001000000047497451
+               "density" : 1,
+               "filter-categoryBits" : 2,
+               "filter-maskBits" : 2,
+               "friction" : 0.2000000029802322,
+               "name" : "fixture6",
+               "sensor" : true
             }
          ],
          "linearVelocity" : 0,
-         "massData-I" : 0.5897218585014343,
-         "massData-mass" : 2.722253322601318,
-         "name" : "feet",
+         "name" : "rightHand",
          "position" : 
          {
-            "x" : 0.04271949827671051,
-            "y" : 0.9289640188217163
+            "x" : -0.1904373168945313,
+            "y" : 4.005749702453613
          },
-         "type" : 2
+         "type" : 0
       }
    ],
    "continuousPhysics" : true,
@@ -442,7 +442,7 @@
       
       {
          "angle" : 0,
-         "body" : 4,
+         "body" : 5,
          "center" : 
          {
             "x" : -0.2257580012083054,
@@ -465,7 +465,7 @@
                4.106247901916504
             ]
          },
-         "file" : "smallCharIdle.png",
+         "file" : "../../../../../../attraversiamo-project/attraversiamo-android/assets/data/character/smallCharacter/smallCharIdle.png",
          "filter" : 1,
          "flip" : false,
          "glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
@@ -501,8 +501,8 @@
             "x" : -0.05539999902248383,
             "y" : -0.2794241905212402
          },
-         "bodyA" : 1,
-         "bodyB" : 4,
+         "bodyA" : 2,
+         "bodyB" : 5,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint4",
@@ -521,8 +521,8 @@
             "x" : 1.094040036201477,
             "y" : 3.440609931945801
          },
-         "bodyA" : 0,
-         "bodyB" : 4,
+         "bodyA" : 6,
+         "bodyB" : 5,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint2",
@@ -541,8 +541,8 @@
             "x" : 0.06573849916458130,
             "y" : -0.8399949073791504
          },
-         "bodyA" : 2,
-         "bodyB" : 4,
+         "bodyA" : 3,
+         "bodyB" : 5,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint3",
@@ -561,8 +561,8 @@
             "x" : 0.3374860286712647,
             "y" : -0.7131271362304688
          },
-         "bodyA" : 4,
-         "bodyB" : 6,
+         "bodyA" : 5,
+         "bodyB" : 0,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint0",
@@ -581,8 +581,8 @@
             "x" : 0.0004458948969841003,
             "y" : 0.7034727334976196
          },
-         "bodyA" : 4,
-         "bodyB" : 7,
+         "bodyA" : 5,
+         "bodyB" : 1,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint1",
@@ -601,8 +601,8 @@
             "x" : 0.004001490771770477,
             "y" : 0.001510739326477051
          },
-         "bodyA" : 5,
-         "bodyB" : 7,
+         "bodyA" : 4,
+         "bodyB" : 1,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint6",

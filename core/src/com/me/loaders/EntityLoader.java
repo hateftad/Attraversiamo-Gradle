@@ -254,9 +254,12 @@ public class EntityLoader {
 				 */
 			}
 
-			if (ud.mName.equals("water")) {
-				entity.addComponent(new BouyancyComponent());
+			if (ud.mName.equals("characterWater")) {
+				entity.addComponent(new BouyancyComponent(new Vector2(0, 5),  1.5f, 2));
 				entity.addComponent(new ShaderComponent("",body));
+			}
+			if(ud.mName.equals("boxWater")){
+				entity.addComponent(new BouyancyComponent(new Vector2(0, 5), 1.5f, 2));
 			}
 
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(
@@ -308,7 +311,6 @@ public class EntityLoader {
 
 				bodyPos.set(body.getPosition());
 				image = images.get(0);
-				;
 				String tName = image.file;
 				if (tName != null) {
 					tmp.set(image.width, image.height);
