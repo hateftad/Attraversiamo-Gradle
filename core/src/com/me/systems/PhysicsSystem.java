@@ -48,9 +48,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 	@Mapper
 	ComponentMapper<BuoyancyComponent> m_bouyComps;
 
-	@Mapper
-	ComponentMapper<PlayerComponent> m_playerComps;
-
 	private World m_world;
 
 	private int m_velocityItr;
@@ -204,15 +201,17 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 			if (m_queueComps.has(e)) {
 				QueueComponent comp = m_queueComps.get(e);
 				if (comp.type == QueueType.MASS) {
-					m_physicsComponents.get(e).setMass(comp.mass, "box");
-				} else if (comp.type == QueueType.JOINT) {
+					m_physicsComponents.get(e).setMass(comp.mass, comp.bodyName);
+				} else if(comp.type == QueueType.MASSTEMP) {
+					m_physicsComponents.get(e).setMass(comp.mass, comp.bodyName);
+					e.removeComponent(comp);
+				}else if (comp.type == QueueType.JOINT) {
 					JointComponent joint = m_jointComps.get(e);
 					JointFactory.getInstance().destroyJoint(joint.getDJoint());
 					e.removeComponent(comp);
 				}
 			}
 		}
-
 	}
 
 	@Override

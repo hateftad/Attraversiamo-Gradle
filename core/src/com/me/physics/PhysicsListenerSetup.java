@@ -5,22 +5,10 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.controllers.B2Controller;
-import com.me.component.CrawlComponent;
-import com.me.component.GrabComponent;
-import com.me.component.HangComponent;
-import com.me.component.JointComponent;
-import com.me.component.LadderClimbComponent;
-import com.me.component.MovementComponent;
-import com.me.component.ParticleComponent;
-import com.me.component.PhysicsComponent;
-import com.me.component.PlayerComponent;
-import com.me.component.PushComponent;
-import com.me.component.QueueComponent;
 import com.me.component.QueueComponent.QueueType;
-import com.me.component.TouchComponent;
-import com.me.component.VelocityLimitComponent;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
 import com.me.physics.RBUserData.Type;
 
@@ -204,6 +192,7 @@ public class PhysicsListenerSetup {
 									QueueComponent queueComp = e1.getComponent(QueueComponent.class);
 									queueComp.mass = 5f;
 									queueComp.type = QueueType.MASS;
+									queueComp.bodyName = "box";
 									e.getComponent(TouchComponent.class).m_boxTouch = true;
 									if(e.getComponent(PushComponent.class) != null){
 										if(e.getComponent(PlayerComponent.class).isFacingLeft()){
@@ -391,15 +380,31 @@ public class PhysicsListenerSetup {
 					}
 				}
 			}
+
 			private void treatBouyancy(Body body, boolean submerged){
 				Entity entity = (Entity) body.getUserData();
 				PhysicsComponent ps = entity.getComponent(PhysicsComponent.class);
-				ps.setSubmerged(submerged);
 				RBUserData otherUd = ps.getRBUserData(body);
 				if (otherUd.getType() == Type.BOX && submerged) {
 					ps.setFriction(PhysicsComponent.LOW_FRICTION);
 				} else if(otherUd.getType() == Type.BOX && !submerged){
 					ps.setFriction(PhysicsComponent.HIGH_FRICTION);
+				}
+				if(otherUd.getType()==Type.FEET && entity.getComponent(PlayerTwoComponent.class) != null){
+					QueueComponent queueComp = new QueueComponent();
+					if(submerged) {
+						queueComp.mass = 1.6f;
+						queueComp.type = QueueType.MASSTEMP;
+						queueComp.bodyName = "feet";
+					}else{
+						queueComp.mass = 1f;
+						queueComp.type = QueueType.MASSTEMP;
+						queueComp.bodyName = "feet";
+					}
+					entity.addComponent(queueComp);
+				}
+				if(otherUd.getType() == Type.PELVIS){
+					System.out.println("Under Water");
 				}
 			}
 		});

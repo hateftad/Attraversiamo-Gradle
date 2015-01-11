@@ -205,8 +205,7 @@ public class EntityLoader {
 				entity.addComponent(new QueueComponent());
 			}
 			if (ud.mName.equals("portal")) {
-				entity.addComponent(new ParticleComponent("fire",
-						ParticleType.PORTAL));
+				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL));
 				entity.addComponent(new TriggerComponent());
 				LevelComponent levelComp = new LevelComponent(config);
 				config.setLevelComponent(levelComp);
@@ -219,8 +218,7 @@ public class EntityLoader {
 				entity.addComponent(levelComp);
 			}
 			if (ud.mName.equals("point")) {
-				entity.addComponent(new ParticleComponent("point",
-						ParticleType.PICKUP));
+				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP));
 				entity.addComponent(new TriggerComponent());
 			}
 			if (ud.mName.equals("minX")) {
@@ -243,12 +241,15 @@ public class EntityLoader {
 
 			}
 
-			if (ud.mName.equals("characterWater")) {
-				entity.addComponent(new BuoyancyComponent(new Vector2(0, 5),  1.5f, 2));
-				entity.addComponent(new ShaderComponent("",body));
+			if (ud.mName.equals("bigCharacterWater")) {
+				entity.addComponent(new BuoyancyComponent(new Vector2(0, 3),  1.5f, 2));
+			}
+			if(ud.mName.equals("smallCharacterWater")){
+				entity.addComponent(new BuoyancyComponent(new Vector2(0, 1),  1.5f, 2));
 			}
 			if(ud.mName.equals("boxWater")){
-				entity.addComponent(new BuoyancyComponent(new Vector2(1, 2), 1.5f, 2));
+				entity.addComponent(new BuoyancyComponent(new Vector2(0, 1), 1.5f, 2));
+				entity.addComponent(new ShaderComponent("",body));
 			}
 
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(
@@ -386,8 +387,8 @@ public class EntityLoader {
 						+ atlasName, CHARPATH + characterPath + skelName, 1.3f);
 				entity.addComponent(anim);
 			}
-			if (m_scene.getCustom(body, "characterType", "")
-					.equals("playerOne")) {
+			if (m_scene.getCustom(body, "characterType", "").equals("playerOne")) {
+
 				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body,
 						"characterType", ""));
 				p.setActive(config.m_playerOne.m_active);
@@ -483,6 +484,7 @@ public class EntityLoader {
 				entity.addComponent(new CrawlComponent());
 				entity.addComponent(new RestartComponent());
 				entity.addComponent(new PushComponent());
+				entity.addComponent(new QueueComponent());
 				pComp.setPosition(config.m_playerTwo.m_playerPosition);
 			}
 

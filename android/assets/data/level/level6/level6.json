@@ -14,10 +14,55 @@
             
             {
                "density" : 1,
+               "filter-maskBits" : 76,
+               "friction" : 0.2000000029802322,
+               "name" : "bigCharacterWaterFixture",
+               "polygon" : 
+               {
+                  "vertices" : 
+                  {
+                     "x" : 
+                     [
+                        24.22726249694824,
+                        24.22726249694824,
+                        -24.21458625793457,
+                        -24.21458625793457
+                     ],
+                     "y" : 
+                     [
+                        -5.927052974700928,
+                        5.653911590576172,
+                        5.848942756652832,
+                        -5.732021808624268
+                     ]
+                  }
+               },
+               "sensor" : true
+            }
+         ],
+         "linearVelocity" : 0,
+         "name" : "bigCharacterWater",
+         "position" : 
+         {
+            "x" : 33.34370040893555,
+            "y" : -10.83699989318848
+         },
+         "type" : 0
+      },
+      
+      {
+         "angle" : 0,
+         "angularVelocity" : 0,
+         "awake" : true,
+         "fixture" : 
+         [
+            
+            {
+               "density" : 1,
                "filter-categoryBits" : 2,
                "filter-maskBits" : 76,
                "friction" : 0.2000000029802322,
-               "name" : "fixture0",
+               "name" : "boxWaterFixture",
                "polygon" : 
                {
                   "vertices" : 
@@ -45,8 +90,8 @@
          "name" : "boxWater",
          "position" : 
          {
-            "x" : 33.23091888427734,
-            "y" : -10.7644042968750
+            "x" : 33.34731674194336,
+            "y" : -10.83557033538818
          },
          "type" : 0
       },
@@ -140,6 +185,8 @@
             
             {
                "density" : 1,
+               "filter-categoryBits" : 64,
+               "filter-maskBits" : 76,
                "friction" : 0.2000000029802322,
                "name" : "fixture4",
                "polygon" : 
@@ -438,9 +485,10 @@
             
             {
                "density" : 1,
-               "filter-maskBits" : 76,
+               "filter-categoryBits" : 4,
+               "filter-maskBits" : 4,
                "friction" : 0.2000000029802322,
-               "name" : "fixture0",
+               "name" : "smallCharacterWaterFixture",
                "polygon" : 
                {
                   "vertices" : 
@@ -465,11 +513,11 @@
             }
          ],
          "linearVelocity" : 0,
-         "name" : "characterWater",
+         "name" : "smallCharacterWater",
          "position" : 
          {
-            "x" : 33.34365463256836,
-            "y" : -10.83696556091309
+            "x" : 33.36251068115234,
+            "y" : -10.79531478881836
          },
          "type" : 0
       },
@@ -892,7 +940,7 @@
       
       {
          "angle" : 0,
-         "body" : 14,
+         "body" : 15,
          "center" : 
          {
             "x" : -65.71321105957031,
@@ -939,7 +987,7 @@
       
       {
          "angle" : 0,
-         "body" : 11,
+         "body" : 12,
          "center" : 
          {
             "x" : -0.03423120081424713,
@@ -986,7 +1034,7 @@
       
       {
          "angle" : 0,
-         "body" : 1,
+         "body" : 2,
          "center" : 
          {
             "x" : 0.06555175781250,
@@ -1033,7 +1081,7 @@
       
       {
          "angle" : -1.577181935310364,
-         "body" : 6,
+         "body" : 7,
          "center" : 
          {
             "x" : -39.58924484252930,
@@ -1080,54 +1128,7 @@
       
       {
          "angle" : 0,
-         "body" : 4,
-         "center" : 
-         {
-            "x" : -0.03999387845396996,
-            "y" : 0.08659583330154419
-         },
-         "corners" : 
-         {
-            "x" : 
-            [
-               -3.140269279479981,
-               3.060281515121460,
-               3.060281515121460,
-               -3.140269279479981
-            ],
-            "y" : 
-            [
-               -2.837527513504028,
-               -2.837527513504028,
-               3.010719060897827,
-               3.010719060897827
-            ]
-         },
-         "file" : "../common/box.png",
-         "filter" : 1,
-         "flip" : false,
-         "glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
-         "glTexCoordPointer" : [ 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0 ],
-         "glVertexPointer" : 
-         [
-            -3.140269279479981,
-            -2.837527513504028,
-            3.060281515121460,
-            -2.837527513504028,
-            3.060281515121460,
-            3.010719060897827,
-            -3.140269279479981,
-            3.010719060897827
-         ],
-         "name" : "box",
-         "opacity" : 1,
-         "renderOrder" : 6.0,
-         "scale" : 5.848246574401856
-      },
-      
-      {
-         "angle" : 0,
-         "body" : 7,
+         "body" : 5,
          "center" : 
          {
             "x" : -0.03999387845396996,
@@ -1175,6 +1176,53 @@
       {
          "angle" : 0,
          "body" : 8,
+         "center" : 
+         {
+            "x" : -0.03999387845396996,
+            "y" : 0.08659583330154419
+         },
+         "corners" : 
+         {
+            "x" : 
+            [
+               -3.140269279479981,
+               3.060281515121460,
+               3.060281515121460,
+               -3.140269279479981
+            ],
+            "y" : 
+            [
+               -2.837527513504028,
+               -2.837527513504028,
+               3.010719060897827,
+               3.010719060897827
+            ]
+         },
+         "file" : "../common/box.png",
+         "filter" : 1,
+         "flip" : false,
+         "glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+         "glTexCoordPointer" : [ 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0 ],
+         "glVertexPointer" : 
+         [
+            -3.140269279479981,
+            -2.837527513504028,
+            3.060281515121460,
+            -2.837527513504028,
+            3.060281515121460,
+            3.010719060897827,
+            -3.140269279479981,
+            3.010719060897827
+         ],
+         "name" : "box",
+         "opacity" : 1,
+         "renderOrder" : 6.0,
+         "scale" : 5.848246574401856
+      },
+      
+      {
+         "angle" : 0,
+         "body" : 1,
          "center" : 
          {
             "x" : -0.5022773742675781,
@@ -1241,8 +1289,8 @@
             "x" : 0.5635371208190918,
             "y" : 0.03327083587646484
          },
-         "bodyA" : 13,
-         "bodyB" : 12,
+         "bodyA" : 14,
+         "bodyB" : 13,
          "enableLimit" : true,
          "enableMotor" : false,
          "jointSpeed" : 0,
@@ -1266,8 +1314,8 @@
             "x" : 1.153640747070313,
             "y" : 7.956190109252930
          },
-         "bodyA" : 18,
-         "bodyB" : 1,
+         "bodyA" : 19,
+         "bodyB" : 2,
          "enableLimit" : true,
          "enableMotor" : false,
          "localAxisA" : 
@@ -1295,8 +1343,8 @@
             "x" : 0.2460784912109375,
             "y" : -2.233520030975342
          },
-         "bodyA" : 14,
-         "bodyB" : 5,
+         "bodyA" : 15,
+         "bodyB" : 6,
          "enableLimit" : true,
          "enableMotor" : false,
          "jointSpeed" : 0,
@@ -1320,8 +1368,8 @@
             "x" : -1.142608642578125,
             "y" : -1.087859988212585
          },
-         "bodyA" : 9,
-         "bodyB" : 11,
+         "bodyA" : 10,
+         "bodyB" : 12,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint1",
@@ -1340,8 +1388,8 @@
             "x" : 1.203929901123047,
             "y" : -0.9621469974517822
          },
-         "bodyA" : 10,
-         "bodyB" : 11,
+         "bodyA" : 11,
+         "bodyB" : 12,
          "dampingRatio" : 0,
          "frequency" : 0,
          "name" : "joint2",

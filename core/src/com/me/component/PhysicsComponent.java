@@ -222,7 +222,7 @@ public class PhysicsComponent extends BaseComponent {
 
 	public void setAllBodiesPosition(Vector2 pos) {
 		for (Body b : m_body.values()) {
-			b.setTransform(pos, 0.0f);
+			b.setTransform(pos, 0);
 		}
 	}
 
