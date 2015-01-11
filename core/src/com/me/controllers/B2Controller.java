@@ -1,4 +1,4 @@
-package com.gushikustudios.box2d.controllers;
+package com.me.controllers;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;

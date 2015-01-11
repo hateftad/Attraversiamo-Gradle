@@ -1,4 +1,4 @@
-package com.gushikustudios.box2d.controllers;
+package com.me.controllers;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;

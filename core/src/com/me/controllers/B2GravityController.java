@@ -1,4 +1,4 @@
-package com.gushikustudios.box2d.controllers;
+package com.me.controllers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -19,7 +19,7 @@ public class B2GravityController extends B2Controller
    public B2GravityController(Vector2 gravity)
    {
       mControllerGravity.set(gravity);
-      mControllerType = B2Controller.GRAVITY_CONTROLLER;
+      mControllerType = GRAVITY_CONTROLLER;
    }
    
    /**
