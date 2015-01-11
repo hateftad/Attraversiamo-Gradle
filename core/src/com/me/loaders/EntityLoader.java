@@ -240,18 +240,7 @@ public class EntityLoader {
 			}
 
 			if (ud.mName.equals("branch")) {
-				/*
-				 * JointComponent j = new JointComponent("branchJoint");
-				 * Array<JointEdge> jList = body.getJointList();
-				 * DistanceJointDef jDef =
-				 * JointFactory.getInstance().createDistanceJoint
-				 * (jList.items[0].other, jList.items[1].other,
-				 * jList.items[0].joint.getAnchorA(),
-				 * jList.items[0].joint.getAnchorB(), false, 10f);
-				 * j.setDJoint(JointFactory.getInstance().createJoint(jDef));
-				 * 
-				 * //j.setDJoint(); entity.addComponent(j);
-				 */
+
 			}
 
 			if (ud.mName.equals("characterWater")) {
