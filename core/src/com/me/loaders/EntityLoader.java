@@ -489,8 +489,7 @@ public class EntityLoader {
 			}
 
 			BodyUserData ud = (BodyUserData) body.getUserData();
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(
-					ud.mBoxIndex, ud.mCollisionGroup));
+			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup));
 			pComp.setUserData(entity, ud.mName);
 			tempList.add(pComp.getBody(ud.mName));
 		}

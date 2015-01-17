@@ -155,6 +155,7 @@ public class PhysicsListenerSetup {
 
 					RBUserData otherUd = other.getRBUserData(fA.getBody());
 					RBUserData playerUd = player.getRBUserData(fB.getBody());
+
 					if(playerUd == null || otherUd == null)
 						return;
 
@@ -363,6 +364,7 @@ public class PhysicsListenerSetup {
 			public void beginContact(Entity e, Contact contact, boolean fixtureA) {
 				Fixture fixA = contact.getFixtureA();
 				Fixture fixB = contact.getFixtureB();
+				printBodies(fixA, fixB);
 				if ((fixA.isSensor()) && (fixA.getUserData() != null))
 				{
 					B2Controller b2c = (B2Controller) fixA.getUserData();
@@ -405,6 +407,28 @@ public class PhysicsListenerSetup {
 				}
 				if(otherUd.getType() == Type.PELVIS){
 					System.out.println("Under Water");
+				}
+			}
+
+			private void printBodies(Fixture fixA, Fixture fixB){
+				Body b1 = fixA.getBody();
+				if(b1.getUserData() instanceof Entity) {
+					Entity entity1 = (Entity) b1.getUserData();
+					PhysicsComponent pc1 = entity1.getComponent(PhysicsComponent.class);
+					RBUserData ud1 = pc1.getRBUserData(b1);
+					if(ud1 != null && ud1.getType() != null) {
+						System.out.println("Type Collision b1 " + ud1.getType().toString());
+					}
+				}
+
+				Body b2 = fixB.getBody();
+				if(b2.getUserData() instanceof Entity) {
+					Entity entity2 = (Entity) b2.getUserData();
+					PhysicsComponent pc2 = entity2.getComponent(PhysicsComponent.class);
+					RBUserData ud2 = pc2.getRBUserData(b1);
+					if(ud2 != null && ud2.getType() != null) {
+						System.out.println("Type Collision b2" + ud2.getType().toString());
+					}
 				}
 			}
 		});
