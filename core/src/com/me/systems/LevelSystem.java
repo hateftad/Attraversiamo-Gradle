@@ -12,7 +12,6 @@ import com.me.component.LightComponent;
 import com.me.component.ParticleComponent;
 import com.me.component.QueueComponent;
 import com.me.component.ParticleComponent.ParticleType;
-import com.me.component.PlayerComponent.PlayerNumber;
 import com.me.component.PlayerComponent.Tasks;
 import com.me.component.PlayerComponent;
 import com.me.component.QueueComponent.QueueType;
@@ -20,9 +19,7 @@ import com.me.component.TouchComponent;
 import com.me.component.TriggerComponent;
 import com.me.listeners.LevelEventListener;
 import com.me.scripting.ScriptManager;
-import com.me.ui.InputManager;
 import com.me.utils.LevelConfig;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 public class LevelSystem extends EntityProcessingSystem{
 

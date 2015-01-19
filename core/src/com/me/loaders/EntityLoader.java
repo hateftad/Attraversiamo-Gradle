@@ -252,8 +252,7 @@ public class EntityLoader {
 				entity.addComponent(new ShaderComponent("",body));
 			}
 
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(
-					ud.mBoxIndex, ud.mCollisionGroup));
+			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, pComp.getBody(ud.mName)));
 			pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
 			tempList.add(pComp.getBody(ud.mName));
 			entity.addToWorld();
@@ -489,7 +488,7 @@ public class EntityLoader {
 			}
 
 			BodyUserData ud = (BodyUserData) body.getUserData();
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup));
+			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, pComp.getBody(ud.mName)));
 			pComp.setUserData(entity, ud.mName);
 			tempList.add(pComp.getBody(ud.mName));
 		}

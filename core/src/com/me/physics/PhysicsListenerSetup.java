@@ -1,7 +1,6 @@
 package com.me.physics;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -30,33 +29,42 @@ public class PhysicsListenerSetup {
 
 			}
 
+			//@Override
+			public void beginContacts(Entity e, Contact contact, boolean fixtureA) {
+
+
+				//if()
+
+			}
+
 			@Override
 			public void beginContact(Entity e, Contact contact, boolean fixtureA) {
 				Fixture fA = contact.getFixtureA();
 				Fixture fB = contact.getFixtureB();
+				Entity e2 = (Entity) fA.getBody().getUserData();
+				PhysicsComponent player = e.getComponent(PhysicsComponent.class);
+				PhysicsComponent other = e2.getComponent(PhysicsComponent.class);
+				RBUserData otherUd = other.getRBUserData(fA.getBody());
+				RBUserData playerUd = player.getRBUserData(fB.getBody());
+				if(playerUd == null || otherUd == null)
+					return;
+				System.out.println(otherUd.getType());
+				System.out.println(playerUd.getType());
 
 				if(fA.isSensor()){
-
-					Entity e2 = (Entity) fA.getBody().getUserData();
-					PhysicsComponent player = e.getComponent(PhysicsComponent.class);
-					PhysicsComponent other = e2.getComponent(PhysicsComponent.class);
-					RBUserData otherUd = other.getRBUserData(fA.getBody());
-					RBUserData playerUd = player.getRBUserData(fB.getBody());
-					if(playerUd == null)
-						return;
 
 					if(player.getRBUserData(fB.getBody()).getCollisionGroup() == otherUd.getCollisionGroup()){
 						if(e.getComponent(PlayerComponent.class) != null){
 							PlayerComponent pl = e.getComponent(PlayerComponent.class);
 							boolean created = false;
-							if(pl.isFacingLeft() && otherUd.getType() == Type.LEFTEDGE ){
+							if(pl.isFacingLeft() && otherUd.getType() == Type.LEFTEDGE && playerUd.getType() == Type.HANGHANDS ){
 								JointComponent j = e.getComponent(JointComponent.class);
 								j.createEdgeHang(other.getBody(), player.getBody("leftH"),3, 11, 0);
 								player.setLinearVelocity(player.getLinearVelocity().x, 0);
 								created = true;
 								e.getComponent(HangComponent.class).m_hangingLeft = true;
 							}
-							if(!pl.isFacingLeft() && otherUd.getType() == Type.RIGHTEDGE){
+							if(!pl.isFacingLeft() && otherUd.getType() == Type.RIGHTEDGE && playerUd.getType() == Type.HANGHANDS){
 								JointComponent j = e.getComponent(JointComponent.class);
 								j.createEdgeHang(other.getBody(), player.getBody("rightH"),3, 11, 0);
 								player.setLinearVelocity(player.getLinearVelocity().x, 0);
@@ -143,26 +151,25 @@ public class PhysicsListenerSetup {
 
 					}
 				} else if(fB.isSensor()){
-
+					System.out.println("other is sensor");
 				}
 
 				if(contact.isTouching())
 				{
 					Entity e1 = (Entity) fA.getBody().getUserData();
-
+					/*
 					PhysicsComponent other = e1.getComponent(PhysicsComponent.class);
 					PhysicsComponent player = e.getComponent(PhysicsComponent.class);
 
 					RBUserData otherUd = other.getRBUserData(fA.getBody());
 					RBUserData playerUd = player.getRBUserData(fB.getBody());
+					*/
 
-					if(playerUd == null || otherUd == null)
-						return;
 
 					if (playerUd.getCollisionGroup() == otherUd.getCollisionGroup()) {
 
 						if(e.getComponent(PlayerComponent.class) != null){
-							if(playerUd.getType() == Type.FEET && otherUd.getType() == Type.GROUND ){
+							if(playerUd.getType() == Type.FEET && otherUd.getType() == Type.GROUND){
 								e.getComponent(TouchComponent.class).m_groundTouch = true;
 								e.getComponent(MovementComponent.class).m_lockControls = false;
 								e.getComponent(GrabComponent.class).m_grabbed = false;
