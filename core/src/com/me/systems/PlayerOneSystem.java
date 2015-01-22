@@ -181,7 +181,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					player.setOnGround(false);
 					if (m.m_left || m.m_right) {
 						animation.setAnimationState(AnimState.JUMPING);
-						ps.setLinearVelocity(ps.getLinearVelocity().x,
+						ps.setLinearVelocity((m.m_left ? -3 : 3) +ps.getLinearVelocity().x ,
 								vel.m_jumpLimit);
 					} else if (!touch.m_boxTouch) {
 						ps.setLinearVelocity(ps.getLinearVelocity().x, 8);

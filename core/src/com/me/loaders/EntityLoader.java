@@ -25,36 +25,11 @@ import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WheelJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
-import com.me.component.AnimationComponent;
-import com.me.component.BuoyancyComponent;
-import com.me.component.CameraComponent;
-import com.me.component.CrawlComponent;
-import com.me.component.GrabComponent;
-import com.me.component.HangComponent;
-import com.me.component.JointComponent;
-import com.me.component.JumpComponent;
-import com.me.component.LadderClimbComponent;
-import com.me.component.LevelComponent;
-import com.me.component.LightComponent;
-import com.me.component.MovementComponent;
-import com.me.component.ParticleComponent;
+import com.me.component.*;
 import com.me.component.PlayerComponent.PlayerNumber;
 import com.me.component.PlayerComponent.Tasks;
-import com.me.component.QueueComponent;
 import com.me.component.ParticleComponent.ParticleType;
-import com.me.component.PhysicsComponent;
-import com.me.component.PlayerOneComponent;
-import com.me.component.PlayerTwoComponent;
-import com.me.component.PushComponent;
-import com.me.component.RagDollComponent;
-import com.me.component.RestartComponent;
-import com.me.component.ShaderComponent;
-import com.me.component.TouchComponent;
-import com.me.component.TriggerComponent;
-import com.me.component.VelocityLimitComponent;
 import com.me.component.AnimationComponent.AnimState;
-import com.me.component.PlayerComponent;
-import com.me.component.SpriteComponent;
 import com.me.loaders.BodySerializer.BodyUserData;
 import com.me.loaders.RubeScene.Indexes;
 import com.me.physics.JointFactory;
@@ -241,14 +216,12 @@ public class EntityLoader {
 
 			}
 
-			if (ud.mName.equals("bigCharacterWater")) {
-				entity.addComponent(new BuoyancyComponent(new Vector2(0, 3),  1.5f, 2));
-			}
-			if(ud.mName.equals("smallCharacterWater")){
-				entity.addComponent(new BuoyancyComponent(new Vector2(0, 1),  1.5f, 2));
-			}
-			if(ud.mName.equals("boxWater")){
-				entity.addComponent(new BuoyancyComponent(new Vector2(0, 1), 1.5f, 2));
+			if (ud.mName.equals("water")) {
+				BuoyancyComponent buoyancyComponent = new BuoyancyComponent();
+				buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3),  1.5f, 2);
+				buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
+				buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 1), 1.5f, 2);
+				entity.addComponent(buoyancyComponent);
 				entity.addComponent(new ShaderComponent("",body));
 			}
 

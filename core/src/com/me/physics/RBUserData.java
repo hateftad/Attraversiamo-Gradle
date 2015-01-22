@@ -8,11 +8,11 @@ import com.badlogic.gdx.utils.Array;
 public class RBUserData {
 
 	public enum Type {
-		GROUND, WALL, TORSO, FEET, PELVIS, LEFTEDGE, RIGHTEDGE, 
-		LADDER, LEFTLADDER, RIGHTLADDER, TOPLADDER, BOTTOMLADDER,
-		BOX, LEFTPULLUP, RIGHTPULLUP, HAND, BOXHAND, PORTAL, BOXFOOT, 
-		FINISH, LEFTCRAWL, RIGHTCRAWL, CRAWLCANAL, LPUSHAREA, RPUSHAREA,
-		HANGHANDS, FOOTSENSOR
+		Ground, Wall, Torso, Feet, Pelvis, LeftEdge, RightEdge,
+		Ladder, LeftLadder, RightLadder, TopLadder, BottomLadder,
+		Box, LeftPullup, RightPullup, Hand, BoxHand, Portal, BoxFoot,
+		Finish, LeftCrawl, RightCrawl, CrawlCanal, LeftPushButton, RightPushButton,
+		HangHands, FootSensor, Water
 	}
 
 		public static final int
@@ -57,150 +57,156 @@ public class RBUserData {
 		Filter filter = new Filter();
 		switch (boxid) {
 		case 1:
-			setType(Type.GROUND);
+			setType(Type.Ground);
 			filter.categoryBits = Boundary;
 			filter.maskBits = Character | WorldObject | Boundary;
 			setFilterData(body, filter);
 			break;
 		case 2:
-			setType(Type.WALL);
+			setType(Type.Wall);
 			break;
 		case 3:
-			setType(Type.TORSO);
+			setType(Type.Torso);
 			filter.categoryBits = Character;
 			filter.maskBits = Boundary | WorldObject | WorldSensor;
 			setFilterData(body, filter);
 			break;
 		case 4:
-			setType(Type.FEET);
+			setType(Type.Feet);
 			filter.categoryBits = Character;
-			filter.maskBits = Boundary | WorldObject;
+			filter.maskBits = Boundary | WorldObject | WorldSensor;
 			setFilterData(body, filter);
 			break;
 		case 5:
-			setType(Type.LEFTEDGE);
+			setType(Type.LeftEdge);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 6:
-			setType(Type.RIGHTEDGE);
+			setType(Type.RightEdge);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 7:
-			setType(Type.PELVIS);
+			setType(Type.Pelvis);
 			filter.categoryBits = CharacterSensor;
 			filter.maskBits = WorldSensor;
 			setFilterData(body, filter);
 			break;
 		case 8:
-			setType(Type.RIGHTLADDER);
+			setType(Type.RightLadder);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 9:
-			setType(Type.LEFTLADDER);
+			setType(Type.LeftLadder);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 10:
-			setType(Type.BOTTOMLADDER);
+			setType(Type.BottomLadder);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 11:
-			setType(Type.TOPLADDER);
+			setType(Type.TopLadder);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 12:
-			setType(Type.LEFTPULLUP);
+			setType(Type.LeftPullup);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 13:
-			setType(Type.BOX);
+			setType(Type.Box);
 			filter.categoryBits = WorldObject;
-			filter.maskBits = Character | Boundary;
+			filter.maskBits = Character | Boundary | WorldSensor;
 			setFilterData(body, filter);
 			break;
 		case 14:
-			setType(Type.HAND);
+			setType(Type.Hand);
 			filter.categoryBits = CharacterSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 15:
-			setType(Type.BOXHAND);
+			setType(Type.BoxHand);
 			break;
 		case 16:
-			setType(Type.PORTAL);
+			setType(Type.Portal);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 17:
-			setType(Type.BOXFOOT);
+			setType(Type.BoxFoot);
 			break;
 		case 18:
-			setType(Type.FINISH);
+			setType(Type.Finish);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 19:
-			setType(Type.LEFTCRAWL);
+			setType(Type.LeftCrawl);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 20:
-			setType(Type.RIGHTCRAWL);
+			setType(Type.RightCrawl);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 21:
-			setType(Type.CRAWLCANAL);
+			setType(Type.CrawlCanal);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 22:
-			setType(Type.RIGHTPULLUP);
+			setType(Type.RightPullup);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
 			setFilterData(body, filter);
 			break;
 		case 23:
-			setType(Type.RPUSHAREA);
+			setType(Type.RightPushButton);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = Character;
 			setFilterData(body, filter);
 			break;
 		case 24:
-			setType(Type.LPUSHAREA);
+			setType(Type.LeftPushButton);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = Character;
 			setFilterData(body, filter);
 			break;
 		case 25:
-			setType(Type.HANGHANDS);
+			setType(Type.HangHands);
 			filter.categoryBits = CharacterSensor;
 			filter.maskBits = WorldSensor;
 			setFilterData(body, filter);
 			break;
 		case 26:
-			setType(Type.FOOTSENSOR);
+			setType(Type.FootSensor);
 			filter.categoryBits = CharacterSensor;
 			filter.maskBits = WorldSensor;
+			setFilterData(body, filter);
+			break;
+		case 27:
+			setType(Type.Water);
+			filter.categoryBits = WorldSensor;
+			filter.maskBits = CharacterSensor | Character | WorldObject;
 			setFilterData(body, filter);
 			break;
 		default:

@@ -1,20 +1,23 @@
 package com.me.component;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ObjectMap;
+
+import java.util.HashMap;
 
 public class BuoyancyComponent extends BaseComponent {
 
-	//com.badlogic.gdx.math.Vector2 surfaceNormal, Vector2 fluidVelocity, Vector2 gravity,
-	//float surfaceHeight, float fluidDensity, float linearDrag, float angularDrag
+	private ObjectMap<String, BuoyancyControllerInfo> controllerInfo = new ObjectMap<String, BuoyancyControllerInfo>();
 
-	private float m_angularDrag;
-	private float m_linearDrag;
-	private Vector2 m_fluidVelocity;
+	public BuoyancyComponent(){
+	}
 
-	public BuoyancyComponent(Vector2 fluidVelocity, float linearDrag, float angularDrag){
-		m_fluidVelocity = fluidVelocity;
-		m_linearDrag = linearDrag;
-		m_angularDrag = angularDrag;
+	public void addControllerInfo(String name, Vector2 fluidVelocity, float linearDrag, float angularDrag){
+		controllerInfo.put(name, new BuoyancyControllerInfo(fluidVelocity, linearDrag, angularDrag));
+	}
+
+	public ObjectMap getControllerInfo(){
+		return controllerInfo;
 	}
 
 	@Override
@@ -29,15 +32,27 @@ public class BuoyancyComponent extends BaseComponent {
 
 	}
 
-	public float getAngularDrag() {
-		return m_angularDrag;
-	}
+	public class BuoyancyControllerInfo{
+		private float m_angularDrag;
+		private float m_linearDrag;
+		private Vector2 m_fluidVelocity;
 
-	public float getLinearDrag() {
-		return m_linearDrag;
-	}
+		public BuoyancyControllerInfo(Vector2 fluidVelocity, float linearDrag, float angularDrag){
+			m_angularDrag = angularDrag;
+			m_linearDrag = linearDrag;
+			m_fluidVelocity = fluidVelocity;
+		}
 
-	public Vector2 getFluidVelocity(){
-		return m_fluidVelocity;
+		public float getAngularDrag() {
+			return m_angularDrag;
+		}
+
+		public float getLinearDrag() {
+			return m_linearDrag;
+		}
+
+		public Vector2 getFluidVelocity() {
+			return m_fluidVelocity;
+		}
 	}
 }

@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.controllers.B2Controller;
@@ -26,6 +27,9 @@ import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.utils.GlobalConfig;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class PhysicsSystem extends EntitySystem implements Disposable,
 		LevelEventListener {
@@ -252,16 +256,25 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 				shape.getVertex(j, mTmp);
 				maxHeight = Math.max(maxHeight, mTmp.y + bodyHeight);
 			}
+
 			BuoyancyComponent buoyancyComponent = m_bouyComps.get(e);
-			B2BuoyancyController b2c = new B2BuoyancyController(B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
-					buoyancyComponent.getFluidVelocity(),
-					m_world.getGravity(),
-					maxHeight,
-					fixture.getDensity(),
-					buoyancyComponent.getLinearDrag(),
-					buoyancyComponent.getAngularDrag());
-			fixture.setUserData(b2c);
-			m_b2Controllers.add(b2c);
+			ObjectMap<String, B2BuoyancyController> controllers = new ObjectMap<String, B2BuoyancyController>();
+			Iterator it = buoyancyComponent.getControllerInfo().entries().iterator();
+			while (it.hasNext()) {
+				ObjectMap.Entry pairs = (ObjectMap.Entry) it.next();
+				BuoyancyComponent.BuoyancyControllerInfo controllerInfo = (BuoyancyComponent.BuoyancyControllerInfo) pairs.value;
+				B2BuoyancyController b2c = new B2BuoyancyController(B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
+						controllerInfo.getFluidVelocity(),
+						m_world.getGravity(),
+						maxHeight,
+						fixture.getDensity(),
+						controllerInfo.getLinearDrag(),
+						controllerInfo.getAngularDrag());
+				controllers.put((String)pairs.key, b2c);
+				m_b2Controllers.add(b2c);
+				it.remove();
+			}
+			fixture.setUserData(controllers);
 			PhysicsListenerSetup setup = new PhysicsListenerSetup();
 			setup.setLevelPhysics(pComp);
 		}
