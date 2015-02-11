@@ -465,7 +465,7 @@
                4.106247901916504
             ]
          },
-         "file" : "../../../../../../attraversiamo-project/attraversiamo-android/assets/data/character/smallCharacter/smallCharIdle.png",
+         "file" : "smallCharIdle.png",
          "filter" : 1,
          "flip" : false,
          "glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],

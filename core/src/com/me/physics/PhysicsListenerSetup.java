@@ -335,13 +335,11 @@ public class PhysicsListenerSetup {
 				Fixture fixA = contact.getFixtureA();
 				Fixture fixB = contact.getFixtureB();
 
-				if ((fixA.isSensor()) && (fixA.getUserData() != null))
-				{
+				if ((fixA.isSensor()) && (fixA.getUserData() != null)){
 					determineController((ObjectMap)fixA.getUserData(), fixB.getBody(), true);
 					treatBouyancy(fixB.getBody(), false);
 				}
-				else if ((fixB.isSensor()) && (fixB.getUserData() != null))
-				{
+				else if ((fixB.isSensor()) && (fixB.getUserData() != null)){
 					determineController((ObjectMap) fixB.getUserData(), fixA.getBody(), false);
 					treatBouyancy(fixA.getBody(), false);
 				}
@@ -352,13 +350,11 @@ public class PhysicsListenerSetup {
 				Fixture fixA = contact.getFixtureA();
 				Fixture fixB = contact.getFixtureB();
 				printBodies(fixA, fixB);
-				if ((fixA.isSensor()) && (fixA.getUserData() != null))
-				{
+				if ((fixA.isSensor()) && (fixA.getUserData() != null)){
 					determineController((ObjectMap)fixA.getUserData(), fixB.getBody(), true);
 					treatBouyancy(fixB.getBody(), true);
 				}
-				else if ((fixB.isSensor()) && (fixB.getUserData() != null))
-				{
+				else if ((fixB.isSensor()) && (fixB.getUserData() != null)){
 					determineController((ObjectMap) fixB.getUserData(), fixA.getBody(), true);
 					treatBouyancy(fixB.getBody(), true);
 				}
@@ -368,11 +364,11 @@ public class PhysicsListenerSetup {
 				Entity entity = (Entity) body.getUserData();
 				B2BuoyancyController b2c;
 				if(entity.getComponent(PlayerOneComponent.class) != null){
-					b2c = controllerMap.get("playerOne");
+					b2c = controllerMap.get(PlayerOneComponent.PlayerOne);
 				}else if(entity.getComponent(PlayerTwoComponent.class) != null){
-					b2c = controllerMap.get("playerTwo");
+					b2c = controllerMap.get(PlayerTwoComponent.PlayerTwo);
 				} else {
-					b2c = controllerMap.get("worldObjects");
+					b2c = controllerMap.get(WorldObjectComponent.WorldObject);
 				}
 				if(add) {
 					b2c.addBody(body);
