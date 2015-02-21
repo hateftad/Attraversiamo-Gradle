@@ -51,7 +51,6 @@ public class PhysicsContactListener implements ContactListener {
 			removeBodyFromContacts(entityB, contact, false);
 		}
 	}
-
 	
 	private void removeBodyFromContacts(Entity e, Contact contact, boolean fixtureA) {
 		if (e == null)

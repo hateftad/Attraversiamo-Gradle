@@ -181,8 +181,11 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					player.setOnGround(false);
 					if (m.m_left || m.m_right) {
 						animation.setAnimationState(AnimState.JUMPING);
-						ps.setLinearVelocity((m.m_left ? -3 : 3) +ps.getLinearVelocity().x ,
-								vel.m_jumpLimit);
+                        if(velocityLimitForJumpBoost(e)) {
+                            ps.setLinearVelocity((m.m_left ? -3 : 3) + ps.getLinearVelocity().x, vel.m_jumpLimit);
+                        } else {
+                            ps.setLinearVelocity(ps.getLinearVelocity().x, vel.m_jumpLimit);
+                        }
 					} else if (!touch.m_boxTouch) {
 						ps.setLinearVelocity(ps.getLinearVelocity().x, 8);
 						animation.setAnimationState(AnimState.UPJUMP);
@@ -261,6 +264,19 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		animation.setFacing(player.isFacingLeft());
 
 	}
+
+    private boolean velocityLimitForJumpBoost(Entity entity){
+
+        PhysicsComponent physicsComponent = m_physComps.get(entity);
+        MovementComponent movementComponent = m_movComps.get(entity);
+        System.out.println("Velocity" + physicsComponent.getLinearVelocity().x);
+        if(movementComponent.m_left && physicsComponent.getLinearVelocity().x < -4){
+            return false;
+        } else if(movementComponent.m_right && physicsComponent.getLinearVelocity().x > 4){
+            return false;
+        }
+        return true;
+    }
 
 	private void moveLeft(Entity e) {
 

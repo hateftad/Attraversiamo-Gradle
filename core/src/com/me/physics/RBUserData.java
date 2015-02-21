@@ -10,7 +10,7 @@ public class RBUserData {
 	public enum Type {
 		Ground, Wall, Torso, Feet, Pelvis, LeftEdge, RightEdge,
 		Ladder, LeftLadder, RightLadder, TopLadder, BottomLadder,
-		Box, LeftPullup, RightPullup, Hand, BoxHand, Portal, BoxFoot,
+		Box, LeftPullup, RightPullup, Hand, BoxHand, Portal, ObjectWorldCollision,
 		Finish, LeftCrawl, RightCrawl, CrawlCanal, LeftPushButton, RightPushButton,
 		HangHands, FootSensor, Water
 	}
@@ -60,7 +60,6 @@ public class RBUserData {
 			setType(Type.Ground);
 			filter.categoryBits = Boundary;
 			filter.maskBits = Character | WorldObject | Boundary;
-			setFilterData(body, filter);
 			break;
 		case 2:
 			setType(Type.Wall);
@@ -69,73 +68,61 @@ public class RBUserData {
 			setType(Type.Torso);
 			filter.categoryBits = Character;
 			filter.maskBits = Boundary | WorldObject | WorldSensor;
-			setFilterData(body, filter);
 			break;
 		case 4:
 			setType(Type.Feet);
 			filter.categoryBits = Character;
 			filter.maskBits = Boundary | WorldObject | WorldSensor;
-			setFilterData(body, filter);
 			break;
 		case 5:
 			setType(Type.LeftEdge);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 6:
 			setType(Type.RightEdge);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 7:
 			setType(Type.Pelvis);
 			filter.categoryBits = CharacterSensor;
 			filter.maskBits = WorldSensor;
-			setFilterData(body, filter);
 			break;
 		case 8:
 			setType(Type.RightLadder);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 9:
 			setType(Type.LeftLadder);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 10:
 			setType(Type.BottomLadder);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 11:
 			setType(Type.TopLadder);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 12:
 			setType(Type.LeftPullup);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 13:
 			setType(Type.Box);
 			filter.categoryBits = WorldObject;
-			filter.maskBits = Character | Boundary | WorldSensor;
-			setFilterData(body, filter);
+			filter.maskBits = Character | Boundary | WorldSensor | WorldObject;
 			break;
 		case 14:
 			setType(Type.Hand);
 			filter.categoryBits = CharacterSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 15:
 			setType(Type.BoxHand);
@@ -144,75 +131,66 @@ public class RBUserData {
 			setType(Type.Portal);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 17:
-			setType(Type.BoxFoot);
+			setType(Type.ObjectWorldCollision);
+            filter.categoryBits = WorldObject;
+            filter.maskBits = WorldObject;
 			break;
 		case 18:
 			setType(Type.Finish);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 19:
 			setType(Type.LeftCrawl);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 20:
 			setType(Type.RightCrawl);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 21:
 			setType(Type.CrawlCanal);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 22:
 			setType(Type.RightPullup);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor;
-			setFilterData(body, filter);
 			break;
 		case 23:
 			setType(Type.RightPushButton);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = Character;
-			setFilterData(body, filter);
 			break;
 		case 24:
 			setType(Type.LeftPushButton);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = Character;
-			setFilterData(body, filter);
 			break;
 		case 25:
 			setType(Type.HangHands);
 			filter.categoryBits = CharacterSensor;
 			filter.maskBits = WorldSensor;
-			setFilterData(body, filter);
 			break;
 		case 26:
 			setType(Type.FootSensor);
 			filter.categoryBits = CharacterSensor;
 			filter.maskBits = WorldSensor;
-			setFilterData(body, filter);
 			break;
 		case 27:
 			setType(Type.Water);
 			filter.categoryBits = WorldSensor;
 			filter.maskBits = CharacterSensor | Character | WorldObject;
-			setFilterData(body, filter);
 			break;
 		default:
 			break;
 		}
-
+        setFilterData(body, filter);
 	}
 
 	public int getBoxId() {

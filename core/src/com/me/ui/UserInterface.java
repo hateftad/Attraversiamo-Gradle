@@ -138,7 +138,7 @@ public class UserInterface {
 			}
 		});
 		
-		int size = 120;
+		int size = 200;
 		
 		m_bottomLeftBtnsTable.setFillParent(true);
 		m_bottomLeftBtnsTable.bottom().left();

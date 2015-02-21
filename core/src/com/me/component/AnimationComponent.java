@@ -400,8 +400,7 @@ public class AnimationComponent extends BaseComponent {
 	@Override
 	public void dispose() {
 		m_skeleton.getBones().clear();
-		m_skeleton.getData().clear();
-		//m_animationState.clearAnimation();
+
 		m_animationState.clearTracks();
 		m_renderer = null;
 		m_atlas.getRegions().clear();
