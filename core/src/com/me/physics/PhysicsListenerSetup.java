@@ -42,8 +42,8 @@ public class PhysicsListenerSetup {
 				if(playerUd == null || otherUd == null)
 					return;
 
-				System.out.println(otherUd.getType());
-				System.out.println(playerUd.getType());
+				//System.out.println(otherUd.getType());
+				//System.out.println(playerUd.getType());
 
 				if(fA.isSensor()){
 
@@ -126,7 +126,7 @@ public class PhysicsListenerSetup {
 									}
 								}
 							}
-							if(otherUd.getType() == Type.LeftCrawl){
+							if(otherUd.getType() == Type.LeftCrawl && e.getComponent(CrawlComponent.class) != null){
 								e.getComponent(CrawlComponent.class).canCrawl = true;
 							}
 							if(otherUd.getType() == Type.Portal){
@@ -251,7 +251,7 @@ public class PhysicsListenerSetup {
 								}
 							}
 						}
-						if(otherUd.getType() == Type.LeftCrawl){
+						if(otherUd.getType() == Type.LeftCrawl && e.getComponent(CrawlComponent.class) != null){
 							System.out.println("outOfBox");
 							e.getComponent(CrawlComponent.class).canCrawl = false;
 						}

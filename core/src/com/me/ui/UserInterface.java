@@ -137,23 +137,23 @@ public class UserInterface {
 				InputManager.getInstance().keyUp(Input.Keys.F);
 			}
 		});
-		
-		int size = 200;
+
+		int size = Gdx.graphics.getWidth() / 10;
 		
 		m_bottomLeftBtnsTable.setFillParent(true);
 		m_bottomLeftBtnsTable.bottom().left();
-		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left().width(size).height(size).padRight(20);
+		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left().space(20).width(size).height(size).padRight(20).padLeft(20);
 		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left().width(size).height(size);
 		
 		m_bottomRightBtnsTable.setFillParent(true);
 		m_bottomRightBtnsTable.bottom().right().setHeight(size);
-		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right().width(size).height(size);
-		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right().width(size).height(size);
+		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right().space(20).width(size).height(size);
+		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right().space(20).width(size).height(size);
 		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right().width(size).height(size);
 		
 		m_topBtnsTable.setFillParent(true);
 		m_topBtnsTable.top().left();
-		m_topBtnsTable.add(m_restartBtn).width(100).height(100);
+		m_topBtnsTable.add(m_restartBtn).width(100).height(100).padLeft(10).padTop(10);
 		
 		m_stage.addActor(m_topBtnsTable);
 		m_stage.addActor(m_bottomLeftBtnsTable);
@@ -164,10 +164,7 @@ public class UserInterface {
 	}
 	
 	public void update(float delta){
-		//if(GlobalConfig.getInstance().config.showUI){
-			m_stage.act(delta);
-			m_stage.draw();
-			//Table.drawDebug(m_stage);
-		//}
+        m_stage.act(delta);
+        m_stage.draw();
 	}
 }

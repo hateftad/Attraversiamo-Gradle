@@ -1,9 +1,6 @@
 package com.me.systems;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import com.artemis.Aspect;
 import com.artemis.Component;
@@ -151,13 +148,16 @@ public class RenderSystem extends EntitySystem {
 	public void dispose() {
 
 		m_batch.dispose();
-		for (Entity e : m_sortedEntities) {
+        Iterator<Entity> iterator = m_sortedEntities.iterator();
+		while(iterator.hasNext()){
 			Bag<Component> bag = new Bag<Component>();
-			e.getComponents(bag);
+			Entity e = iterator.next();
+            e.getComponents(bag);
 			for (int i = 0; i < bag.size(); i++) {
 				((BaseComponent) bag.get(i)).dispose();
 			}
-			e.deleteFromWorld();
+			iterator.remove();
+
 		}
 		m_sortedEntities.clear();
 

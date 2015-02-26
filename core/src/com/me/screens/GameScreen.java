@@ -118,6 +118,10 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		
 	}
 
+    public void printInfo(){
+        System.out.println("Active Entities"+m_entityWorld.getEntityManager().getActiveEntityCount());
+    }
+
 	@Override
 	public void resize(int width, int height) {
 		super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
@@ -131,7 +135,6 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

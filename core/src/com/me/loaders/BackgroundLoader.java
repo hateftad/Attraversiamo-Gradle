@@ -40,7 +40,7 @@ public class BackgroundLoader{
 		try{
 			doRun();
 		} catch(Exception e){
-			System.out.println("Exceptio while loading " + e.getMessage());
+			System.out.println("Exception while loading " + e.getMessage());
 		}
 		finally{
 			m_listener.onComplete();
@@ -58,25 +58,21 @@ public class BackgroundLoader{
 			m_game.m_gameScreen = new GameScreen(m_game);
 		}
 
-		
-		m_loader.loadLevel(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), 
-				m_game.m_gameScreen.getCameraSystem().getRayHandler());
+		m_loader.loadLevel(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler());
 		
 		if(m_levelConfig.m_playerOne != null){
-			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), 
-					m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.ONE);
+			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.ONE);
 			setupCharacter(m_levelConfig.m_playerOne, 1);
-		}	
+		}
 			
 		if(m_levelConfig.m_playerTwo != null){
-			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(),
-					m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.TWO);
+			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.TWO);
 			setupCharacter(m_levelConfig.m_playerTwo, 2);
 		}
 		
 		m_loader.dispose();
 		startProcessingSystems();
-		
+
 	}
 	
 	private void setupCharacter(PlayerConfig playerCfg, int playerNr){

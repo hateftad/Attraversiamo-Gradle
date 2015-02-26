@@ -126,13 +126,12 @@ public class PhysicsComponent extends BaseComponent {
 	public void disableBody(String name) {
 
 		if (currentFilter == null) {
-			currentFilter = m_body.get(name).getFixtureList().get(0)
-					.getFilterData();
+			currentFilter = m_body.get(name).getFixtureList().get(0).getFilterData();
 			currentBits = currentFilter.categoryBits;
 		}
 
 		Filter t1 = currentFilter;
-		t1.categoryBits = 1;
+		t1.categoryBits = 0;
 		m_body.get(name).getFixtureList().get(0).setFilterData(t1);
 
 	}
