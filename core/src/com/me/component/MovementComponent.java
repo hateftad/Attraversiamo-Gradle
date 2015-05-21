@@ -40,6 +40,10 @@ public class MovementComponent extends BaseComponent {
 		return (m_left) || (m_right) || (m_jump);
 	}
 
+	public boolean isMoving(){
+		return (m_left || m_right);
+	}
+
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub

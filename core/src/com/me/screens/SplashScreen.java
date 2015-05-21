@@ -45,7 +45,6 @@ public class SplashScreen extends AbstractScreen {
 	         }, 3);
 	             
 	      } else if(Gdx.input.isTouched()) {
-	           // Remove the task so we don't call changeScreen twice: 
 	           Timer.instance().clear(); 
 	           changeScreen();
 	      }

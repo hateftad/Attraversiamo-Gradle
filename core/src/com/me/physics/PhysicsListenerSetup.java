@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
-import com.me.controllers.B2Controller;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
 import com.me.physics.RBUserData.Type;
@@ -41,9 +40,6 @@ public class PhysicsListenerSetup {
 				RBUserData playerUd = player.getRBUserData(fB.getBody());
 				if(playerUd == null || otherUd == null)
 					return;
-
-				//System.out.println(otherUd.getType());
-				//System.out.println(playerUd.getType());
 
 				if(fA.isSensor()){
 
@@ -288,6 +284,12 @@ public class PhysicsListenerSetup {
 								onBox = false;	
 								e.getComponent(MovementComponent.class).m_lockControls = false;
 								e.getComponent(TouchComponent.class).m_feetToBox = false;
+                                System.out.println("Friction BOX " + other.getFriction("box"));
+                                other.setFrictionToBody("box", PhysicsComponent.LOW_FRICTION);
+                                System.out.println("Friction BOX after set " + other.getFriction("box"));
+                                System.out.println("Friction FEET " + other.getFriction("box"));
+                                player.setFrictionToBody("feet", PhysicsComponent.LOW_FRICTION);
+                                System.out.println("Friction FEET after set " + other.getFriction("box"));
 							}
 							if(!onGround && !onBox){
 								e.getComponent(TouchComponent.class).m_groundTouch = false;
@@ -349,7 +351,7 @@ public class PhysicsListenerSetup {
 			public void beginContact(Entity e, Contact contact, boolean fixtureA) {
 				Fixture fixA = contact.getFixtureA();
 				Fixture fixB = contact.getFixtureB();
-				printBodies(fixA, fixB);
+				//printBodies(fixA, fixB);
 				if ((fixA.isSensor()) && (fixA.getUserData() != null)){
 					determineController((ObjectMap)fixA.getUserData(), fixB.getBody(), true);
 					treatBouyancy(fixB.getBody(), true);
@@ -381,11 +383,13 @@ public class PhysicsListenerSetup {
 				Entity entity = (Entity) body.getUserData();
 				PhysicsComponent ps = entity.getComponent(PhysicsComponent.class);
 				RBUserData otherUd = ps.getRBUserData(body);
+                /*
 				if (otherUd.getType() == Type.Box && submerged) {
 					ps.setFriction(PhysicsComponent.LOW_FRICTION);
 				} else if(otherUd.getType() == Type.Box && !submerged){
 					ps.setFriction(PhysicsComponent.HIGH_FRICTION);
 				}
+				*/
 				if(otherUd.getType()==Type.Feet && entity.getComponent(PlayerTwoComponent.class) != null){
 					QueueComponent queueComp = new QueueComponent();
 					if(submerged) {

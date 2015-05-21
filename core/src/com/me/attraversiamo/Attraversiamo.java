@@ -20,7 +20,7 @@ public class Attraversiamo extends Game implements ApplicationListener {
 	FPSLogger m_fpsLogger;
 	public Array<InputProcessor> m_processors = new Array<InputProcessor>();
 	public InputMultiplexer m_multiPlexer = new InputMultiplexer();
-	
+
 	public Attraversiamo(GameConfig config){
 		if(config != null){
 			GlobalConfig.getInstance().setConfig(config);
@@ -29,14 +29,14 @@ public class Attraversiamo extends Game implements ApplicationListener {
 			conf.platform = Platform.DESKTOP;
 			conf.showUI = false;
 			conf.timeStep = 1/60f;
-		}		
-		
+		}
+
 	}
 	
 	public Attraversiamo(){
 		this(null);
 	}
-	
+
 	@Override
 	public void create() {		
 		

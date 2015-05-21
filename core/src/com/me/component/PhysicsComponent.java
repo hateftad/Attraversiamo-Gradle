@@ -203,6 +203,14 @@ public class PhysicsComponent extends BaseComponent {
 		m_body.get(m_name).getFixtureList().get(0).setFriction(friction);
 	}
 
+	public void setFrictionToBody(String name, float friction){
+		m_body.get(name).getFixtureList().get(0).setFriction(friction);
+	}
+
+	public float getFriction(String name){
+		return m_body.get(name).getFixtureList().get(0).getFriction();
+	}
+
 	public Vector2 getWorldPosition() {
 		return m_worldPosition;
 	}
@@ -402,6 +410,7 @@ public class PhysicsComponent extends BaseComponent {
 	public void setSubmerged(boolean submerged) {
 		this.m_submerged = submerged;
 	}
+
 
 	public interface ImmediateModePhysicsListener {
 
