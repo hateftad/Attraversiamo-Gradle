@@ -93,8 +93,30 @@ public class PhysicsContactListener implements ContactListener {
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		// TODO Auto-generated function stub
 
+		if (!contact.isTouching())
+			return;
+
+		Body bodyA = contact.getFixtureA().getBody();
+		Body bodyB = contact.getFixtureB().getBody();
+
+		Entity entityA = (Entity) bodyA.getUserData();
+		Entity entityB = (Entity) bodyB.getUserData();
+
+		executePostSolveListener(entityA, contact, true);
+		executePostSolveListener(entityB, contact, false);
+	}
+
+	private void executePostSolveListener(Entity e, Contact contact, boolean fixtureA) {
+		if (e == null)
+			return;
+		PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
+		if (physicsComponent == null)
+			return;
+
+		ImmediateModePhysicsListener physicsListener = physicsComponent.m_physicsListener;
+		if (physicsListener != null)
+			physicsListener.postSolve(e, contact, fixtureA);
 	}
 
 

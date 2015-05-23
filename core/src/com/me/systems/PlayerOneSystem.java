@@ -35,7 +35,7 @@ import com.me.utils.PlayerConfig;
 public class PlayerOneSystem extends EntityProcessingSystem implements
 		InputProcessor {
 
-	private int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5,
+	private final static int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5,
 			changePlayer = 6, action = 7, skinChange = 8;
 
 	private boolean m_process = true;
@@ -45,7 +45,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 	private PlayerConfig m_playerConfig;
 
 	@Mapper
-	public static ComponentMapper<PlayerComponent> m_playerComps;
+	ComponentMapper<PlayerComponent> m_playerComps;
 
 	@Mapper
 	ComponentMapper<PhysicsComponent> m_physComps;

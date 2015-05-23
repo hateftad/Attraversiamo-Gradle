@@ -28,7 +28,6 @@ import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.utils.GlobalConfig;
 
-import java.util.HashMap;
 import java.util.Iterator;
 
 public class PhysicsSystem extends EntitySystem implements Disposable,
@@ -204,12 +203,12 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 			Entity e = entities.get(i);
 			if (m_queueComps.has(e)) {
 				QueueComponent comp = m_queueComps.get(e);
-				if (comp.type == QueueType.MASS) {
+				if (comp.type == QueueType.Mass) {
 					m_physicsComponents.get(e).setMass(comp.mass, comp.bodyName);
-				} else if(comp.type == QueueType.MASSTEMP) {
+				} else if(comp.type == QueueType.TempMass) {
 					m_physicsComponents.get(e).setMass(comp.mass, comp.bodyName);
 					e.removeComponent(comp);
-				}else if (comp.type == QueueType.JOINT) {
+				}else if (comp.type == QueueType.Joint) {
 					JointComponent joint = m_jointComps.get(e);
 					JointFactory.getInstance().destroyJoint(joint.getDJoint());
 					e.removeComponent(comp);

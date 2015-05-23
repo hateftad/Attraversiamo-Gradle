@@ -414,13 +414,15 @@ public class PhysicsComponent extends BaseComponent {
 
 	public interface ImmediateModePhysicsListener {
 
-		public void beginContact(Entity e, Contact contact, boolean fixtureA);
+		void beginContact(Entity e, Contact contact, boolean fixtureA);
 
-		public void endContact(Entity e, Contact contact, boolean fixtureA);
+		void endContact(Entity e, Contact contact, boolean fixtureA);
 
-		public void preSolve(Entity e, Contact contact, boolean fixtureA);
+		void preSolve(Entity e, Contact contact, boolean fixtureA);
 
-		public void onRestart();
+		void postSolve(Entity e, Contact contact, boolean fixtureA);
+
+		void onRestart();
 	}
 
 }

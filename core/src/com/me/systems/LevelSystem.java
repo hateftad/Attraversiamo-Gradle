@@ -80,7 +80,7 @@ public class LevelSystem extends EntityProcessingSystem{
 			if(joint.shouldDestroy()){
 				if(m_queue.has(e)){
 					QueueComponent queue = m_queue.get(e);
-					queue.type = QueueType.JOINT;
+					queue.type = QueueType.Joint;
 				}
 			}
 			if(joint.hasMotor()){

@@ -3,9 +3,9 @@ package com.me.component;
 public class QueueComponent extends BaseComponent {
 
 	public enum QueueType{
-		MASS,
-		MASSTEMP,
-		JOINT
+		Mass,
+		TempMass,
+		Joint
 	}
 	
 	public QueueType type;

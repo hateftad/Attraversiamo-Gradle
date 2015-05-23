@@ -17,8 +17,7 @@ public class PhysicsListenerSetup {
 
 	}
 
-	public void setPlayerPhysics(PhysicsComponent ps)
-	{
+	public void setPlayerPhysics(PhysicsComponent ps){
 
 		ps.setPhysicsListener(new ImmediateModePhysicsListener() {
 
@@ -27,9 +26,45 @@ public class PhysicsListenerSetup {
 			@Override
 			public void preSolve(Entity e, Contact contact, boolean fixtureA) {
 
+
+				Fixture fA = contact.getFixtureA();
+				Fixture fB = contact.getFixtureB();
+				Entity e2 = (Entity) fA.getBody().getUserData();
+				PhysicsComponent player = e.getComponent(PhysicsComponent.class);
+				PhysicsComponent other = e2.getComponent(PhysicsComponent.class);
+				RBUserData otherUd = other.getRBUserData(fA.getBody());
+				RBUserData playerUd = player.getRBUserData(fB.getBody());
+				if(playerUd == null || otherUd == null)
+					return;
+
+				if(contact.isTouching()) {
+
+					if (playerUd.getCollisionGroup() == otherUd.getCollisionGroup()) {
+
+						if (e.getComponent(PlayerComponent.class) != null) {
+
+							if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Box) {
+
+                                if(!e.getComponent(MovementComponent.class).isMoving()) {
+                                    other.setFrictionToBody("box", 5f);
+                                    contact.resetFriction();
+                                } else {
+                                    other.setFrictionToBody("box", 0.001f);
+                                    contact.resetFriction();
+                                }
+							}
+						}
+					}
+				}
+
 			}
 
-			@Override
+            @Override
+            public void postSolve(Entity e, Contact contact, boolean fixtureA) {
+
+            }
+
+            @Override
 			public void beginContact(Entity e, Contact contact, boolean fixtureA) {
 				Fixture fA = contact.getFixtureA();
 				Fixture fB = contact.getFixtureB();
@@ -93,12 +128,10 @@ public class PhysicsListenerSetup {
 							}
 							
 							if(otherUd.getType() == Type.LeftPushButton){
-								System.out.println("left push area");
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_leftPushArea = true;
 							}
 							if(otherUd.getType() == Type.RightPushButton){
-								System.out.println("right push area");
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_rightPushArea = true;
 							}
@@ -141,7 +174,6 @@ public class PhysicsListenerSetup {
 
 					}
 				} else if(fB.isSensor()){
-					System.out.println("other is sensor");
 				}
 
 				if(contact.isTouching())
@@ -163,7 +195,7 @@ public class PhysicsListenerSetup {
 								e.getComponent(TouchComponent.class).m_feetToBox = true;
 								e.getComponent(MovementComponent.class).m_lockControls = false;
 								e.getComponent(GrabComponent.class).m_grabbed = false;
-								onBox = true;
+                                onBox = true;
 							}
 
 							if(playerUd.getType() == Type.Torso && otherUd.getType() == Type.Ground){
@@ -181,7 +213,7 @@ public class PhysicsListenerSetup {
 								if(e.getComponent(TouchComponent.class).m_groundTouch){
 									QueueComponent queueComp = e1.getComponent(QueueComponent.class);
 									queueComp.mass = 5f;
-									queueComp.type = QueueType.MASS;
+									queueComp.type = QueueType.Mass;
 									queueComp.bodyName = "box";
 									e.getComponent(TouchComponent.class).m_boxTouch = true;
 									if(e.getComponent(PushComponent.class) != null){
@@ -248,7 +280,6 @@ public class PhysicsListenerSetup {
 							}
 						}
 						if(otherUd.getType() == Type.LeftCrawl && e.getComponent(CrawlComponent.class) != null){
-							System.out.println("outOfBox");
 							e.getComponent(CrawlComponent.class).canCrawl = false;
 						}
 						if(otherUd.getType() == Type.Portal){
@@ -284,19 +315,14 @@ public class PhysicsListenerSetup {
 								onBox = false;	
 								e.getComponent(MovementComponent.class).m_lockControls = false;
 								e.getComponent(TouchComponent.class).m_feetToBox = false;
-                                System.out.println("Friction BOX " + other.getFriction("box"));
-                                other.setFrictionToBody("box", PhysicsComponent.LOW_FRICTION);
-                                System.out.println("Friction BOX after set " + other.getFriction("box"));
-                                System.out.println("Friction FEET " + other.getFriction("box"));
-                                player.setFrictionToBody("feet", PhysicsComponent.LOW_FRICTION);
-                                System.out.println("Friction FEET after set " + other.getFriction("box"));
 							}
 							if(!onGround && !onBox){
 								e.getComponent(TouchComponent.class).m_groundTouch = false;
 							}
 						}
 						if(playerUd.getType() == Type.Torso && otherUd.getType() == Type.Box){
-							Body b = other.getBody("box");
+
+                            Body b = other.getBody("box");
 							b.getFixtureList().get(0).setFriction(PhysicsComponent.HIGH_FRICTION);
 							e1.getComponent(QueueComponent.class).mass = 20f;
 							e.getComponent(TouchComponent.class).m_boxTouch = false;
@@ -326,7 +352,12 @@ public class PhysicsListenerSetup {
 
 			}
 
-			@Override
+            @Override
+            public void postSolve(Entity e, Contact contact, boolean fixtureA) {
+
+            }
+
+            @Override
 			public void onRestart() {
 
 			}
@@ -394,11 +425,11 @@ public class PhysicsListenerSetup {
 					QueueComponent queueComp = new QueueComponent();
 					if(submerged) {
 						queueComp.mass = 1.6f;
-						queueComp.type = QueueType.MASSTEMP;
+						queueComp.type = QueueType.TempMass;
 						queueComp.bodyName = "feet";
 					}else{
 						queueComp.mass = 1f;
-						queueComp.type = QueueType.MASSTEMP;
+						queueComp.type = QueueType.TempMass;
 						queueComp.bodyName = "feet";
 					}
 					entity.addComponent(queueComp);
