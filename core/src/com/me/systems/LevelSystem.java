@@ -8,6 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.me.component.JointComponent;
 import com.me.component.LevelComponent;
+import com.me.component.LevelComponent.LevelTasks;
 import com.me.component.LightComponent;
 import com.me.component.ParticleComponent;
 import com.me.component.QueueComponent;
@@ -84,7 +85,7 @@ public class LevelSystem extends EntityProcessingSystem{
 				}
 			}
 			if(joint.hasMotor()){
-				if(m_levelComponent.isTaskDone(Tasks.OPENDOOR)){
+				if(m_levelComponent.isTaskDone(Tasks.OpenDoor)){
 					joint.enableMotor(true);
 				}
 			}
@@ -99,7 +100,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateLights(LightComponent light){
 		if(light.getName().equals("portalLight")){
 			float a = light.getAlpha();
-			if(!m_levelComponent.isTaskDone(Tasks.TOUCHEDEND)){
+			if(!m_levelComponent.isTaskDone(Tasks.TouchedEnd)){
 				if(a >= 1){
 					light.setColor(Color.RED);
 					inc = -0.01f;
@@ -119,11 +120,12 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateParticles(ParticleComponent particle){
 
 		if(particle.getType() == ParticleType.PORTAL){
-			if(particle.isSetToStart() && m_levelComponent.isTaskDone(Tasks.TOUCHEDEND)){
-				particle.start();
-				particle.setToStart(false);
+
+			if(m_levelComponent.isTaskDone(Tasks.TouchedEnd) && !m_levelComponent.isTaskDone(LevelTasks.PlayingFinishAnimation)){
+                particle.start();
+				m_levelComponent.doneTask(LevelTasks.PlayingFinishAnimation);
 			}
-			if(particle.isCompleted() && m_levelComponent.isTaskDone(Tasks.TOUCHEDEND)){
+			if(particle.isCompleted() && m_levelComponent.isTaskDone(Tasks.TouchedEnd)){
 				m_levelListener.onFinishedLevel(m_levelNr);
 			}
 		}
@@ -132,11 +134,11 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void checkFinished(PlayerComponent player, TouchComponent touch){
 		
 		if(touch.m_endReach == 1){
-			player.doneTask(Tasks.TOUCHEDEND, true);
+			player.doneTask(Tasks.TouchedEnd, true);
 		} else if (touch.m_endReach == 0){
-			player.doneTask(Tasks.TOUCHEDEND, false);
+			player.doneTask(Tasks.TouchedEnd, false);
 		}
-		if(m_levelComponent.isTaskDone(Tasks.TOUCHEDEND)){
+		if(m_levelComponent.isTaskDone(Tasks.TouchedEnd)){
 			player.setFacingLeft(m_levelComponent.m_finishFacingLeft);    
 			if(!m_levelComponent.m_hasPortal && player.isFinishedAnimating()){
 				m_levelListener.onFinishedLevel(m_levelNr);

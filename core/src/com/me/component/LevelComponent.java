@@ -7,10 +7,16 @@ import com.me.utils.LevelConfig;
 
 public class LevelComponent extends BaseComponent {
 
+	public enum LevelTasks{
+		PlayingFinishAnimation
+	}
+
 	public ObjectMap<PlayerNumber, PlayerComponent> m_finishers = new ObjectMap<PlayerNumber, PlayerComponent>();
 	public int m_nrOfFinishers;
 	public boolean m_hasPortal;
 	public boolean m_finishFacingLeft;
+
+	private ObjectMap<LevelTasks, Boolean> m_levelTasks = new ObjectMap<LevelTasks, Boolean>();
 
 	public LevelComponent(LevelConfig lvlConf) {
 		m_nrOfFinishers = lvlConf.getNrOfPlayers();
@@ -30,6 +36,18 @@ public class LevelComponent extends BaseComponent {
 			}
 		}
 		return m_finishers.size == finished;
+	}
+
+	public boolean isTaskDone(LevelTasks task){
+		return (m_levelTasks.containsKey(task) && m_levelTasks.get(task));
+	}
+
+	public void doneTask(LevelTasks task){
+		m_levelTasks.put(task, true);
+	}
+
+	public void unDoneTask(LevelTasks task){
+		m_levelTasks.put(task, false);
 	}
 
 	@Override

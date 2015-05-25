@@ -89,7 +89,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 		TouchComponent touch = m_touchComps.get(e);
 		CrawlComponent crawlComp = m_crawlComps.get(e);
 		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent()
-				.isTaskDone(Tasks.TOUCHEDEND);
+				.isTaskDone(Tasks.TouchedEnd);
 		if (m_inputMgr.m_playerSelected == PlayerSelection.TWO) {
 			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);
@@ -177,13 +177,13 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(Tasks.OPENDOOR, true);
+						player.doneTask(Tasks.OpenDoor, true);
 						player.setState(State.WAITTILDONE);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(Tasks.OPENDOOR, true);
+						player.doneTask(Tasks.OpenDoor, true);
 						player.setState(State.WAITTILDONE);
 					}
 					

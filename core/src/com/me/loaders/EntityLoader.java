@@ -180,7 +180,7 @@ public class EntityLoader {
 				entity.addComponent(new QueueComponent());
 			}
 			if (ud.mName.equals("portal")) {
-				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL));
+				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL, 1));
 				entity.addComponent(new TriggerComponent());
 				LevelComponent levelComp = new LevelComponent(config);
 				config.setLevelComponent(levelComp);
@@ -193,7 +193,7 @@ public class EntityLoader {
 				entity.addComponent(levelComp);
 			}
 			if (ud.mName.equals("point")) {
-				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP));
+				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
 				entity.addComponent(new TriggerComponent());
 			}
 			if (ud.mName.equals("minX")) {

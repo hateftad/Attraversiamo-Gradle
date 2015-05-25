@@ -159,8 +159,6 @@ public class PhysicsListenerSetup {
 								e.getComponent(CrawlComponent.class).canCrawl = true;
 							}
 							if(otherUd.getType() == Type.Portal){
-								if(!e2.getComponent(ParticleComponent.class).isStarted())
-									e2.getComponent(ParticleComponent.class).setToStart(true);
 								e.getComponent(TouchComponent.class).m_endReach = 1;
 							}
 							if(otherUd.getType() == Type.Finish){

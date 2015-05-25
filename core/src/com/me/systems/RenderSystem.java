@@ -101,16 +101,13 @@ public class RenderSystem extends EntitySystem {
 						sprite.draw(m_batch);
 					}
 				}
-
 			}
 
 			if (m_particles.has(e)) {
-				ParticleComponent p = m_particles.get(e);
-				p.setPosition(physics.getWorldPosition().x,
-						physics.getWorldPosition().y);
-				p.draw(m_batch, world.delta);
-				if (p.isCompleted()) {
-					p.setStart(false);
+				ParticleComponent particles = m_particles.get(e);
+                particles.setPosition(physics.getWorldPosition());
+				if(particles.needsDrawAndUpdate()) {
+					particles.draw(m_batch, world.delta);
 				}
 			}
 		}
@@ -118,8 +115,7 @@ public class RenderSystem extends EntitySystem {
 
 		if (m_shaderComps.has(e)) {
 			ShaderComponent sComp = m_shaderComps.get(e);
-			sComp.render(m_batch, world.getSystem(CameraSystem.class)
-					.getCameraComponent().getCamera(), m_sprites.get(e));
+			sComp.render(m_batch, world.getSystem(CameraSystem.class).getCameraComponent().getCamera(), m_sprites.get(e));
 		}
 
 	}

@@ -108,7 +108,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		PhysicsComponent ps = m_physComps.get(e);
 
 		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent()
-				.isTaskDone(Tasks.TOUCHEDEND);
+				.isTaskDone(Tasks.TouchedEnd);
 
 		if (m_inputMgr.isDown(skinChange)) {
 			animation.setSkin(m_inputMgr.toggleSkins());
@@ -208,13 +208,13 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(Tasks.OPENDOOR, true);
+						player.doneTask(Tasks.OpenDoor, true);
 						player.setState(State.WAITTILDONE);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(Tasks.OPENDOOR, true);
+						player.doneTask(Tasks.OpenDoor, true);
 						player.setState(State.WAITTILDONE);
 					}
 				}

@@ -13,7 +13,7 @@ public class PlayerComponent extends BaseComponent {
 	}
 
 	public enum Tasks {
-		OPENDOOR, COLLECTED, TOUCHEDEND
+		OpenDoor, Collected, TouchedEnd,
 	}
 
 	private ObjectMap<Tasks, Boolean> m_tasks = new ObjectMap<Tasks, Boolean>();
@@ -118,7 +118,7 @@ public class PlayerComponent extends BaseComponent {
 	}
 	
 	public void doneTask(Tasks task, boolean change){
-		if(m_tasks.get(task)!= null){
+		if(m_tasks.get(task) != null){
 			m_tasks.put(task, change);
 		}
 	}
