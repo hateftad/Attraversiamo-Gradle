@@ -93,7 +93,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 		if (m_inputMgr.m_playerSelected == PlayerSelection.TWO) {
 			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);
-		} else if (player.canDeActivate()) {
+		} else if (player.canDeActivate() && player.getState() != State.WAITTILDONE) {
 			player.setActive(false);
 		}
 

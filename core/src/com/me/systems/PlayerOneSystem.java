@@ -117,7 +117,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 
 		if (m_inputMgr.m_playerSelected == PlayerSelection.ONE) {
 			player.setActive(true);
-		} else if (player.canDeActivate()) {
+		} else if (player.canDeActivate() && player.getState() != State.WAITTILDONE) {
 			player.setActive(false);
 		}
 
