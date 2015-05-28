@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Values;
+import com.me.physics.FixtureData;
 import com.me.physics.RBUserData;
 import com.me.utils.Converters;
 
@@ -36,7 +37,9 @@ public class PhysicsComponent extends BaseComponent {
 	private String m_name;
 	private boolean m_isPlayer;
 	private boolean m_isDynamic = true;
+    private FixtureData m_fixtureData;
 	private Filter currentFilter;
+    private short currentBits;
 	public ImmediateModePhysicsListener m_physicsListener;
 	private boolean m_submerged;
 
@@ -121,16 +124,15 @@ public class PhysicsComponent extends BaseComponent {
 		return false;
 	}
 
-	private short currentBits;
-
 	public void disableBody(String name) {
 
-		if (currentFilter == null) {
-			currentFilter = m_body.get(name).getFixtureList().get(0).getFilterData();
-			currentBits = currentFilter.categoryBits;
+		if (m_fixtureData == null) {
+            Filter currentFilter = m_body.get(name).getFixtureList().get(0).getFilterData();
+            float friction = m_body.get(name).getFixtureList().get(0).getFriction();
+            m_fixtureData = new FixtureData(currentFilter, friction);
 		}
 
-		Filter t1 = currentFilter;
+		Filter t1 = m_fixtureData.getCurrentFilter();
 		t1.categoryBits = 0;
 		m_body.get(name).getFixtureList().get(0).setFilterData(t1);
 
@@ -138,10 +140,11 @@ public class PhysicsComponent extends BaseComponent {
 
 	public void enableBody(String name) {
 
-		if (currentFilter != null) {
-			currentFilter.categoryBits = currentBits;
-			m_body.get(name).getFixtureList().get(0)
-					.setFilterData(currentFilter);
+		if (m_fixtureData != null) {
+			m_fixtureData.restoreCategoryBits();
+			m_body.get(name).getFixtureList().get(0).setFilterData(m_fixtureData.getCurrentFilter());
+            m_body.get(name).getFixtureList().get(0).setFriction(m_fixtureData.getCurrentFriction());
+
 		}
 	}
 
