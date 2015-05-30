@@ -119,7 +119,9 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	}
 
     public void printInfo(){
-        System.out.println("Active Entities"+m_entityWorld.getEntityManager().getActiveEntityCount());
+		if(m_entityWorld != null && m_entityWorld.getEntityManager() != null) {
+			System.out.println("Active Entities" + m_entityWorld.getEntityManager().getActiveEntityCount());
+		}
     }
 
 	@Override

@@ -38,18 +38,14 @@ public class PhysicsListenerSetup {
 					return;
 
 				if(contact.isTouching()) {
-
 					if (playerUd.getCollisionGroup() == otherUd.getCollisionGroup()) {
-
 						if (e.getComponent(PlayerComponent.class) != null) {
-
 							if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Box) {
-
                                 if(!e.getComponent(MovementComponent.class).isMoving()) {
-                                    other.setFrictionToBody("box", 1f);
+                                    other.setFriction(1f);
                                     contact.resetFriction();
                                 } else {
-                                    other.setFrictionToBody("box", 0.001f);
+                                    other.setFriction(0.001f);
                                     contact.resetFriction();
                                 }
 							}
@@ -162,7 +158,7 @@ public class PhysicsListenerSetup {
 								e.getComponent(TouchComponent.class).m_endReach = 1;
 							}
 							if(otherUd.getType() == Type.Finish){
-								e.getComponent(TouchComponent.class).m_endReach = 1;
+                                e.getComponent(TouchComponent.class).m_endReach = 1;
 							}
 							if(created){
 								e.getComponent(TouchComponent.class).m_edgeTouch = true;

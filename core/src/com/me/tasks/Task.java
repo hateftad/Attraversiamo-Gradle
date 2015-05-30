@@ -11,6 +11,8 @@ public abstract class Task {
 
     protected boolean m_isFinished = false;
 
+    public abstract Task createCopy();
+
     public abstract TaskType getType();
 
     public abstract void finish();
@@ -18,6 +20,8 @@ public abstract class Task {
     public abstract void unFinish();
 
     public abstract boolean isFinished();
+
+    public abstract void reset();
 
     public void setFinished(boolean finished){
         m_isFinished = finished;

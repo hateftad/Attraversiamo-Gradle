@@ -122,9 +122,16 @@ public class PlayerComponent extends BaseComponent {
 		m_tasks.put(task.getType(), task);
 	}
 
+    public void resetTasks(){
+        for (Task task : m_tasks.values()) {
+            task.reset();
+        }
+    }
+
 	@Override
 	public void restart() {
 		m_facingLeft = false;
 		m_isFinishedAnimating = false;
+        resetTasks();
 	}
 }

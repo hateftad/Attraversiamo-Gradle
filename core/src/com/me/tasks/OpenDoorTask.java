@@ -11,6 +11,11 @@ public class OpenDoorTask extends Task {
     }
 
     @Override
+    public Task createCopy() {
+        return new OpenDoorTask();
+    }
+
+    @Override
     public TaskType getType() {
         return TaskType.OpenDoor;
     }
@@ -28,5 +33,10 @@ public class OpenDoorTask extends Task {
     @Override
     public boolean isFinished() {
         return m_isFinished;
+    }
+
+    @Override
+    public void reset() {
+        setFinished(false);
     }
 }

@@ -59,7 +59,13 @@ public class LevelComponent extends BaseComponent {
 
 	@Override
 	public void restart() {
-		//m_finishers.clear();
+        for (PlayerComponent player : m_finishers.values()) {
+            player.resetTasks();
+        }
+
+        for (LevelTaskType type : m_levelTasks.keys()) {
+            unDoneTask(type);
+        }
 	}
 
 }

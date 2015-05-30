@@ -42,9 +42,9 @@ public class ConfigReader {
 						pConfig.setFinishAnimation(gChild.get("finishAnim"));
 						pConfig.m_name = gChild.get("playerName");
 						config.setPlayerOneConfig(pConfig);
-						Element tasks = children.get(0);
-						for(int i=0; i < tasks.getChild(0).getChildCount(); i++){
-							String childrenTask = tasks.getChild(0).getChildByName("task").get("name");
+						Element tasks = gChild.getChild(0);
+						for(int i=0; i < tasks.getChildCount(); i++){
+							String childrenTask = tasks.getChild(i).get("name");
 							pConfig.addTask(childrenTask);
 						}
 					}
@@ -59,11 +59,11 @@ public class ConfigReader {
 						pConfig.setFinishAnimation(gChild.get("finishAnim"));
 						pConfig.m_name = gChild.get("playerName");
 						config.setPlayerTwoConfig(pConfig);
-						Element tasks = children.get(0);
-						for(int i=0; i < tasks.getChild(0).getChildCount(); i++){
-							String childrenTask = tasks.getChild(0).getChildByName("task").get("name");
-							pConfig.addTask(childrenTask);
-						}
+                        Element tasks = gChild.getChild(0);
+                        for(int i=0; i < tasks.getChildCount(); i++){
+                            String childrenTask = tasks.getChild(i).get("name");
+                            pConfig.addTask(childrenTask);
+                        }
 					}
 				}
 				config.setLevelNr(child.getInt("levelNr"));

@@ -120,7 +120,6 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateParticles(ParticleComponent particle){
 
 		if(particle.getType() == ParticleType.PORTAL){
-
 			if(m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd) && !m_levelComponent.isTaskDone(LevelTaskType.PlayingFinishAnimation)){
                 particle.start();
 				m_levelComponent.doneTask(LevelTaskType.PlayingFinishAnimation);

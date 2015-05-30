@@ -144,8 +144,8 @@
         <hasPortal>false</hasPortal>
         <player>
             <tasks>
-                <task name="OpenDoor"/>
                 <task name="TouchEnd"/>
+                <task name="OpenDoor"/>
             </tasks>
             <skinName>silhouette</skinName>
             <active>true</active>
@@ -161,8 +161,8 @@
         </player>
         <player>
             <tasks>
-                <task name="OpenDoor"/>
                 <task name="TouchEnd"/>
+                <task name="OpenDoor"/>
             </tasks>
             <skinName>silhouette</skinName>
             <active>false</active>

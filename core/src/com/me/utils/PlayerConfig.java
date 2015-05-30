@@ -39,6 +39,12 @@ public class PlayerConfig {
 		return m_tasks;
 	}
 
+    public void resetTasks(){
+        for(Task task : m_tasks){
+            task.reset();
+        }
+    }
+
  	public void setFinishAnimation(String state){
  		
  		if(state.equals("suckin")){

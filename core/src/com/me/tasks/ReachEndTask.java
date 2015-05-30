@@ -6,6 +6,11 @@ package com.me.tasks;
 public class ReachEndTask extends Task {
 
     @Override
+    public Task createCopy() {
+        return new ReachEndTask();
+    }
+
+    @Override
     public TaskType getType() {
         return TaskType.ReachedEnd;
     }
@@ -23,5 +28,10 @@ public class ReachEndTask extends Task {
     @Override
     public boolean isFinished() {
         return m_isFinished;
+    }
+
+    @Override
+    public void reset() {
+        setFinished(false);
     }
 }

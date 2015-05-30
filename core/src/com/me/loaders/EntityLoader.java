@@ -367,8 +367,9 @@ public class EntityLoader {
 				p.setActive(playerConfig.m_active);
 				p.setFacingLeft(playerConfig.m_facingleft);
 				p.setCanBecomeInactive(playerConfig.m_canDeactivate);
-				for (Task task : playerConfig.getTasks()) {
-					p.addTask(task);
+				Array<Task> tasks = playerConfig.getTasks();
+				for (Task task : tasks) {
+					p.addTask(task.createCopy());
 				}
 				config.getLevelComponent().addFinisher(p);
 				// entity.addComponent(new LightComponent(light, ((BodyUserData)
@@ -417,8 +418,9 @@ public class EntityLoader {
 				p.setActive(playerConfig.m_active);
 				p.setFacingLeft(playerConfig.m_facingleft);
 				p.setCanBecomeInactive(playerConfig.m_canDeactivate);
-				for (Task task : playerConfig.getTasks()) {
-					p.addTask(task);
+				Array<Task> tasks = playerConfig.getTasks();
+				for (Task task : tasks) {
+					p.addTask(task.createCopy());
 				}
 				config.getLevelComponent().addFinisher(p);
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
