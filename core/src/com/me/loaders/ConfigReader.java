@@ -42,6 +42,11 @@ public class ConfigReader {
 						pConfig.setFinishAnimation(gChild.get("finishAnim"));
 						pConfig.m_name = gChild.get("playerName");
 						config.setPlayerOneConfig(pConfig);
+						Element tasks = children.get(0);
+						for(int i=0; i < tasks.getChild(0).getChildCount(); i++){
+							String childrenTask = tasks.getChild(0).getChildByName("task").get("name");
+							pConfig.addTask(childrenTask);
+						}
 					}
 					if(gChild.get("playerNr").equals("two")){
 						PlayerConfig pConfig = new PlayerConfig();
@@ -54,8 +59,12 @@ public class ConfigReader {
 						pConfig.setFinishAnimation(gChild.get("finishAnim"));
 						pConfig.m_name = gChild.get("playerName");
 						config.setPlayerTwoConfig(pConfig);
+						Element tasks = children.get(0);
+						for(int i=0; i < tasks.getChild(0).getChildCount(); i++){
+							String childrenTask = tasks.getChild(0).getChildByName("task").get("name");
+							pConfig.addTask(childrenTask);
+						}
 					}
-					
 				}
 				config.setLevelNr(child.getInt("levelNr"));
 				config.setLightColor(child.get("lightColor"));
@@ -63,12 +72,6 @@ public class ConfigReader {
 				config.finishFacingLeft(child.getBoolean("finishFacingLeft"));
 				config.setHasPortal(child.getBoolean("hasPortal"));
 				
-				Element tasks = child.getChildrenByName("tasks").get(0);
-				for(int i=0; i < tasks.getChildCount(); i++){
-					String childrenTask = tasks.getChild(i).get("name");
-					config.addTask(childrenTask);
-				}
-
 				m_levelConfigs.put(child.getAttribute("name"), config);
 				
 			}

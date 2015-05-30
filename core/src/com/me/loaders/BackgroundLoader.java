@@ -60,14 +60,14 @@ public class BackgroundLoader{
 
 		m_loader.loadLevel(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler());
 		
-		if(m_levelConfig.m_playerOne != null){
+		if(m_levelConfig.getPlayerOneConfig() != null){
 			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.ONE);
-			setupCharacter(m_levelConfig.m_playerOne, 1);
+			setupCharacter(m_levelConfig.getPlayerOneConfig(), 1);
 		}
 			
-		if(m_levelConfig.m_playerTwo != null){
+		if(m_levelConfig.getPlayerTwoConfig() != null){
 			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.TWO);
-			setupCharacter(m_levelConfig.m_playerTwo, 2);
+			setupCharacter(m_levelConfig.getPlayerTwoConfig(), 2);
 		}
 		
 		m_loader.dispose();

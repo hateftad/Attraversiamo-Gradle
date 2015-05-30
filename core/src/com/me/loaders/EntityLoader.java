@@ -27,7 +27,6 @@ import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.me.component.*;
 import com.me.component.PlayerComponent.PlayerNumber;
-import com.me.component.PlayerComponent.Tasks;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.loaders.BodySerializer.BodyUserData;
@@ -36,8 +35,10 @@ import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.physics.RBUserData;
 import com.me.systems.CameraSystem;
+import com.me.tasks.Task;
 import com.me.utils.Converters;
 import com.me.utils.LevelConfig;
+import com.me.utils.PlayerConfig;
 
 public class EntityLoader {
 
@@ -243,11 +244,11 @@ public class EntityLoader {
 		String characterPath = "";
 		String characterName = "";
 		if (playerNumber == PlayerNumber.ONE) {
-			characterPath = config.m_playerOne.m_name + "/";
-			characterName = config.m_playerOne.m_name;
+			characterPath = config.getPlayerOneConfig().m_name + "/";
+			characterName = config.getPlayerOneConfig().m_name;
 		} else if (playerNumber == PlayerNumber.TWO) {
-			characterPath = config.m_playerTwo.m_name + "/";
-			characterName = config.m_playerTwo.m_name;
+			characterPath = config.getPlayerTwoConfig().m_name + "/";
+			characterName = config.getPlayerTwoConfig().m_name;
 		}
 
 		clearLoader();
@@ -361,12 +362,12 @@ public class EntityLoader {
 			}
 			if (m_scene.getCustom(body, "characterType", "").equals("playerOne")) {
 
-				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body,
-						"characterType", ""));
-				p.setActive(config.m_playerOne.m_active);
-				p.setFacingLeft(config.m_playerOne.m_facingleft);
-				p.setCanBecomeInactive(config.m_playerOne.m_canDeactivate);
-				for (Tasks task : config.getTasks()) {
+				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
+				PlayerConfig playerConfig = config.getPlayerOneConfig();
+				p.setActive(playerConfig.m_active);
+				p.setFacingLeft(playerConfig.m_facingleft);
+				p.setCanBecomeInactive(playerConfig.m_canDeactivate);
+				for (Task task : playerConfig.getTasks()) {
 					p.addTask(task);
 				}
 				config.getLevelComponent().addFinisher(p);
@@ -405,18 +406,18 @@ public class EntityLoader {
 				stateData.setMix("runJumping", "falling", 0.4f);
 				// dstateData.setMix("pushing", "idle", 0.6f);
 				// stateData.setMix("ladderHang", "running", 0.1f);
-				anim.setSkin(config.m_playerOne.getSkinName());
-				pComp.setPosition(config.m_playerOne.m_playerPosition);
+				anim.setSkin(playerConfig.getSkinName());
+				pComp.setPosition(playerConfig.m_playerPosition);
 				// stateData.setMix("lieDown", "running", 0.3f);
 
 			} else if (m_scene.getCustom(body, "characterType", "").equals(
 					"playerTwo")) {
-				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body,
-						"characterType", ""));
-				p.setActive(config.m_playerTwo.m_active);
-				p.setFacingLeft(config.m_playerTwo.m_facingleft);
-				p.setCanBecomeInactive(config.m_playerTwo.m_canDeactivate);
-				for (Tasks task : config.getTasks()) {
+				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
+				PlayerConfig playerConfig = config.getPlayerTwoConfig();
+				p.setActive(playerConfig.m_active);
+				p.setFacingLeft(playerConfig.m_facingleft);
+				p.setCanBecomeInactive(playerConfig.m_canDeactivate);
+				for (Task task : playerConfig.getTasks()) {
 					p.addTask(task);
 				}
 				config.getLevelComponent().addFinisher(p);
@@ -442,7 +443,7 @@ public class EntityLoader {
 				stateData.setMix("standUp", "idle1", 0.2f);
 				stateData.setMix("lyingDown", "standUp", 0.2f);
 				entity.addComponent(p);
-				anim.setSkin(config.m_playerTwo.getSkinName());
+				anim.setSkin(playerConfig.getSkinName());
 				entity.addComponent(new MovementComponent());
 				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f,
 						10);
@@ -457,7 +458,7 @@ public class EntityLoader {
 				entity.addComponent(new RestartComponent());
 				entity.addComponent(new PushComponent());
 				entity.addComponent(new QueueComponent());
-				pComp.setPosition(config.m_playerTwo.m_playerPosition);
+				pComp.setPosition(playerConfig.m_playerPosition);
 			}
 
 			BodyUserData ud = (BodyUserData) body.getUserData();

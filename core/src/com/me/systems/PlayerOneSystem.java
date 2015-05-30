@@ -19,12 +19,12 @@ import com.me.component.MovementComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
 import com.me.component.PlayerComponent.State;
-import com.me.component.PlayerComponent.Tasks;
 import com.me.component.PlayerOneComponent;
 import com.me.component.PushComponent;
 import com.me.component.TouchComponent;
 import com.me.component.VelocityLimitComponent;
 import com.me.listeners.LevelEventListener;
+import com.me.tasks.Task.TaskType;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;
@@ -108,7 +108,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		PhysicsComponent ps = m_physComps.get(e);
 
 		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent()
-				.isTaskDone(Tasks.TouchedEnd);
+				.isTaskDoneForAll(TaskType.ReachedEnd);
 
 		if (m_inputMgr.isDown(skinChange)) {
 			animation.setSkin(m_inputMgr.toggleSkins());
@@ -122,11 +122,9 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		}
 
 		if (!player.isActive() && !finish) {
-
 			if (!g.m_gonnaGrab && !h.m_isHanging && !g.m_lifting) {
 				animation.setAnimationState(AnimState.IDLE);
 			}
-
 		}
 
 		MovementComponent m = m_movComps.get(e);
@@ -208,13 +206,13 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(Tasks.OpenDoor, true);
+						player.doneTask(TaskType.OpenDoor);
 						player.setState(State.WAITTILDONE);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(Tasks.OpenDoor, true);
+						player.doneTask(TaskType.OpenDoor);
 						player.setState(State.WAITTILDONE);
 					}
 				}
@@ -418,24 +416,12 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 			if (!(slot.getAttachment() instanceof RegionAttachment))
 				continue;
 			String attachment = slot.getBone().getData().getName();
-			// System.out.println(attachment.getName());
 			if (ps.getBody(attachment) != null) {
 				float x = (Converters.ToBox(slot.getBone().getWorldX()));
 				float x2 = (ps.getBody().getPosition().x + x);
 				float y = Converters.ToBox(slot.getBone().getWorldY());
 				float y2 = (ps.getBody().getPosition().y + y);
-				// if(!touch.m_handTouch){
-				ps.getBody(attachment).setTransform(x2,
-						animation.getcenter().y + y2, 0);
-				// }else{
-				// ps.getBody(attachment.getName()).setType(BodyType.StaticBody);
-				/*
-				 * ps.getBody(attachment.getName()).setTransform( x2,
-				 * animation.getcenter().y + y2, rot * (33f +
-				 * slot.getBone().getWorldRotation() *
-				 * MathUtils.degreesToRadians) );
-				 */
-
+				ps.getBody(attachment).setTransform(x2, animation.getcenter().y + y2, 0);
 			}
 		}
 	}
@@ -445,7 +431,6 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 	}
 
 	public void clearSystem() {
-
 	}
 
 	public void toggleProcessing(boolean process) {
@@ -454,7 +439,6 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 
 	@Override
 	protected boolean checkProcessing() {
-		// TODO Auto-generated method stub
 		return m_process;
 	}
 
@@ -473,7 +457,6 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -494,13 +477,11 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-
 		return false;
 	}
 

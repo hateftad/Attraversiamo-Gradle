@@ -2,13 +2,14 @@ package com.me.component;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.component.PlayerComponent.PlayerNumber;
-import com.me.component.PlayerComponent.Tasks;
+import com.me.tasks.Task.TaskType;
 import com.me.utils.LevelConfig;
 
 public class LevelComponent extends BaseComponent {
 
-	public enum LevelTasks{
-		PlayingFinishAnimation
+	public enum LevelTaskType {
+		PlayingFinishAnimation,
+		PullLever
 	}
 
 	public ObjectMap<PlayerNumber, PlayerComponent> m_finishers = new ObjectMap<PlayerNumber, PlayerComponent>();
@@ -16,7 +17,7 @@ public class LevelComponent extends BaseComponent {
 	public boolean m_hasPortal;
 	public boolean m_finishFacingLeft;
 
-	private ObjectMap<LevelTasks, Boolean> m_levelTasks = new ObjectMap<LevelTasks, Boolean>();
+	private ObjectMap<LevelTaskType, Boolean> m_levelTasks = new ObjectMap<LevelTaskType, Boolean>();
 
 	public LevelComponent(LevelConfig lvlConf) {
 		m_nrOfFinishers = lvlConf.getNrOfPlayers();
@@ -28,7 +29,7 @@ public class LevelComponent extends BaseComponent {
 		m_finishers.put(player.getPlayerNr(), player);
 	}
 
-	public boolean isTaskDone(Tasks task) {
+	public boolean isTaskDoneForAll(TaskType task) {
 		int finished = 0;
 		for (PlayerComponent player : m_finishers.values()) {
 			if (player.isTaskDone(task)) {
@@ -38,15 +39,15 @@ public class LevelComponent extends BaseComponent {
 		return m_finishers.size == finished;
 	}
 
-	public boolean isTaskDone(LevelTasks task){
+	public boolean isTaskDone(LevelTaskType task){
 		return (m_levelTasks.containsKey(task) && m_levelTasks.get(task));
 	}
 
-	public void doneTask(LevelTasks task){
+	public void doneTask(LevelTaskType task){
 		m_levelTasks.put(task, true);
 	}
 
-	public void unDoneTask(LevelTasks task){
+	public void unDoneTask(LevelTaskType task){
 		m_levelTasks.put(task, false);
 	}
 

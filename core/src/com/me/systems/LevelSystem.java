@@ -8,12 +8,12 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.me.component.JointComponent;
 import com.me.component.LevelComponent;
-import com.me.component.LevelComponent.LevelTasks;
+import com.me.component.LevelComponent.LevelTaskType;
 import com.me.component.LightComponent;
 import com.me.component.ParticleComponent;
 import com.me.component.QueueComponent;
 import com.me.component.ParticleComponent.ParticleType;
-import com.me.component.PlayerComponent.Tasks;
+import com.me.tasks.Task.TaskType;
 import com.me.component.PlayerComponent;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.TouchComponent;
@@ -85,7 +85,7 @@ public class LevelSystem extends EntityProcessingSystem{
 				}
 			}
 			if(joint.hasMotor()){
-				if(m_levelComponent.isTaskDone(Tasks.OpenDoor)){
+				if(m_levelComponent.isTaskDoneForAll(TaskType.OpenDoor)){
 					joint.enableMotor(true);
 				}
 			}
@@ -100,7 +100,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateLights(LightComponent light){
 		if(light.getName().equals("portalLight")){
 			float a = light.getAlpha();
-			if(!m_levelComponent.isTaskDone(Tasks.TouchedEnd)){
+			if(!m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd)){
 				if(a >= 1){
 					light.setColor(Color.RED);
 					inc = -0.01f;
@@ -121,11 +121,11 @@ public class LevelSystem extends EntityProcessingSystem{
 
 		if(particle.getType() == ParticleType.PORTAL){
 
-			if(m_levelComponent.isTaskDone(Tasks.TouchedEnd) && !m_levelComponent.isTaskDone(LevelTasks.PlayingFinishAnimation)){
+			if(m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd) && !m_levelComponent.isTaskDone(LevelTaskType.PlayingFinishAnimation)){
                 particle.start();
-				m_levelComponent.doneTask(LevelTasks.PlayingFinishAnimation);
+				m_levelComponent.doneTask(LevelTaskType.PlayingFinishAnimation);
 			}
-			if(particle.isCompleted() && m_levelComponent.isTaskDone(Tasks.TouchedEnd)){
+			if(particle.isCompleted() && m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd)){
 				m_levelListener.onFinishedLevel(m_levelNr);
 			}
 		}
@@ -134,11 +134,11 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void checkFinished(PlayerComponent player, TouchComponent touch){
 		
 		if(touch.m_endReach == 1){
-			player.doneTask(Tasks.TouchedEnd, true);
+			player.doneTask(TaskType.ReachedEnd);
 		} else if (touch.m_endReach == 0){
-			player.doneTask(Tasks.TouchedEnd, false);
+			player.unDoneTask(TaskType.ReachedEnd);
 		}
-		if(m_levelComponent.isTaskDone(Tasks.TouchedEnd)){
+		if(m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd)){
 			player.setFacingLeft(m_levelComponent.m_finishFacingLeft);    
 			if(!m_levelComponent.m_hasPortal && player.isFinishedAnimating()){
 				m_levelListener.onFinishedLevel(m_levelNr);

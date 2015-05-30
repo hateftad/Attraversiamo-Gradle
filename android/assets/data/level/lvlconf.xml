@@ -6,10 +6,10 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>true</hasPortal>
-        <tasks>
-            <task name="TouchEnd"/>
-        </tasks>
         <player>
+            <tasks>
+                <task name="TouchEnd"/>
+            </tasks>
             <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
@@ -23,6 +23,9 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
+            <tasks>
+                <task name="TouchEnd"/>
+            </tasks>
             <skinName>color</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
@@ -45,10 +48,10 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
-         <tasks>
-            <task name="TouchEnd"/>
-        </tasks>
         <player>
+            <tasks>
+                <task name="TouchEnd"/>
+            </tasks>
             <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
@@ -62,6 +65,9 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
+            <tasks>
+                <task name="TouchEnd"/>
+            </tasks>
             <skinName>color</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
@@ -84,10 +90,10 @@
         <nrOfPlayers>1</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
-		 <tasks>
-            <task name="TouchEnd"/>
-        </tasks>
         <player>
+            <tasks>
+                <task name="TouchEnd"/>
+            </tasks>
             <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>false</canDeactivate>
@@ -110,10 +116,10 @@
         <nrOfPlayers>1</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
-         <tasks>
-            <task name="TouchEnd"/>
-        </tasks>
         <player>
+            <tasks>
+                <task name="TouchEnd"/>
+            </tasks>
             <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>false</canDeactivate>
@@ -136,11 +142,11 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
-         <tasks>
-            <task name="OpenDoor"/>
-            <task name="TouchEnd"/>
-        </tasks>
         <player>
+            <tasks>
+                <task name="OpenDoor"/>
+                <task name="TouchEnd"/>
+            </tasks>
             <skinName>silhouette</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
@@ -154,6 +160,10 @@
 	        <finishAnim>runOut</finishAnim>
         </player>
         <player>
+            <tasks>
+                <task name="OpenDoor"/>
+                <task name="TouchEnd"/>
+            </tasks>
             <skinName>silhouette</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
@@ -176,10 +186,10 @@
         <nrOfPlayers>2</nrOfPlayers>
         <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
-        <tasks>
-           <task name="OpenDoor"/>
-        </tasks>
         <player>
+            <tasks>
+                <task name="OpenDoor"/>
+            </tasks>
             <skinName>silhouette</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
@@ -193,6 +203,9 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
+            <tasks>
+                <task name="OpenDoor"/>
+            </tasks>
             <skinName>silhouette</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>

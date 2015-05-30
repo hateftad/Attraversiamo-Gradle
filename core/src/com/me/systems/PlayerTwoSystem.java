@@ -17,7 +17,7 @@ import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
 import com.me.component.PushComponent;
 import com.me.component.PlayerComponent.State;
-import com.me.component.PlayerComponent.Tasks;
+import com.me.tasks.Task.TaskType;
 import com.me.component.PlayerTwoComponent;
 import com.me.component.TouchComponent;
 import com.me.component.VelocityLimitComponent;
@@ -88,8 +88,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 		GrabComponent g = m_grabComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		CrawlComponent crawlComp = m_crawlComps.get(e);
-		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent()
-				.isTaskDone(Tasks.TouchedEnd);
+		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().isTaskDoneForAll(TaskType.ReachedEnd);
 		if (m_inputMgr.m_playerSelected == PlayerSelection.TWO) {
 			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);
@@ -173,17 +172,16 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 					player.setState(State.LYINGDOWN);
 				}
 				if(touch.m_pushArea){
-					
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(Tasks.OpenDoor, true);
+						player.doneTask(TaskType.OpenDoor);
 						player.setState(State.WAITTILDONE);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(Tasks.OpenDoor, true);
+						player.doneTask(TaskType.OpenDoor);
 						player.setState(State.WAITTILDONE);
 					}
 					

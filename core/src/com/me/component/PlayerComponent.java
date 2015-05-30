@@ -1,6 +1,8 @@
 package com.me.component;
 
 import com.badlogic.gdx.utils.ObjectMap;
+import com.me.tasks.Task;
+import com.me.tasks.Task.TaskType;
 
 public class PlayerComponent extends BaseComponent {
 
@@ -12,11 +14,8 @@ public class PlayerComponent extends BaseComponent {
 		ONE, TWO, THREE
 	}
 
-	public enum Tasks {
-		OpenDoor, Collected, TouchedEnd,
-	}
 
-	private ObjectMap<Tasks, Boolean> m_tasks = new ObjectMap<Tasks, Boolean>();
+	private ObjectMap<TaskType, Task> m_tasks = new ObjectMap<TaskType, Task>();
 
 	private PlayerNumber m_playerNr;
 
@@ -31,8 +30,6 @@ public class PlayerComponent extends BaseComponent {
 	private boolean m_canDeactivate;
 
 	private boolean m_isFinishedAnimating;
-
-	private boolean m_reachedEnd;
 
 	public PlayerComponent(String player) {
 		setPlayerNr(player);
@@ -105,32 +102,29 @@ public class PlayerComponent extends BaseComponent {
 		m_isFinishedAnimating = isFinished;
 	}
 
-	public void rechedEnd(boolean end) {
-		m_reachedEnd = end;
-	}
-
-	public boolean hasReachedEnd() {
-		return m_reachedEnd;
-	}
-
-	public boolean isTaskDone(Tasks task) {
-		return (m_tasks.containsKey(task) && m_tasks.get(task).booleanValue() == Boolean.TRUE);
+	public boolean isTaskDone(TaskType task) {
+		return (m_tasks.containsKey(task) && m_tasks.get(task).isFinished());
 	}
 	
-	public void doneTask(Tasks task, boolean change){
-		if(m_tasks.get(task) != null){
-			m_tasks.put(task, change);
-		}
+	public void doneTask(TaskType taskType){
+        if(m_tasks.containsKey(taskType)) {
+            m_tasks.get(taskType).finish();
+        }
 	}
+
+    public void unDoneTask(TaskType taskType){
+        if(m_tasks.containsKey(taskType)) {
+            m_tasks.get(taskType).unFinish();
+        }
+    }
 	
-	public void addTask(Tasks task){
-		m_tasks.put(task, false);
+	public void addTask(Task task){
+		m_tasks.put(task.getType(), task);
 	}
 
 	@Override
 	public void restart() {
 		m_facingLeft = false;
-		m_reachedEnd = false;
 		m_isFinishedAnimating = false;
 	}
 }

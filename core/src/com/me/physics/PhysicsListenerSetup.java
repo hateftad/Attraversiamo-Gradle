@@ -46,7 +46,7 @@ public class PhysicsListenerSetup {
 							if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Box) {
 
                                 if(!e.getComponent(MovementComponent.class).isMoving()) {
-                                    other.setFrictionToBody("box", 5f);
+                                    other.setFrictionToBody("box", 1f);
                                     contact.resetFriction();
                                 } else {
                                     other.setFrictionToBody("box", 0.001f);
@@ -412,13 +412,7 @@ public class PhysicsListenerSetup {
 				Entity entity = (Entity) body.getUserData();
 				PhysicsComponent ps = entity.getComponent(PhysicsComponent.class);
 				RBUserData otherUd = ps.getRBUserData(body);
-                /*
-				if (otherUd.getType() == Type.Box && submerged) {
-					ps.setFriction(PhysicsComponent.LOW_FRICTION);
-				} else if(otherUd.getType() == Type.Box && !submerged){
-					ps.setFriction(PhysicsComponent.HIGH_FRICTION);
-				}
-				*/
+
 				if(otherUd.getType()==Type.Feet && entity.getComponent(PlayerTwoComponent.class) != null){
 					QueueComponent queueComp = new QueueComponent();
 					if(submerged) {
