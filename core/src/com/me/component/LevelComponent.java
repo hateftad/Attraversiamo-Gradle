@@ -30,13 +30,12 @@ public class LevelComponent extends BaseComponent {
 	}
 
 	public boolean isTaskDoneForAll(TaskType task) {
-		int finished = 0;
 		for (PlayerComponent player : m_finishers.values()) {
-			if (player.isTaskDone(task)) {
-				finished++;
-			}
+			if (!player.isTaskDone(task)) {
+                return false;
+            }
 		}
-		return m_finishers.size == finished;
+		return true;
 	}
 
 	public boolean isTaskDone(LevelTaskType task){
