@@ -46,12 +46,12 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		rayHandler.setAmbientLight(1f);
 		//rayHandler.setShadows(false);
 		//rayHandler.setAmbientLight(Color.GREEN);
-		
-		m_renderSystem = m_entityWorld.setSystem(new RenderSystem());
+        m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_camera));
+		m_renderSystem = m_entityWorld.setSystem(new RenderSystem(m_camera));
 		m_entityWorld.setSystem(m_physicsSystem);
 		m_entityWorld.setSystem(new PlayerAttributeSystem());
 		m_entityWorld.setSystem(new LevelSystem(this));
-		m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_camera));
+
 		
 		m_playerOneSystem = new PlayerOneSystem(m_physicsSystem);
 		m_entityWorld.setSystem(m_playerOneSystem);

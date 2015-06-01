@@ -1,4 +1,4 @@
-package com.me.scripting;
+package com.me.manager;
 
 import org.keplerproject.luajava.LuaState;
 import org.keplerproject.luajava.LuaStateFactory;

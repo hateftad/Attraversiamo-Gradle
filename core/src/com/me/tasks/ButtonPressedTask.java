@@ -3,16 +3,16 @@ package com.me.tasks;
 /**
  * Created by hateftadayon on 5/30/15.
  */
-public class OpenDoorTask extends Task {
+public class ButtonPressedTask extends CharacterTask {
 
 
-    public OpenDoorTask(){
+    public ButtonPressedTask(){
         m_isFinished = false;
     }
 
     @Override
-    public Task createCopy() {
-        return new OpenDoorTask();
+    public CharacterTask createCopy() {
+        return new ButtonPressedTask();
     }
 
     @Override

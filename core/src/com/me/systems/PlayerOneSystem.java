@@ -9,22 +9,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
-import com.me.component.AnimationComponent;
+import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
-import com.me.component.GrabComponent;
-import com.me.component.HangComponent;
-import com.me.component.JumpComponent;
-import com.me.component.LadderClimbComponent;
-import com.me.component.MovementComponent;
-import com.me.component.PhysicsComponent;
-import com.me.component.PlayerComponent;
 import com.me.component.PlayerComponent.State;
-import com.me.component.PlayerOneComponent;
-import com.me.component.PushComponent;
-import com.me.component.TouchComponent;
-import com.me.component.VelocityLimitComponent;
 import com.me.listeners.LevelEventListener;
-import com.me.tasks.Task.TaskType;
+import com.me.manager.LevelManager;
+import com.me.tasks.CharacterTask.TaskType;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;
@@ -65,6 +55,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 	@Mapper
 	ComponentMapper<LadderClimbComponent> m_ladderComps;
 
+
 	@Mapper
 	ComponentMapper<VelocityLimitComponent> m_velComps;
 
@@ -80,6 +71,8 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 	private float VELOCITY = 11.0f;
 	private float VELOCITYINR = 3.0f;
 
+	private LevelManager m_levelManager;
+
 	@SuppressWarnings("unchecked")
 	public PlayerOneSystem(LevelEventListener listener) {
 		super(Aspect.getAspectForOne(PlayerOneComponent.class));
@@ -90,11 +83,20 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		if (GlobalConfig.getInstance().config.platform == Platform.DESKTOP) {
 			Gdx.input.setInputProcessor(this);
 		}
+
+
 	}
 
 	public void setPlayerConfig(PlayerConfig playerCfg) {
 		m_playerConfig = playerCfg;
 	}
+
+    @Override
+    protected void begin() {
+        if(m_levelManager == null){
+            m_levelManager = world.getSystem(LevelSystem.class).getLevelManager();
+        }
+    }
 
 	@Override
 	protected void process(Entity e) {
@@ -107,12 +109,10 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		TouchComponent touch = m_touchComps.get(e);
 		PhysicsComponent ps = m_physComps.get(e);
 
-		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent()
-				.isTaskDoneForAll(TaskType.ReachedEnd);
+		boolean finish = m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd);
 
 		if (m_inputMgr.isDown(skinChange)) {
 			animation.setSkin(m_inputMgr.toggleSkins());
-			;
 		}
 
 		if (m_inputMgr.m_playerSelected == PlayerSelection.ONE) {

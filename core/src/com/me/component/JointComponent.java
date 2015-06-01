@@ -141,18 +141,6 @@ public class JointComponent extends BaseComponent{
 	public boolean shouldDestroy(){
 		return setToDestroy;
 	}
-	
-	public void update(float timeStep){
-		float maxForceSq = 5f;
-		if(m_dJoint != null){
-			Vector2 reactionForce = m_dJoint.getReactionForce(1/timeStep);
-		    float forceModuleSq = reactionForce.len2();
-		    //System.out.println(" force" +forceModuleSq);
-		    if(forceModuleSq >= maxForceSq){
-		    	setToDestroy = true;
-		    }
-		}
-	}
 
 	@Override
 	public void dispose() {

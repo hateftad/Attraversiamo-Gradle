@@ -31,11 +31,12 @@ import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.loaders.BodySerializer.BodyUserData;
 import com.me.loaders.RubeScene.Indexes;
+import com.me.manager.LevelManager;
 import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.physics.RBUserData;
 import com.me.systems.CameraSystem;
-import com.me.tasks.Task;
+import com.me.tasks.CharacterTask;
 import com.me.utils.Converters;
 import com.me.utils.LevelConfig;
 import com.me.utils.PlayerConfig;
@@ -183,15 +184,13 @@ public class EntityLoader {
 			if (ud.mName.equals("portal")) {
 				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL, 1));
 				entity.addComponent(new TriggerComponent());
-				LevelComponent levelComp = new LevelComponent(config);
-				config.setLevelComponent(levelComp);
-				entity.addComponent(levelComp);
+                LevelManager levelComp = new LevelManager(config);
+				config.setLevelManager(levelComp);
 			}
 			if (ud.mName.equals("finish")) {
 				entity.addComponent(new TriggerComponent());
-				LevelComponent levelComp = new LevelComponent(config);
-				config.setLevelComponent(levelComp);
-				entity.addComponent(levelComp);
+                LevelManager levelComp = new LevelManager(config);
+				config.setLevelManager(levelComp);
 			}
 			if (ud.mName.equals("point")) {
 				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
@@ -224,6 +223,7 @@ public class EntityLoader {
 				buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 1), 1.5f, 2);
 				entity.addComponent(buoyancyComponent);
 				entity.addComponent(new ShaderComponent("",body));
+                entity.addComponent(new TriggerComponent());
 			}
 
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, pComp.getBody(ud.mName)));
@@ -367,11 +367,11 @@ public class EntityLoader {
 				p.setActive(playerConfig.m_active);
 				p.setFacingLeft(playerConfig.m_facingleft);
 				p.setCanBecomeInactive(playerConfig.m_canDeactivate);
-				Array<Task> tasks = playerConfig.getTasks();
-				for (Task task : tasks) {
+				Array<CharacterTask> tasks = playerConfig.getTasks();
+				for (CharacterTask task : tasks) {
 					p.addTask(task.createCopy());
 				}
-				config.getLevelComponent().addFinisher(p);
+				config.getLevelManager().addFinisher(p);
 				// entity.addComponent(new LightComponent(light, ((BodyUserData)
 				// body.getUserData()).mName));
 				entity.addComponent(p);
@@ -418,11 +418,11 @@ public class EntityLoader {
 				p.setActive(playerConfig.m_active);
 				p.setFacingLeft(playerConfig.m_facingleft);
 				p.setCanBecomeInactive(playerConfig.m_canDeactivate);
-				Array<Task> tasks = playerConfig.getTasks();
-				for (Task task : tasks) {
+				Array<CharacterTask> tasks = playerConfig.getTasks();
+				for (CharacterTask task : tasks) {
 					p.addTask(task.createCopy());
 				}
-				config.getLevelComponent().addFinisher(p);
+				config.getLevelManager().addFinisher(p);
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);

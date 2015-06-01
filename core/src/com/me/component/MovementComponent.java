@@ -11,7 +11,6 @@ public class MovementComponent extends BaseComponent {
 	public boolean m_jump;
 	public boolean m_movingUp = false;
 	public boolean m_movingDown = false;
-	public Vector2 m_movement;
 	public boolean m_lockControls = false;
 	
 	public void set(boolean left, boolean right, boolean up, boolean down, boolean jump){
@@ -22,20 +21,7 @@ public class MovementComponent extends BaseComponent {
 		m_jump = jump;
 		
 	}
-	
-	public void stopUpDown(){
-		m_movingDown = false;
-		m_movingUp =false;
-	}
-	
-	public float getX(){
-		return m_movement.x;
-	}
-	
-	public float getY(){
-		return m_movement.y;
-	}
-	
+
 	public boolean moved(){
 		return (m_left) || (m_right) || (m_jump);
 	}
@@ -59,7 +45,6 @@ public class MovementComponent extends BaseComponent {
 		m_jump = false;
 		m_movingUp = false;
 		m_movingDown = false;
-		m_movement = Vector2.Zero;
 		m_lockControls = false;
 	}
 	

@@ -1,7 +1,7 @@
 package com.me.utils;
 
 import com.badlogic.gdx.graphics.Color;
-import com.me.component.LevelComponent;
+import com.me.manager.LevelManager;
 
 public class LevelConfig {
 
@@ -14,7 +14,7 @@ public class LevelConfig {
 	private int m_levelNr;
 	private boolean m_finishFacingLeft;
 	private boolean m_hasPortal;
-	private LevelComponent m_levelComponent;
+	private LevelManager m_levelManager;
 	public float m_minX, m_maxX, m_minY;
 
 	public LevelConfig(String name) {
@@ -29,12 +29,12 @@ public class LevelConfig {
 		return m_playerTwo;
 	}
 
-	public void setLevelComponent(LevelComponent lvlComp){
-		m_levelComponent = lvlComp;
+	public void setLevelManager(LevelManager lvlComp){
+        m_levelManager = lvlComp;
 	}
 	
-	public LevelComponent getLevelComponent(){
-		return m_levelComponent;
+	public LevelManager getLevelManager(){
+		return m_levelManager;
 	}
 	
 	public void setPlayerOneConfig(PlayerConfig p1){

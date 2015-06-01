@@ -1,8 +1,8 @@
 package com.me.component;
 
 import com.badlogic.gdx.utils.ObjectMap;
-import com.me.tasks.Task;
-import com.me.tasks.Task.TaskType;
+import com.me.tasks.CharacterTask;
+import com.me.tasks.CharacterTask.TaskType;
 
 public class PlayerComponent extends BaseComponent {
 
@@ -15,7 +15,7 @@ public class PlayerComponent extends BaseComponent {
 	}
 
 
-	private ObjectMap<TaskType, Task> m_tasks = new ObjectMap<TaskType, Task>();
+	private ObjectMap<TaskType, CharacterTask> m_tasks = new ObjectMap<TaskType, CharacterTask>();
 
 	private PlayerNumber m_playerNr;
 
@@ -118,12 +118,12 @@ public class PlayerComponent extends BaseComponent {
         }
     }
 	
-	public void addTask(Task task){
+	public void addTask(CharacterTask task){
 		m_tasks.put(task.getType(), task);
 	}
 
     public void resetTasks(){
-        for (Task task : m_tasks.values()) {
+        for (CharacterTask task : m_tasks.values()) {
             task.reset();
         }
     }

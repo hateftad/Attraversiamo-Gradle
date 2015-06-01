@@ -107,10 +107,10 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 				m_physicsComp.get(e).setPosition(Converters.ToBox(m_camera.getPosition().x , m_camera.getPosition().y + 2150));
 			}
 		}
-		if(debug){
+		//if(debug){
 			Matrix4 m = m_camera.getCombined();
 			m_debugDrawer.render(world.getSystem(PhysicsSystem.class).getWorld(), m.scale(100, 100, 0));
-		}
+		//}
 		
 	}
 

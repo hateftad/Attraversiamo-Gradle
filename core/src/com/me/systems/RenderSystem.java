@@ -10,13 +10,10 @@ import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.Bag;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.me.component.AnimationComponent;
-import com.me.component.BaseComponent;
-import com.me.component.ParticleComponent;
-import com.me.component.PhysicsComponent;
-import com.me.component.ShaderComponent;
-import com.me.component.SpriteComponent;
+import com.me.component.*;
 
 public class RenderSystem extends EntitySystem {
 
@@ -39,12 +36,14 @@ public class RenderSystem extends EntitySystem {
 
 	private SpriteBatch m_batch;
 
+    private OrthographicCamera m_camera;
+
 	@SuppressWarnings("unchecked")
-	public RenderSystem() {
+	public RenderSystem(OrthographicCamera camera) {
 
 		super(Aspect.getAspectForAll(PhysicsComponent.class,
 				SpriteComponent.class));
-		// m_camera = camera;
+		m_camera = camera;
 	}
 
 	@Override
@@ -61,8 +60,7 @@ public class RenderSystem extends EntitySystem {
 
 	@Override
 	protected void begin() {
-		m_batch.setProjectionMatrix(world.getSystem(CameraSystem.class)
-				.getCameraComponent().getCamera().combined);
+		m_batch.setProjectionMatrix(m_camera.combined);
 		// m_batch.begin();
 
 	}
@@ -115,7 +113,7 @@ public class RenderSystem extends EntitySystem {
 
 		if (m_shaderComps.has(e)) {
 			ShaderComponent sComp = m_shaderComps.get(e);
-			sComp.render(m_batch, world.getSystem(CameraSystem.class).getCameraComponent().getCamera(), m_sprites.get(e));
+			sComp.render(m_batch, m_camera, m_sprites.get(e));
 		}
 
 	}

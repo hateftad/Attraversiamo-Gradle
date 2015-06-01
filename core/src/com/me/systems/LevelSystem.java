@@ -6,20 +6,13 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
-import com.me.component.JointComponent;
-import com.me.component.LevelComponent;
-import com.me.component.LevelComponent.LevelTaskType;
-import com.me.component.LightComponent;
-import com.me.component.ParticleComponent;
-import com.me.component.QueueComponent;
+import com.me.component.*;
+import com.me.manager.LevelManager.LevelTaskType;
 import com.me.component.ParticleComponent.ParticleType;
-import com.me.tasks.Task.TaskType;
-import com.me.component.PlayerComponent;
-import com.me.component.QueueComponent.QueueType;
-import com.me.component.TouchComponent;
-import com.me.component.TriggerComponent;
+import com.me.manager.LevelManager;
+import com.me.tasks.CharacterTask.TaskType;
 import com.me.listeners.LevelEventListener;
-import com.me.scripting.ScriptManager;
+import com.me.manager.ScriptManager;
 import com.me.utils.LevelConfig;
 
 public class LevelSystem extends EntityProcessingSystem{
@@ -29,7 +22,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	private int m_levelNr;
 	private LevelConfig m_levelConfig;
 	private ScriptManager m_scriptMgr;
-	private LevelComponent m_levelComponent;
+	private LevelManager m_levelManager;
 	private boolean m_enable;
 
 	@Mapper ComponentMapper<LightComponent> m_lightComps;
@@ -37,7 +30,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	@Mapper ComponentMapper<TouchComponent> m_touch;
 	@Mapper ComponentMapper<ParticleComponent> m_particles;
 	@Mapper ComponentMapper<JointComponent> m_joints;
-	@Mapper ComponentMapper<QueueComponent> m_queue;
+	@Mapper ComponentMapper<BuoyancyComponent> m_buoyancyComps;
 
 
 	@SuppressWarnings("unchecked")
@@ -51,7 +44,7 @@ public class LevelSystem extends EntityProcessingSystem{
 		m_levelNr = levelCfg.getLevelNr();
 		//m_scriptMgr = new ScriptManager("data/script.lua");
 		//m_scriptMgr.runScriptFunction("init", levelCfg);
-		m_levelComponent = levelCfg.getLevelComponent();
+        m_levelManager = levelCfg.getLevelManager();
 	}
 
 	public void setProcessing(boolean enable){
@@ -77,19 +70,15 @@ public class LevelSystem extends EntityProcessingSystem{
 		
 		if(m_joints.has(e)){
 			JointComponent joint = m_joints.get(e);
-			joint.update(world.delta);
-			if(joint.shouldDestroy()){
-				if(m_queue.has(e)){
-					QueueComponent queue = m_queue.get(e);
-					queue.type = QueueType.Joint;
-				}
-			}
 			if(joint.hasMotor()){
-				if(m_levelComponent.isTaskDoneForAll(TaskType.OpenDoor)){
+				if(m_levelManager.isTaskDoneForAll(TaskType.OpenDoor)){
 					joint.enableMotor(true);
 				}
 			}
 		}
+        if(m_buoyancyComps.has(e)) {
+            updateBuoyancy();
+        }
 	}
 
 	@Override
@@ -100,7 +89,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateLights(LightComponent light){
 		if(light.getName().equals("portalLight")){
 			float a = light.getAlpha();
-			if(!m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd)){
+			if(!m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd)){
 				if(a >= 1){
 					light.setColor(Color.RED);
 					inc = -0.01f;
@@ -120,11 +109,11 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateParticles(ParticleComponent particle){
 
 		if(particle.getType() == ParticleType.PORTAL){
-			if(m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd) && !m_levelComponent.isTaskDone(LevelTaskType.PlayingFinishAnimation)){
+			if(m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd) && !m_levelManager.isTaskDone(LevelTaskType.LevelFinished)){
                 particle.start();
-				m_levelComponent.doneTask(LevelTaskType.PlayingFinishAnimation);
+                m_levelManager.doneTask(LevelTaskType.LevelFinished);
 			}
-			if(particle.isCompleted() && m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd)){
+			if(particle.isCompleted() && m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd)){
 				m_levelListener.onFinishedLevel(m_levelNr);
 			}
 		}
@@ -137,16 +126,20 @@ public class LevelSystem extends EntityProcessingSystem{
 		} else if (touch.m_endReach == 0){
 			player.unDoneTask(TaskType.ReachedEnd);
 		}
-		if(m_levelComponent.isTaskDoneForAll(TaskType.ReachedEnd)){
-			player.setFacingLeft(m_levelComponent.m_finishFacingLeft);    
-			if(!m_levelComponent.m_hasPortal && player.isFinishedAnimating()){
+		if(m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd)){
+			player.setFacingLeft(m_levelManager.m_finishFacingLeft);
+			if(!m_levelManager.m_hasPortal && player.isFinishedAnimating()){
 				m_levelListener.onFinishedLevel(m_levelNr);
 			}
 		}
 	}
+
+	private void updateBuoyancy(){
+        //if()
+	}
 	
-	public LevelComponent getLevelComponent(){
-		return m_levelComponent;
+	public LevelManager getLevelManager(){
+		return m_levelManager;
 	}
 
 }

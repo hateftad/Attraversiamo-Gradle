@@ -1,37 +1,38 @@
 package com.me.tasks;
 
 /**
- * Created by hateftadayon on 5/30/15.
+ * Created by hateftadayon on 6/1/15.
  */
-public class ReachEndTask extends CharacterTask {
+public class LeverTask extends CharacterTask {
 
+    
     @Override
     public CharacterTask createCopy() {
-        return new ReachEndTask();
+        return new LeverTask();
     }
 
     @Override
     public TaskType getType() {
-        return TaskType.ReachedEnd;
+        return TaskType.Lever;
     }
 
     @Override
     public void finish() {
-        setFinished(true);
+
     }
 
     @Override
     public void unFinish() {
-        setFinished(false);
+
     }
 
     @Override
     public boolean isFinished() {
-        return m_isFinished;
+        return false;
     }
 
     @Override
     public void reset() {
-        setFinished(false);
+
     }
 }

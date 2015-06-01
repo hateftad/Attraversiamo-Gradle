@@ -3,9 +3,9 @@ package com.me.utils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.component.AnimationComponent.AnimState;
-import com.me.tasks.OpenDoorTask;
+import com.me.tasks.ButtonPressedTask;
+import com.me.tasks.CharacterTask;
 import com.me.tasks.ReachEndTask;
-import com.me.tasks.Task;
 
 public class PlayerConfig {
 	
@@ -17,7 +17,7 @@ public class PlayerConfig {
  	public AnimState m_finishAnimation;
  	public float minimumY;
  	private String m_skinName;
-	private Array<Task> m_tasks = new Array<Task>();
+	private Array<CharacterTask> m_tasks = new Array<CharacterTask>();
  	
  	public PlayerConfig(){
  		m_playerPosition = new Vector2();
@@ -29,18 +29,18 @@ public class PlayerConfig {
 
 	public void addTask(String task){
 		if(task.equalsIgnoreCase("OpenDoor")){
-			m_tasks.add(new OpenDoorTask());
+			m_tasks.add(new ButtonPressedTask());
 		} else if(task.equalsIgnoreCase("TouchEnd")){
 			m_tasks.add(new ReachEndTask());
 		}
 	}
 
- 	public Array<Task> getTasks(){
+ 	public Array<CharacterTask> getTasks(){
 		return m_tasks;
 	}
 
     public void resetTasks(){
-        for(Task task : m_tasks){
+        for(CharacterTask task : m_tasks){
             task.reset();
         }
     }

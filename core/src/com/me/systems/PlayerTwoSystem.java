@@ -8,19 +8,10 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
-import com.me.component.AnimationComponent;
-import com.me.component.CrawlComponent;
-import com.me.component.GrabComponent;
-import com.me.component.JumpComponent;
-import com.me.component.MovementComponent;
-import com.me.component.PhysicsComponent;
-import com.me.component.PlayerComponent;
-import com.me.component.PushComponent;
+import com.me.component.*;
 import com.me.component.PlayerComponent.State;
-import com.me.tasks.Task.TaskType;
-import com.me.component.PlayerTwoComponent;
-import com.me.component.TouchComponent;
-import com.me.component.VelocityLimitComponent;
+import com.me.manager.LevelManager;
+import com.me.tasks.CharacterTask.TaskType;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
@@ -64,6 +55,8 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 
 	private PlayerConfig m_playerConfig;
 
+	private LevelManager m_levelManager;
+
 	private boolean m_process = true;
 
 	private int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5,
@@ -80,6 +73,13 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 	}
 
 	@Override
+	protected void begin() {
+		if(m_levelManager == null){
+			m_levelManager = world.getSystem(LevelSystem.class).getLevelManager();
+		}
+	}
+
+	@Override
 	protected void process(Entity e) {
 
 		PhysicsComponent ps = m_physComps.get(e);
@@ -88,7 +88,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 		GrabComponent g = m_grabComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		CrawlComponent crawlComp = m_crawlComps.get(e);
-		boolean finish = world.getSystem(LevelSystem.class).getLevelComponent().isTaskDoneForAll(TaskType.ReachedEnd);
+		boolean finish = m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd);
 		if (m_inputMgr.m_playerSelected == PlayerSelection.TWO) {
 			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);
@@ -242,7 +242,6 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 			player.setState(State.IDLE);
 			return true;
 		}
-
 		return false;
 	}
 

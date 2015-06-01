@@ -25,7 +25,7 @@ import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
-import com.me.tasks.Task.TaskType;
+import com.me.tasks.CharacterTask.TaskType;
 import com.me.utils.GlobalConfig;
 
 import java.util.Iterator;
@@ -174,7 +174,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		if (m_restart) {
-			if (!world.getSystem(LevelSystem.class).getLevelComponent().isTaskDoneForAll(TaskType.ReachedEnd)) {
+			if (!world.getSystem(LevelSystem.class).getLevelManager().isTaskDoneForAll(TaskType.ReachedEnd)) {
 				for (int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
 					if (m_restartComps.has(e)) {
