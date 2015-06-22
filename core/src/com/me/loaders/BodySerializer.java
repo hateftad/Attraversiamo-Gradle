@@ -26,11 +26,13 @@ public class BodySerializer extends ReadOnlySerializer<Body>
 		public String mName;
 		public int mBoxIndex;
 		public int mCollisionGroup;
+        public int mtaskId;
 		public BodyUserData(String name, int box, int collG) {
 			mName = name;
 			mBoxIndex = box;
 			mCollisionGroup = collG;
 		}
+
 	}
 	
 	public BodySerializer(RubeScene scene, Json json)
@@ -105,8 +107,15 @@ public class BodySerializer extends ReadOnlySerializer<Body>
 		scene.parseCustomProperties(json, body, jsonData);
 		int boxI = scene.getCustom(body, "boxIndex", -1);
 		int collG = scene.getCustom(body, "collisionGroup", -1);
-		body.setUserData(new BodyUserData(name, boxI, collG));
-		
+        BodyUserData userData = new BodyUserData(name, boxI, collG);
+
+        int taskID = scene.getCustom(body, "taskID", -1);
+        if(taskID != -1){
+            userData.mtaskId = taskID;
+        }
+
+        body.setUserData(userData);
+
 		fixtureSerializer.setBody(body);
 		
 		scene.addFixtures(json.readValue("fixture", Array.class, Fixture.class, jsonData));

@@ -1,8 +1,6 @@
 package com.me.component;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import com.artemis.Entity;

@@ -126,10 +126,12 @@ public class PhysicsListenerSetup {
 							if(otherUd.getType() == Type.LeftPushButton){
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_leftPushArea = true;
+                                e.getComponent(TaskComponent.class).setTaskId(otherUd.getExtraInfo());
 							}
 							if(otherUd.getType() == Type.RightPushButton){
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_rightPushArea = true;
+                                e.getComponent(TaskComponent.class).setTaskId(otherUd.getExtraInfo());
 							}
 
 							if(otherUd.getType() == Type.Hand){
@@ -155,10 +157,10 @@ public class PhysicsListenerSetup {
 								e.getComponent(CrawlComponent.class).canCrawl = true;
 							}
 							if(otherUd.getType() == Type.Portal){
-								e.getComponent(TouchComponent.class).m_endReach = 1;
+								e.getComponent(TouchComponent.class).m_endReach = true;
 							}
 							if(otherUd.getType() == Type.Finish){
-                                e.getComponent(TouchComponent.class).m_endReach = 1;
+                                e.getComponent(TouchComponent.class).m_endReach = true;
 							}
 							if(created){
 								e.getComponent(TouchComponent.class).m_edgeTouch = true;
@@ -277,7 +279,7 @@ public class PhysicsListenerSetup {
 							e.getComponent(CrawlComponent.class).canCrawl = false;
 						}
 						if(otherUd.getType() == Type.Portal){
-							e.getComponent(TouchComponent.class).m_endReach = 0;
+							e.getComponent(TouchComponent.class).m_endReach = false;
 						}
 						if(otherUd.getType() == Type.LeftPushButton){
 							e.getComponent(TouchComponent.class).m_pushArea = false;

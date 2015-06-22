@@ -75,7 +75,8 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		
 		m_entityWorld.setDelta(Gdx.graphics.getDeltaTime());
 		m_entityWorld.process();
-		
+
+		m_cameraSystem.process();
 		InputManager.getInstance().update();
 		
 		if(m_userInterface != null){

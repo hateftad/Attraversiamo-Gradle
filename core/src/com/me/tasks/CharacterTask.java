@@ -5,15 +5,10 @@ package com.me.tasks;
  */
 public abstract class CharacterTask {
 
-    public enum TaskType {
-        OpenDoor, Collected, ReachedEnd, Lever
-    }
 
     protected boolean m_isFinished = false;
 
     public abstract CharacterTask createCopy();
-
-    public abstract TaskType getType();
 
     public abstract void finish();
 

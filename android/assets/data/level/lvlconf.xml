@@ -189,6 +189,7 @@
         <player>
             <tasks>
                 <task name="OpenDoor"/>
+                <task name="TouchEnd"/>
             </tasks>
             <skinName>silhouette</skinName>
             <active>true</active>
@@ -203,11 +204,11 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
-            <tasks>
-                <task name="OpenDoor"/>
-            </tasks>
             <skinName>silhouette</skinName>
             <active>false</active>
+            <tasks>
+                <task name="TouchEnd"/>
+            </tasks>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
             <playerNr>two</playerNr>

@@ -37,12 +37,17 @@ public class RBUserData {
 
 	private int m_collisionGroup;
 	private int m_boxId;
+    private int m_extraInfo;
 	private Type m_type;
 
-	public RBUserData(int boxId, int collisionGroup, Body body) {
+	public RBUserData(int boxId, int collisionGroup, int extra, Body body) {
 		set(boxId, collisionGroup, body);
-
+        setExtraInfo(extra);
 	}
+
+    public void setExtraInfo(int extraInfo){
+        m_extraInfo = extraInfo;
+    }
 
 	private void setFilterData(Body body, Filter filter){
 		Array<Fixture> fixtureList = body.getFixtureList();
@@ -208,4 +213,8 @@ public class RBUserData {
 	public void setType(Type m_type) {
 		this.m_type = m_type;
 	}
+
+    public int getExtraInfo(){
+        return m_extraInfo;
+    }
 }

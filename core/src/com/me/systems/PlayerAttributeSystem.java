@@ -5,16 +5,8 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
-import com.me.component.AnimationComponent;
+import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
-import com.me.component.GrabComponent;
-import com.me.component.HangComponent;
-import com.me.component.JointComponent;
-import com.me.component.MovementComponent;
-import com.me.component.PhysicsComponent;
-import com.me.component.PlayerComponent;
-import com.me.component.PlayerTwoComponent;
-import com.me.component.TouchComponent;
 import com.me.physics.JointFactory;
 
 public class PlayerAttributeSystem extends EntityProcessingSystem {
@@ -97,7 +89,6 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					p.makeDynamic();
 				}
 			}
-
 		}
 		if (!m_playerTwo.has(e)) {
 			if (!g.m_grabbed && touch.m_handTouch && touch.m_footEdge) {
@@ -111,7 +102,6 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					g.m_lifting = false;
 				}
 			}
-
 		}
 		if (m_playerTwo.has(e)) {
 			if (g.m_gettingLifted) {
@@ -124,7 +114,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					g.aligned = true;
 				}
 				pComp.setBodyActive(false);
-				if (anim.isCompleted(AnimState.PULLUP)) {
+                if (anim.isCompleted(AnimState.PULLUP)) {
 					pComp.setAllBodiesPosition(anim.getPositionRelative("left foot"));
 					pComp.setBodyActive(true);
 					anim.setAnimationState(AnimState.IDLE);

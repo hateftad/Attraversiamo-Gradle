@@ -37,6 +37,7 @@ import com.me.physics.PhysicsListenerSetup;
 import com.me.physics.RBUserData;
 import com.me.systems.CameraSystem;
 import com.me.tasks.CharacterTask;
+import com.me.tasks.LevelTask;
 import com.me.utils.Converters;
 import com.me.utils.LevelConfig;
 import com.me.utils.PlayerConfig;
@@ -79,6 +80,9 @@ public class EntityLoader {
 			com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh) {
 		String levelDirectory = config.getLevelName();
 		clearLoader();
+
+        LevelManager levelManager = new LevelManager(config);
+        config.setLevelManager(levelManager);
 
 		m_scene = m_loader.loadScene(Gdx.files.internal("data/level/"
 				+ levelDirectory + "/" + config.getLevelName() + ".json"));
@@ -184,13 +188,9 @@ public class EntityLoader {
 			if (ud.mName.equals("portal")) {
 				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL, 1));
 				entity.addComponent(new TriggerComponent());
-                LevelManager levelComp = new LevelManager(config);
-				config.setLevelManager(levelComp);
 			}
 			if (ud.mName.equals("finish")) {
 				entity.addComponent(new TriggerComponent());
-                LevelManager levelComp = new LevelManager(config);
-				config.setLevelManager(levelComp);
 			}
 			if (ud.mName.equals("point")) {
 				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
@@ -212,10 +212,6 @@ public class EntityLoader {
 						+ Converters.ToWorld(body.getPosition().y));
 			}
 
-			if (ud.mName.equals("branch")) {
-
-			}
-
 			if (ud.mName.equals("water")) {
 				BuoyancyComponent buoyancyComponent = new BuoyancyComponent();
 				buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3),  1.5f, 2);
@@ -226,12 +222,19 @@ public class EntityLoader {
                 entity.addComponent(new TriggerComponent());
 			}
 
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, pComp.getBody(ud.mName)));
+            if(ud.mName.equalsIgnoreCase("taskInfo")){
+                int taskId = m_scene.getCustom(body, "taskId", 0);
+                int taskFinishers = m_scene.getCustom(body, "taskFinishers", 0);
+                String taskType = m_scene.getCustom(body, "taskType", "");
+                LevelTask task = new LevelTask(taskId, taskFinishers, taskType);
+                levelManager.addTask(task.getTaskType(), task);
+            }
+
+			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
 			pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
 			tempList.add(pComp.getBody(ud.mName));
 			entity.addToWorld();
-			entityWorld.getManager(GroupManager.class).add(entity,
-					"worldObjects");
+			entityWorld.getManager(GroupManager.class).add(entity, "worldObjects");
 		}
 
 		loadBodyJoints(physicsWorld, tempList, entityWorld);
@@ -367,11 +370,6 @@ public class EntityLoader {
 				p.setActive(playerConfig.m_active);
 				p.setFacingLeft(playerConfig.m_facingleft);
 				p.setCanBecomeInactive(playerConfig.m_canDeactivate);
-				Array<CharacterTask> tasks = playerConfig.getTasks();
-				for (CharacterTask task : tasks) {
-					p.addTask(task.createCopy());
-				}
-				config.getLevelManager().addFinisher(p);
 				// entity.addComponent(new LightComponent(light, ((BodyUserData)
 				// body.getUserData()).mName));
 				entity.addComponent(p);
@@ -388,7 +386,8 @@ public class EntityLoader {
 				entity.addComponent(new PlayerOneComponent());
 				entity.addComponent(new TriggerComponent());
 				entity.addComponent(new RestartComponent());
-				
+				entity.addComponent(new TaskComponent());
+
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
 				stateData = anim.setUp(image);
@@ -418,11 +417,6 @@ public class EntityLoader {
 				p.setActive(playerConfig.m_active);
 				p.setFacingLeft(playerConfig.m_facingleft);
 				p.setCanBecomeInactive(playerConfig.m_canDeactivate);
-				Array<CharacterTask> tasks = playerConfig.getTasks();
-				for (CharacterTask task : tasks) {
-					p.addTask(task.createCopy());
-				}
-				config.getLevelManager().addFinisher(p);
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
@@ -460,11 +454,13 @@ public class EntityLoader {
 				entity.addComponent(new RestartComponent());
 				entity.addComponent(new PushComponent());
 				entity.addComponent(new QueueComponent());
+                entity.addComponent(new TaskComponent());
+
 				pComp.setPosition(playerConfig.m_playerPosition);
 			}
 
 			BodyUserData ud = (BodyUserData) body.getUserData();
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, pComp.getBody(ud.mName)));
+			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
 			pComp.setUserData(entity, ud.mName);
 			tempList.add(pComp.getBody(ud.mName));
 		}

@@ -5,12 +5,15 @@ public class QueueComponent extends BaseComponent {
 	public enum QueueType{
 		Mass,
 		TempMass,
-		Joint
+		Joint,
+        BodyState
 	}
 	
 	public QueueType type;
 	public float mass;
 	public String bodyName;
+    public boolean active;
+
 
 	@Override
 	public void dispose() {

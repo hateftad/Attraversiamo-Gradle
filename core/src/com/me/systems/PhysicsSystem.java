@@ -25,7 +25,7 @@ import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
-import com.me.tasks.CharacterTask.TaskType;
+import com.me.tasks.LevelTask.TaskType;
 import com.me.utils.GlobalConfig;
 
 import java.util.Iterator;
@@ -212,7 +212,11 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 					JointComponent joint = m_jointComps.get(e);
 					JointFactory.getInstance().destroyJoint(joint.getDJoint());
 					e.removeComponent(comp);
-				}
+				} else if (comp.type == QueueType.BodyState){
+                    System.out.println("removing component");
+                    m_physicsComponents.get(e).setActive(comp.active);
+                    e.removeComponent(comp);
+                }
 			}
 		}
 	}

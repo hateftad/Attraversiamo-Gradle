@@ -1,8 +1,9 @@
 package com.me.manager;
 
 import com.badlogic.gdx.utils.ObjectMap;
-import com.me.component.PlayerComponent;
-import com.me.tasks.CharacterTask;
+import com.me.component.PlayerComponent.PlayerNumber;
+import com.me.tasks.LevelTask;
+import com.me.tasks.LevelTask.TaskType;
 import com.me.utils.LevelConfig;
 
 /**
@@ -10,56 +11,52 @@ import com.me.utils.LevelConfig;
  */
 public class LevelManager {
 
-    public enum LevelTaskType {
-        LevelFinished
-    }
-
-    public ObjectMap<PlayerComponent.PlayerNumber, PlayerComponent> m_finishers = new ObjectMap<PlayerComponent.PlayerNumber, PlayerComponent>();
-    public int m_nrOfFinishers;
     public boolean m_hasPortal;
     public boolean m_finishFacingLeft;
-
-    private ObjectMap<LevelTaskType, Boolean> m_levelTasks = new ObjectMap<LevelTaskType, Boolean>();
+    private boolean m_levelFinished;
+    private ObjectMap<TaskType, LevelTask> taskObjectMap = new ObjectMap<TaskType, LevelTask>();
+    private boolean m_taskChanged;
 
     public LevelManager(LevelConfig lvlConf) {
-        m_nrOfFinishers = lvlConf.getNrOfPlayers();
         m_hasPortal = lvlConf.hasPortal();
         m_finishFacingLeft = lvlConf.finishLeft();
     }
 
-    public void addFinisher(PlayerComponent player) {
-        m_finishers.put(player.getPlayerNr(), player);
-    }
-
-    public boolean isTaskDoneForAll(CharacterTask.TaskType task) {
-        for (PlayerComponent player : m_finishers.values()) {
-            if (!player.isTaskDone(task)) {
-                return false;
-            }
+    public boolean isTaskDoneForAll(TaskType task) {
+        if(taskObjectMap.containsKey(task)) {
+            return taskObjectMap.get(task).isFinished();
         }
-        return true;
+        return false;
     }
 
-    public boolean isTaskDone(LevelTaskType task){
-        return (m_levelTasks.containsKey(task) && m_levelTasks.get(task));
+    public void addTask(TaskType taskType, LevelTask levelTask){
+        taskObjectMap.put(taskType, levelTask);
     }
 
-    public void doneTask(LevelTaskType task){
-        m_levelTasks.put(task, true);
+    public void doneTask(PlayerNumber playerNr, TaskType taskType){
+        taskObjectMap.get(taskType).playerFinished(playerNr);
     }
 
-    public void unDoneTask(LevelTaskType task){
-        m_levelTasks.put(task, false);
+    public void unDoneTask(PlayerNumber playerNumber, TaskType taskType){
+        taskObjectMap.get(taskType).playerUnfinished(playerNumber);
+    }
+
+    public void setFinishedLevel(){
+        m_levelFinished = true;
+    }
+
+    public boolean isLevelFinished(){
+        return m_levelFinished;
     }
 
     public void restart() {
-        for (PlayerComponent player : m_finishers.values()) {
-            player.resetTasks();
+        for (LevelTask task: taskObjectMap.values()) {
+            task.resetTask();
         }
+    }
 
-        for (LevelTaskType type : m_levelTasks.keys()) {
-            unDoneTask(type);
-        }
+    public void setTaskChanged(boolean taskChanged){
+        m_taskChanged = taskChanged;
     }
 
 }

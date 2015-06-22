@@ -1,8 +1,6 @@
 package com.me.component;
 
-import com.badlogic.gdx.utils.ObjectMap;
 import com.me.tasks.CharacterTask;
-import com.me.tasks.CharacterTask.TaskType;
 
 public class PlayerComponent extends BaseComponent {
 
@@ -15,7 +13,6 @@ public class PlayerComponent extends BaseComponent {
 	}
 
 
-	private ObjectMap<TaskType, CharacterTask> m_tasks = new ObjectMap<TaskType, CharacterTask>();
 
 	private PlayerNumber m_playerNr;
 
@@ -102,36 +99,9 @@ public class PlayerComponent extends BaseComponent {
 		m_isFinishedAnimating = isFinished;
 	}
 
-	public boolean isTaskDone(TaskType task) {
-		return (m_tasks.containsKey(task) && m_tasks.get(task).isFinished());
-	}
-	
-	public void doneTask(TaskType taskType){
-        if(m_tasks.containsKey(taskType)) {
-            m_tasks.get(taskType).finish();
-        }
-	}
-
-    public void unDoneTask(TaskType taskType){
-        if(m_tasks.containsKey(taskType)) {
-            m_tasks.get(taskType).unFinish();
-        }
-    }
-	
-	public void addTask(CharacterTask task){
-		m_tasks.put(task.getType(), task);
-	}
-
-    public void resetTasks(){
-        for (CharacterTask task : m_tasks.values()) {
-            task.reset();
-        }
-    }
-
 	@Override
 	public void restart() {
 		m_facingLeft = false;
 		m_isFinishedAnimating = false;
-        resetTasks();
 	}
 }

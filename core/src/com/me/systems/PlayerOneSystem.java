@@ -14,7 +14,7 @@ import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.LevelManager;
-import com.me.tasks.CharacterTask.TaskType;
+import com.me.tasks.LevelTask.TaskType;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;
@@ -206,13 +206,13 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(TaskType.OpenDoor);
+						m_levelManager.doneTask(player.getPlayerNr(), TaskType.OpenDoor);
 						player.setState(State.WAITTILDONE);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						player.doneTask(TaskType.OpenDoor);
+                        m_levelManager.doneTask(player.getPlayerNr(), TaskType.OpenDoor);
 						player.setState(State.WAITTILDONE);
 					}
 				}

@@ -7,10 +7,9 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.me.component.*;
-import com.me.manager.LevelManager.LevelTaskType;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.manager.LevelManager;
-import com.me.tasks.CharacterTask.TaskType;
+import com.me.tasks.LevelTask.TaskType;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.ScriptManager;
 import com.me.utils.LevelConfig;
@@ -109,9 +108,9 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateParticles(ParticleComponent particle){
 
 		if(particle.getType() == ParticleType.PORTAL){
-			if(m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd) && !m_levelManager.isTaskDone(LevelTaskType.LevelFinished)){
+			if(m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd) && !m_levelManager.isLevelFinished()){
                 particle.start();
-                m_levelManager.doneTask(LevelTaskType.LevelFinished);
+                m_levelManager.setFinishedLevel();
 			}
 			if(particle.isCompleted() && m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd)){
 				m_levelListener.onFinishedLevel(m_levelNr);
@@ -121,10 +120,10 @@ public class LevelSystem extends EntityProcessingSystem{
 	
 	private void checkFinished(PlayerComponent player, TouchComponent touch){
 		
-		if(touch.m_endReach == 1){
-			player.doneTask(TaskType.ReachedEnd);
-		} else if (touch.m_endReach == 0){
-			player.unDoneTask(TaskType.ReachedEnd);
+		if(touch.m_endReach){
+			m_levelManager.doneTask(player.getPlayerNr(), TaskType.ReachedEnd);
+		} else {
+            m_levelManager.unDoneTask(player.getPlayerNr(), TaskType.ReachedEnd);
 		}
 		if(m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd)){
 			player.setFacingLeft(m_levelManager.m_finishFacingLeft);
@@ -135,7 +134,7 @@ public class LevelSystem extends EntityProcessingSystem{
 	}
 
 	private void updateBuoyancy(){
-        //if()
+        //if(m_levelManager.isTaskDone())
 	}
 	
 	public LevelManager getLevelManager(){
