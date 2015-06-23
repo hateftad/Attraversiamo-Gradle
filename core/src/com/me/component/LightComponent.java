@@ -9,8 +9,7 @@ public class LightComponent extends BaseComponent {
 	
 	private Light m_light;
 	private String m_name;
-	public LightComponent(Light l, String name)
-	{
+	public LightComponent(Light l, String name){
 		setName(name);
 		setLight(l);
 	}

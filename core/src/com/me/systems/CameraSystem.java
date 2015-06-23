@@ -1,7 +1,7 @@
 package com.me.systems;
 
-import box2dLight.RayHandler;
 
+import box2dLight.RayHandler;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -9,6 +9,7 @@ import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -47,6 +48,8 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	public CameraSystem(RayHandler rh, OrthographicCamera camera) {
 		super(Aspect.getAspectForOne(CameraComponent.class, PlayerComponent.class));
 		m_rayHandler = rh;
+        m_rayHandler.setAmbientLight(Color.CYAN);
+        m_rayHandler.setBlurNum(3);
 		m_debugDrawer = new Box2DDebugRenderer();
 
 		m_camera = new CameraComponent(camera);
@@ -167,8 +170,7 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	public boolean scrolled(int amount) {
 
 		m_camera.setZoom(m_camera.getZoom() + (amount * 1f));
-		if (m_camera.getZoom() < 0.1f)
-		{
+		if (m_camera.getZoom() < 0.1f){
 			m_camera.setZoom(0.1f);
 		}
 		m_camera.update(world.delta);

@@ -5,7 +5,6 @@ import java.util.WeakHashMap;
 import box2dLight.ConeLight;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
-
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.managers.GroupManager;
@@ -148,28 +147,18 @@ public class EntityLoader {
 				entity.addComponent(pComp);
 			}
 			if (m_scene.getCustom(body, "bodyType", "").equals("light")) {
-				ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500,
-						Converters.ToWorld(body.getPosition().x),
-						Converters.ToWorld(body.getPosition().y), 180, 180);
-				entity.addComponent(new LightComponent(light,
-						((BodyUserData) body.getUserData()).mName));
+				ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
+				entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
 				entity.addComponent(new TriggerComponent());
-				entityWorld.getManager(GroupManager.class)
-						.add(entity, "lights");
+				entityWorld.getManager(GroupManager.class).add(entity, "lights");
 			}
 
 			if (m_scene.getCustom(body, "bodyType", "").equals("skyLight")) {
-
-				CameraComponent camComp = entityWorld.getSystem(
-						CameraSystem.class).getCameraComponent();
+				CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
 				entity.addComponent(camComp);
-				PointLight light = new PointLight(rh, 500,
-						config.getLightColor(), 1000,
-						camComp.getCamera().position.x,
-						camComp.getCamera().position.y);
+				PointLight light = new PointLight(rh, 500, config.getLightColor(), 1000, camComp.getCamera().position.x, camComp.getCamera().position.y);
 				entity.addComponent(new LightComponent(light, "cameraLight"));
-				entityWorld.getManager(GroupManager.class)
-						.add(entity, "lights");
+				entityWorld.getManager(GroupManager.class).add(entity, "lights");
 			}
 			if (m_scene.getCustom(body, "bodyType", "").equals("behindLight")) {
 

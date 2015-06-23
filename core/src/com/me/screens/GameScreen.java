@@ -6,6 +6,7 @@ import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.listeners.LevelEventListener;
@@ -44,8 +45,8 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		JointFactory.getInstance().initialize(m_physicsSystem.getWorld());
 		RayHandler rayHandler = new RayHandler(m_physicsSystem.getWorld());
 		rayHandler.setAmbientLight(1f);
-		//rayHandler.setShadows(false);
-		//rayHandler.setAmbientLight(Color.GREEN);
+		rayHandler.setShadows(false);
+		rayHandler.setAmbientLight(Color.GREEN);
         m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_camera));
 		m_renderSystem = m_entityWorld.setSystem(new RenderSystem(m_camera));
 		m_entityWorld.setSystem(m_physicsSystem);
