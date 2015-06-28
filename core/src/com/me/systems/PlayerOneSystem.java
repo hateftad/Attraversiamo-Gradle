@@ -14,7 +14,7 @@ import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.LevelManager;
-import com.me.tasks.LevelTask.TaskType;
+import com.me.level.tasks.LevelTask.TaskType;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;

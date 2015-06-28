@@ -1,4 +1,4 @@
-package com.me.tasks;
+package com.me.level.tasks;
 
 /**
  * Created by hateftadayon on 5/30/15.

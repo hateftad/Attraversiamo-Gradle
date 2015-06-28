@@ -1,7 +1,5 @@
 package com.me.component;
 
-import com.me.tasks.CharacterTask;
-
 public class PlayerComponent extends BaseComponent {
 
 	public enum State {

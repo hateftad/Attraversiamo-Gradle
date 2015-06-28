@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.me.component.*;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.manager.LevelManager;
-import com.me.tasks.LevelTask.TaskType;
+import com.me.level.tasks.LevelTask.TaskType;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.ScriptManager;
 import com.me.utils.LevelConfig;
@@ -76,7 +76,7 @@ public class LevelSystem extends EntityProcessingSystem{
 			}
 		}
         if(m_buoyancyComps.has(e)) {
-            updateBuoyancy();
+            updateBuoyancy(e);
         }
 	}
 
@@ -133,8 +133,18 @@ public class LevelSystem extends EntityProcessingSystem{
 		}
 	}
 
-	private void updateBuoyancy(){
-        //if(m_levelManager.isTaskDone())
+	private void updateBuoyancy(Entity e){
+        if(m_levelManager.isTaskDoneForAll(TaskType.WaterEngine)) {
+            BuoyancyComponent.BuoyancyControllerInfo info = m_buoyancyComps.get(e).getController(WorldObjectComponent.WorldObject);
+            if(info != null) {
+                ButtonDirectionComponent directionComponent = new ButtonDirectionComponent();
+                if (directionComponent.getDirection() == ButtonDirectionComponent.Direction.Left) {
+                    info.setFluidVelocity(-3, 1);
+                } else if (directionComponent.getDirection() == ButtonDirectionComponent.Direction.Right) {
+                    info.setFluidVelocity(3, 1);
+                }
+            }
+        }
 	}
 	
 	public LevelManager getLevelManager(){

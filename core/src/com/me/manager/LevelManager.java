@@ -2,8 +2,8 @@ package com.me.manager;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.component.PlayerComponent.PlayerNumber;
-import com.me.tasks.LevelTask;
-import com.me.tasks.LevelTask.TaskType;
+import com.me.level.tasks.LevelTask;
+import com.me.level.tasks.LevelTask.TaskType;
 import com.me.utils.LevelConfig;
 
 /**

@@ -35,8 +35,7 @@ import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.physics.RBUserData;
 import com.me.systems.CameraSystem;
-import com.me.tasks.CharacterTask;
-import com.me.tasks.LevelTask;
+import com.me.level.tasks.LevelTask;
 import com.me.utils.Converters;
 import com.me.utils.LevelConfig;
 import com.me.utils.PlayerConfig;
@@ -209,6 +208,7 @@ public class EntityLoader {
 				entity.addComponent(buoyancyComponent);
 				entity.addComponent(new ShaderComponent("",body));
                 entity.addComponent(new TriggerComponent());
+                entity.addComponent(new ButtonDirectionComponent());
 			}
 
             if(ud.mName.equalsIgnoreCase("taskInfo")){

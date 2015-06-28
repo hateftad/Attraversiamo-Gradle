@@ -3,7 +3,7 @@ package com.me.utils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.component.AnimationComponent.AnimState;
-import com.me.tasks.CharacterTask;
+import com.me.level.tasks.CharacterTask;
 
 public class PlayerConfig {
 	

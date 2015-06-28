@@ -20,6 +20,10 @@ public class BuoyancyComponent extends BaseComponent {
 		return controllerInfo;
 	}
 
+    public BuoyancyControllerInfo getController(String name){
+        return controllerInfo.get(name);
+    }
+
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
@@ -54,5 +58,9 @@ public class BuoyancyComponent extends BaseComponent {
 		public Vector2 getFluidVelocity() {
 			return m_fluidVelocity;
 		}
+
+        public void setFluidVelocity(float x, float y){
+            m_fluidVelocity.set(x, y);
+        }
 	}
 }

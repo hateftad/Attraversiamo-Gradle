@@ -7,11 +7,11 @@ public class ButtonDirectionComponent extends BaseComponent {
 
     public static class Direction{
 
-        public static int Undefined = -1;
-        public static int Left = 0;
-        public static int Right = 1;
-        public static int Up = 2;
-        public static int Down = 3;
+        public static final int Undefined = -1;
+        public static final int Left = 0;
+        public static final int Right = 1;
+        public static final int Up = 2;
+        public static final int Down = 3;
 
         public int currentDirection = Undefined;
     }

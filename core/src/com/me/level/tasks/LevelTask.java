@@ -1,4 +1,4 @@
-package com.me.tasks;
+package com.me.level.tasks;
 
 import com.badlogic.gdx.utils.Array;
 import com.me.component.PlayerComponent.PlayerNumber;

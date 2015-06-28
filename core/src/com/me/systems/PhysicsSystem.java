@@ -25,7 +25,7 @@ import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
-import com.me.tasks.LevelTask.TaskType;
+import com.me.level.tasks.LevelTask.TaskType;
 import com.me.utils.GlobalConfig;
 
 import java.util.Iterator;
@@ -71,12 +71,12 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 
 	private float m_fixedAccumulatorRatio = 0;
 
-	private Array<B2Controller> m_b2Controllers;
+    private ObjectMap<String, B2Controller> m_b2Controllers;
 
 	public PhysicsSystem(World physicsWorld) {
 		this(physicsWorld, 6, 6);
 		m_timeStep = GlobalConfig.getInstance().config.timeStep;
-		m_b2Controllers = new Array<B2Controller>();
+		m_b2Controllers = new ObjectMap<String, B2Controller>();
 	}
 
 	public void toggleProcessing(boolean process) {
@@ -118,8 +118,8 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 
 		for (int i = 0; i < nStepsClamped; i++) {
 			resetSmoothStates();
-			for (int x = 0; x < m_b2Controllers.size; x++) {
-				m_b2Controllers.get(x).step(m_timeStep);
+			for (B2Controller controller : m_b2Controllers.values()) {
+				controller.step(m_timeStep);
 			}
 			singleStep(m_timeStep);
 		}
@@ -261,23 +261,21 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 			}
 
 			BuoyancyComponent buoyancyComponent = m_bouyComps.get(e);
-			ObjectMap<String, B2BuoyancyController> controllers = new ObjectMap<String, B2BuoyancyController>();
-			Iterator it = buoyancyComponent.getControllerInfo().entries().iterator();
-			while (it.hasNext()) {
-				ObjectMap.Entry pairs = (ObjectMap.Entry) it.next();
-				BuoyancyComponent.BuoyancyControllerInfo controllerInfo = (BuoyancyComponent.BuoyancyControllerInfo) pairs.value;
-				B2BuoyancyController b2c = new B2BuoyancyController(B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
-						controllerInfo.getFluidVelocity(),
-						m_world.getGravity(),
-						maxHeight,
-						fixture.getDensity(),
-						controllerInfo.getLinearDrag(),
-						controllerInfo.getAngularDrag());
-				controllers.put((String)pairs.key, b2c);
-				m_b2Controllers.add(b2c);
-				it.remove();
-			}
+			ObjectMap<String, B2Controller> controllers = new ObjectMap<String, B2Controller>();
+            for (Object o : buoyancyComponent.getControllerInfo().entries()) {
+                ObjectMap.Entry pairs = (ObjectMap.Entry) o;
+                BuoyancyComponent.BuoyancyControllerInfo controllerInfo = (BuoyancyComponent.BuoyancyControllerInfo) pairs.value;
+                B2BuoyancyController b2c = new B2BuoyancyController(B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
+                        controllerInfo.getFluidVelocity(),
+                        m_world.getGravity(),
+                        maxHeight,
+                        fixture.getDensity(),
+                        controllerInfo.getLinearDrag(),
+                        controllerInfo.getAngularDrag());
+                controllers.put((String) pairs.key, b2c);
+            }
 			fixture.setUserData(controllers);
+            m_b2Controllers = controllers;
 			PhysicsListenerSetup setup = new PhysicsListenerSetup();
 			setup.setLevelPhysics(pComp);
 		}

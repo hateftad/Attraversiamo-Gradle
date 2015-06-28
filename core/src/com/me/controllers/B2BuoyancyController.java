@@ -36,7 +36,7 @@ public class B2BuoyancyController extends B2Controller
    // The outer surface normal. Change this to point out from the surface. Assume up.
    public final Vector2 mSurfaceNormal = new Vector2();
    // Fluid velocity, for drag calculations. Creates a directional 'current' for the fluid.
-   public final Vector2 mFluidVelocity = new Vector2();
+   public Vector2 mFluidVelocity = new Vector2();
    // Gravity vector of the fluid. Used to provide upward force within the fluid
    public final Vector2 mGravity = new Vector2();
    // Linear drag co-efficient. Recommend that this is about 5x the angular drag.
@@ -83,7 +83,7 @@ public class B2BuoyancyController extends B2Controller
                                float surfaceHeight, float fluidDensity, float linearDrag, float angularDrag)
    {
       mSurfaceNormal.set(surfaceNormal);
-      mFluidVelocity.set(fluidVelocity);
+      mFluidVelocity = fluidVelocity;
       mGravity.set(gravity);
       mSurfaceHeight = surfaceHeight;
       mFluidDensity = fluidDensity;
