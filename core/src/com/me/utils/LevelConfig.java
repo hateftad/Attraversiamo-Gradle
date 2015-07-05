@@ -1,62 +1,38 @@
 package com.me.utils;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Array;
+import com.me.Player;
 import com.me.manager.LevelManager;
 
 public class LevelConfig {
 
-	private PlayerConfig m_playerOne;
-	private PlayerConfig m_playerTwo;
-	public boolean facingRight;
+	private Array<PlayerConfig> m_playerConfigs = new Array<PlayerConfig>();
 	private String m_name;
 	private Color m_skyLightColor;
-	private int m_nrOfPlayers;
 	private int m_levelNr;
 	private boolean m_finishFacingLeft;
 	private boolean m_hasPortal;
-	private LevelManager m_levelManager;
 	public float m_minX, m_maxX, m_minY;
 
 	public LevelConfig(String name) {
 		m_name = name;
 	}
 
-	public PlayerConfig getPlayerOneConfig(){
-		return m_playerOne;
-	}
+    public void addPlayerConfig(PlayerConfig config){
+        m_playerConfigs.add(config);
+        config.setPlayerNumber(m_playerConfigs.size);
+    }
 
-	public PlayerConfig getPlayerTwoConfig(){
-		return m_playerTwo;
-	}
+    public Array<PlayerConfig> getPlayerConfigs(){
+        return m_playerConfigs;
+    }
 
-	public void setLevelManager(LevelManager lvlComp){
-        m_levelManager = lvlComp;
-	}
-	
-	public LevelManager getLevelManager(){
-		return m_levelManager;
-	}
-	
-	public void setPlayerOneConfig(PlayerConfig p1){
-		m_playerOne = p1;
-	}
-	
-	public void setPlayerTwoConfig(PlayerConfig p2){
-		m_playerTwo = p2;
-	}
-	
 	public String getLevelName(){
 		return m_name;
 	}
 	
-	public void setNrOfPlayers(int nr){
-		m_nrOfPlayers = nr;
-	}
-	
-	public int getNrOfPlayers(){
-		return m_nrOfPlayers;
-	}
-	
+
 	public void setLightColor(String color){
 				
 		if(color.equals("Gray")){
@@ -91,8 +67,7 @@ public class LevelConfig {
 	}
 	
 	public void dispose(){
-		m_playerOne = null;
-		m_playerTwo = null;
+        m_playerConfigs.clear();
 	}
 
 	public int getLevelNr() {

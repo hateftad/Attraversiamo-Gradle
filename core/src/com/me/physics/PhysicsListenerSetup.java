@@ -9,6 +9,7 @@ import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
+import com.me.level.tasks.LevelTask;
 import com.me.physics.RBUserData.Type;
 
 public class PhysicsListenerSetup {
@@ -126,12 +127,12 @@ public class PhysicsListenerSetup {
 							if(otherUd.getType() == Type.LeftPushButton){
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_leftPushArea = true;
-                                e.getComponent(TaskComponent.class).setTaskId(otherUd.getExtraInfo());
+                                e.getComponent(TaskComponent.class).setTask(other.getTaskInfo());
 							}
 							if(otherUd.getType() == Type.RightPushButton){
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_rightPushArea = true;
-                                e.getComponent(TaskComponent.class).setTaskId(otherUd.getExtraInfo());
+                                e.getComponent(TaskComponent.class).setTask(other.getTaskInfo());
 							}
 
 							if(otherUd.getType() == Type.Hand){
@@ -158,9 +159,11 @@ public class PhysicsListenerSetup {
 							}
 							if(otherUd.getType() == Type.Portal){
 								e.getComponent(TouchComponent.class).m_endReach = true;
+                                e.getComponent(TaskComponent.class).setTask(other.getTaskInfo());
 							}
 							if(otherUd.getType() == Type.Finish){
                                 e.getComponent(TouchComponent.class).m_endReach = true;
+                                e.getComponent(TaskComponent.class).setTask(other.getTaskInfo());
 							}
 							if(created){
 								e.getComponent(TouchComponent.class).m_edgeTouch = true;
@@ -280,14 +283,17 @@ public class PhysicsListenerSetup {
 						}
 						if(otherUd.getType() == Type.Portal){
 							e.getComponent(TouchComponent.class).m_endReach = false;
+                            e.getComponent(TaskComponent.class).setTask(LevelTask.noTask());
 						}
 						if(otherUd.getType() == Type.LeftPushButton){
 							e.getComponent(TouchComponent.class).m_pushArea = false;
 							e.getComponent(TouchComponent.class).m_leftPushArea = false;
+                            e.getComponent(TaskComponent.class).setTask(LevelTask.noTask());
 						}
 						if(otherUd.getType() == Type.RightPushButton){
 							e.getComponent(TouchComponent.class).m_pushArea = false;
 							e.getComponent(TouchComponent.class).m_rightPushArea = false;
+                            e.getComponent(TaskComponent.class).setTask(LevelTask.noTask());
 						}
 					}
 				}

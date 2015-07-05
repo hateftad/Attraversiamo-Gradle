@@ -26,6 +26,8 @@ public class PlayerComponent extends BaseComponent {
 
 	private boolean m_isFinishedAnimating;
 
+    private AnimationComponent.AnimState m_finishAnimation;
+
 	public PlayerComponent(String player) {
 		setPlayerNr(player);
 		setFacingLeft(true);
@@ -75,6 +77,14 @@ public class PlayerComponent extends BaseComponent {
 	public PlayerNumber getPlayerNr() {
 		return m_playerNr;
 	}
+
+    public void setFinishAnimaiton(AnimationComponent.AnimState animState){
+        m_finishAnimation = animState;
+    }
+
+    public AnimationComponent.AnimState getFinishAnimation(){
+        return m_finishAnimation;
+    }
 
 	public void setPlayerNr(String playerNr) {
 		if (playerNr.equalsIgnoreCase("playerOne")) {

@@ -3,7 +3,7 @@ package com.me.component;
 /**
  * Created by hateftadayon on 6/1/15.
  */
-public class ButtonDirectionComponent extends BaseComponent {
+public class DirectionComponent extends BaseComponent {
 
     public static class Direction{
 
@@ -18,7 +18,7 @@ public class ButtonDirectionComponent extends BaseComponent {
 
     private Direction m_direction;
 
-    public ButtonDirectionComponent(){
+    public DirectionComponent(){
         m_direction = new Direction();
     }
 

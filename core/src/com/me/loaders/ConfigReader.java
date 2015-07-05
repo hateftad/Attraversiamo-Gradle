@@ -31,34 +31,18 @@ public class ConfigReader {
 				LevelConfig config = new LevelConfig(child.getAttribute("name"));
 				Array<Element> children = child.getChildrenByName("player");
 				for(Element gChild : children){
-					if(gChild.get("playerNr").equals("one")){
 						PlayerConfig pConfig = new PlayerConfig();
 						pConfig.setSkinName(gChild.get("skinName"));
-						pConfig.m_active = gChild.getBoolean("active");
-						pConfig.m_canDeactivate = gChild.getBoolean("canDeactivate");
-						pConfig.m_playerPosition.x = gChild.getChildByName("position").getFloat("x");
-						pConfig.m_playerPosition.y = gChild.getChildByName("position").getFloat("y");
-						pConfig.m_facingleft = gChild.getBoolean("facingLeft");
+						pConfig.setActive(gChild.getBoolean("active"));
+						pConfig.setCanDeactivate(gChild.getBoolean("canDeactivate"));
+						pConfig.setPlayerPosition(gChild.getChildByName("position").getFloat("x"), gChild.getChildByName("position").getFloat("y"));
+						pConfig.setFacingleft(gChild.getBoolean("facingLeft"));
 						pConfig.setFinishAnimation(gChild.get("finishAnim"));
-						pConfig.m_name = gChild.get("playerName");
-						config.setPlayerOneConfig(pConfig);
-					}
-					if(gChild.get("playerNr").equals("two")){
-						PlayerConfig pConfig = new PlayerConfig();
-						pConfig.setSkinName(gChild.get("skinName"));
-						pConfig.m_active = gChild.getBoolean("active");
-						pConfig.m_canDeactivate = gChild.getBoolean("canDeactivate");
-						pConfig.m_playerPosition.x = gChild.getChildByName("position").getFloat("x");
-						pConfig.m_playerPosition.y = gChild.getChildByName("position").getFloat("y");
-						pConfig.m_facingleft = gChild.getBoolean("facingLeft");
-						pConfig.setFinishAnimation(gChild.get("finishAnim"));
-						pConfig.m_name = gChild.get("playerName");
-						config.setPlayerTwoConfig(pConfig);
-					}
+						pConfig.setName(gChild.get("playerName"));
+						config.addPlayerConfig(pConfig);
 				}
 				config.setLevelNr(child.getInt("levelNr"));
 				config.setLightColor(child.get("lightColor"));
-				config.setNrOfPlayers(child.getInt("nrOfPlayers"));
 				config.finishFacingLeft(child.getBoolean("finishFacingLeft"));
 				config.setHasPortal(child.getBoolean("hasPortal"));
 				

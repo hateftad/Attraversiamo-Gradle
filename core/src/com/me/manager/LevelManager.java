@@ -2,6 +2,7 @@ package com.me.manager;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.component.PlayerComponent.PlayerNumber;
+import com.me.level.Level;
 import com.me.level.tasks.LevelTask;
 import com.me.level.tasks.LevelTask.TaskType;
 import com.me.utils.LevelConfig;
@@ -11,34 +12,33 @@ import com.me.utils.LevelConfig;
  */
 public class LevelManager {
 
-    public boolean m_hasPortal;
-    public boolean m_finishFacingLeft;
-    private boolean m_levelFinished;
-    private ObjectMap<TaskType, LevelTask> taskObjectMap = new ObjectMap<TaskType, LevelTask>();
-    private boolean m_taskChanged;
 
-    public LevelManager(LevelConfig lvlConf) {
-        m_hasPortal = lvlConf.hasPortal();
-        m_finishFacingLeft = lvlConf.finishLeft();
+    private boolean m_levelFinished;
+    private Level m_currentLevel;
+
+
+    public LevelManager() {
+
+    }
+
+    public void setLevel(Level level){
+        m_currentLevel = level;
     }
 
     public boolean isTaskDoneForAll(TaskType task) {
-        if(taskObjectMap.containsKey(task)) {
-            return taskObjectMap.get(task).isFinished();
-        }
-        return false;
+        return m_currentLevel.isTaskDoneForAll(task);
     }
 
     public void addTask(TaskType taskType, LevelTask levelTask){
-        taskObjectMap.put(taskType, levelTask);
+        m_currentLevel.addTask(taskType, levelTask);
     }
 
-    public void doneTask(PlayerNumber playerNr, TaskType taskType){
-        taskObjectMap.get(taskType).playerFinished(playerNr);
+    public void doneTask(PlayerNumber playerNumber, LevelTask task){
+        m_currentLevel.doneTask(playerNumber, task);
     }
 
-    public void unDoneTask(PlayerNumber playerNumber, TaskType taskType){
-        taskObjectMap.get(taskType).playerUnfinished(playerNumber);
+    public void unDoneTask(PlayerNumber playerNumber, TaskType task){
+        m_currentLevel.unDoneTask(playerNumber, task);
     }
 
     public void setFinishedLevel(){
@@ -49,14 +49,25 @@ public class LevelManager {
         return m_levelFinished;
     }
 
+    public boolean charactersFinishingLeft(){
+        return m_currentLevel.isfinishFacingLeft();
+    }
+
+    public boolean levelHasPortal(){
+        return m_currentLevel.hasPortal();
+    }
+
+    public int getLevelNumber(){
+        return m_currentLevel.getLevelNumber();
+    }
+
+    public Level.LevelBoundaries getLevelBoundaries(){
+        return m_currentLevel.getLevelBoundaries();
+    }
+
+
+
     public void restart() {
-        for (LevelTask task: taskObjectMap.values()) {
-            task.resetTask();
-        }
+        m_currentLevel.restart();
     }
-
-    public void setTaskChanged(boolean taskChanged){
-        m_taskChanged = taskChanged;
-    }
-
 }

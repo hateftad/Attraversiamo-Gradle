@@ -1,15 +1,14 @@
 package com.me.loaders;
 
+import com.me.Player;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.PlayerComponent.PlayerNumber;
+import com.me.level.Level;
 import com.me.listeners.LoadCompletionListener;
+import com.me.manager.LevelManager;
 import com.me.screens.GameScreen;
 import com.me.systems.LevelSystem;
-import com.me.systems.PlayerOneSystem;
-import com.me.systems.PlayerTwoSystem;
 import com.me.ui.InputManager;
-import com.me.utils.Converters;
-import com.me.utils.LevelConfig;
 import com.me.utils.PlayerConfig;
 
 public class BackgroundLoader{
@@ -20,12 +19,13 @@ public class BackgroundLoader{
 	private ConfigReader m_configLoader;
 	private int m_level;
 	private Attraversiamo m_game;
-	private LevelConfig m_levelConfig;
+	private LevelManager m_levelManager;
 	
 	public BackgroundLoader(Attraversiamo game){
 		m_loader = new EntityLoader();
 		m_game = game;
 		m_configLoader = new ConfigReader();
+        m_levelManager = new LevelManager();
 	}
 
 	public void setLevel(int level){
@@ -49,8 +49,8 @@ public class BackgroundLoader{
 
 	public void doRun(){
 
-		m_levelConfig = m_configLoader.getLevelConfigByName(LEVEL+m_level);
-		
+        Level currentLevel = new Level(m_configLoader.getLevelConfigByName(LEVEL+m_level));
+
 		if(m_game.m_gameScreen != null){
 			stopProcessingSystems();
 			clearLevel();
@@ -58,52 +58,30 @@ public class BackgroundLoader{
 			m_game.m_gameScreen = new GameScreen(m_game);
 		}
 
-		m_loader.loadLevel(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler());
-		
-		if(m_levelConfig.getPlayerOneConfig() != null){
-			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.ONE);
-			setupCharacter(m_levelConfig.getPlayerOneConfig(), 1);
+		m_loader.loadLevel(currentLevel, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler());
+
+		for(PlayerConfig playerConfig : currentLevel.getPlayerConfigs()){
+            Player player = new Player(playerConfig);
+			m_loader.loadCharacter(player, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld());
+            InputManager.getInstance().setSelectedPlayer(player.getPlayerNumber(), player.isActive());
 		}
 			
-		if(m_levelConfig.getPlayerTwoConfig() != null){
-			m_loader.loadCharacter(m_levelConfig, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler(), PlayerNumber.TWO);
-			setupCharacter(m_levelConfig.getPlayerTwoConfig(), 2);
-		}
-		
+		m_levelManager.setLevel(currentLevel);
 		m_loader.dispose();
 		startProcessingSystems();
 
-	}
-	
-	private void setupCharacter(PlayerConfig playerCfg, int playerNr){
-		
-		switch (playerNr) {
-		case 1:
-			playerCfg.minimumY = Converters.ToBox(m_levelConfig.m_minY);
-			m_game.m_gameScreen.getEntityWorld().getSystem(PlayerOneSystem.class).setPlayerConfig(playerCfg);
-			InputManager.getInstance().setSelectedPlayer(playerNr, playerCfg.m_active);
-			break;
-		case 2:
-			playerCfg.minimumY = Converters.ToBox(m_levelConfig.m_minY);
-			m_game.m_gameScreen.getEntityWorld().getSystem(PlayerTwoSystem.class).setPlayerConfig(playerCfg);
-			InputManager.getInstance().setSelectedPlayer(playerNr, playerCfg.m_active);
-			break;
-		default:
-			break;
-		}
-			
 	}
 
 	private void startProcessingSystems() {
 		
 		LevelSystem lvlSystem = m_game.m_gameScreen.getEntityWorld().getSystem(LevelSystem.class);
-		lvlSystem.setLevelConfig(m_levelConfig);
+		lvlSystem.setLevelManager(m_levelManager);
 		lvlSystem.setProcessing(true);
 		
 		m_game.m_gameScreen.getPhysicsSystem().toggleProcessing(true);
 		
 		m_game.m_gameScreen.getCameraSystem().toggleProcess(true);
-		m_game.m_gameScreen.getCameraSystem().setLimits(m_levelConfig);
+		m_game.m_gameScreen.getCameraSystem().setLevelBoundariesForCamera(m_levelManager.getLevelBoundaries());
 		
 		m_game.m_gameScreen.getPlayerSystem().toggleProcessing(true);
 		m_game.m_gameScreen.getPlayerSystem().restartSystem();

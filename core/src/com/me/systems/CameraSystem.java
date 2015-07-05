@@ -21,6 +21,7 @@ import com.me.component.LightComponent;
 import com.me.component.PhysicsComponent;
 import com.me.component.PlayerComponent;
 import com.me.component.SpriteComponent;
+import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.utils.Converters;
 import com.me.utils.LevelConfig;
@@ -55,8 +56,8 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 		m_camera = new CameraComponent(camera);
 	}
 	
-	public void setLimits(LevelConfig config){
-		m_camera.setLimit(config.m_maxX, config.m_minX, config.m_minY);
+	public void setLevelBoundariesForCamera(Level.LevelBoundaries boundaries){
+		m_camera.setLimit(boundaries.maxX, boundaries.minX, boundaries.minY);
 	}
 
 	public CameraComponent getCameraComponent(){

@@ -10,9 +10,19 @@ import com.me.component.PlayerComponent.PlayerNumber;
 public class LevelTask {
 
     public enum TaskType{
+        Undefined,
         OpenDoor,
         ReachedEnd,
         WaterEngine
+    }
+
+    private static LevelTask m_undefined;
+
+    public static LevelTask noTask(){
+        if(m_undefined == null){
+            m_undefined = new LevelTask(0, 0, "Undefined");
+        }
+        return m_undefined;
     }
 
     private int m_taskId;
@@ -23,7 +33,7 @@ public class LevelTask {
     public LevelTask(int taskId, int taskFinishers, String taskType){
         m_taskId = taskId;
         m_taskFinishers = taskFinishers;
-        m_finishers = new Array<PlayerNumber>();
+        m_finishers = new Array<PlayerNumber>(taskFinishers);
         setTaskType(taskType);
     }
 
@@ -44,6 +54,8 @@ public class LevelTask {
             m_taskType = TaskType.ReachedEnd;
         } else if("WaterEngine".equalsIgnoreCase(taskType)){
             m_taskType = TaskType.WaterEngine;
+        } else if("Undefined".equalsIgnoreCase(taskType)){
+            m_taskType = TaskType.Undefined;
         }
     }
 

@@ -8,6 +8,7 @@ import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
+import com.me.Player;
 import com.me.component.*;
 import com.me.component.PlayerComponent.State;
 import com.me.manager.LevelManager;
@@ -51,9 +52,12 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 	@Mapper
 	ComponentMapper<PushComponent> m_pushComps;
 
-	private InputManager m_inputMgr;
+    @Mapper
+    ComponentMapper<TaskComponent> m_taskComps;
 
-	private PlayerConfig m_playerConfig;
+
+    private InputManager m_inputMgr;
+
 
 	private LevelManager m_levelManager;
 
@@ -66,10 +70,6 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 	public PlayerTwoSystem() {
 		super(Aspect.getAspectForOne(PlayerTwoComponent.class));
 		m_inputMgr = InputManager.getInstance();
-	}
-
-	public void setPlayerConfig(PlayerConfig playerCfg) {
-		m_playerConfig = playerCfg;
 	}
 
 	@Override
@@ -172,16 +172,17 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 					player.setState(State.LYINGDOWN);
 				}
 				if(touch.m_pushArea){
+                    TaskComponent component = m_taskComps.get(e);
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-                        m_levelManager.doneTask(player.getPlayerNr(), TaskType.OpenDoor);
+                        m_levelManager.doneTask(player.getPlayerNr(), component.getTask());
 						player.setState(State.WAITTILDONE);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-                        m_levelManager.doneTask(player.getPlayerNr(), TaskType.OpenDoor);
+                        m_levelManager.doneTask(player.getPlayerNr(), component.getTask());
 						player.setState(State.WAITTILDONE);
 					}
 					
@@ -211,7 +212,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 		}
 
 		if (finish) {
-			animation.setAnimationState(m_playerConfig.m_finishAnimation);
+			animation.setAnimationState(player.getFinishAnimation());
 		}
 
 		if (ps.isFalling() && ps.movingForward()) {
@@ -370,7 +371,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 
 	private boolean isDead(PhysicsComponent ps) {
 
-		if (ps.getPosition().y < m_playerConfig.minimumY) {
+		if (ps.getPosition().y < m_levelManager.getLevelBoundaries().minY) {
 			return true;
 		}
 		return false;

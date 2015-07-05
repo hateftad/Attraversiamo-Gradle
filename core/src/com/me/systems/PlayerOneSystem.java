@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
+import com.me.Player;
 import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
@@ -31,8 +32,6 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 	private boolean m_process = true;
 
 	private InputManager m_inputMgr;
-
-	private PlayerConfig m_playerConfig;
 
 	@Mapper
 	ComponentMapper<PlayerComponent> m_playerComps;
@@ -68,6 +67,9 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 	@Mapper
 	ComponentMapper<PushComponent> m_pushComps;
 
+    @Mapper
+    ComponentMapper<TaskComponent> m_taskComps;
+
 	private float VELOCITY = 11.0f;
 	private float VELOCITYINR = 3.0f;
 
@@ -84,12 +86,8 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 			Gdx.input.setInputProcessor(this);
 		}
 
-
 	}
 
-	public void setPlayerConfig(PlayerConfig playerCfg) {
-		m_playerConfig = playerCfg;
-	}
 
     @Override
     protected void begin() {
@@ -203,16 +201,17 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					l.m_goingUp = true;
 				}
 				if(touch.m_pushArea){
+                    TaskComponent component = m_taskComps.get(e);
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						m_levelManager.doneTask(player.getPlayerNr(), TaskType.OpenDoor);
+						m_levelManager.doneTask(player.getPlayerNr(), component.getTask());
 						player.setState(State.WAITTILDONE);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-                        m_levelManager.doneTask(player.getPlayerNr(), TaskType.OpenDoor);
+                        m_levelManager.doneTask(player.getPlayerNr(), component.getTask());
 						player.setState(State.WAITTILDONE);
 					}
 				}
@@ -231,7 +230,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		}
 		
 		if (finish) {
-			animation.setAnimationState(m_playerConfig.m_finishAnimation);
+			animation.setAnimationState(player.getFinishAnimation());
 			if (animation.isCompleted()) {
 				player.setIsFinishedAnimating(true);
 			}
@@ -383,7 +382,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 		if (l.m_topLadder && l.m_goingUp) {
 			if (l.m_leftClimb)
 				ps.setLinearVelocity(3, 0);
-			else if (l.m_rightClimb && l.m_goingUp) {
+			else if (l.m_rightClimb) {
 				ps.setLinearVelocity(-3, 0);
 			}
 		} else if (l.m_bottomLadder && m.m_down) {
@@ -402,7 +401,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 
 	private boolean isDead(PhysicsComponent ps) {
 
-		if (ps.getPosition().y < m_playerConfig.minimumY) {
+		if (ps.getPosition().y < m_levelManager.getLevelBoundaries().minY) {
 			return true;
 		}
 		return false;
