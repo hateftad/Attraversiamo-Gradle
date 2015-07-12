@@ -2,7 +2,7 @@ package com.me;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.AnimationComponent;
-import com.me.utils.PlayerConfig;
+import com.me.config.PlayerConfig;
 
 /**
  * Created by hateftadayon on 7/5/15.

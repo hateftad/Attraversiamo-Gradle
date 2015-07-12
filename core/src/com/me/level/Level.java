@@ -1,17 +1,13 @@
 package com.me.level;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.me.component.PlayerComponent;
-import com.me.level.tasks.LevelTask;
-import com.me.utils.LevelConfig;
-import com.me.utils.PlayerConfig;
+import com.me.config.LevelConfig;
+import com.me.config.PlayerConfig;
 
 /**
  * Created by hateftadayon on 6/23/15.
  */
 public class Level {
-
 
     public class LevelBoundaries{
         public float minX;
@@ -20,12 +16,29 @@ public class Level {
     }
 
     private LevelConfig m_levelConfig;
-    private ObjectMap<LevelTask.TaskType, LevelTask> taskObjectMap = new ObjectMap<LevelTask.TaskType, LevelTask>();
     private LevelBoundaries m_levelBoundaries;
+
+    public boolean isFinished() {
+        return m_isFinished;
+    }
+
+    public void setFinished(boolean state){
+        m_isFinished = state;
+    }
+
+    private boolean m_isFinished;
 
     public Level(LevelConfig levelConfig){
         m_levelConfig = levelConfig;
         m_levelBoundaries = new LevelBoundaries();
+    }
+
+    public int getNumberOfFinishers(){
+        return m_levelConfig.getPlayerConfigs().size;
+    }
+
+    public boolean shouldFinishFacingLeft(){
+        return m_levelConfig.finishLeft();
     }
 
     public String getLevelName(){
@@ -40,10 +53,6 @@ public class Level {
         return m_levelConfig.hasPortal();
     }
 
-    public boolean isfinishFacingLeft() {
-        return m_levelConfig.finishLeft();
-    }
-
     public LevelConfig getLevelConfig() {
         return m_levelConfig;
     }
@@ -56,29 +65,9 @@ public class Level {
         return m_levelConfig.getPlayerConfigs();
     }
 
-    public boolean isTaskDoneForAll(LevelTask.TaskType task) {
-        if(taskObjectMap.containsKey(task)) {
-            return taskObjectMap.get(task).isFinished();
-        }
-        return false;
-    }
-
-    public void addTask(LevelTask.TaskType taskType, LevelTask levelTask){
-        taskObjectMap.put(taskType, levelTask);
-    }
-
-    public void doneTask(PlayerComponent.PlayerNumber playerNr, LevelTask task){
-        taskObjectMap.get(task.getTaskType()).playerFinished(playerNr);
-    }
-
-    public void unDoneTask(PlayerComponent.PlayerNumber playerNumber, LevelTask.TaskType task){
-        taskObjectMap.get(task).playerUnfinished(playerNumber);
-    }
 
     public void restart() {
-        for (LevelTask task: taskObjectMap.values()) {
-            task.resetTask();
-        }
+
     }
 
 

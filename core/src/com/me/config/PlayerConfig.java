@@ -1,4 +1,4 @@
-package com.me.utils;
+package com.me.config;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.AnimationComponent.AnimState;

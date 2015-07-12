@@ -3,8 +3,8 @@ package com.me.attraversiamo.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.me.attraversiamo.Attraversiamo;
-import com.me.utils.GameConfig;
-import com.me.utils.GameConfig.Platform;
+import com.me.config.GameConfig;
+import com.me.config.GameConfig.Platform;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

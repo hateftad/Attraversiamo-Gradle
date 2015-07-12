@@ -5,8 +5,8 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.me.attraversiamo.Attraversiamo;
-import com.me.utils.GameConfig;
-import com.me.utils.GameConfig.Platform;
+import com.me.config.GameConfig;
+import com.me.config.GameConfig.Platform;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override

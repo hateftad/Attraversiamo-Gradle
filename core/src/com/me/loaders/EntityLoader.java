@@ -26,22 +26,18 @@ import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.me.Player;
 import com.me.component.*;
-import com.me.component.PlayerComponent.PlayerNumber;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.level.Level;
 import com.me.loaders.BodySerializer.BodyUserData;
 import com.me.loaders.RubeScene.Indexes;
-import com.me.manager.LevelManager;
 import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.physics.RBUserData;
 import com.me.systems.CameraSystem;
-import com.me.level.tasks.LevelTask;
-import com.me.systems.PlayerOneSystem;
+import com.me.level.tasks.BodyInfo;
+import com.me.systems.GameEntityWorld;
 import com.me.utils.Converters;
-import com.me.utils.LevelConfig;
-import com.me.utils.PlayerConfig;
 
 public class EntityLoader {
 
@@ -77,11 +73,10 @@ public class EntityLoader {
 
 	}
 
-	public void loadLevel(Level level, World entityWorld,
+	public void loadLevel(Level level, GameEntityWorld entityWorld,
 			com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh) {
 		String levelDirectory = level.getLevelName();
 		clearLoader();
-
 
 		m_scene = m_loader.loadScene(Gdx.files.internal("data/level/"
 				+ levelDirectory + "/" + levelDirectory+ ".json"));
@@ -146,21 +141,21 @@ public class EntityLoader {
 				entity = entityWorld.createEntity();
 				entity.addComponent(pComp);
 			}
-			if (m_scene.getCustom(body, "bodyType", "").equals("light")) {
+			if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("light")) {
 				ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
 				entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
 				entity.addComponent(new TriggerComponent());
 				entityWorld.getManager(GroupManager.class).add(entity, "lights");
 			}
 
-			if (m_scene.getCustom(body, "bodyType", "").equals("skyLight")) {
+			if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("skyLight")) {
 				CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
 				entity.addComponent(camComp);
 				PointLight light = new PointLight(rh, 500, level.getLevelConfig().getLightColor(), 1000, camComp.getCamera().position.x, camComp.getCamera().position.y);
 				entity.addComponent(new LightComponent(light, "cameraLight"));
 				entityWorld.getManager(GroupManager.class).add(entity, "lights");
 			}
-			if (m_scene.getCustom(body, "bodyType", "").equals("behindLight")) {
+			if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("behindLight")) {
 
 				// entity.addComponent(component);
 			}
@@ -168,43 +163,48 @@ public class EntityLoader {
 			loadFixtures(pComp, body);
 
 			BodyUserData ud = (BodyUserData) body.getUserData();
-			if (ud.mName.equals("box")) {
+			if (ud.mName.equalsIgnoreCase("box")) {
 				pComp.setMass(20f, ud.mName);
 				pComp.setFriction(20.0f);
 				entity.addComponent(new RestartComponent());
 				entity.addComponent(new QueueComponent());
 			}
-			if (ud.mName.equals("portal")) {
+			if (ud.mName.equalsIgnoreCase("portal")) {
 				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL, 1));
 				entity.addComponent(new TriggerComponent());
-                int taskId = m_scene.getCustom(body, "taskId", 0);
                 int taskFinishers = m_scene.getCustom(body, "taskFinishers", 0);
-                String taskType = m_scene.getCustom(body, "taskType", "");
-                LevelTask task = new LevelTask(taskId, taskFinishers, taskType);
-                level.addTask(task.getTaskType(), task);
-                pComp.setTaskInfo(task);
+                //int taskId = m_scene.getCustom(body, "taskId", 0);
+                //String taskType = m_scene.getCustom(body, "eventType", "");
+
+                ReachEndComponent reachEndComponent = new ReachEndComponent(taskFinishers, level.shouldFinishFacingLeft());
+                entityWorld.addObserver(reachEndComponent);
+                entity.addComponent(reachEndComponent);
+                //BodyInfo task = new BodyInfo(taskFinishers, taskId, taskType);
+                //pComp.setTaskInfo(task);
 			}
-			if (ud.mName.equals("finish")) {
+			if (ud.mName.equalsIgnoreCase("finish")) {
 				entity.addComponent(new TriggerComponent());
+                entity.addComponent(new ReachEndComponent(level.getNumberOfFinishers(), level.shouldFinishFacingLeft()));
 			}
-			if (ud.mName.equals("point")) {
+			if (ud.mName.equalsIgnoreCase("point")) {
 				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
 				entity.addComponent(new TriggerComponent());
+
 			}
-			if (ud.mName.equals("minX")) {
+			if (ud.mName.equalsIgnoreCase("minX")) {
                 level.getLevelBoundaries().minX = Converters.ToWorld(body.getPosition().x);
 				//System.out.println("Minx "+ Converters.ToWorld(body.getPosition().x));
 			}
-			if (ud.mName.equals("maxX")) {
+			if (ud.mName.equalsIgnoreCase("maxX")) {
                 level.getLevelBoundaries().maxX = Converters.ToWorld(body.getPosition().x);
 				//System.out.println("MaxX "+ Converters.ToWorld(body.getPosition().x));
 			}
-			if (ud.mName.equals("minY")) {
+			if (ud.mName.equalsIgnoreCase("minY")) {
                 level.getLevelBoundaries().minY = Converters.ToWorld(body.getPosition().y);
 				//System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
 			}
 
-			if (ud.mName.equals("water")) {
+			if (ud.mName.equalsIgnoreCase("water")) {
 				BuoyancyComponent buoyancyComponent = new BuoyancyComponent();
 				buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3),  1.5f, 2);
 				buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
@@ -212,15 +212,20 @@ public class EntityLoader {
 				entity.addComponent(buoyancyComponent);
 				entity.addComponent(new ShaderComponent("",body));
                 entity.addComponent(new TriggerComponent());
-                entity.addComponent(new DirectionComponent());
+
 			}
 
-            if(ud.mName.equalsIgnoreCase("taskInfo")){
-                int taskId = m_scene.getCustom(body, "taskId", 0);
+            if(ud.mName.equalsIgnoreCase("directionButton")){
+                entity.addComponent(new TriggerComponent());
+                entity.addComponent(new DirectionComponent());
+                //entity.addComponent(new AnimationComponent());
+            }
+
+            if(ud.mName.equalsIgnoreCase("bodyInfo")){
                 int taskFinishers = m_scene.getCustom(body, "taskFinishers", 0);
-                String taskType = m_scene.getCustom(body, "taskType", "");
-                LevelTask task = new LevelTask(taskId, taskFinishers, taskType);
-                level.addTask(task.getTaskType(), task);
+                String taskType = m_scene.getCustom(body, "eventType", "");
+                int taskId = m_scene.getCustom(body, "taskId", 0);
+                BodyInfo task = new BodyInfo(taskFinishers, taskId, taskType);
                 pComp.setTaskInfo(task);
             }
 
@@ -235,7 +240,7 @@ public class EntityLoader {
 		tempList.clear();
 	}
 
-	public Entity loadCharacter(Player player, World entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld) {
+	public Entity loadCharacter(Player player, GameEntityWorld entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld) {
 		String characterPath = player.getName() + "/";
 		String characterName = player.getName();
 
@@ -291,7 +296,7 @@ public class EntityLoader {
 				}
 
 			} else {
-				if (m_scene.getCustom(body, "characterType", "").equals("leg")) {
+				if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("leg")) {
 
 					if (pComp != null) {
 						pComp.addBody(physicsWorld, body,
@@ -303,8 +308,8 @@ public class EntityLoader {
 								((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
-				} else if (m_scene.getCustom(body, "characterType", "").equals(
-						"hand")) {
+				} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
+                        "hand")) {
 					if (pComp != null)
 						pComp.addBody(physicsWorld, body,
 								((BodyUserData) body.getUserData()).mName);
@@ -313,8 +318,8 @@ public class EntityLoader {
 								((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
-				} else if (m_scene.getCustom(body, "characterType", "").equals(
-						"LHand")) {
+				} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
+                        "LHand")) {
 					if (pComp != null) {
 						pComp.addBody(physicsWorld, body,
 								((BodyUserData) body.getUserData()).mName);
@@ -343,12 +348,12 @@ public class EntityLoader {
 			String atlasName = m_scene.getCustom(body, "atlas", "failed");
 			AnimationComponent anim = null;
 			AnimationStateData stateData = null;
-			if (!skelName.equals("failed") && !atlasName.equals("failed")) {
+			if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
 				anim = new AnimationComponent(CHARPATH + characterPath
 						+ atlasName, CHARPATH + characterPath + skelName, 1.3f);
 				entity.addComponent(anim);
 			}
-			if (m_scene.getCustom(body, "characterType", "").equals("playerOne")) {
+			if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("playerOne")) {
 
 				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
 				p.setActive(player.isActive());
@@ -371,7 +376,7 @@ public class EntityLoader {
 				entity.addComponent(new PlayerOneComponent());
 				entity.addComponent(new TriggerComponent());
 				entity.addComponent(new RestartComponent());
-				entity.addComponent(new TaskComponent());
+				entity.addComponent(new BodyInfoComponent());
 
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
@@ -395,8 +400,8 @@ public class EntityLoader {
 				pComp.setPosition(player.getPosition());
 				// stateData.setMix("lieDown", "running", 0.3f);
 
-			} else if (m_scene.getCustom(body, "characterType", "").equals(
-					"playerTwo")) {
+			} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
+                    "playerTwo")) {
 				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
 				p.setActive(player.isActive());
 				p.setFacingLeft(player.isFacingLeft());
@@ -439,7 +444,7 @@ public class EntityLoader {
 				entity.addComponent(new RestartComponent());
 				entity.addComponent(new PushComponent());
 				entity.addComponent(new QueueComponent());
-                entity.addComponent(new TaskComponent());
+                entity.addComponent(new BodyInfoComponent());
 
 				pComp.setPosition(player.getPosition());
 			}
@@ -452,7 +457,7 @@ public class EntityLoader {
 		}
 		loadBodyJoints(physicsWorld, tempList, entityWorld);
 		// loadBodyParts(entity, ps);
-		PhysicsListenerSetup setup = new PhysicsListenerSetup();
+		PhysicsListenerSetup setup = new PhysicsListenerSetup(entityWorld);
 		setup.setPlayerPhysics(pComp);
 		tempList.clear();
 		entity.addToWorld();
@@ -462,7 +467,7 @@ public class EntityLoader {
 
 	private void loadBodyJoints(
 			com.badlogic.gdx.physics.box2d.World physicsWorld,
-			Array<Body> tempList, World entityWorld) {
+			Array<Body> tempList, GameEntityWorld entityWorld) {
 		Array<Joint> joints = m_scene.getJoints();
 		if (joints == null)
 			return;
@@ -540,14 +545,17 @@ public class EntityLoader {
 				String name = (String) joint.getUserData();
 				PrismaticJointDef jDef = (PrismaticJointDef) ind.jointDef;
 				if (name.equals("doorMotor")) {
+                    int taskId = m_scene.getCustom(joint, "taskId", 0);
+                    int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
 					Entity ent = entityWorld.createEntity();
-					JointComponent comp = new JointComponent(name);
+					DoorComponent comp = new DoorComponent(taskFinishers, taskId);
 					comp.setPrismJoint(JointFactory.getInstance().createJoint(
 							tempList.get(ind.first), tempList.get(ind.second),
 							jDef, physicsWorld));
 					ent.addComponent(new TriggerComponent());
 					ent.addComponent(comp);
 					ent.addToWorld();
+                    entityWorld.addObserver(comp);
 				} else {
 					JointFactory.getInstance().createJoint(
 							tempList.get(ind.first), tempList.get(ind.second),

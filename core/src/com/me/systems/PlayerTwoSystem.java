@@ -4,22 +4,18 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
-import com.me.Player;
 import com.me.component.*;
 import com.me.component.PlayerComponent.State;
-import com.me.manager.LevelManager;
-import com.me.level.tasks.LevelTask.TaskType;
 import com.me.component.AnimationComponent.AnimState;
+import com.me.interfaces.TaskEvent;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;
-import com.me.utils.PlayerConfig;
 
-public class PlayerTwoSystem extends EntityProcessingSystem implements
+public class PlayerTwoSystem extends GameEntityProcessingSystem implements
 		InputProcessor {
 
 	@Mapper
@@ -53,13 +49,10 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 	ComponentMapper<PushComponent> m_pushComps;
 
     @Mapper
-    ComponentMapper<TaskComponent> m_taskComps;
+    ComponentMapper<BodyInfoComponent> m_taskComps;
 
 
     private InputManager m_inputMgr;
-
-
-	private LevelManager m_levelManager;
 
 	private boolean m_process = true;
 
@@ -72,23 +65,17 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 		m_inputMgr = InputManager.getInstance();
 	}
 
-	@Override
-	protected void begin() {
-		if(m_levelManager == null){
-			m_levelManager = world.getSystem(LevelSystem.class).getLevelManager();
-		}
-	}
 
 	@Override
-	protected void process(Entity e) {
+	protected void process(Entity entity) {
 
-		PhysicsComponent ps = m_physComps.get(e);
-		PlayerComponent player = m_playerComps.get(e);
-		AnimationComponent animation = m_animComps.get(e);
-		GrabComponent g = m_grabComps.get(e);
-		TouchComponent touch = m_touchComps.get(e);
-		CrawlComponent crawlComp = m_crawlComps.get(e);
-		boolean finish = m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd);
+		PhysicsComponent ps = m_physComps.get(entity);
+		PlayerComponent player = m_playerComps.get(entity);
+		AnimationComponent animation = m_animComps.get(entity);
+		GrabComponent g = m_grabComps.get(entity);
+		TouchComponent touch = m_touchComps.get(entity);
+		CrawlComponent crawlComp = m_crawlComps.get(entity);
+		boolean finish = false;//m_levelManager.isTaskDoneForAll(Event.InsideFinishArea);
 		if (m_inputMgr.m_playerSelected == PlayerSelection.TWO) {
 			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);
@@ -111,7 +98,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 			player.setState(State.IDLE);
 		}
 
-		MovementComponent m = m_movComps.get(e);
+		MovementComponent m = m_movComps.get(entity);
 		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right),
 				m_inputMgr.isDown(up), m_inputMgr.isDown(down),
 				m_inputMgr.isDown(jump));
@@ -123,44 +110,44 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 				animation.setupPose();
 			}
 
-			if (isIdle(e)) {
+			if (isIdle(entity)) {
 				animation.setAnimationState(AnimState.IDLE);
-				m_velComps.get(e).m_velocity = 0;
+				m_velComps.get(entity).m_velocity = 0;
 			}
 
 			if (m.m_left && touch.m_groundTouch) {
 				if (crawlComp.isCrawling) {
-					crawlLeft(e);
+					crawlLeft(entity);
 				} else {
-					walkLeft(e);
+					walkLeft(entity);
 				}
 				player.setFacingLeft(true);
-				m_jumpComps.get(e).m_jumped = false;
+				m_jumpComps.get(entity).m_jumped = false;
 			}
 
 			if (m.m_right && touch.m_groundTouch) {
 				if (crawlComp.isCrawling) {
-					crawlRight(e);
+					crawlRight(entity);
 				} else {
-					walkRight(e);
+					walkRight(entity);
 				}
 				player.setFacingLeft(false);
-				m_jumpComps.get(e).m_jumped = false;
+				m_jumpComps.get(entity).m_jumped = false;
 			}
 
 			if (m.m_jump && touch.m_groundTouch && (!m.m_left && !m.m_right)
 					&& !crawlComp.isCrawling) {
 				player.setOnGround(false);
-				m_jumpComps.get(e).m_jumped = true;
+				m_jumpComps.get(entity).m_jumped = true;
 				animation.setAnimationState(AnimState.UPJUMP);
 				player.setState(State.JUMPING);
 			}
 
-			if (m_jumpComps.get(e).m_jumped) {
+			if (m_jumpComps.get(entity).m_jumped) {
 				if (animation.getTime() > 0.2f) {
 					ps.setLinearVelocity(ps.getLinearVelocity().x,
-							m_velComps.get(e).m_jumpLimit);
-					m_jumpComps.get(e).m_jumped = m_playerComps.get(e)
+							m_velComps.get(entity).m_jumpLimit);
+					m_jumpComps.get(entity).m_jumped = m_playerComps.get(entity)
 							.isOnGround();
 					player.setState(State.JUMPED);
 				}
@@ -172,19 +159,19 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 					player.setState(State.LYINGDOWN);
 				}
 				if(touch.m_pushArea){
-                    TaskComponent component = m_taskComps.get(e);
+                    BodyInfoComponent component = m_taskComps.get(entity);
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-                        m_levelManager.doneTask(player.getPlayerNr(), component.getTask());
 						player.setState(State.WAITTILDONE);
-					}
+                        notifyObservers(entity, new TaskEvent(component.getTask()));
+                    }
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-                        m_levelManager.doneTask(player.getPlayerNr(), component.getTask());
 						player.setState(State.WAITTILDONE);
-					}
+                        notifyObservers(entity, new TaskEvent(component.getTask()));
+                    }
 					
 				}
 			}
@@ -371,7 +358,7 @@ public class PlayerTwoSystem extends EntityProcessingSystem implements
 
 	private boolean isDead(PhysicsComponent ps) {
 
-		if (ps.getPosition().y < m_levelManager.getLevelBoundaries().minY) {
+        if (ps.getPosition().y < world.getSystem(LevelSystem.class).getCurrentLevel().getLevelBoundaries().minY) {
 			return true;
 		}
 		return false;

@@ -1,17 +1,20 @@
 package com.me.component;
 
-public class PlayerComponent extends BaseComponent {
+import com.artemis.Entity;
+import com.me.interfaces.GameEvent;
+import com.me.interfaces.GameEventType;
+import com.me.interfaces.GameEventObserverComponent;
 
-	public enum State {
+public class PlayerComponent extends GameEventObserverComponent {
+
+
+    public enum State {
 		WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE
 	}
 
 	public enum PlayerNumber {
 		ONE, TWO, THREE
-	}
-
-
-
+        }
 	private PlayerNumber m_playerNr;
 
 	private State m_state = State.IDLE;
@@ -98,6 +101,13 @@ public class PlayerComponent extends BaseComponent {
 	public void dispose() {
 
 	}
+
+    @Override
+    public void onNotify(Entity entity, GameEvent event) {
+        if(event.getEventType() == GameEventType.AllReachedEnd){
+            setFacingLeft(entity.getComponent(ReachEndComponent.class).m_finishFacingLeft);
+        }
+    }
 
 	public boolean isFinishedAnimating() {
 		return m_isFinishedAnimating;

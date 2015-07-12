@@ -24,7 +24,6 @@ import com.me.component.SpriteComponent;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.utils.Converters;
-import com.me.utils.LevelConfig;
 
 public class CameraSystem extends EntityProcessingSystem implements InputProcessor, LevelEventListener{
 

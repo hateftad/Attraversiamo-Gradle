@@ -1,9 +1,7 @@
-package com.me.utils;
+package com.me.config;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
-import com.me.Player;
-import com.me.manager.LevelManager;
 
 public class LevelConfig {
 

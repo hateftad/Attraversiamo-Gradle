@@ -4,26 +4,22 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
-import com.me.Player;
 import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
+import com.me.interfaces.TaskEvent;
 import com.me.listeners.LevelEventListener;
-import com.me.manager.LevelManager;
-import com.me.level.tasks.LevelTask.TaskType;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;
-import com.me.utils.GameConfig.Platform;
-import com.me.utils.GlobalConfig;
-import com.me.utils.PlayerConfig;
+import com.me.config.GameConfig.Platform;
+import com.me.config.GlobalConfig;
 
-public class PlayerOneSystem extends EntityProcessingSystem implements
+public class PlayerOneSystem extends GameEntityProcessingSystem implements
 		InputProcessor {
 
 	private final static int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5,
@@ -68,12 +64,10 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 	ComponentMapper<PushComponent> m_pushComps;
 
     @Mapper
-    ComponentMapper<TaskComponent> m_taskComps;
+    ComponentMapper<BodyInfoComponent> m_taskComps;
 
 	private float VELOCITY = 11.0f;
 	private float VELOCITYINR = 3.0f;
-
-	private LevelManager m_levelManager;
 
 	@SuppressWarnings("unchecked")
 	public PlayerOneSystem(LevelEventListener listener) {
@@ -89,25 +83,18 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 	}
 
 
-    @Override
-    protected void begin() {
-        if(m_levelManager == null){
-            m_levelManager = world.getSystem(LevelSystem.class).getLevelManager();
-        }
-    }
-
 	@Override
-	protected void process(Entity e) {
+	protected void process(Entity entity) {
 
-		LadderClimbComponent l = m_ladderComps.get(e);
-		HangComponent h = m_hangComps.get(e);
-		PlayerComponent player = m_playerComps.get(e);
-		AnimationComponent animation = m_animComps.get(e);
-		GrabComponent g = m_grabComps.get(e);
-		TouchComponent touch = m_touchComps.get(e);
-		PhysicsComponent ps = m_physComps.get(e);
+		LadderClimbComponent l = m_ladderComps.get(entity);
+		HangComponent h = m_hangComps.get(entity);
+		PlayerComponent player = m_playerComps.get(entity);
+		AnimationComponent animation = m_animComps.get(entity);
+		GrabComponent g = m_grabComps.get(entity);
+		TouchComponent touch = m_touchComps.get(entity);
+		PhysicsComponent ps = m_physComps.get(entity);
 
-		boolean finish = m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd);
+		boolean finish = false;//m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd);
 
 		if (m_inputMgr.isDown(skinChange)) {
 			animation.setSkin(m_inputMgr.toggleSkins());
@@ -125,12 +112,12 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 			}
 		}
 
-		MovementComponent m = m_movComps.get(e);
+		MovementComponent m = m_movComps.get(entity);
 		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right),
 				m_inputMgr.isDown(action), m_inputMgr.isDown(down),
 				m_inputMgr.isDown(jump));
 
-		VelocityLimitComponent vel = m_velComps.get(e);
+		VelocityLimitComponent vel = m_velComps.get(entity);
 
 		if (player.isActive() && !m.m_lockControls && !g.m_lifting && !finish && player.getState() != State.WAITTILDONE) {
 			if (touch.m_groundTouch && !touch.m_boxTouch && !touch.m_footEdge) {
@@ -144,7 +131,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					}
 				}
 			}
-			if (m_hangComps.has(e)) {
+			if (m_hangComps.has(entity)) {
 
 				if (m.m_up && h.m_isHanging) {
 					animation.setAnimationState(AnimState.CLIMBING);
@@ -155,24 +142,24 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					animation.setAnimationState(AnimState.HANGING);
 				}
 			}
-			if (m_ladderComps.has(e)) {
+			if (m_ladderComps.has(entity)) {
 				if (touch.m_ladderTouch) {
-					climbLadder(e);
+					climbLadder(entity);
 				}
 			}
 			if (m.m_left) {
-				moveLeft(e);
+				moveLeft(entity);
 			}
 			if (m.m_right) {
-				moveRight(e);
+				moveRight(entity);
 			}
 
-			if (m_jumpComps.has(e)) {
+			if (m_jumpComps.has(entity)) {
 				if (m.m_jump && touch.m_groundTouch) {
 					player.setOnGround(false);
 					if (m.m_left || m.m_right) {
 						animation.setAnimationState(AnimState.JUMPING);
-                        if(velocityLimitForJumpBoost(e)) {
+                        if(velocityLimitForJumpBoost(entity)) {
                             ps.setLinearVelocity((m.m_left ? -3 : 3) + ps.getLinearVelocity().x, vel.m_jumpLimit);
                         } else {
                             ps.setLinearVelocity(ps.getLinearVelocity().x, vel.m_jumpLimit);
@@ -201,18 +188,18 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 					l.m_goingUp = true;
 				}
 				if(touch.m_pushArea){
-                    TaskComponent component = m_taskComps.get(e);
+                    BodyInfoComponent component = m_taskComps.get(entity);
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-						m_levelManager.doneTask(player.getPlayerNr(), component.getTask());
 						player.setState(State.WAITTILDONE);
+                        notifyObservers(entity, new TaskEvent(component.getTask()));
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
-                        m_levelManager.doneTask(player.getPlayerNr(), component.getTask());
 						player.setState(State.WAITTILDONE);
+                        notifyObservers(entity, new TaskEvent(component.getTask()));
 					}
 				}
 			}
@@ -401,7 +388,7 @@ public class PlayerOneSystem extends EntityProcessingSystem implements
 
 	private boolean isDead(PhysicsComponent ps) {
 
-		if (ps.getPosition().y < m_levelManager.getLevelBoundaries().minY) {
+		if (ps.getPosition().y < world.getSystem(LevelSystem.class).getCurrentLevel().getLevelBoundaries().minY) {
 			return true;
 		}
 		return false;

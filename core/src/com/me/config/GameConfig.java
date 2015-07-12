@@ -1,4 +1,4 @@
-package com.me.utils;
+package com.me.config;
 
 public class GameConfig {
 	

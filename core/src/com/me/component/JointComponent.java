@@ -125,19 +125,11 @@ public class JointComponent extends BaseComponent{
 		}
 		return false;
 	}
-	
-	public void enableMotor(boolean enable){
-		
-		if(m_pJoint != null){
-			PrismaticJoint j = (PrismaticJoint) m_pJoint;
-			j.enableMotor(enable);
-		}
-	}
-	
+
 	public boolean hasMotor(){
 		return m_pJoint != null;
 	}
-	
+
 	public boolean shouldDestroy(){
 		return setToDestroy;
 	}

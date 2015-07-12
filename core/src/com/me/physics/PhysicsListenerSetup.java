@@ -9,13 +9,16 @@ import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
-import com.me.level.tasks.LevelTask;
+import com.me.interfaces.GameEvent;
+import com.me.interfaces.GameEventType;
 import com.me.physics.RBUserData.Type;
+import com.me.systems.GameEntityWorld;
 
 public class PhysicsListenerSetup {
 
-	public PhysicsListenerSetup(){
-
+    private GameEntityWorld m_gameEntityWorld;
+	public PhysicsListenerSetup(GameEntityWorld world){
+        m_gameEntityWorld = world;
 	}
 
 	public void setPlayerPhysics(PhysicsComponent ps){
@@ -127,12 +130,13 @@ public class PhysicsListenerSetup {
 							if(otherUd.getType() == Type.LeftPushButton){
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_leftPushArea = true;
-                                e.getComponent(TaskComponent.class).setTask(other.getTaskInfo());
+                                e.getComponent(BodyInfoComponent.class).setBodyInfo(other.getTaskInfo());
+
 							}
 							if(otherUd.getType() == Type.RightPushButton){
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_rightPushArea = true;
-                                e.getComponent(TaskComponent.class).setTask(other.getTaskInfo());
+                                e.getComponent(BodyInfoComponent.class).setBodyInfo(other.getTaskInfo());
 							}
 
 							if(otherUd.getType() == Type.Hand){
@@ -159,11 +163,11 @@ public class PhysicsListenerSetup {
 							}
 							if(otherUd.getType() == Type.Portal){
 								e.getComponent(TouchComponent.class).m_endReach = true;
-                                e.getComponent(TaskComponent.class).setTask(other.getTaskInfo());
+                                m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.InsideFinishArea));
 							}
 							if(otherUd.getType() == Type.Finish){
                                 e.getComponent(TouchComponent.class).m_endReach = true;
-                                e.getComponent(TaskComponent.class).setTask(other.getTaskInfo());
+                                m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.InsideFinishArea));
 							}
 							if(created){
 								e.getComponent(TouchComponent.class).m_edgeTouch = true;
@@ -283,17 +287,20 @@ public class PhysicsListenerSetup {
 						}
 						if(otherUd.getType() == Type.Portal){
 							e.getComponent(TouchComponent.class).m_endReach = false;
-                            e.getComponent(TaskComponent.class).setTask(LevelTask.noTask());
+                            m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.OutsideFinishArea));
 						}
+                        if(otherUd.getType() == Type.Finish){
+                            e.getComponent(TouchComponent.class).m_endReach = true;
+                            e.getComponent(BodyInfoComponent.class).setBodyInfo(other.getTaskInfo());
+                            m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.OutsideFinishArea));
+                        }
 						if(otherUd.getType() == Type.LeftPushButton){
 							e.getComponent(TouchComponent.class).m_pushArea = false;
 							e.getComponent(TouchComponent.class).m_leftPushArea = false;
-                            e.getComponent(TaskComponent.class).setTask(LevelTask.noTask());
 						}
 						if(otherUd.getType() == Type.RightPushButton){
 							e.getComponent(TouchComponent.class).m_pushArea = false;
 							e.getComponent(TouchComponent.class).m_rightPushArea = false;
-                            e.getComponent(TaskComponent.class).setTask(LevelTask.noTask());
 						}
 					}
 				}

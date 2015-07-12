@@ -1,12 +1,11 @@
 package com.me.attraversiamo;
 
-import com.me.utils.GameConfig;
+import com.me.config.GameConfig;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import com.me.attraversiamo.Attraversiamo;
 
 public class IOSLauncher extends IOSApplication.Delegate {
     @Override

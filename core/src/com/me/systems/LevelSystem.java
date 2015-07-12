@@ -4,23 +4,20 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.me.component.*;
-import com.me.component.ParticleComponent.ParticleType;
-import com.me.level.tasks.LevelTask;
-import com.me.manager.LevelManager;
-import com.me.level.tasks.LevelTask.TaskType;
+import com.me.interfaces.GameEvent;
+import com.me.interfaces.GameEventType;
+import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.ScriptManager;
-import com.me.utils.LevelConfig;
 
-public class LevelSystem extends EntityProcessingSystem{
+public class LevelSystem extends GameEntityProcessingSystem{
 
 	private float inc = 0.0f;
 	private LevelEventListener m_levelListener;
 	private ScriptManager m_scriptMgr;
-	private LevelManager m_levelManager;
+    private Level m_currentLevel;
 	private boolean m_enable;
 
 	@Mapper ComponentMapper<LightComponent> m_lightComps;
@@ -29,8 +26,9 @@ public class LevelSystem extends EntityProcessingSystem{
 	@Mapper ComponentMapper<ParticleComponent> m_particles;
 	@Mapper ComponentMapper<JointComponent> m_joints;
 	@Mapper ComponentMapper<BuoyancyComponent> m_buoyancyComps;
+	@Mapper ComponentMapper<ReachEndComponent> m_reachEndComps;
     @Mapper ComponentMapper<DirectionComponent> m_direction;
-    @Mapper ComponentMapper<TaskComponent> m_taskComps;
+    @Mapper ComponentMapper<BodyInfoComponent> m_taskComps;
 
 
 	@SuppressWarnings("unchecked")
@@ -39,11 +37,13 @@ public class LevelSystem extends EntityProcessingSystem{
 		m_levelListener = listener;
 	}
 
-	public void setLevelManager(LevelManager levelManager){
-		//m_scriptMgr = new ScriptManager("data/script.lua");
-		//m_scriptMgr.runScriptFunction("init", levelCfg);
-        m_levelManager = levelManager;
-	}
+    public void setCurrentLevel(Level level){
+        m_currentLevel = level;
+    }
+
+    public Level getCurrentLevel(){
+        return m_currentLevel;
+    }
 
 	public void setProcessing(boolean enable){
 		m_enable = enable;
@@ -58,7 +58,7 @@ public class LevelSystem extends EntityProcessingSystem{
 			updateLights(m_lightComps.get(e));
 		}
 
-		if(m_players.has(e)){
+        if(m_reachEndComps.has(e)) {
 			checkFinished(e);
 		}
 
@@ -66,18 +66,6 @@ public class LevelSystem extends EntityProcessingSystem{
 			updateParticles(m_particles.get(e));
 		}
 		
-		if(m_joints.has(e)){
-            // make door component
-			JointComponent joint = m_joints.get(e);
-			if(joint.hasMotor()){
-				if(m_levelManager.isTaskDoneForAll(TaskType.OpenDoor)){
-					joint.enableMotor(true);
-				}
-			}
-		}
-        if(m_buoyancyComps.has(e)) {
-            updateBuoyancy(e);
-        }
 	}
 
 	@Override
@@ -88,7 +76,8 @@ public class LevelSystem extends EntityProcessingSystem{
 	private void updateLights(LightComponent light){
 		if(light.getName().equals("portalLight")){
 			float a = light.getAlpha();
-			if(!m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd)){
+
+			if(!m_currentLevel.isFinished()){
 				if(a >= 1){
 					light.setColor(Color.RED);
 					inc = -0.01f;
@@ -102,56 +91,48 @@ public class LevelSystem extends EntityProcessingSystem{
 				light.setColor(Color.GREEN);
 				world.getSystem(CameraSystem.class).getRayHandler().setAmbientLight(1f);
 			}
+
 		}
 	}
 	
 	private void updateParticles(ParticleComponent particle){
 
-		if(particle.getType() == ParticleType.PORTAL){
-			if(m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd) && !m_levelManager.isLevelFinished()){
+		if(particle.getType() == ParticleComponent.ParticleType.PORTAL){
+			if(m_currentLevel.isFinished()){
                 particle.start();
-                m_levelManager.setFinishedLevel();
 			}
-			if(particle.isCompleted() && m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd)){
-				m_levelListener.onFinishedLevel(m_levelManager.getLevelNumber());
+			if(particle.isCompleted() && m_currentLevel.isFinished()){
+				m_levelListener.onFinishedLevel(m_currentLevel.getLevelNumber());
 			}
 		}
+
 	}
 	
-	private void checkFinished(Entity e){
-        PlayerComponent player = m_players.get(e);
-        TouchComponent touch = m_touch.get(e);
-        TaskComponent taskComponent = m_taskComps.get(e);
-        if(touch.endReached()){
-            m_levelManager.doneTask(player.getPlayerNr(), taskComponent.getTask());
-        } else {
-            m_levelManager.unDoneTask(player.getPlayerNr(), TaskType.ReachedEnd);
+	private void checkFinished(Entity entity){
+
+        ReachEndComponent reachEndComponent = m_reachEndComps.get(entity);
+        if (reachEndComponent.allFinished()) {
+            notifyObservers(entity, new GameEvent(GameEventType.AllReachedEnd));
         }
+        //if(!m_levelManager.levelHasPortal() && player.isFinishedAnimating()){
+        //	m_levelListener.onFinishedLevel(m_levelManager.getLevelNumber());
+        //}
 
-		if(m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd)){
-			player.setFacingLeft(m_levelManager.charactersFinishingLeft());
-			if(!m_levelManager.levelHasPortal() && player.isFinishedAnimating()){
-				m_levelListener.onFinishedLevel(m_levelManager.getLevelNumber());
-			}
-		}
-	}
-
-	private void updateBuoyancy(Entity e){
+        /*
         if(m_levelManager.isTaskDoneForAll(TaskType.WaterEngine)) {
-            BuoyancyComponent.BuoyancyControllerInfo info = m_buoyancyComps.get(e).getController(WorldObjectComponent.WorldObject);
-            if(info != null) {
-                DirectionComponent directionComponent = m_direction.get(e);
-                if (directionComponent.getDirection() == DirectionComponent.Direction.Left) {
-                    info.setFluidVelocity(-3, 1);
-                }  else if (directionComponent.getDirection() == DirectionComponent.Direction.Right) {
-                    info.setFluidVelocity(3, 1);
+            if(m_buoyancyComps.has(e)) {
+                BuoyancyComponent.BuoyancyControllerInfo info = m_buoyancyComps.get(e).getController(WorldObjectComponent.WorldObject);
+                if (info != null) {
+                    DirectionComponent directionComponent = m_direction.get(e);
+                    if (directionComponent.getDirection() == DirectionComponent.Direction.Left) {
+                        info.setFluidVelocity(-3, 1);
+                    } else if (directionComponent.getDirection() == DirectionComponent.Direction.Right) {
+                        info.setFluidVelocity(3, 1);
+                    }
                 }
             }
         }
-	}
-	
-	public LevelManager getLevelManager(){
-		return m_levelManager;
+        */
 	}
 
 }

@@ -11,19 +11,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.listeners.LevelEventListener;
 import com.me.physics.JointFactory;
-import com.me.systems.CameraSystem;
-import com.me.systems.PhysicsSystem;
-import com.me.systems.PlayerAttributeSystem;
-import com.me.systems.PlayerOneSystem;
-import com.me.systems.PlayerTwoSystem;
-import com.me.systems.RenderSystem;
-import com.me.systems.LevelSystem;
+import com.me.systems.*;
 import com.me.ui.InputManager;
 import com.me.ui.UserInterface;
 
 public class GameScreen extends AbstractScreen implements LevelEventListener{
 
-	private World m_entityWorld;
+	private GameEntityWorld m_entityWorld;
 	private PhysicsSystem m_physicsSystem;
 	private PlayerOneSystem m_playerOneSystem;
 	private PlayerTwoSystem m_playerTwoSystem;
@@ -33,13 +27,12 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	private boolean m_loadedNextLevel;
 
 
-	public GameScreen(Attraversiamo game)
-	{
+	public GameScreen(Attraversiamo game){
 		super(game);
 		m_camera.viewportWidth = 800;
 		m_camera.viewportHeight = 600;
 		m_camera.zoom = 9.0f;
-		m_entityWorld = new World();
+		m_entityWorld = new GameEntityWorld();
 		m_entityWorld.setManager(new GroupManager());
 		m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -14), true));
 		JointFactory.getInstance().initialize(m_physicsSystem.getWorld());
@@ -53,7 +46,6 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		m_entityWorld.setSystem(new PlayerAttributeSystem());
 		m_entityWorld.setSystem(new LevelSystem(this));
 
-		
 		m_playerOneSystem = new PlayerOneSystem(m_physicsSystem);
 		m_entityWorld.setSystem(m_playerOneSystem);
 		m_playerTwoSystem = m_entityWorld.setSystem(new PlayerTwoSystem());
@@ -89,7 +81,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		}
 	}
 	
-	public World getEntityWorld(){
+	public GameEntityWorld getEntityWorld(){
 		return m_entityWorld;
 	}
 	

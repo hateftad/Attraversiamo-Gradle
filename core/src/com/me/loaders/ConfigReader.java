@@ -8,8 +8,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
-import com.me.utils.LevelConfig;
-import com.me.utils.PlayerConfig;
+import com.me.config.LevelConfig;
+import com.me.config.PlayerConfig;
 
 public class ConfigReader {
 	

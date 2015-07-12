@@ -9,9 +9,9 @@ import com.badlogic.gdx.utils.Array;
 import com.me.screens.GameScreen;
 import com.me.screens.LoadingScreen;
 import com.me.screens.SplashScreen;
-import com.me.utils.GameConfig;
-import com.me.utils.GameConfig.Platform;
-import com.me.utils.GlobalConfig;
+import com.me.config.GameConfig;
+import com.me.config.GameConfig.Platform;
+import com.me.config.GlobalConfig;
 
 public class Attraversiamo extends Game implements ApplicationListener {
 	

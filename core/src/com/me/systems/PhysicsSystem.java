@@ -25,10 +25,7 @@ import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
-import com.me.level.tasks.LevelTask.TaskType;
-import com.me.utils.GlobalConfig;
-
-import java.util.Iterator;
+import com.me.config.GlobalConfig;
 
 public class PhysicsSystem extends EntitySystem implements Disposable,
 		LevelEventListener {
@@ -174,7 +171,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		if (m_restart) {
-			if (!world.getSystem(LevelSystem.class).getLevelManager().isTaskDoneForAll(TaskType.ReachedEnd)) {
+			if (world.getSystem(LevelSystem.class) == null) {
 				for (int i = 0; i < entities.size(); i++) {
 					Entity e = entities.get(i);
 					if (m_restartComps.has(e)) {
@@ -276,7 +273,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
             }
 			fixture.setUserData(controllers);
             m_b2Controllers = controllers;
-			PhysicsListenerSetup setup = new PhysicsListenerSetup();
+			PhysicsListenerSetup setup = new PhysicsListenerSetup((GameEntityWorld) world);
 			setup.setLevelPhysics(pComp);
 		}
 	}

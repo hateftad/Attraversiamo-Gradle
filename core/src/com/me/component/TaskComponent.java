@@ -1,37 +1,21 @@
 package com.me.component;
 
-import com.me.level.tasks.LevelTask;
+import com.badlogic.gdx.utils.Array;
 
 /**
- * Created by hateftadayon on 6/7/15.
+ * Created by hateftadayon on 7/11/15.
  */
-public class TaskComponent extends BaseComponent {
+public abstract class TaskComponent extends TaskEventObserverComponent {
 
-    private LevelTask m_task;
+    protected int m_nrfinishers;
+    protected Array<PlayerComponent.PlayerNumber> m_finishers;
 
-
-    public TaskComponent(){
+    public TaskComponent(int finishers){
+        m_nrfinishers = finishers;
+        m_finishers = new Array<PlayerComponent.PlayerNumber>(m_nrfinishers);
     }
 
-    public TaskComponent(LevelTask task){
-        m_task = task;
-    }
-
-    public LevelTask getTask() {
-        return m_task;
-    }
-
-    public void setTask(LevelTask task){
-        m_task = task;
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public void restart() {
-
+    public boolean allFinished(){
+        return m_finishers.size == m_nrfinishers;
     }
 }

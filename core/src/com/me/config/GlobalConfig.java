@@ -1,6 +1,7 @@
-package com.me.utils;
+package com.me.config;
 
 import com.badlogic.gdx.Gdx;
+import com.me.utils.DimensionsHelper;
 
 public class GlobalConfig {
 

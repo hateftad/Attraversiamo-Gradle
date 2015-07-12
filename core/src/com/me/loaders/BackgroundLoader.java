@@ -2,14 +2,12 @@ package com.me.loaders;
 
 import com.me.Player;
 import com.me.attraversiamo.Attraversiamo;
-import com.me.component.PlayerComponent.PlayerNumber;
 import com.me.level.Level;
 import com.me.listeners.LoadCompletionListener;
-import com.me.manager.LevelManager;
 import com.me.screens.GameScreen;
 import com.me.systems.LevelSystem;
 import com.me.ui.InputManager;
-import com.me.utils.PlayerConfig;
+import com.me.config.PlayerConfig;
 
 public class BackgroundLoader{
 
@@ -19,13 +17,12 @@ public class BackgroundLoader{
 	private ConfigReader m_configLoader;
 	private int m_level;
 	private Attraversiamo m_game;
-	private LevelManager m_levelManager;
-	
+    private Level m_currentLevel;
+
 	public BackgroundLoader(Attraversiamo game){
 		m_loader = new EntityLoader();
 		m_game = game;
 		m_configLoader = new ConfigReader();
-        m_levelManager = new LevelManager();
 	}
 
 	public void setLevel(int level){
@@ -49,7 +46,7 @@ public class BackgroundLoader{
 
 	public void doRun(){
 
-        Level currentLevel = new Level(m_configLoader.getLevelConfigByName(LEVEL+m_level));
+        m_currentLevel = new Level(m_configLoader.getLevelConfigByName(LEVEL+m_level));
 
 		if(m_game.m_gameScreen != null){
 			stopProcessingSystems();
@@ -58,15 +55,14 @@ public class BackgroundLoader{
 			m_game.m_gameScreen = new GameScreen(m_game);
 		}
 
-		m_loader.loadLevel(currentLevel, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler());
+		m_loader.loadLevel(m_currentLevel, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler());
 
-		for(PlayerConfig playerConfig : currentLevel.getPlayerConfigs()){
+		for(PlayerConfig playerConfig : m_currentLevel.getPlayerConfigs()){
             Player player = new Player(playerConfig);
 			m_loader.loadCharacter(player, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld());
             InputManager.getInstance().setSelectedPlayer(player.getPlayerNumber(), player.isActive());
 		}
 			
-		m_levelManager.setLevel(currentLevel);
 		m_loader.dispose();
 		startProcessingSystems();
 
@@ -75,13 +71,13 @@ public class BackgroundLoader{
 	private void startProcessingSystems() {
 		
 		LevelSystem lvlSystem = m_game.m_gameScreen.getEntityWorld().getSystem(LevelSystem.class);
-		lvlSystem.setLevelManager(m_levelManager);
+        lvlSystem.setCurrentLevel(m_currentLevel);
 		lvlSystem.setProcessing(true);
 		
 		m_game.m_gameScreen.getPhysicsSystem().toggleProcessing(true);
 		
 		m_game.m_gameScreen.getCameraSystem().toggleProcess(true);
-		m_game.m_gameScreen.getCameraSystem().setLevelBoundariesForCamera(m_levelManager.getLevelBoundaries());
+		m_game.m_gameScreen.getCameraSystem().setLevelBoundariesForCamera(m_currentLevel.getLevelBoundaries());
 		
 		m_game.m_gameScreen.getPlayerSystem().toggleProcessing(true);
 		m_game.m_gameScreen.getPlayerSystem().restartSystem();
