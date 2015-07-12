@@ -28,7 +28,7 @@ public class LevelSystem extends GameEntityProcessingSystem{
 	@Mapper ComponentMapper<BuoyancyComponent> m_buoyancyComps;
 	@Mapper ComponentMapper<ReachEndComponent> m_reachEndComps;
     @Mapper ComponentMapper<DirectionComponent> m_direction;
-    @Mapper ComponentMapper<BodyInfoComponent> m_taskComps;
+    @Mapper ComponentMapper<EventComponent> m_taskComps;
 
 
 	@SuppressWarnings("unchecked")

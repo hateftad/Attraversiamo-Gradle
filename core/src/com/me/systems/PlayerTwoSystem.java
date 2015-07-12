@@ -10,7 +10,6 @@ import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
 import com.me.component.PlayerComponent.State;
 import com.me.component.AnimationComponent.AnimState;
-import com.me.interfaces.TaskEvent;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;
@@ -49,7 +48,7 @@ public class PlayerTwoSystem extends GameEntityProcessingSystem implements
 	ComponentMapper<PushComponent> m_pushComps;
 
     @Mapper
-    ComponentMapper<BodyInfoComponent> m_taskComps;
+    ComponentMapper<EventComponent> m_taskComps;
 
 
     private InputManager m_inputMgr;
@@ -159,18 +158,18 @@ public class PlayerTwoSystem extends GameEntityProcessingSystem implements
 					player.setState(State.LYINGDOWN);
 				}
 				if(touch.m_pushArea){
-                    BodyInfoComponent component = m_taskComps.get(entity);
+                    EventComponent component = m_taskComps.get(entity);
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
 						player.setState(State.WAITTILDONE);
-                        notifyObservers(entity, new TaskEvent(component.getTask()));
+                        component.getEventInfo().notify(entity, this);
                     }
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
 						player.setState(State.WAITTILDONE);
-                        notifyObservers(entity, new TaskEvent(component.getTask()));
+                        component.getEventInfo().notify(entity, this);
                     }
 					
 				}

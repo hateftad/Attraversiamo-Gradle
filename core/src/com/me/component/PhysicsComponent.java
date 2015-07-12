@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Values;
-import com.me.level.tasks.BodyInfo;
+import com.me.interfaces.GameEvent;
 import com.me.physics.FixtureData;
 import com.me.physics.RBUserData;
 import com.me.utils.Converters;
@@ -41,7 +41,7 @@ public class PhysicsComponent extends BaseComponent {
     private short currentBits;
 	public ImmediateModePhysicsListener m_physicsListener;
 	private boolean m_submerged;
-    private BodyInfo m_taskInfo;
+    private GameEvent m_eventInfo;
 
 	public PhysicsComponent(World world, Body b, String name) {
 		m_name = name;
@@ -303,12 +303,12 @@ public class PhysicsComponent extends BaseComponent {
 		return m_userData.get(body);
 	}
 
-    public void setTaskInfo(BodyInfo taskInfo){
-        m_taskInfo = taskInfo;
+    public void setTaskInfo(GameEvent taskInfo){
+        m_eventInfo = taskInfo;
     }
 
-    public BodyInfo getTaskInfo(){
-        return m_taskInfo;
+    public GameEvent getEventInfo(){
+        return m_eventInfo;
     }
 
 	public Values<Body> getBodyMap() {

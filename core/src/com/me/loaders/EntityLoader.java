@@ -6,7 +6,6 @@ import box2dLight.ConeLight;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.artemis.Entity;
-import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -28,6 +27,7 @@ import com.me.Player;
 import com.me.component.*;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.AnimationComponent.AnimState;
+import com.me.interfaces.TaskEvent;
 import com.me.level.Level;
 import com.me.loaders.BodySerializer.BodyUserData;
 import com.me.loaders.RubeScene.Indexes;
@@ -225,7 +225,7 @@ public class EntityLoader {
                 int taskFinishers = m_scene.getCustom(body, "taskFinishers", 0);
                 String taskType = m_scene.getCustom(body, "eventType", "");
                 int taskId = m_scene.getCustom(body, "taskId", 0);
-                BodyInfo task = new BodyInfo(taskFinishers, taskId, taskType);
+                TaskEvent task = new TaskEvent(new BodyInfo(taskFinishers, taskId, taskType));
                 pComp.setTaskInfo(task);
             }
 
@@ -376,7 +376,7 @@ public class EntityLoader {
 				entity.addComponent(new PlayerOneComponent());
 				entity.addComponent(new TriggerComponent());
 				entity.addComponent(new RestartComponent());
-				entity.addComponent(new BodyInfoComponent());
+				entity.addComponent(new EventComponent());
 
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
@@ -444,7 +444,7 @@ public class EntityLoader {
 				entity.addComponent(new RestartComponent());
 				entity.addComponent(new PushComponent());
 				entity.addComponent(new QueueComponent());
-                entity.addComponent(new BodyInfoComponent());
+                entity.addComponent(new EventComponent());
 
 				pComp.setPosition(player.getPosition());
 			}

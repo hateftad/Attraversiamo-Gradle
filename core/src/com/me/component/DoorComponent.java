@@ -3,7 +3,6 @@ package com.me.component;
 import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
-import com.me.interfaces.GameEvent;
 import com.me.interfaces.GameEventType;
 import com.me.interfaces.TaskEvent;
 import com.me.physics.JointFactory;

@@ -130,13 +130,13 @@ public class PhysicsListenerSetup {
 							if(otherUd.getType() == Type.LeftPushButton){
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_leftPushArea = true;
-                                e.getComponent(BodyInfoComponent.class).setBodyInfo(other.getTaskInfo());
+                                e.getComponent(EventComponent.class).setEventInfo(other.getEventInfo());
 
 							}
 							if(otherUd.getType() == Type.RightPushButton){
 								e.getComponent(TouchComponent.class).m_pushArea = true;
 								e.getComponent(TouchComponent.class).m_rightPushArea = true;
-                                e.getComponent(BodyInfoComponent.class).setBodyInfo(other.getTaskInfo());
+                                e.getComponent(EventComponent.class).setEventInfo(other.getEventInfo());
 							}
 
 							if(otherUd.getType() == Type.Hand){
@@ -291,7 +291,7 @@ public class PhysicsListenerSetup {
 						}
                         if(otherUd.getType() == Type.Finish){
                             e.getComponent(TouchComponent.class).m_endReach = true;
-                            e.getComponent(BodyInfoComponent.class).setBodyInfo(other.getTaskInfo());
+                            e.getComponent(EventComponent.class).setEventInfo(other.getEventInfo());
                             m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.OutsideFinishArea));
                         }
 						if(otherUd.getType() == Type.LeftPushButton){

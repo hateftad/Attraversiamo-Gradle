@@ -11,7 +11,6 @@ import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
-import com.me.interfaces.TaskEvent;
 import com.me.listeners.LevelEventListener;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
@@ -64,7 +63,7 @@ public class PlayerOneSystem extends GameEntityProcessingSystem implements
 	ComponentMapper<PushComponent> m_pushComps;
 
     @Mapper
-    ComponentMapper<BodyInfoComponent> m_taskComps;
+    ComponentMapper<EventComponent> m_taskComps;
 
 	private float VELOCITY = 11.0f;
 	private float VELOCITYINR = 3.0f;
@@ -188,19 +187,20 @@ public class PlayerOneSystem extends GameEntityProcessingSystem implements
 					l.m_goingUp = true;
 				}
 				if(touch.m_pushArea){
-                    BodyInfoComponent component = m_taskComps.get(entity);
+                    EventComponent component = m_taskComps.get(entity);
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
 						player.setState(State.WAITTILDONE);
-                        notifyObservers(entity, new TaskEvent(component.getTask()));
+                        component.getEventInfo().notify(entity, this);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
 						player.setState(State.WAITTILDONE);
-                        notifyObservers(entity, new TaskEvent(component.getTask()));
-					}
+                        component.getEventInfo().notify(entity, this);
+
+                    }
 				}
 			}
 
