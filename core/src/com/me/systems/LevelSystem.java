@@ -6,8 +6,8 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.graphics.Color;
 import com.me.component.*;
-import com.me.interfaces.GameEvent;
-import com.me.interfaces.GameEventType;
+import com.me.event.GameEvent;
+import com.me.event.GameEventType;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.ScriptManager;
@@ -27,7 +27,6 @@ public class LevelSystem extends GameEntityProcessingSystem{
 	@Mapper ComponentMapper<JointComponent> m_joints;
 	@Mapper ComponentMapper<BuoyancyComponent> m_buoyancyComps;
 	@Mapper ComponentMapper<ReachEndComponent> m_reachEndComps;
-    @Mapper ComponentMapper<DirectionComponent> m_direction;
     @Mapper ComponentMapper<EventComponent> m_taskComps;
 
 
@@ -121,7 +120,7 @@ public class LevelSystem extends GameEntityProcessingSystem{
         /*
         if(m_levelManager.isTaskDoneForAll(TaskType.WaterEngine)) {
             if(m_buoyancyComps.has(e)) {
-                BuoyancyComponent.BuoyancyControllerInfo info = m_buoyancyComps.get(e).getController(WorldObjectComponent.WorldObject);
+                BuoyancyComponent.BuoyancyControllerConfig info = m_buoyancyComps.get(e).getController(WorldObjectComponent.WorldObject);
                 if (info != null) {
                     DirectionComponent directionComponent = m_direction.get(e);
                     if (directionComponent.getDirection() == DirectionComponent.Direction.Left) {

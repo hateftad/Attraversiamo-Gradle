@@ -1,4 +1,4 @@
-package com.me.interfaces;
+package com.me.event;
 
 /**
  * Created by hateftadayon on 7/7/15.
@@ -6,7 +6,7 @@ package com.me.interfaces;
 public enum GameEventType {
     Button,
     Door,
-    DirectionButton,
+    HorizontalButton,
     WaterEngine,
     InsideFinishArea,
     OutsideFinishArea,

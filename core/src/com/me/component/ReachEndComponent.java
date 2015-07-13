@@ -1,8 +1,8 @@
 package com.me.component;
 
 import com.artemis.Entity;
-import com.me.interfaces.GameEventType;
-import com.me.interfaces.TaskEvent;
+import com.me.event.GameEventType;
+import com.me.event.TaskEvent;
 
 /**
  * Created by hateftadayon on 7/11/15.

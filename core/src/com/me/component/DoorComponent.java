@@ -3,8 +3,8 @@ package com.me.component;
 import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
-import com.me.interfaces.GameEventType;
-import com.me.interfaces.TaskEvent;
+import com.me.event.GameEventType;
+import com.me.event.TaskEvent;
 import com.me.physics.JointFactory;
 
 /**
@@ -43,7 +43,7 @@ public class DoorComponent extends TaskComponent {
     @Override
     public void onNotify(Entity entity, TaskEvent event) {
         if(event.getEventType().equals(GameEventType.Door)){
-            if(event.getTaskId() == m_taskId) {
+            if(event.getEventId() == m_taskId) {
                 PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
                 if (!m_finishers.contains(playerComponent.getPlayerNr(), false)) {
                     m_finishers.add(playerComponent.getPlayerNr());

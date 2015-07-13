@@ -261,7 +261,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 			ObjectMap<String, B2Controller> controllers = new ObjectMap<String, B2Controller>();
             for (Object o : buoyancyComponent.getControllerInfo().entries()) {
                 ObjectMap.Entry pairs = (ObjectMap.Entry) o;
-                BuoyancyComponent.BuoyancyControllerInfo controllerInfo = (BuoyancyComponent.BuoyancyControllerInfo) pairs.value;
+                BuoyancyComponent.BuoyancyControllerConfig controllerInfo = (BuoyancyComponent.BuoyancyControllerConfig) pairs.value;
                 B2BuoyancyController b2c = new B2BuoyancyController(B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
                         controllerInfo.getFluidVelocity(),
                         m_world.getGravity(),

@@ -1,8 +1,8 @@
 package com.me.component;
 
 import com.artemis.Entity;
-import com.me.interfaces.GameEvent;
-import com.me.interfaces.GameEventType;
+import com.me.event.GameEvent;
+import com.me.event.GameEventType;
 
 public class PlayerComponent extends GameEventObserverComponent {
 

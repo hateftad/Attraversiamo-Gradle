@@ -1,6 +1,6 @@
 package com.me.level.tasks;
 
-import com.me.interfaces.GameEventType;
+import com.me.event.GameEventType;
 
 
 /**
@@ -10,7 +10,7 @@ public class BodyInfo {
 
     private int m_taskFinishers;
 
-    public int getTaskId() {
+    public int getEventId() {
         return m_taskId;
     }
 
@@ -28,6 +28,10 @@ public class BodyInfo {
             m_taskType = GameEventType.Door;
         } else if("WaterEngine".equalsIgnoreCase(taskType)){
             m_taskType = GameEventType.WaterEngine;
+        } else if("ReachEnd".equalsIgnoreCase(taskType)){
+            m_taskType = GameEventType.InsideFinishArea;
+        } else if("HorizontalButton".equalsIgnoreCase(taskType)){
+            m_taskType = GameEventType.HorizontalButton;
         }
     }
 

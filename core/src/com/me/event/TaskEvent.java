@@ -1,4 +1,4 @@
-package com.me.interfaces;
+package com.me.event;
 
 import com.artemis.Entity;
 import com.me.level.tasks.BodyInfo;
@@ -9,15 +9,19 @@ import com.me.systems.GameEntityProcessingSystem;
  */
 public class TaskEvent extends GameEvent {
 
-    public int getTaskId() {
-        return m_taskId;
-    }
+    private int m_eventId;
 
-    private int m_taskId;
+    public int getEventId() {
+        return m_eventId;
+    }
 
     public TaskEvent(BodyInfo bodyInfo){
         super(bodyInfo.getEventType());
-        m_taskId = bodyInfo.getTaskId();
+        m_eventId = bodyInfo.getEventId();
+    }
+
+    public TaskEvent(GameEventType type){
+        super(type);
     }
 
     public void notify(Entity e, GameEntityProcessingSystem entityProcessingSystem){

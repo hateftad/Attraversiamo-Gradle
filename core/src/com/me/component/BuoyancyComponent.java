@@ -1,26 +1,32 @@
 package com.me.component;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.me.event.ButtonEvent;
+import com.me.event.GameEventType;
+import com.me.event.HorizontalButtonEvent;
+import com.me.utils.Direction;
 
-import java.util.HashMap;
 
-public class BuoyancyComponent extends BaseComponent {
+public class BuoyancyComponent extends ButtonStateObserverComponent {
 
-	private ObjectMap<String, BuoyancyControllerInfo> controllerInfo = new ObjectMap<String, BuoyancyControllerInfo>();
+	private ObjectMap<String, BuoyancyControllerConfig> controllerInfo = new ObjectMap<String, BuoyancyControllerConfig>();
+    private int m_eventId;
 
-	public BuoyancyComponent(){
+	public BuoyancyComponent(int taskId){
+        m_eventId = taskId;
 	}
 
 	public void addControllerInfo(String name, Vector2 fluidVelocity, float linearDrag, float angularDrag){
-		controllerInfo.put(name, new BuoyancyControllerInfo(fluidVelocity, linearDrag, angularDrag));
+		controllerInfo.put(name, new BuoyancyControllerConfig(fluidVelocity, linearDrag, angularDrag));
 	}
 
 	public ObjectMap getControllerInfo(){
 		return controllerInfo;
 	}
 
-    public BuoyancyControllerInfo getController(String name){
+    public BuoyancyControllerConfig getController(String name){
         return controllerInfo.get(name);
     }
 
@@ -36,12 +42,28 @@ public class BuoyancyComponent extends BaseComponent {
 
 	}
 
-	public class BuoyancyControllerInfo{
+    @Override
+    public void onNotify(Entity entity, ButtonEvent event) {
+        if(event.getEventType() == GameEventType.HorizontalButton){
+            if(m_eventId == event.getEventId()){
+                HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
+                buttonEvent.update();
+                //get fluid velocity from other component
+                if(buttonEvent.getDirection() == Direction.Left){
+                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(-3, 1);
+                } else if(buttonEvent.getDirection() == Direction.Right){
+                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(3, 1);
+                }
+            }
+        }
+    }
+
+    public class BuoyancyControllerConfig {
 		private float m_angularDrag;
 		private float m_linearDrag;
 		private Vector2 m_fluidVelocity;
 
-		public BuoyancyControllerInfo(Vector2 fluidVelocity, float linearDrag, float angularDrag){
+		public BuoyancyControllerConfig(Vector2 fluidVelocity, float linearDrag, float angularDrag){
 			m_angularDrag = angularDrag;
 			m_linearDrag = linearDrag;
 			m_fluidVelocity = fluidVelocity;

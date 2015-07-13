@@ -27,7 +27,7 @@ import com.me.Player;
 import com.me.component.*;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.AnimationComponent.AnimState;
-import com.me.interfaces.TaskEvent;
+import com.me.factory.GameEventFactory;
 import com.me.level.Level;
 import com.me.loaders.BodySerializer.BodyUserData;
 import com.me.loaders.RubeScene.Indexes;
@@ -205,28 +205,21 @@ public class EntityLoader {
 			}
 
 			if (ud.mName.equalsIgnoreCase("water")) {
-				BuoyancyComponent buoyancyComponent = new BuoyancyComponent();
+                int eventId = m_scene.getCustom(body, "taskId", 0);
+				BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
 				buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3),  1.5f, 2);
 				buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
 				buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 1), 1.5f, 2);
+                entityWorld.addObserver(buoyancyComponent);
 				entity.addComponent(buoyancyComponent);
 				entity.addComponent(new ShaderComponent("",body));
                 entity.addComponent(new TriggerComponent());
 
 			}
 
-            if(ud.mName.equalsIgnoreCase("directionButton")){
-                entity.addComponent(new TriggerComponent());
-                entity.addComponent(new DirectionComponent());
-                //entity.addComponent(new AnimationComponent());
-            }
-
             if(ud.mName.equalsIgnoreCase("bodyInfo")){
-                int taskFinishers = m_scene.getCustom(body, "taskFinishers", 0);
-                String taskType = m_scene.getCustom(body, "eventType", "");
-                int taskId = m_scene.getCustom(body, "taskId", 0);
-                TaskEvent task = new TaskEvent(new BodyInfo(taskFinishers, taskId, taskType));
-                pComp.setTaskInfo(task);
+                GameEventFactory factory = new GameEventFactory();
+                pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
             }
 
 			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));

@@ -9,8 +9,8 @@ import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
-import com.me.interfaces.GameEvent;
-import com.me.interfaces.GameEventType;
+import com.me.event.GameEventType;
+import com.me.event.TaskEvent;
 import com.me.physics.RBUserData.Type;
 import com.me.systems.GameEntityWorld;
 
@@ -163,11 +163,11 @@ public class PhysicsListenerSetup {
 							}
 							if(otherUd.getType() == Type.Portal){
 								e.getComponent(TouchComponent.class).m_endReach = true;
-                                m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.InsideFinishArea));
+                                m_gameEntityWorld.onNotify(e, new TaskEvent(GameEventType.InsideFinishArea));
 							}
 							if(otherUd.getType() == Type.Finish){
                                 e.getComponent(TouchComponent.class).m_endReach = true;
-                                m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.InsideFinishArea));
+                                m_gameEntityWorld.onNotify(e, new TaskEvent(GameEventType.InsideFinishArea));
 							}
 							if(created){
 								e.getComponent(TouchComponent.class).m_edgeTouch = true;
@@ -287,12 +287,12 @@ public class PhysicsListenerSetup {
 						}
 						if(otherUd.getType() == Type.Portal){
 							e.getComponent(TouchComponent.class).m_endReach = false;
-                            m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.OutsideFinishArea));
+                            m_gameEntityWorld.onNotify(e, new TaskEvent(GameEventType.OutsideFinishArea));
 						}
                         if(otherUd.getType() == Type.Finish){
                             e.getComponent(TouchComponent.class).m_endReach = true;
                             e.getComponent(EventComponent.class).setEventInfo(other.getEventInfo());
-                            m_gameEntityWorld.onNotify(e, new GameEvent(GameEventType.OutsideFinishArea));
+                            m_gameEntityWorld.onNotify(e, new TaskEvent(GameEventType.OutsideFinishArea));
                         }
 						if(otherUd.getType() == Type.LeftPushButton){
 							e.getComponent(TouchComponent.class).m_pushArea = false;
