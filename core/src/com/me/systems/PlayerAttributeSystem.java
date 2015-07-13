@@ -28,7 +28,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 	@Mapper
 	ComponentMapper<PlayerTwoComponent> m_playerTwo;
 	@Mapper
-	ComponentMapper<AnimationComponent> m_animComps;
+	ComponentMapper<PlayerAnimationComponent> m_animComps;
 
 	@SuppressWarnings("unchecked")
 	public PlayerAttributeSystem() {

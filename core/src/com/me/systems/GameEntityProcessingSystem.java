@@ -3,10 +3,7 @@ package com.me.systems;
 import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
-import com.me.event.ButtonEvent;
-import com.me.event.GameEvent;
-import com.me.event.MultiStateEvent;
-import com.me.event.TaskEvent;
+import com.me.event.*;
 
 /**
  * Created by hateftadayon on 7/9/15.
@@ -18,15 +15,11 @@ public abstract class GameEntityProcessingSystem extends EntityProcessingSystem 
         super(aspect);
     }
 
-    public void notifyObservers(Entity entity, GameEvent event){
-        ((GameEntityWorld)world).onNotify(entity, event);
+    public void notifyObservers(GameEventType event){
+        ((GameEntityWorld)world).onNotify(event);
     }
 
     public void notifyObservers(Entity entity, TaskEvent taskEvent){
-        ((GameEntityWorld)world).onNotify(entity, taskEvent);
-    }
-
-    public void notifyObservers(Entity entity, MultiStateEvent taskEvent){
         ((GameEntityWorld)world).onNotify(entity, taskEvent);
     }
 

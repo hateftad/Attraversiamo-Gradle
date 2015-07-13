@@ -23,7 +23,7 @@ import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WheelJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
-import com.me.Player;
+import com.me.level.Player;
 import com.me.component.*;
 import com.me.component.ParticleComponent.ParticleType;
 import com.me.component.AnimationComponent.AnimState;
@@ -35,7 +35,6 @@ import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.physics.RBUserData;
 import com.me.systems.CameraSystem;
-import com.me.level.tasks.BodyInfo;
 import com.me.systems.GameEntityWorld;
 import com.me.utils.Converters;
 
@@ -170,21 +169,25 @@ public class EntityLoader {
 				entity.addComponent(new QueueComponent());
 			}
 			if (ud.mName.equalsIgnoreCase("portal")) {
-				entity.addComponent(new ParticleComponent("fire", ParticleType.PORTAL, 1));
+                ParticleComponent particleComponent = new ParticleComponent("fire", ParticleType.PORTAL, 1);
+                entityWorld.addObserver(particleComponent);
+				entity.addComponent(particleComponent);
 				entity.addComponent(new TriggerComponent());
-                int taskFinishers = m_scene.getCustom(body, "taskFinishers", 0);
-                //int taskId = m_scene.getCustom(body, "taskId", 0);
-                //String taskType = m_scene.getCustom(body, "eventType", "");
-
-                ReachEndComponent reachEndComponent = new ReachEndComponent(taskFinishers, level.shouldFinishFacingLeft());
+                ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
+                LevelComponent levelComponent = new LevelComponent();
                 entityWorld.addObserver(reachEndComponent);
+                entityWorld.addObserver(levelComponent);
+                entity.addComponent(levelComponent);
                 entity.addComponent(reachEndComponent);
-                //BodyInfo task = new BodyInfo(taskFinishers, taskId, taskType);
-                //pComp.setTaskInfo(task);
 			}
 			if (ud.mName.equalsIgnoreCase("finish")) {
 				entity.addComponent(new TriggerComponent());
-                entity.addComponent(new ReachEndComponent(level.getNumberOfFinishers(), level.shouldFinishFacingLeft()));
+                ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
+                LevelComponent levelComponent = new LevelComponent();
+                entityWorld.addObserver(reachEndComponent);
+                entityWorld.addObserver(levelComponent);
+                entity.addComponent(levelComponent);
+                entity.addComponent(reachEndComponent);
 			}
 			if (ud.mName.equalsIgnoreCase("point")) {
 				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
@@ -339,23 +342,24 @@ public class EntityLoader {
 
 			String skelName = m_scene.getCustom(body, "skeleton", "failed");
 			String atlasName = m_scene.getCustom(body, "atlas", "failed");
-			AnimationComponent anim = null;
+			PlayerAnimationComponent animationComponent = null;
 			AnimationStateData stateData = null;
 			if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
-				anim = new AnimationComponent(CHARPATH + characterPath
-						+ atlasName, CHARPATH + characterPath + skelName, 1.3f);
-				entity.addComponent(anim);
+				animationComponent = new PlayerAnimationComponent(CHARPATH + characterPath
+						+ atlasName, CHARPATH + characterPath + skelName, 1.3f, player.getFinishAnimation());
+				entity.addComponent(animationComponent);
+                entityWorld.addObserver(animationComponent);
 			}
 			if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("playerOne")) {
 
-				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
-				p.setActive(player.isActive());
-				p.setFacingLeft(player.isFacingLeft());
-				p.setCanBecomeInactive(player.canDeactivate());
-                p.setFinishAnimaiton(player.getFinishAnimation());
+				PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), player.isFinishFacingLeft());
+				playerComponent.setActive(player.isActive());
+				playerComponent.setFacingLeft(player.isFacingLeft());
+				playerComponent.setCanBecomeInactive(player.canDeactivate());
+                entityWorld.addObserver(playerComponent);
 				// entity.addComponent(new LightComponent(light, ((BodyUserData)
 				// body.getUserData()).mName));
-				entity.addComponent(p);
+				entity.addComponent(playerComponent);
 				entity.addComponent(new TouchComponent());
 				entity.addComponent(new MovementComponent());
 				entity.addComponent(new JointComponent("noname"));
@@ -373,8 +377,8 @@ public class EntityLoader {
 
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
-				stateData = anim.setUp(image);
-				anim.setAnimationState(AnimState.IDLE);
+				stateData = animationComponent.setUp(image);
+				animationComponent.setAnimationState(AnimState.IDLE);
 				stateData.setMix("idle1", "jogging", 0.4f);
 				stateData.setMix("jogging", "idle1", 0.4f);
 				stateData.setMix("running", "idle1", 0.4f);
@@ -389,22 +393,23 @@ public class EntityLoader {
 				stateData.setMix("runJumping", "falling", 0.4f);
 				// dstateData.setMix("pushing", "idle", 0.6f);
 				// stateData.setMix("ladderHang", "running", 0.1f);
-				anim.setSkin(player.getSkinName());
+				animationComponent.setSkin(player.getSkinName());
 				pComp.setPosition(player.getPosition());
 				// stateData.setMix("lieDown", "running", 0.3f);
 
 			} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
                     "playerTwo")) {
-				PlayerComponent p = new PlayerComponent(m_scene.getCustom(body, "characterType", ""));
-				p.setActive(player.isActive());
-				p.setFacingLeft(player.isFacingLeft());
-                p.setCanBecomeInactive(player.canDeactivate());
-                p.setFinishAnimaiton(player.getFinishAnimation());
+				PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), player.isFinishFacingLeft());
+				playerComponent.setActive(player.isActive());
+				playerComponent.setFacingLeft(player.isFacingLeft());
+                playerComponent.setCanBecomeInactive(player.canDeactivate());
+                entityWorld.addObserver(playerComponent);
+
 				pComp.setName(((BodyUserData) body.getUserData()).mName);
 				pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
 				pComp.setIsPlayer(true);
-				stateData = anim.setUp(image);
-				anim.setAnimationState(AnimState.IDLE);
+				stateData = animationComponent.setUp(image);
+				animationComponent.setAnimationState(AnimState.IDLE);
 				stateData.setMix("idle1", "walking", 0.4f);
 				stateData.setMix("running", "idle1", 0.4f);
 				stateData.setMix("walking", "idle1", 0.4f);
@@ -421,8 +426,8 @@ public class EntityLoader {
 				stateData.setMix("lyingDown", "crawling", 0.2f);
 				stateData.setMix("standUp", "idle1", 0.2f);
 				stateData.setMix("lyingDown", "standUp", 0.2f);
-				entity.addComponent(p);
-				anim.setSkin(player.getSkinName());
+				entity.addComponent(playerComponent);
+				animationComponent.setSkin(player.getSkinName());
 				entity.addComponent(new MovementComponent());
 				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f,
 						10);

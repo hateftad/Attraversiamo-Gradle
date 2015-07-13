@@ -5,7 +5,7 @@ import com.me.level.tasks.BodyInfo;
 /**
  * Created by hateftadayon on 7/13/15.
  */
-public class MultiStateEvent extends GameEvent {
+public abstract class MultiStateEvent extends GameEvent {
 
     protected int m_eventId;
 

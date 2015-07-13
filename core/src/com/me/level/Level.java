@@ -37,10 +37,6 @@ public class Level {
         return m_levelConfig.getPlayerConfigs().size;
     }
 
-    public boolean shouldFinishFacingLeft(){
-        return m_levelConfig.finishLeft();
-    }
-
     public String getLevelName(){
         return m_levelConfig.getLevelName();
     }

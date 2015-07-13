@@ -6,11 +6,8 @@ import com.badlogic.gdx.utils.Array;
 import com.me.component.ButtonStateObserverComponent;
 import com.me.component.MultiStateObserverComponent;
 import com.me.component.TaskEventObserverComponent;
-import com.me.event.ButtonEvent;
-import com.me.event.GameEvent;
+import com.me.event.*;
 import com.me.component.GameEventObserverComponent;
-import com.me.event.MultiStateEvent;
-import com.me.event.TaskEvent;
 
 /**
  * Created by hateftadayon on 7/9/15.
@@ -44,9 +41,9 @@ public class GameEntityWorld extends World {
         m_gameEventObservers.removeValue(observerComponent, false);
     }
 
-    public void onNotify(Entity entity, GameEvent event){
+    public void onNotify(GameEventType eventType){
         for(GameEventObserverComponent observerComponent : m_gameEventObservers){
-            observerComponent.onNotify(entity, event);
+            observerComponent.onNotify(eventType);
         }
     }
 

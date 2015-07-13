@@ -10,5 +10,6 @@ public enum GameEventType {
     WaterEngine,
     InsideFinishArea,
     OutsideFinishArea,
-    AllReachedEnd
+    AllReachedEnd,
+    LevelFinished
 }

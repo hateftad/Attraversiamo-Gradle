@@ -11,6 +11,7 @@ import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
+import com.me.event.GameEventType;
 import com.me.listeners.LevelEventListener;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
@@ -35,7 +36,7 @@ public class PlayerOneSystem extends GameEntityProcessingSystem implements
 	ComponentMapper<PhysicsComponent> m_physComps;
 
 	@Mapper
-	ComponentMapper<AnimationComponent> m_animComps;
+	ComponentMapper<PlayerAnimationComponent> m_animComps;
 
 	@Mapper
 	ComponentMapper<MovementComponent> m_movComps;
@@ -93,7 +94,7 @@ public class PlayerOneSystem extends GameEntityProcessingSystem implements
 		TouchComponent touch = m_touchComps.get(entity);
 		PhysicsComponent ps = m_physComps.get(entity);
 
-		boolean finish = false;//m_levelManager.isTaskDoneForAll(TaskType.ReachedEnd);
+		boolean finish = player.isFinishing();
 
 		if (m_inputMgr.isDown(skinChange)) {
 			animation.setSkin(m_inputMgr.toggleSkins());
@@ -217,8 +218,8 @@ public class PlayerOneSystem extends GameEntityProcessingSystem implements
 		}
 		
 		if (finish) {
-			animation.setAnimationState(player.getFinishAnimation());
 			if (animation.isCompleted()) {
+                notifyObservers(GameEventType.LevelFinished);
 				player.setIsFinishedAnimating(true);
 			}
 		}

@@ -4,12 +4,10 @@
     <Level name="level1">
         <levelNr>1</levelNr>
         <nrOfPlayers>2</nrOfPlayers>
-        <finishFacingLeft>false</finishFacingLeft>
+
         <hasPortal>true</hasPortal>
         <player>
-            <tasks>
-                <task name="TouchEnd"/>
-            </tasks>
+            <finishFacingLeft>false</finishFacingLeft>
             <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
@@ -23,9 +21,7 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
-            <tasks>
-                <task name="TouchEnd"/>
-            </tasks>
+            <finishFacingLeft>false</finishFacingLeft>
             <skinName>color</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
@@ -46,12 +42,9 @@
     <Level name="level2">
         <levelNr>2</levelNr>
         <nrOfPlayers>2</nrOfPlayers>
-        <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
         <player>
-            <tasks>
-                <task name="TouchEnd"/>
-            </tasks>
+            <finishFacingLeft>false</finishFacingLeft>
             <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
@@ -65,9 +58,7 @@
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
-            <tasks>
-                <task name="TouchEnd"/>
-            </tasks>
+            <finishFacingLeft>false</finishFacingLeft>
             <skinName>color</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
@@ -88,12 +79,9 @@
     <Level name="level3">
         <levelNr>3</levelNr>
         <nrOfPlayers>1</nrOfPlayers>
-        <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
         <player>
-            <tasks>
-                <task name="TouchEnd"/>
-            </tasks>
+            <finishFacingLeft>false</finishFacingLeft>
             <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>false</canDeactivate>
@@ -114,12 +102,9 @@
     <Level name="level4">
         <levelNr>4</levelNr>
         <nrOfPlayers>1</nrOfPlayers>
-        <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
         <player>
-            <tasks>
-                <task name="TouchEnd"/>
-            </tasks>
+            <finishFacingLeft>false</finishFacingLeft>
             <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>false</canDeactivate>
@@ -140,13 +125,9 @@
     <Level name="level5">
         <levelNr>5</levelNr>
         <nrOfPlayers>2</nrOfPlayers>
-        <finishFacingLeft>false</finishFacingLeft>
         <hasPortal>false</hasPortal>
         <player>
-            <tasks>
-                <task name="TouchEnd"/>
-                <task name="OpenDoor"/>
-            </tasks>
+            <finishFacingLeft>false</finishFacingLeft>
             <skinName>silhouette</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
@@ -160,10 +141,7 @@
 	        <finishAnim>runOut</finishAnim>
         </player>
         <player>
-            <tasks>
-                <task name="TouchEnd"/>
-                <task name="OpenDoor"/>
-            </tasks>
+            <finishFacingLeft>false</finishFacingLeft>
             <skinName>silhouette</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
@@ -184,14 +162,11 @@
     <Level name="level6">
         <levelNr>6</levelNr>
         <nrOfPlayers>2</nrOfPlayers>
-        <finishFacingLeft>false</finishFacingLeft>
+
         <hasPortal>false</hasPortal>
         <player>
-            <tasks>
-                <task name="OpenDoor"/>
-                <task name="TouchEnd"/>
-            </tasks>
             <skinName>silhouette</skinName>
+            <finishFacingLeft>false</finishFacingLeft>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
@@ -205,10 +180,8 @@
         </player>
         <player>
             <skinName>silhouette</skinName>
+            <finishFacingLeft>false</finishFacingLeft>
             <active>false</active>
-            <tasks>
-                <task name="TouchEnd"/>
-            </tasks>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
             <playerNr>two</playerNr>

@@ -39,11 +39,11 @@ public class ConfigReader {
 						pConfig.setFacingleft(gChild.getBoolean("facingLeft"));
 						pConfig.setFinishAnimation(gChild.get("finishAnim"));
 						pConfig.setName(gChild.get("playerName"));
+						pConfig.setFinishFacingleft(gChild.getBoolean("finishFacingLeft"));
 						config.addPlayerConfig(pConfig);
 				}
 				config.setLevelNr(child.getInt("levelNr"));
 				config.setLightColor(child.get("lightColor"));
-				config.finishFacingLeft(child.getBoolean("finishFacingLeft"));
 				config.setHasPortal(child.getBoolean("hasPortal"));
 				
 				m_levelConfigs.put(child.getAttribute("name"), config);

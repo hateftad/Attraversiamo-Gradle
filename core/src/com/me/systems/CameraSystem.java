@@ -15,12 +15,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.me.component.AnimationComponent;
-import com.me.component.CameraComponent;
-import com.me.component.LightComponent;
-import com.me.component.PhysicsComponent;
-import com.me.component.PlayerComponent;
-import com.me.component.SpriteComponent;
+import com.me.component.*;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.utils.Converters;
@@ -32,7 +27,7 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	@Mapper ComponentMapper<PhysicsComponent> m_physicsComp;
 	@Mapper ComponentMapper<LightComponent> m_lightComps;
 	@Mapper ComponentMapper<SpriteComponent> m_spriteComps;
-	@Mapper ComponentMapper<AnimationComponent> m_animComps;
+	@Mapper ComponentMapper<PlayerAnimationComponent> m_animComps;
 
 	private Vector3 m_camPos = new Vector3();
 

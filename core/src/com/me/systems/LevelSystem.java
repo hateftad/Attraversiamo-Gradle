@@ -21,13 +21,8 @@ public class LevelSystem extends GameEntityProcessingSystem{
 	private boolean m_enable;
 
 	@Mapper ComponentMapper<LightComponent> m_lightComps;
-	@Mapper ComponentMapper<PlayerComponent> m_players;
-	@Mapper ComponentMapper<TouchComponent> m_touch;
-	@Mapper ComponentMapper<ParticleComponent> m_particles;
-	@Mapper ComponentMapper<JointComponent> m_joints;
-	@Mapper ComponentMapper<BuoyancyComponent> m_buoyancyComps;
 	@Mapper ComponentMapper<ReachEndComponent> m_reachEndComps;
-    @Mapper ComponentMapper<EventComponent> m_taskComps;
+	@Mapper ComponentMapper<LevelComponent> m_levelComp;
 
 
 	@SuppressWarnings("unchecked")
@@ -60,10 +55,6 @@ public class LevelSystem extends GameEntityProcessingSystem{
         if(m_reachEndComps.has(e)) {
 			checkFinished(e);
 		}
-
-		if(m_particles.has(e)){
-			updateParticles(m_particles.get(e));
-		}
 		
 	}
 
@@ -90,48 +81,20 @@ public class LevelSystem extends GameEntityProcessingSystem{
 				light.setColor(Color.GREEN);
 				world.getSystem(CameraSystem.class).getRayHandler().setAmbientLight(1f);
 			}
-
 		}
-	}
-	
-	private void updateParticles(ParticleComponent particle){
-
-		if(particle.getType() == ParticleComponent.ParticleType.PORTAL){
-			if(m_currentLevel.isFinished()){
-                particle.start();
-			}
-			if(particle.isCompleted() && m_currentLevel.isFinished()){
-				m_levelListener.onFinishedLevel(m_currentLevel.getLevelNumber());
-			}
-		}
-
 	}
 	
 	private void checkFinished(Entity entity){
 
         ReachEndComponent reachEndComponent = m_reachEndComps.get(entity);
-        if (reachEndComponent.allFinished()) {
-            notifyObservers(entity, new GameEvent(GameEventType.AllReachedEnd));
+        if (reachEndComponent.allFinished() && !m_currentLevel.isFinished()) {
+            notifyObservers(GameEventType.AllReachedEnd);
+            m_currentLevel.setFinished(true);
         }
-        //if(!m_levelManager.levelHasPortal() && player.isFinishedAnimating()){
-        //	m_levelListener.onFinishedLevel(m_levelManager.getLevelNumber());
-        //}
-
-        /*
-        if(m_levelManager.isTaskDoneForAll(TaskType.WaterEngine)) {
-            if(m_buoyancyComps.has(e)) {
-                BuoyancyComponent.BuoyancyControllerConfig info = m_buoyancyComps.get(e).getController(WorldObjectComponent.WorldObject);
-                if (info != null) {
-                    DirectionComponent directionComponent = m_direction.get(e);
-                    if (directionComponent.getDirection() == DirectionComponent.Direction.Left) {
-                        info.setFluidVelocity(-3, 1);
-                    } else if (directionComponent.getDirection() == DirectionComponent.Direction.Right) {
-                        info.setFluidVelocity(3, 1);
-                    }
-                }
-            }
+        LevelComponent levelComponent = m_levelComp.get(entity);
+        if(levelComponent.isFinished()){
+            m_levelListener.onFinishedLevel(m_currentLevel.getLevelNumber());
         }
-        */
 	}
 
 }

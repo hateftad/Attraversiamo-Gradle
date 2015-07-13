@@ -9,11 +9,8 @@ import com.me.event.TaskEvent;
  */
 public class ReachEndComponent extends TaskComponent {
 
-    public boolean m_finishFacingLeft;
-
-    public ReachEndComponent(int finishers, boolean finishFacingLeft) {
+    public ReachEndComponent(int finishers) {
         super(finishers);
-        m_finishFacingLeft = finishFacingLeft;
     }
 
     @Override

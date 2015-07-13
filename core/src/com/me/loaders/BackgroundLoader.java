@@ -1,6 +1,6 @@
 package com.me.loaders;
 
-import com.me.Player;
+import com.me.level.Player;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.level.Level;
 import com.me.listeners.LoadCompletionListener;

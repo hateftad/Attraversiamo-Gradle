@@ -10,7 +10,6 @@ import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.Bag;
 import com.artemis.utils.ImmutableBag;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.component.*;
@@ -24,7 +23,7 @@ public class RenderSystem extends EntitySystem {
 	ComponentMapper<SpriteComponent> m_sprites;
 
 	@Mapper
-	ComponentMapper<AnimationComponent> m_animation;
+	ComponentMapper<PlayerAnimationComponent> m_playerAnimation;
 
 	@Mapper
 	ComponentMapper<ParticleComponent> m_particles;
@@ -89,8 +88,8 @@ public class RenderSystem extends EntitySystem {
 				SpriteComponent sprite = m_sprites.get(e);
 				sprite.setPosition(physics.getWorldPosition());
 				sprite.setRotation(physics.getBody().getAngle());
-				if (m_animation.has(e)) {
-					AnimationComponent anim = m_animation.get(e);
+				if (m_playerAnimation.has(e)) {
+					AnimationComponent anim = m_playerAnimation.get(e);
 					anim.setPosition(physics.getPosition().x,
 							physics.getPosition().y);
 					anim.update(m_batch, world.delta);

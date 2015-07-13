@@ -21,7 +21,7 @@ public class PlayerTwoSystem extends GameEntityProcessingSystem implements
 	ComponentMapper<PlayerComponent> m_playerComps;
 
 	@Mapper
-	ComponentMapper<AnimationComponent> m_animComps;
+	ComponentMapper<PlayerAnimationComponent> m_animComps;
 
 	@Mapper
 	ComponentMapper<MovementComponent> m_movComps;
@@ -74,7 +74,7 @@ public class PlayerTwoSystem extends GameEntityProcessingSystem implements
 		GrabComponent g = m_grabComps.get(entity);
 		TouchComponent touch = m_touchComps.get(entity);
 		CrawlComponent crawlComp = m_crawlComps.get(entity);
-		boolean finish = false;//m_levelManager.isTaskDoneForAll(Event.InsideFinishArea);
+		boolean finish = player.isFinishing();
 		if (m_inputMgr.m_playerSelected == PlayerSelection.TWO) {
 			ps.makeDynamic("center", 0.001f);
 			player.setActive(true);
@@ -198,7 +198,9 @@ public class PlayerTwoSystem extends GameEntityProcessingSystem implements
 		}
 
 		if (finish) {
-			animation.setAnimationState(player.getFinishAnimation());
+            if (animation.isCompleted()) {
+                player.setIsFinishedAnimating(true);
+            }
 		}
 
 		if (ps.isFalling() && ps.movingForward()) {

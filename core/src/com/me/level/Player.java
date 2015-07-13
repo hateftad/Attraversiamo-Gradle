@@ -1,4 +1,4 @@
-package com.me;
+package com.me.level;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.AnimationComponent;
@@ -25,6 +25,9 @@ public class Player {
 
     public boolean isFacingLeft(){
         return m_playerConfig.isFacingleft();
+    }
+    public boolean isFinishFacingLeft(){
+        return m_playerConfig.getFinishFacingleft();
     }
 
     public boolean isActive(){

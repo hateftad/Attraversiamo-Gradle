@@ -26,11 +26,14 @@ public class PlayerComponent extends GameEventObserverComponent {
 
 	private boolean m_canDeactivate;
 
+    private boolean m_isFinishing;
+
+    private boolean m_finishFacingLeft;
+
 	private boolean m_isFinishedAnimating;
 
-    private AnimationComponent.AnimState m_finishAnimation;
-
-	public PlayerComponent(String player) {
+	public PlayerComponent(String player, boolean finishFacingLeft) {
+        m_finishFacingLeft = finishFacingLeft;
 		setPlayerNr(player);
 		setFacingLeft(true);
 		setState(State.IDLE);
@@ -76,17 +79,13 @@ public class PlayerComponent extends GameEventObserverComponent {
 		this.m_onGround = onGround;
 	}
 
+    public boolean isFinishing(){
+        return m_isFinishing;
+    }
+
 	public PlayerNumber getPlayerNr() {
 		return m_playerNr;
 	}
-
-    public void setFinishAnimaiton(AnimationComponent.AnimState animState){
-        m_finishAnimation = animState;
-    }
-
-    public AnimationComponent.AnimState getFinishAnimation(){
-        return m_finishAnimation;
-    }
 
 	public void setPlayerNr(String playerNr) {
 		if (playerNr.equalsIgnoreCase("playerOne")) {
@@ -102,15 +101,12 @@ public class PlayerComponent extends GameEventObserverComponent {
 	}
 
     @Override
-    public void onNotify(Entity entity, GameEvent event) {
-        if(event.getEventType() == GameEventType.AllReachedEnd){
-            setFacingLeft(entity.getComponent(ReachEndComponent.class).m_finishFacingLeft);
+    public void onNotify(GameEventType event) {
+        if(event == GameEventType.AllReachedEnd){
+            setFacingLeft(m_finishFacingLeft);
+            m_isFinishing = true;
         }
     }
-
-	public boolean isFinishedAnimating() {
-		return m_isFinishedAnimating;
-	}
 
 	public void setIsFinishedAnimating(boolean isFinished) {
 		m_isFinishedAnimating = isFinished;

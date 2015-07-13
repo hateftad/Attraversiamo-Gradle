@@ -9,7 +9,6 @@ public class LevelConfig {
 	private String m_name;
 	private Color m_skyLightColor;
 	private int m_levelNr;
-	private boolean m_finishFacingLeft;
 	private boolean m_hasPortal;
 	public float m_minX, m_maxX, m_minY;
 
@@ -76,14 +75,7 @@ public class LevelConfig {
 		this.m_levelNr = m_levelNr;
 	}
 	
-	public void finishFacingLeft(boolean facingLeft){
-		m_finishFacingLeft = facingLeft;
-	}
-	
-	public boolean finishLeft(){
-		return m_finishFacingLeft;
-	}
-	
+
 	public void setHasPortal(boolean hasPortal){
 		m_hasPortal = hasPortal;
 	}

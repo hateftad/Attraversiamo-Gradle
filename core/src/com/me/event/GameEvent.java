@@ -19,6 +19,6 @@ public class GameEvent extends Event{
     }
 
     public void notify(Entity entity, GameEntityProcessingSystem entityProcessingSystem){
-        entityProcessingSystem.notifyObservers(entity, this);
+
     }
 }

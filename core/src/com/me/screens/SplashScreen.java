@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
+import com.me.component.LevelAnimationComponent;
 
 public class SplashScreen extends AbstractScreen {
 
@@ -17,7 +18,7 @@ public class SplashScreen extends AbstractScreen {
 		super(game);
 		m_camera.viewportWidth = 800;
 		m_camera.viewportHeight = 600;
-		m_animation = new AnimationComponent("data/intro", "data/intro", 1f);
+		m_animation = new LevelAnimationComponent("data/intro", "data/intro", 1f);
 		m_animation.setUp(new Vector2(0, 0), "intro");
 		m_camera.zoom = 2f;
 	}

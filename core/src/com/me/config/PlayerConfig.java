@@ -16,6 +16,7 @@ public class PlayerConfig {
     private AnimState m_finishAnimation;
  	private String m_skinName;
     private int m_playerNumber;
+    private boolean m_finishFacingLeft;
 
  	public PlayerConfig(){
  		m_playerPosition = new Vector2();
@@ -23,6 +24,13 @@ public class PlayerConfig {
 
     public void setFacingleft(boolean m_facingleft) {
         this.m_facingleft = m_facingleft;
+    }
+
+    public void setFinishFacingleft(boolean m_facingleft) {
+        this.m_finishFacingLeft = m_facingleft;
+    }
+    public boolean getFinishFacingleft() {
+        return this.m_finishFacingLeft;
     }
 
     public void setActive(boolean m_active) {

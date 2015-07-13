@@ -1,25 +1,29 @@
 package com.me.component;
 
+import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.me.event.GameEvent;
+import com.me.event.GameEventType;
 
-public class ParticleComponent extends BaseComponent {
+public class ParticleComponent extends GameEventObserverComponent {
 
-	public enum ParticleType{
+
+
+    public enum ParticleType{
 		PORTAL,
-		PICKUP
-	}
-	
+		PICKUP;
+    }
 	private ParticleEffect m_particle;
-	private ParticleType m_type;
-	private ParticleEffectPool m_pool;
-	private Array<ParticleEffectPool.PooledEffect> m_effects;
-	private Vector2 m_position = Vector2.Zero;
 
+    private ParticleType m_type;
+    private ParticleEffectPool m_pool;
+    private Array<ParticleEffectPool.PooledEffect> m_effects;
+    private Vector2 m_position = Vector2.Zero;
 	public ParticleComponent(String effect, ParticleType type, int max){
 		m_particle = new ParticleEffect();
 		m_particle.load(Gdx.files.internal("data/"+effect+".p"), Gdx.files.internal("data"));
@@ -30,11 +34,11 @@ public class ParticleComponent extends BaseComponent {
 
 		m_type = type;
 	}
-	
+
 	public ParticleType getType(){
 		return m_type;
 	}
-	
+
 	public void start(){
 		ParticleEffectPool.PooledEffect effect = m_pool.obtain();
 		effect.setPosition(m_position.x, m_position.y);
@@ -62,7 +66,16 @@ public class ParticleComponent extends BaseComponent {
 			}
 		}
 	}
-	
+
+    @Override
+    public void onNotify(GameEventType event) {
+        if(event == GameEventType.AllReachedEnd){
+            if(m_type == ParticleType.PORTAL){
+                start();
+            }
+        }
+    }
+
 	public void dispose(){
 		m_particle.dispose();
 	}
