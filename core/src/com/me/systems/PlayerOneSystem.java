@@ -5,9 +5,6 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.esotericsoftware.spine.Slot;
-import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
@@ -15,59 +12,25 @@ import com.me.event.GameEventType;
 import com.me.listeners.LevelEventListener;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
-import com.me.utils.Converters;
 import com.me.config.GameConfig.Platform;
 import com.me.config.GlobalConfig;
 
-public class PlayerOneSystem extends GameEntityProcessingSystem implements
-		InputProcessor {
-
-	private final static int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5,
-			changePlayer = 6, action = 7, skinChange = 8;
-
-	private boolean m_process = true;
-
-	private InputManager m_inputMgr;
-
-	@Mapper
-	ComponentMapper<PlayerComponent> m_playerComps;
-
-	@Mapper
-	ComponentMapper<PhysicsComponent> m_physComps;
-
-	@Mapper
-	ComponentMapper<PlayerAnimationComponent> m_animComps;
-
-	@Mapper
-	ComponentMapper<MovementComponent> m_movComps;
-
-	@Mapper
-	ComponentMapper<TouchComponent> m_touchComps;
-
-	@Mapper
-	ComponentMapper<HangComponent> m_hangComps;
-
-	@Mapper
-	ComponentMapper<LadderClimbComponent> m_ladderComps;
-
-
-	@Mapper
-	ComponentMapper<VelocityLimitComponent> m_velComps;
-
-	@Mapper
-	ComponentMapper<JumpComponent> m_jumpComps;
-
-	@Mapper
-	ComponentMapper<GrabComponent> m_grabComps;
-	
-	@Mapper
-	ComponentMapper<PushComponent> m_pushComps;
-
-    @Mapper
-    ComponentMapper<EventComponent> m_taskComps;
+public class PlayerOneSystem extends PlayerSystem  {
 
 	private float VELOCITY = 11.0f;
 	private float VELOCITYINR = 3.0f;
+    @Mapper ComponentMapper<PlayerComponent> m_playerComps;
+    @Mapper ComponentMapper<PhysicsComponent> m_physComps;
+    @Mapper ComponentMapper<PlayerAnimationComponent> m_animComps;
+    @Mapper ComponentMapper<MovementComponent> m_movComps;
+    @Mapper ComponentMapper<TouchComponent> m_touchComps;
+    @Mapper ComponentMapper<HangComponent> m_hangComps;
+    @Mapper ComponentMapper<LadderClimbComponent> m_ladderComps;
+    @Mapper ComponentMapper<VelocityLimitComponent> m_velComps;
+    @Mapper ComponentMapper<JumpComponent> m_jumpComps;
+    @Mapper ComponentMapper<GrabComponent> m_grabComps;
+    @Mapper ComponentMapper<PushComponent> m_pushComps;
+    @Mapper ComponentMapper<EventComponent> m_taskComps;
 
 	@SuppressWarnings("unchecked")
 	public PlayerOneSystem(LevelEventListener listener) {
@@ -81,7 +44,6 @@ public class PlayerOneSystem extends GameEntityProcessingSystem implements
 		}
 
 	}
-
 
 	@Override
 	protected void process(Entity entity) {
@@ -387,48 +349,6 @@ public class PlayerOneSystem extends GameEntityProcessingSystem implements
 
 	}
 
-	private boolean isDead(PhysicsComponent ps) {
-
-		if (ps.getPosition().y < world.getSystem(LevelSystem.class).getCurrentLevel().getLevelBoundaries().minY) {
-			return true;
-		}
-		return false;
-	}
-
-	private void animateBody(PhysicsComponent ps, PlayerComponent player,
-			AnimationComponent animation) {
-
-		int rot = player.isFacingLeft() ? -1 : 1;
-		for (Slot slot : animation.getSkeleton().getSlots()) {
-			if (!(slot.getAttachment() instanceof RegionAttachment))
-				continue;
-			String attachment = slot.getBone().getData().getName();
-			if (ps.getBody(attachment) != null) {
-				float x = (Converters.ToBox(slot.getBone().getWorldX()));
-				float x2 = (ps.getBody().getPosition().x + x);
-				float y = Converters.ToBox(slot.getBone().getWorldY());
-				float y2 = (ps.getBody().getPosition().y + y);
-				ps.getBody(attachment).setTransform(x2, animation.getcenter().y + y2, 0);
-			}
-		}
-	}
-
-	public void restartSystem() {
-		m_inputMgr.reset();
-	}
-
-	public void clearSystem() {
-	}
-
-	public void toggleProcessing(boolean process) {
-		m_process = process;
-	}
-
-	@Override
-	protected boolean checkProcessing() {
-		return m_process;
-	}
-
 	@Override
 	public boolean keyDown(int keycode) {
 		m_inputMgr.keyDown(keycode);
@@ -442,34 +362,5 @@ public class PlayerOneSystem extends GameEntityProcessingSystem implements
 
 	}
 
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		return false;
-	}
 
 }

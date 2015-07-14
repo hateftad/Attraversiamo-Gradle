@@ -14,56 +14,25 @@ import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 import com.me.utils.Converters;
 
-public class PlayerTwoSystem extends GameEntityProcessingSystem implements
-		InputProcessor {
+public class PlayerTwoSystem extends PlayerSystem {
 
-	@Mapper
-	ComponentMapper<PlayerComponent> m_playerComps;
-
-	@Mapper
-	ComponentMapper<PlayerAnimationComponent> m_animComps;
-
-	@Mapper
-	ComponentMapper<MovementComponent> m_movComps;
-
-	@Mapper
-	ComponentMapper<TouchComponent> m_touchComps;
-
-	@Mapper
-	ComponentMapper<JumpComponent> m_jumpComps;
-
-	@Mapper
-	ComponentMapper<GrabComponent> m_grabComps;
-
-	@Mapper
-	ComponentMapper<PhysicsComponent> m_physComps;
-
-	@Mapper
-	ComponentMapper<VelocityLimitComponent> m_velComps;
-
-	@Mapper
-	ComponentMapper<CrawlComponent> m_crawlComps;
-	
-	@Mapper
-	ComponentMapper<PushComponent> m_pushComps;
-
-    @Mapper
-    ComponentMapper<EventComponent> m_taskComps;
-
-
-    private InputManager m_inputMgr;
-
-	private boolean m_process = true;
-
-	private int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5,
-			changePlayer = 6, action = 7;
+	@Mapper	ComponentMapper<PlayerComponent> m_playerComps;
+	@Mapper	ComponentMapper<PlayerAnimationComponent> m_animComps;
+	@Mapper	ComponentMapper<MovementComponent> m_movComps;
+	@Mapper	ComponentMapper<TouchComponent> m_touchComps;
+	@Mapper	ComponentMapper<JumpComponent> m_jumpComps;
+	@Mapper	ComponentMapper<GrabComponent> m_grabComps;
+	@Mapper	ComponentMapper<PhysicsComponent> m_physComps;
+	@Mapper	ComponentMapper<VelocityLimitComponent> m_velComps;
+	@Mapper	ComponentMapper<CrawlComponent> m_crawlComps;
+	@Mapper	ComponentMapper<PushComponent> m_pushComps;
+    @Mapper ComponentMapper<EventComponent> m_taskComps;
 
 	@SuppressWarnings("unchecked")
 	public PlayerTwoSystem() {
 		super(Aspect.getAspectForOne(PlayerTwoComponent.class));
 		m_inputMgr = InputManager.getInstance();
 	}
-
 
 	@Override
 	protected void process(Entity entity) {
@@ -326,55 +295,6 @@ public class PlayerTwoSystem extends GameEntityProcessingSystem implements
 
 	}
 
-	private void animateBody(PhysicsComponent ps, PlayerComponent player,
-			AnimationComponent animation) {
-
-		int rot = player.isFacingLeft() ? -1 : 1;
-		for (Slot slot : animation.getSkeleton().getSlots()) {
-			if (!(slot.getAttachment() instanceof RegionAttachment))
-				continue;
-			String attachment = slot.getBone().getData().getName();
-			// System.out.println(attachment.getName());
-			if (ps.getBody(attachment) != null) {
-				float x = (Converters.ToBox(slot.getBone().getWorldX()));
-				float x2 = (ps.getBody().getPosition().x + x);
-				float y = Converters.ToBox(slot.getBone().getWorldY());
-				float y2 = (ps.getBody().getPosition().y + y);
-				// if(!touch.m_handTouch){
-				ps.getBody(attachment).setTransform(x2,
-						animation.getcenter().y + y2, 0);
-				// }else{
-				// ps.getBody(attachment.getName()).setType(BodyType.StaticBody);
-				/*
-				 * ps.getBody(attachment.getName()).setTransform( x2,
-				 * animation.getcenter().y + y2, rot * (33f +
-				 * slot.getBone().getWorldRotation() *
-				 * MathUtils.degreesToRadians) );
-				 */
-
-			}
-		}
-
-	}
-
-	private boolean isDead(PhysicsComponent ps) {
-
-        if (ps.getPosition().y < world.getSystem(LevelSystem.class).getCurrentLevel().getLevelBoundaries().minY) {
-			return true;
-		}
-		return false;
-	}
-
-	public void toggleProcessing(boolean process) {
-		m_process = process;
-	}
-
-	@Override
-	protected boolean checkProcessing() {
-		// TODO Auto-generated method stub
-		return m_process;
-	}
-
 	@Override
 	public boolean keyDown(int keycode) {
 		m_inputMgr.keyDown(keycode);
@@ -386,42 +306,6 @@ public class PlayerTwoSystem extends GameEntityProcessingSystem implements
 		m_inputMgr.keyUp(keycode);
 		return true;
 
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }
