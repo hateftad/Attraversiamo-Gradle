@@ -27,8 +27,7 @@ import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.config.GlobalConfig;
 
-public class PhysicsSystem extends EntitySystem implements Disposable,
-		LevelEventListener {
+public class PhysicsSystem extends EntitySystem implements Disposable, LevelEventListener {
 
 	@Mapper
 	ComponentMapper<PhysicsComponent> m_physicsComponents;
@@ -171,29 +170,27 @@ public class PhysicsSystem extends EntitySystem implements Disposable,
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		if (m_restart) {
-			if (world.getSystem(LevelSystem.class) == null) {
-				for (int i = 0; i < entities.size(); i++) {
-					Entity e = entities.get(i);
-					if (m_restartComps.has(e)) {
-						PhysicsComponent comp = m_physicsComponents.get(e);
-						comp.setToStart();
-						if (m_animComponents.has(e)) {
-							m_animComponents.get(e).setAnimationState(
-									AnimState.IDLE);
-							if (e.getComponent(PlayerTwoComponent.class) != null) {
-								comp.makeDynamic("center", 0.001f);
-							}
-						}
-					}
-					Bag<Component> fillBag = new Bag<Component>();
-					e.getComponents(fillBag);
-					for (int x = 0; x < fillBag.size(); x++) {
-						BaseComponent comp = (BaseComponent) fillBag.get(x);
-						comp.restart();
-					}
-				}
-				OnStartLevel();
+            for (int i = 0; i < entities.size(); i++) {
+                Entity e = entities.get(i);
+                if (m_restartComps.has(e)) {
+                    PhysicsComponent comp = m_physicsComponents.get(e);
+                    comp.setToStart();
+                    if (m_animComponents.has(e)) {
+                        m_animComponents.get(e).setAnimationState(
+                                AnimState.IDLE);
+                        if (e.getComponent(PlayerTwoComponent.class) != null) {
+                            comp.makeDynamic("center", 0.001f);
+                        }
+                    }
+                }
+                Bag<Component> fillBag = new Bag<Component>();
+                e.getComponents(fillBag);
+                for (int x = 0; x < fillBag.size(); x++) {
+                    BaseComponent comp = (BaseComponent) fillBag.get(x);
+                    comp.restart();
+                }
 			}
+            OnStartLevel();
 		}
 
 		for (int i = 0; i < entities.size(); i++) {
