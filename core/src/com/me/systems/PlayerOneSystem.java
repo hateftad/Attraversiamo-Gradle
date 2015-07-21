@@ -31,6 +31,7 @@ public class PlayerOneSystem extends PlayerSystem  {
     @Mapper ComponentMapper<GrabComponent> m_grabComps;
     @Mapper ComponentMapper<PushComponent> m_pushComps;
     @Mapper ComponentMapper<EventComponent> m_taskComps;
+    @Mapper ComponentMapper<CharacterMovementComponent> m_movementComps;
 
 	@SuppressWarnings("unchecked")
 	public PlayerOneSystem(LevelEventListener listener) {
@@ -55,6 +56,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		GrabComponent g = m_grabComps.get(entity);
 		TouchComponent touch = m_touchComps.get(entity);
 		PhysicsComponent ps = m_physComps.get(entity);
+        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
 
 		boolean finish = player.isFinishing();
 
@@ -71,6 +73,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		if (!player.isActive() && !finish) {
 			if (!g.m_gonnaGrab && !h.m_isHanging && !g.m_lifting) {
 				animation.setAnimationState(AnimState.IDLE);
+                movementComponent.standStill();
 			}
 		}
 
@@ -91,6 +94,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 					if (!animation.getAnimationState().equals(AnimState.PULLUP)) {
 						animation.setAnimationState(AnimState.IDLE);
 					}
+                    movementComponent.standStill();
 				}
 			}
 			if (m_hangComps.has(entity)) {
@@ -122,12 +126,12 @@ public class PlayerOneSystem extends PlayerSystem  {
 					if (m.m_left || m.m_right) {
 						animation.setAnimationState(AnimState.JUMPING);
                         if(velocityLimitForJumpBoost(entity)) {
-                            ps.setLinearVelocity((m.m_left ? -3 : 3) + ps.getLinearVelocity().x, vel.m_jumpLimit);
+                            ps.applyLinearImpulse((m.m_left ? -3 : 3) + ps.getLinearVelocity().x, 200);
                         } else {
-                            ps.setLinearVelocity(ps.getLinearVelocity().x, vel.m_jumpLimit);
+                            ps.applyLinearImpulse(ps.getLinearVelocity().x, 200);
                         }
 					} else if (!touch.m_boxTouch) {
-						ps.setLinearVelocity(ps.getLinearVelocity().x, 8);
+						ps.applyLinearImpulse(ps.getLinearVelocity().x, 100);
 						animation.setAnimationState(AnimState.UPJUMP);
 					}
 					player.setState(State.JUMPING);
@@ -225,6 +229,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
 		PhysicsComponent ps = m_physComps.get(e);
+        CharacterMovementComponent movementComponent = m_movementComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		LadderClimbComponent ladderComp = m_ladderComps.get(e);
 		HangComponent h = m_hangComps.get(e);
@@ -240,9 +245,9 @@ public class PlayerOneSystem extends PlayerSystem  {
 				if (m_ladderComps.has(e) && !h.m_isHanging) {
 					if (!ladderComp.m_leftClimb && !touch.m_boxTouch) {
 						vel.m_velocity -= VELOCITY * world.delta;
-						ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
-						if (ps.getLinearVelocity().x < -vel.m_walkLimit) {
-							ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
+						movementComponent.setVelocity(vel.m_velocity);
+						if (movementComponent.getSpeed() < -vel.m_walkLimit) {
+							movementComponent.setVelocity(-vel.m_walkLimit);
 							animation.setAnimationState(AnimState.RUNNING);
 							vel.m_velocity = -vel.m_walkLimit;
 						} else {
@@ -250,13 +255,12 @@ public class PlayerOneSystem extends PlayerSystem  {
 						}
 					}
 					if (touch.m_boxTouch && push.m_pushLeft) {
-						ps.setLinearVelocity(-vel.m_pushlimit,
-								ps.getLinearVelocity().y);
+						movementComponent.setVelocity(-vel.m_pushlimit);
 						animation.setAnimationState(AnimState.PUSHING);
 					}
 					if (touch.m_boxTouch && !push.m_pushLeft) {
 						animation.setAnimationState(AnimState.WALKING);
-						ps.setLinearVelocity(-vel.m_pushlimit, ps.getLinearVelocity().y);
+						movementComponent.setVelocity(-vel.m_pushlimit);
 					}
 					if (ladderComp.m_rightClimb && !ps.isDynamic()) {
 						animation.setAnimationState(AnimState.WALKING);
@@ -277,6 +281,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
 		PhysicsComponent ps = m_physComps.get(e);
+        CharacterMovementComponent movementComponent = m_movementComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		LadderClimbComponent l = m_ladderComps.get(e);
 		HangComponent h = m_hangComps.get(e);
@@ -290,9 +295,9 @@ public class PlayerOneSystem extends PlayerSystem  {
 				if (m_ladderComps.has(e) && !h.m_isHanging) {
 					if (!l.m_rightClimb && !touch.m_boxTouch) {
 						vel.m_velocity += VELOCITY * world.delta;
-						ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
-						if (ps.getLinearVelocity().x > vel.m_walkLimit) {
-							ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
+                        movementComponent.setVelocity(vel.m_velocity);
+						if (movementComponent.getSpeed() > vel.m_walkLimit) {
+                            movementComponent.setVelocity(vel.m_walkLimit);
 							animation.setAnimationState(AnimState.RUNNING);
 							vel.m_velocity = vel.m_walkLimit;
 						} else {
@@ -301,10 +306,10 @@ public class PlayerOneSystem extends PlayerSystem  {
 					}
 					if (touch.m_boxTouch && push.m_pushRight) {
 						animation.setAnimationState(AnimState.PUSHING);
-						ps.setLinearVelocity(vel.m_pushlimit, ps.getLinearVelocity().y);
+                        movementComponent.setVelocity(vel.m_pushlimit);
 					} else if (touch.m_boxTouch && !push.m_pushRight) {
 						animation.setAnimationState(AnimState.WALKING);
-						ps.setLinearVelocity(vel.m_pushlimit, ps.getLinearVelocity().y);
+                        movementComponent.setVelocity(vel.m_pushlimit);
 					}
 					if (l.m_leftClimb && !ps.isDynamic()) {
 						animation.setAnimationState(AnimState.WALKING);

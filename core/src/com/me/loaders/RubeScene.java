@@ -298,8 +298,7 @@ public class RubeScene
 		this.mJoints = mJoints;
 	}
 
-	public Array<Joint> getJoints()
-	{
+	public Array<Joint> getJoints(){
 		return mJoints;
 	}
 

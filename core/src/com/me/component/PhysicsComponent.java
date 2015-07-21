@@ -276,8 +276,9 @@ public class PhysicsComponent extends BaseComponent {
 	}
 
 	public void setLinearVelocity(float x, float y) {
-		for (Body b : m_body.values())
-			b.setLinearVelocity(x, y);
+		//for (Body b : m_body.values())
+		//	b.setLinearVelocity(x, y);
+        m_body.get("center").setLinearVelocity(x, y);
 	}
 
 	public void applyLinearImpulse(Vector2 imp) {

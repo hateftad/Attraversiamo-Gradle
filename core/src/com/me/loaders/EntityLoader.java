@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef.JointType;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
@@ -366,7 +367,7 @@ public class EntityLoader {
 				entity.addComponent(new HangComponent());
 				entity.addComponent(new RagDollComponent());
 				entity.addComponent(new LadderClimbComponent());
-				entity.addComponent(new VelocityLimitComponent(8, 14, 5, 5));
+				entity.addComponent(new VelocityLimitComponent(12, 14, 5, 5));
 				entity.addComponent(new PushComponent());
 				entity.addComponent(new JumpComponent());
 				entity.addComponent(new GrabComponent());
@@ -429,8 +430,7 @@ public class EntityLoader {
 				entity.addComponent(playerComponent);
 				animationComponent.setSkin(player.getSkinName());
 				entity.addComponent(new MovementComponent());
-				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f,
-						10);
+				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f, 10);
 				vel.m_crawlLimit = 2.5f;
 				entity.addComponent(vel);
 				entity.addComponent(new TouchComponent());
@@ -453,7 +453,14 @@ public class EntityLoader {
 			pComp.setUserData(entity, ud.mName);
 			tempList.add(pComp.getBody(ud.mName));
 		}
-		loadBodyJoints(physicsWorld, tempList, entityWorld);
+        Array<Joint> joints = m_scene.getJoints();
+        if(joints!= null && joints.size > 0){
+            for(int i=0; i < joints.size; i++ ){
+                Joint joint = joints.get(i);
+                Indexes ind = m_scene.getJointBodyIndex(i);
+                attachToEntity(joint, ind, tempList, entity, physicsWorld, entityWorld);
+            }
+        }
 		// loadBodyParts(entity, ps);
 		PhysicsListenerSetup setup = new PhysicsListenerSetup(entityWorld);
 		setup.setPlayerPhysics(pComp);
@@ -464,7 +471,7 @@ public class EntityLoader {
 	}
 
 	private void loadBodyJoints(
-			com.badlogic.gdx.physics.box2d.World physicsWorld,
+			World physicsWorld,
 			Array<Body> tempList, GameEntityWorld entityWorld) {
 		Array<Joint> joints = m_scene.getJoints();
 		if (joints == null)
@@ -473,95 +480,99 @@ public class EntityLoader {
 
 			Joint joint = joints.get(j);
 			Indexes ind = m_scene.getJointBodyIndex(j);
-
-			if (joint.getType() == JointType.DistanceJoint) {
-
-				DistanceJointDef jDef = (DistanceJointDef) ind.jointDef;
-
-				if (joint.getUserData() != null) {
-					String name = (String) joint.getUserData();
-					if (name.equals("branchJoint")) {
-						Entity ent = entityWorld.createEntity();
-						JointComponent comp = new JointComponent(name);
-						comp.setDJoint(JointFactory.getInstance().createJoint(
-								tempList.get(ind.first),
-								tempList.get(ind.second), jDef, physicsWorld));
-						ent.addComponent(new TriggerComponent());
-						ent.addComponent(new QueueComponent());
-						ent.addComponent(comp);
-						ent.addToWorld();
-					}
-				} else {
-
-					JointFactory.getInstance().createJoint(
-							tempList.get(ind.first), tempList.get(ind.second),
-							jDef, physicsWorld);
-
-				}
-			}
-
-			if (joint.getType() == JointType.RevoluteJoint) {
-
-				RevoluteJointDef jDef = (RevoluteJointDef) ind.jointDef;
-
-				if (joint.getUserData() != null) {
-					String name = (String) joint.getUserData();
-					if (name.equals("branchJoint")) {
-						Entity ent = entityWorld.createEntity();
-						JointComponent comp = new JointComponent(name);
-						comp.setDJoint(JointFactory.getInstance().createJoint(
-								tempList.get(ind.first),
-								tempList.get(ind.second), jDef, physicsWorld));
-						ent.addComponent(new TriggerComponent());
-						ent.addComponent(new QueueComponent());
-						ent.addComponent(comp);
-						ent.addToWorld();
-					} else {
-
-						JointFactory.getInstance().createJoint(
-								tempList.get(ind.first),
-								tempList.get(ind.second), jDef, physicsWorld);
-
-					}
-				}
-			}
-
-			if (joint.getType() == JointType.WheelJoint) {
-				WheelJointDef jDef = (WheelJointDef) ind.jointDef;
-				JointFactory.getInstance().createJoint(tempList.get(ind.first),
-						tempList.get(ind.second), jDef, physicsWorld);
-				// m_wheels.add((WheelJoint)jD);
-			}
-
-			if (joint.getType() == JointType.WeldJoint) {
-				WeldJointDef jDef = (WeldJointDef) ind.jointDef;
-				JointFactory.getInstance().createJoint(tempList.get(ind.first),
-						tempList.get(ind.second), jDef, physicsWorld);
-			}
-
-			if (joint.getType() == JointType.PrismaticJoint) {
-				String name = (String) joint.getUserData();
-				PrismaticJointDef jDef = (PrismaticJointDef) ind.jointDef;
-				if (name.equals("doorMotor")) {
-                    int taskId = m_scene.getCustom(joint, "taskId", 0);
-                    int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
-					Entity ent = entityWorld.createEntity();
-					DoorComponent comp = new DoorComponent(taskFinishers, taskId);
-					comp.setPrismJoint(JointFactory.getInstance().createJoint(
-							tempList.get(ind.first), tempList.get(ind.second),
-							jDef, physicsWorld));
-					ent.addComponent(new TriggerComponent());
-					ent.addComponent(comp);
-					ent.addToWorld();
-                    entityWorld.addObserver(comp);
-				} else {
-					JointFactory.getInstance().createJoint(
-							tempList.get(ind.first), tempList.get(ind.second),
-							jDef, physicsWorld);
-				}
-			}
+            attachToEntity(joint, ind, tempList, entityWorld.createEntity(), physicsWorld, entityWorld);
 		}
 	}
+
+    private void attachToEntity(Joint joint, Indexes ind, Array<Body> tempList, Entity ent, World physicsWorld, GameEntityWorld gameEntityWorld){
+
+        if (joint.getType() == JointType.DistanceJoint) {
+
+            DistanceJointDef jDef = (DistanceJointDef) ind.jointDef;
+
+            if (joint.getUserData() != null) {
+                String name = (String) joint.getUserData();
+                if (name.equals("branchJoint")) {
+
+                    JointComponent comp = new JointComponent(name);
+                    comp.setDJoint(JointFactory.getInstance().createJoint(
+                            tempList.get(ind.first),
+                            tempList.get(ind.second), jDef, physicsWorld));
+                    ent.addComponent(new TriggerComponent());
+                    ent.addComponent(new QueueComponent());
+                    ent.addComponent(comp);
+                    ent.addToWorld();
+                }
+            } else {
+
+                JointFactory.getInstance().createJoint(
+                        tempList.get(ind.first), tempList.get(ind.second),
+                        jDef, physicsWorld);
+
+            }
+        }
+
+        if (joint.getType() == JointType.RevoluteJoint) {
+
+            RevoluteJointDef jDef = (RevoluteJointDef) ind.jointDef;
+            if (joint.getUserData() != null) {
+                String name = (String) joint.getUserData();
+                if (name.equals("footMotor")) {
+                    CharacterMovementComponent comp = new CharacterMovementComponent(JointFactory.getInstance().createJoint(
+                            tempList.get(ind.first),
+                            tempList.get(ind.second), jDef, physicsWorld));
+                    ent.addComponent(comp);
+                } else {
+                    JointFactory.getInstance().createJoint(tempList.get(ind.first),
+                            tempList.get(ind.second), jDef, physicsWorld);
+                }
+            }
+        }
+
+        if (joint.getType() == JointType.WheelJoint) {
+            WheelJointDef jDef = (WheelJointDef) ind.jointDef;
+            if (joint.getUserData() != null) {
+                String name = (String) joint.getUserData();
+                if (name.equals("footMotor")) {
+                    CharacterMovementComponent comp = new CharacterMovementComponent(JointFactory.getInstance().createJoint(
+                            tempList.get(ind.first),
+                            tempList.get(ind.second), jDef, physicsWorld));
+                    ent.addComponent(comp);
+                } else {
+                    JointFactory.getInstance().createJoint(tempList.get(ind.first),
+                            tempList.get(ind.second), jDef, physicsWorld);
+                }
+            }
+            // m_wheels.add((WheelJoint)jD);
+        }
+
+        if (joint.getType() == JointType.WeldJoint) {
+            WeldJointDef jDef = (WeldJointDef) ind.jointDef;
+            JointFactory.getInstance().createJoint(tempList.get(ind.first),
+                    tempList.get(ind.second), jDef, physicsWorld);
+        }
+
+        if (joint.getType() == JointType.PrismaticJoint) {
+            String name = (String) joint.getUserData();
+            PrismaticJointDef jDef = (PrismaticJointDef) ind.jointDef;
+            if (name.equals("doorMotor")) {
+                int taskId = m_scene.getCustom(joint, "taskId", 0);
+                int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                DoorComponent comp = new DoorComponent(taskFinishers, taskId);
+                comp.setPrismJoint(JointFactory.getInstance().createJoint(
+                        tempList.get(ind.first), tempList.get(ind.second),
+                        jDef, physicsWorld));
+                ent.addComponent(new TriggerComponent());
+                ent.addComponent(comp);
+                ent.addToWorld();
+                gameEntityWorld.addObserver(comp);
+            } else {
+                JointFactory.getInstance().createJoint(
+                        tempList.get(ind.first), tempList.get(ind.second),
+                        jDef, physicsWorld);
+            }
+        }
+    }
 
 	/*
 	 * private Vector2 vector = new Vector2(); private void loadBodyParts(Entity

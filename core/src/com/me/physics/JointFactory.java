@@ -7,10 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
-import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
+import com.badlogic.gdx.physics.box2d.joints.*;
 
 public class JointFactory {
 
@@ -93,7 +90,7 @@ public class JointFactory {
 	public Joint createJoint(Body bodyA, Body bodyB, JointDef jDef, World world ){
 		jDef.bodyA = bodyA;
 		jDef.bodyB = bodyB;
-		return	world.createJoint(jDef);
+		return world.createJoint(jDef);
 	}
 	
 	public Joint createJoint(JointDef jDef){

@@ -162,7 +162,6 @@
     <Level name="level6">
         <levelNr>6</levelNr>
         <nrOfPlayers>2</nrOfPlayers>
-
         <hasPortal>false</hasPortal>
         <player>
             <skinName>silhouette</skinName>

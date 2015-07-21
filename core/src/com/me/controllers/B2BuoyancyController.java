@@ -130,7 +130,7 @@ public class B2BuoyancyController extends B2Controller
             break;
 
          case Polygon:
-            sarea = B2ShapeExtensions.ComputeSubmergedArea((PolygonShape) shape, mSurfaceNormal, mSurfaceHeight, body.getTransform(),mSC);
+            sarea = B2ShapeExtensions.ComputeSubmergedArea((PolygonShape) shape, mSurfaceNormal, mSurfaceHeight, body.getTransform(), mSC);
             break;
 
          default:

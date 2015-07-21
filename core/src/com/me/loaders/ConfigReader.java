@@ -45,7 +45,7 @@ public class ConfigReader {
 				config.setLevelNr(child.getInt("levelNr"));
 				config.setLightColor(child.get("lightColor"));
 				config.setHasPortal(child.getBoolean("hasPortal"));
-				
+				config.setNumberOfPlayers(child.getInt("nrOfPlayers"));
 				m_levelConfigs.put(child.getAttribute("name"), config);
 				
 			}

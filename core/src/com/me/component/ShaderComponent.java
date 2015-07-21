@@ -36,35 +36,33 @@ public class ShaderComponent extends BaseComponent {
 	Matrix4 view = new Matrix4();
 	Matrix4 model = new Matrix4();
 	Matrix4 combined = new Matrix4();
-	
+    float time;
+
 	public ShaderComponent(String extraTexture, Body body){
-		m_displacementTexture = new Texture(Gdx.files.internal("data/level/common/waterdisplacement.png"));
-		m_displacementTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		m_displacementTexture.bind();
-		ShaderProgram.pedantic = false;
-		vertexShader = Gdx.files.internal("data/shaders/vertex.vert").readString();
-		fragmentShader = Gdx.files.internal("data/shaders/fragment.frag").readString();
-		fragmentShader2 = Gdx.files.internal("data/shaders/fragment2.frag").readString();
-		m_shader = new ShaderProgram(vertexShader, fragmentShader);
-		m_waterShader = new ShaderProgram(vertexShader, fragmentShader2);
-		m_matrix = new Matrix4();
-		m_waterShader.setUniformMatrix("u_projTrans", m_matrix);
-		PolygonShape shape = (PolygonShape) body.getFixtureList().get(0).getShape();
-		ArrayList<Vector2> vertices = new ArrayList<Vector2>();
-		for(int i = 0; i < shape.getVertexCount(); i++){
-			Vector2 vertex = new Vector2();
-			shape.getVertex(i, vertex);
-			vertices.add(vertex);
+        m_displacementTexture = new Texture(Gdx.files.internal("data/level/common/waterdisplacement.png"));
+        m_displacementTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        m_displacementTexture.bind();
+        ShaderProgram.pedantic = false;
+        vertexShader = Gdx.files.internal("data/shaders/vertex.vert").readString();
+        fragmentShader = Gdx.files.internal("data/shaders/fragment.frag").readString();
+        fragmentShader2 = Gdx.files.internal("data/shaders/fragment2.frag").readString();
+        m_shader = new ShaderProgram(vertexShader, fragmentShader);
+        m_waterShader = new ShaderProgram(vertexShader, fragmentShader2);
+        m_matrix = new Matrix4();
+        m_waterShader.setUniformMatrix("u_projTrans", m_matrix);
+        PolygonShape shape = (PolygonShape) body.getFixtureList().get(0).getShape();
+        ArrayList<Vector2> vertices = new ArrayList<Vector2>();
+        for(int i = 0; i < shape.getVertexCount(); i++){
+            Vector2 vertex = new Vector2();
+            shape.getVertex(i, vertex);
+            vertices.add(vertex);
 		}
-		m_waterMesh = createQuad(vertices.get(3).x * 100, vertices.get(3).y* 100, 
-								vertices.get(0).x* 100, vertices.get(0).y* 100, 
+		m_waterMesh = createQuad(vertices.get(3).x * 100, vertices.get(3).y* 100,
+								vertices.get(0).x* 100, vertices.get(0).y* 100,
 								vertices.get(1).x* 100, vertices.get(1).y* 160,
 								vertices.get(2).x* 100, vertices.get(2).y* 160);
 	}
-	
-	float time;
-	float xPosition = 0;
-	Vector3 axis = new Vector3(1, 0, 1).nor();
+
 	public void render(SpriteBatch batch, OrthographicCamera camera, SpriteComponent sprite){
 		float dt = Gdx.graphics.getDeltaTime();
 		time += dt;
@@ -94,7 +92,7 @@ public class ShaderComponent extends BaseComponent {
 
 		m_shader.setUniformi("u_texture", 1);
 		m_shader.setUniformi("u_texture2", 2);
-		m_shader.setUniformf("timedelta", -angle * 2 );
+		m_shader.setUniformf("timedelta", angle * 2 );
 		m_waterMesh.render(m_shader, GL20.GL_TRIANGLE_FAN);
 		m_shader.end();
 		

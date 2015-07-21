@@ -34,7 +34,7 @@ public class Level {
     }
 
     public int getNumberOfFinishers(){
-        return m_levelConfig.getPlayerConfigs().size;
+        return m_levelConfig.getNumberOfPlayers();
     }
 
     public String getLevelName(){
@@ -60,6 +60,7 @@ public class Level {
     public Array<PlayerConfig> getPlayerConfigs(){
         return m_levelConfig.getPlayerConfigs();
     }
+
 
 
     public void restart() {

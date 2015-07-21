@@ -11,6 +11,7 @@ public class LevelConfig {
 	private int m_levelNr;
 	private boolean m_hasPortal;
 	public float m_minX, m_maxX, m_minY;
+    private int m_numberOfPlayers;
 
 	public LevelConfig(String name) {
 		m_name = name;
@@ -74,7 +75,14 @@ public class LevelConfig {
 	public void setLevelNr(int m_levelNr) {
 		this.m_levelNr = m_levelNr;
 	}
-	
+
+    public void setNumberOfPlayers(int nrOfPlayers){
+        m_numberOfPlayers = nrOfPlayers;
+    }
+
+    public int getNumberOfPlayers(){
+        return m_numberOfPlayers;
+    }
 
 	public void setHasPortal(boolean hasPortal){
 		m_hasPortal = hasPortal;
