@@ -47,6 +47,9 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	@Mapper
 	ComponentMapper<BuoyancyComponent> m_bouyComps;
 
+	@Mapper
+	ComponentMapper<RayCastComponent> m_raycastComponent;
+
 	private World m_world;
 
 	private int m_velocityItr;
@@ -56,6 +59,8 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	private float m_timeStep;
 
 	private PhysicsContactListener m_physicsContactListener;
+
+	private RaycastListener m_raycastCallback;
 
 	private boolean m_restart;
 
@@ -90,6 +95,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 		m_velocityItr = velocityIterations;
 		m_positionItr = positionIterations;
 		m_physicsContactListener = new PhysicsContactListener();
+		m_raycastCallback = new RaycastListener();
 	}
 
 	private static final int MAXSTEPS = 2;
@@ -123,6 +129,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 		m_world.clearForces();
 		smoothStates();
 
+
 	}
 
 	private void smoothStates() {
@@ -135,8 +142,12 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 			Entity e = (Entity) b.getUserData();
 			if(e != null){
 				if (m_physicsComponents.has(e)) {
-					m_physicsComponents.get(e).updateSmoothStates(
-							m_fixedAccumulatorRatio, oneMinusRatio);
+					m_physicsComponents.get(e).updateSmoothStates(m_fixedAccumulatorRatio, oneMinusRatio);
+				}
+				if(m_raycastComponent.has(e)){
+					RayCastComponent rayCastComponent = m_raycastComponent.get(e);
+					m_world.rayCast(m_raycastCallback, rayCastComponent.pointOne, rayCastComponent.pointTwo);
+
 				}
 			}
 		}
