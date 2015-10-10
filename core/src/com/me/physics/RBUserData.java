@@ -117,7 +117,7 @@ public class RBUserData {
 		case 12:
 			setType(Type.LeftPullup);
 			filter.categoryBits = WorldSensor;
-			filter.maskBits = CharacterSensor;
+			filter.maskBits = CharacterSensor | Character;
 			break;
 		case 13:
 			setType(Type.Box);
@@ -165,7 +165,7 @@ public class RBUserData {
 		case 22:
 			setType(Type.RightPullup);
 			filter.categoryBits = WorldSensor;
-			filter.maskBits = CharacterSensor;
+			filter.maskBits = CharacterSensor | Character;
 			break;
 		case 23:
 			setType(Type.RightPushButton);

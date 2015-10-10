@@ -14,16 +14,9 @@ import com.me.component.AnimationComponent;
 import com.me.component.LevelAnimationComponent;
 import com.me.ui.UIButton;
 
-public class MenuScreen extends AbstractScreen implements InputProcessor {
+public class MenuScreen extends AbstractScreen {
 
-	private Stage m_stage;
-	private TextureAtlas m_atlas;
-	private Skin m_skin;
-	private Table m_table;
-	private UIButton m_newGameBtn;
-	
-	private static final String PONEPATH = "data/character/littleGirl/littleGirl";
-	private static final String PTWOPATH = "data/character/smallCharacter/bigGuy";
+
 	private static final String SCENEPATH = "data/ui/menu";
 	private static final float SCALE = 0.5f;
 	
@@ -43,51 +36,7 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		Vector2 middlePoint = new Vector2(0, 0);
 		AnimationComponent scene = new LevelAnimationComponent(SCENEPATH, SCENEPATH, SCALE);
 		scene.setUp(middlePoint, "running");
-		
-		//AnimationComponent littleGirl = new AnimationComponent(PONEPATH ,"data/ui/littleGirl", SCALE);
-		//littleGirl.setUp(middlePoint, "walking");
-		
-		//AnimationComponent bigGuy = new AnimationComponent(PTWOPATH, "data/ui/bigGuy", SCALE);
-		//bigGuy.setUp(middlePoint, "walking");
-		
 		m_animation.add(scene);
-		//m_animation.add(littleGirl);
-		//m_animation.add(bigGuy);
-		//m_camera.lookAt(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
-		
-		//Skeleton skel = m_animation.getSkeleton();
-		//skel.getAttachment(0, "");
-		/*
-		m_stage = new Stage();
-		m_game.m_processors.add(m_stage);
-		m_atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.pack"));
-		m_skin = new Skin(m_atlas);
-
-		m_table = new Table(m_skin);
-		m_table.setBounds(0, 0, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
-
-		TextButtonStyle btnStyle = new TextButtonStyle();
-		btnStyle.up = m_skin.getDrawable("newgame.up");
-		btnStyle.pressedOffsetX = 10;
-
-		m_newGameBtn = new UIButton(btnStyle);
-		m_newGameBtn.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-			
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-					
-			}
-		});
-		m_table.add(m_newGameBtn);
-		//m_table.addListener();
-		m_table.debug();
-		m_stage.addActor(m_table);
-		//m_stage.addActor(m_newGameBtn);
-		*/
-
 	}
 
 	@Override
@@ -100,8 +49,6 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 		
 		super.render(delta);
 		m_camera.update();
-		//m_stage.act(delta);
-		//m_stage.draw();
 		m_spriteBatch.setProjectionMatrix(m_camera.combined);
 		m_spriteBatch.begin();
 		for(AnimationComponent comp: m_animation){
@@ -124,71 +71,15 @@ public class MenuScreen extends AbstractScreen implements InputProcessor {
 	public void dispose(){
 		m_stage.dispose();
 		m_spriteBatch.dispose();
-		m_atlas.dispose();
-		m_skin.dispose();
-		//m_animation.dispose();
+        for(AnimationComponent animationComponent : m_animation){
+            animationComponent.dispose();
+        }
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		//super.resize(width, height);
 
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-
-		return true;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		/*
-		if(m_newGameBtn.contains(screenX, screenY)){
-			m_game.setScreen(new LoadingScreen(m_game));
-			m_game.m_multiPlexer.removeProcessor(this);
-		}
-		 */
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

@@ -266,8 +266,7 @@
 					"filter-categoryBits" : 4,
 					"filter-maskBits" : 65,
 					"friction" : 100.0,
-					"name" : "fixture1",
-					"restitution" : 0.001000000047497451
+					"name" : "fixture1"
 				}
 			],
 			"linearVelocity" : 0,

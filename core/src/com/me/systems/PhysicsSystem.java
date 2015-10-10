@@ -123,7 +123,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 			for (B2Controller controller : m_b2Controllers.values()) {
 				controller.step(m_timeStep);
 			}
-			singleStep(m_timeStep);
+			singleStep();
 		}
 
 		m_world.clearForces();
@@ -147,7 +147,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 				if(m_raycastComponent.has(e)){
 					RayCastComponent rayCastComponent = m_raycastComponent.get(e);
 					m_world.rayCast(m_raycastCallback, rayCastComponent.pointOne, rayCastComponent.pointTwo);
-
 				}
 			}
 		}
@@ -167,7 +166,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 		}
 	}
 
-	private void singleStep(float timeStep) {
+	private void singleStep() {
 		if (m_processPhysics) {
 			m_world.step(world.delta, m_velocityItr, m_positionItr);
 		}

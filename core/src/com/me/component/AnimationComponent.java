@@ -146,14 +146,9 @@ public abstract class AnimationComponent extends GameEventObserverComponent {
 		return m_center;
 	}
 
-	public void setPosition(float x, float y){
-		m_skeleton.setX(Converters.ToWorld(x));
-		m_skeleton.setY(Converters.ToWorld(m_center.y + y));
-	}
-
-	public Vector2 getBonePosition(String name){
-		Bone b = m_skeleton.findBone(name);
-		return new Vector2(b.getX(), b.getY());
+	public void setPosition(Vector2 position){
+		m_skeleton.setX(Converters.ToWorld(position.x));
+		m_skeleton.setY(Converters.ToWorld(m_center.y + position.y));
 	}
 
 	public void setFacing(boolean left){
@@ -221,7 +216,6 @@ public abstract class AnimationComponent extends GameEventObserverComponent {
 	@Override
 	public void dispose() {
 		m_skeleton.getBones().clear();
-
 		m_animationState.clearTracks();
 		m_renderer = null;
 		m_atlas.getRegions().clear();

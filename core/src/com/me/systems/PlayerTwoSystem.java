@@ -29,6 +29,8 @@ public class PlayerTwoSystem extends PlayerSystem {
     @Mapper ComponentMapper<EventComponent> m_taskComps;
     @Mapper ComponentMapper<CharacterMovementComponent> m_movementComps;
 
+    private float VELOCITY = 5.5f;
+
 	@SuppressWarnings("unchecked")
 	public PlayerTwoSystem() {
 		super(Aspect.getAspectForOne(PlayerTwoComponent.class));
@@ -75,7 +77,6 @@ public class PlayerTwoSystem extends PlayerSystem {
 		if (player.isActive() && !m.m_lockControls && !g.m_gettingLifted
 				&& !finish && !crawlComp.isStanding && player.getState() != State.WAITTILDONE) {
 
-			// animation.printStateChange();
 			if (touch.m_groundTouch && !crawlComp.isCrawling) {
 				animation.setupPose();
 			}
@@ -151,8 +152,9 @@ public class PlayerTwoSystem extends PlayerSystem {
 				ps.disableBody("center");
 			}
 
-			if (player.getState().equals(State.CRAWLING) && !ps.movingForward()) {
+			if (player.getState().equals(State.CRAWLING) && !m.isMoving()) {
 				animation.setAnimationState(AnimState.LYINGDOWN);
+                movementComponent.standStill();
 			}
 
 			if (!crawlComp.canCrawl && crawlComp.isCrawling) {
@@ -160,6 +162,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 				crawlComp.isCrawling = false;
 				crawlComp.isStanding = true;
 				ps.enableBody("center");
+                movementComponent.standStill();
 			}
 		}
 		
@@ -205,25 +208,25 @@ public class PlayerTwoSystem extends PlayerSystem {
 	}
 
 	private void crawlLeft(Entity e) {
-		PhysicsComponent ps = m_physComps.get(e);
+        CharacterMovementComponent movementComponent = m_movementComps.get(e);
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
 
-		vel.m_velocity = -vel.m_crawlLimit;
-		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
+		vel.m_velocity = -vel.m_crawlLimit * 2;
+        movementComponent.setVelocity(vel.m_velocity);
 		animation.setAnimationState(AnimState.CRAWL);
 		player.setState(State.CRAWLING);
 	}
 
 	private void crawlRight(Entity e) {
-		PhysicsComponent ps = m_physComps.get(e);
+        CharacterMovementComponent movementComponent = m_movementComps.get(e);
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
 
-		vel.m_velocity = vel.m_crawlLimit;
-		ps.setLinearVelocity(vel.m_velocity, ps.getLinearVelocity().y);
+		vel.m_velocity = vel.m_crawlLimit * 2;
+        movementComponent.setVelocity(vel.m_velocity);
 		animation.setAnimationState(AnimState.CRAWL);
 		player.setState(State.CRAWLING);
 	}
@@ -239,7 +242,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 			if (vel.m_velocity > 0) {
 				vel.m_velocity = 0;
 			}
-			vel.m_velocity -= 5.5f * world.delta;
+			vel.m_velocity -= VELOCITY * world.delta;
             movementComponent.setVelocity(vel.m_velocity);
 			if (movementComponent.getSpeed() < -vel.m_walkLimit) {
                 movementComponent.setVelocity(-vel.m_walkLimit);
@@ -274,7 +277,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 				vel.m_velocity = 0;
 			}
 	
-			vel.m_velocity += 5.5f * world.delta;
+			vel.m_velocity += VELOCITY * world.delta;
             movementComponent.setVelocity(vel.m_velocity);
 			if (movementComponent.getSpeed() > vel.m_walkLimit) {
                 movementComponent.setVelocity(vel.m_walkLimit);

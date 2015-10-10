@@ -45,7 +45,7 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
 
     protected boolean isDead(PhysicsComponent ps) {
 
-        if (ps.getPosition().y < world.getSystem(LevelSystem.class).getCurrentLevel().getLevelBoundaries().minY) {
+        if (ps.getPosition().y < -100) {
             return true;
         }
         return false;

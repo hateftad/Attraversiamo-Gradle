@@ -37,8 +37,6 @@ public class PhysicsComponent extends BaseComponent {
 	private boolean m_isPlayer;
 	private boolean m_isDynamic = true;
     private FixtureData m_fixtureData;
-	private Filter currentFilter;
-    private short currentBits;
 	public ImmediateModePhysicsListener m_physicsListener;
 	private boolean m_submerged;
     private GameEvent m_eventInfo;

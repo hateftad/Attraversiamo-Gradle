@@ -89,9 +89,8 @@ public class RenderSystem extends EntitySystem {
 				sprite.setPosition(physics.getWorldPosition());
 				sprite.setRotation(physics.getBody().getAngle());
 				if (m_playerAnimation.has(e)) {
-					AnimationComponent anim = m_playerAnimation.get(e);
-					anim.setPosition(physics.getPosition().x,
-							physics.getPosition().y);
+					PlayerAnimationComponent anim = m_playerAnimation.get(e);
+					anim.setPosition(physics.getPosition());
 					anim.update(m_batch, world.delta);
 				} else {
 					if(sprite.m_shouldDraw){

@@ -3,6 +3,7 @@ package com.me.component;
 import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Slot;
 import com.me.event.GameEvent;
 import com.me.event.GameEventType;
@@ -102,6 +103,12 @@ public class PlayerAnimationComponent extends AnimationComponent {
             m_previousState = state;
     }
 
+    public Vector2 setBonePosition(String name, Vector2 position){
+        Bone b = m_skeleton.findBone(name);
+
+        return new Vector2(b.getX(), b.getY());
+    }
+
     public Vector2 getPositionRelative(String attachmentName){
         Slot slot = null;
 
@@ -129,6 +136,7 @@ public class PlayerAnimationComponent extends AnimationComponent {
         m_skeleton.update(dt);
         m_skeleton.updateWorldTransform();
         m_renderer.draw(sb, m_skeleton);
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.Gdx;
+import com.esotericsoftware.spine.AnimationState;
 import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
@@ -49,16 +50,16 @@ public class PlayerOneSystem extends PlayerSystem  {
 	@Override
 	protected void process(Entity entity) {
 
-		LadderClimbComponent l = m_ladderComps.get(entity);
-		HangComponent h = m_hangComps.get(entity);
+		LadderClimbComponent ladderClimbComponent = m_ladderComps.get(entity);
+		HangComponent hangComponent = m_hangComps.get(entity);
 		PlayerComponent player = m_playerComps.get(entity);
 		AnimationComponent animation = m_animComps.get(entity);
-		GrabComponent g = m_grabComps.get(entity);
+		GrabComponent grabComponent = m_grabComps.get(entity);
 		TouchComponent touch = m_touchComps.get(entity);
-		PhysicsComponent ps = m_physComps.get(entity);
+		PhysicsComponent physicsComponent = m_physComps.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-
-		boolean finish = player.isFinishing();
+        System.out.println("Ground touch is "+touch.m_groundTouch);
+        boolean finish = player.isFinishing();
 
 		if (m_inputMgr.isDown(skinChange)) {
 			animation.setSkin(m_inputMgr.toggleSkins());
@@ -71,27 +72,29 @@ public class PlayerOneSystem extends PlayerSystem  {
 		}
 
 		if (!player.isActive() && !finish) {
-			if (!g.m_gonnaGrab && !h.m_isHanging && !g.m_lifting) {
+			if (!grabComponent.m_gonnaGrab && !hangComponent.m_isHanging && !grabComponent.m_lifting) {
 				animation.setAnimationState(AnimState.IDLE);
                 movementComponent.standStill();
 			}
 		}
 
 		MovementComponent m = m_movComps.get(entity);
-		m.set(m_inputMgr.isDown(left), m_inputMgr.isDown(right),
-				m_inputMgr.isDown(action), m_inputMgr.isDown(down),
-				m_inputMgr.isDown(jump));
+		m.set(m_inputMgr.isDown(left),
+              m_inputMgr.isDown(right),
+              m_inputMgr.isDown(action),
+              m_inputMgr.isDown(down),
+              m_inputMgr.isDown(jump));
 
 		VelocityLimitComponent vel = m_velComps.get(entity);
 
-		if (player.isActive() && !m.m_lockControls && !g.m_lifting && !finish && player.getState() != State.WAITTILDONE) {
+		if (player.isActive() && !m.m_lockControls && !grabComponent.m_lifting && !finish && player.getState() != State.WAITTILDONE) {
 			if (touch.m_groundTouch && !touch.m_boxTouch && !touch.m_footEdge) {
 				animation.setupPose();
 			}
-			if (!m.m_left && !m.m_right && touch.m_groundTouch && !touch.m_ladderTouch) {
+			if (!m.isMoving() && touch.m_groundTouch && !touch.m_ladderTouch) {
 				vel.m_velocity = 0;
-				if (!g.m_gonnaGrab) {
-					if (!animation.getAnimationState().equals(AnimState.PULLUP)) {
+				if (!grabComponent.m_gonnaGrab) {
+					if (!animation.getState().equals(AnimState.PULLUP)) {
 						animation.setAnimationState(AnimState.IDLE);
 					}
                     movementComponent.standStill();
@@ -99,12 +102,12 @@ public class PlayerOneSystem extends PlayerSystem  {
 			}
 			if (m_hangComps.has(entity)) {
 
-				if (m.m_up && h.m_isHanging) {
+				if (m.m_up && hangComponent.m_isHanging) {
 					animation.setAnimationState(AnimState.CLIMBING);
-					h.m_climbingUp = true;
+					hangComponent.m_climbingUp = true;
 					m.m_lockControls = true;
 				}
-				if (h.m_isHanging && !h.m_climbingUp) {
+				if (hangComponent.m_isHanging && !hangComponent.m_climbingUp) {
 					animation.setAnimationState(AnimState.HANGING);
 				}
 			}
@@ -126,18 +129,19 @@ public class PlayerOneSystem extends PlayerSystem  {
 					if (m.m_left || m.m_right) {
 						animation.setAnimationState(AnimState.JUMPING);
                         if(velocityLimitForJumpBoost(entity)) {
-                            ps.applyLinearImpulse((m.m_left ? -3 : 3) + ps.getLinearVelocity().x, 200);
+                            physicsComponent.applyLinearImpulse((m.m_left ? -3 : 3) + physicsComponent.getLinearVelocity().x, 200);
                         } else {
-                            ps.applyLinearImpulse(ps.getLinearVelocity().x, 200);
+                            physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 200);
                         }
 					} else if (!touch.m_boxTouch) {
-						ps.applyLinearImpulse(ps.getLinearVelocity().x, 100);
+						physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 100);
 						animation.setAnimationState(AnimState.UPJUMP);
 					}
 					player.setState(State.JUMPING);
 				}
 			}
 			if (m_inputMgr.isDown(action)) {
+
 				if (touch.m_footEdge) {
 					if (touch.m_footEdgeL) {
 						player.setFacingLeft(true);
@@ -145,13 +149,13 @@ public class PlayerOneSystem extends PlayerSystem  {
 					if (touch.m_footEdgeR) {
 						player.setFacingLeft(false);
 					}
-					ps.warp("feet", touch.m_touchCenter);
+					physicsComponent.warp("feet", touch.m_touchCenter);
 					animation.setAnimationState(AnimState.LIEDOWN);
-					g.m_gonnaGrab = true;
+					grabComponent.m_gonnaGrab = true;
 				}
 				if (touch.m_ladderTouch) {
 					vel.m_ladderClimbVelocity = 3;
-					l.m_goingUp = true;
+					ladderClimbComponent.m_goingUp = true;
 				}
 				if(touch.m_pushArea){
                     EventComponent component = m_taskComps.get(entity);
@@ -171,11 +175,11 @@ public class PlayerOneSystem extends PlayerSystem  {
 				}
 			}
 
-			if (g.m_gonnaGrab) {
-				ps.warp("feet", touch.m_touchCenter);
+			if (grabComponent.m_gonnaGrab) {
+				physicsComponent.warp("feet", touch.m_touchCenter);
 			}
 			if (m.moved()) {
-				g.m_gonnaGrab = false;
+				grabComponent.m_gonnaGrab = false;
 			}
 		}
 		
@@ -190,22 +194,22 @@ public class PlayerOneSystem extends PlayerSystem  {
 			}
 		}
 
-		if (ps.isFalling() && ps.movingForward()) {
-			if(!ps.isSubmerged() && !touch.m_feetToBox) {
+		if (physicsComponent.isFalling() && physicsComponent.movingForward()) {
+			if(!physicsComponent.isSubmerged() && !touch.m_feetToBox) {
 				animation.setAnimationState(AnimState.FALLING);
 			}
 		}
 
-		if(ps.isSubmerged()){
+		if(physicsComponent.isSubmerged()){
 			animation.setAnimationState(AnimState.IDLE);
 		}
 
-		if (isDead(ps)) {
+		if (isDead(physicsComponent)) {
 			m_inputMgr.callRestart();
 		}
 
 		// TOO MUCH PROCESSING!!
-		animateBody(ps, player, animation);
+		animateBody(physicsComponent, player, animation);
 
 		animation.setFacing(player.isFacingLeft());
 

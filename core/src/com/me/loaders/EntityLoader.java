@@ -344,7 +344,7 @@ public class EntityLoader {
 			String skelName = m_scene.getCustom(body, "skeleton", "failed");
 			String atlasName = m_scene.getCustom(body, "atlas", "failed");
 			PlayerAnimationComponent animationComponent = null;
-			AnimationStateData stateData = null;
+			AnimationStateData stateData;
 			if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
 				animationComponent = new PlayerAnimationComponent(CHARPATH + characterPath
 						+ atlasName, CHARPATH + characterPath + skelName, 1.3f, player.getFinishAnimation());
@@ -430,7 +430,7 @@ public class EntityLoader {
 				entity.addComponent(playerComponent);
 				animationComponent.setSkin(player.getSkinName());
 				entity.addComponent(new MovementComponent());
-				VelocityLimitComponent vel = new VelocityLimitComponent(5.5f, 10);
+				VelocityLimitComponent vel = new VelocityLimitComponent(10.5f, 10);
 				vel.m_crawlLimit = 2.5f;
 				entity.addComponent(vel);
 				entity.addComponent(new TouchComponent());
@@ -484,31 +484,27 @@ public class EntityLoader {
 		}
 	}
 
+    private void loadFixtures(PhysicsComponent pComp, Body body) {
+        Array<Fixture> fixtures = body.getFixtureList();
+
+        if ((fixtures != null) && (fixtures.size > 0)) {
+            // for each fixture on the body...
+            for (int j = 0; j < fixtures.size; j++) {
+                Fixture fixture = fixtures.get(j);
+                pComp.createFixture(fixture, ((BodyUserData) body.getUserData()).mName);
+            }
+        }
+    }
+
     private void attachToEntity(Joint joint, Indexes ind, Array<Body> tempList, Entity ent, World physicsWorld, GameEntityWorld gameEntityWorld){
 
         if (joint.getType() == JointType.DistanceJoint) {
 
             DistanceJointDef jDef = (DistanceJointDef) ind.jointDef;
-
             if (joint.getUserData() != null) {
-                String name = (String) joint.getUserData();
-                if (name.equals("branchJoint")) {
-
-                    JointComponent comp = new JointComponent(name);
-                    comp.setDJoint(JointFactory.getInstance().createJoint(
-                            tempList.get(ind.first),
-                            tempList.get(ind.second), jDef, physicsWorld));
-                    ent.addComponent(new TriggerComponent());
-                    ent.addComponent(new QueueComponent());
-                    ent.addComponent(comp);
-                    ent.addToWorld();
-                }
-            } else {
-
                 JointFactory.getInstance().createJoint(
                         tempList.get(ind.first), tempList.get(ind.second),
                         jDef, physicsWorld);
-
             }
         }
 
@@ -526,6 +522,9 @@ public class EntityLoader {
                     JointFactory.getInstance().createJoint(tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld);
                 }
+            } else {
+                JointFactory.getInstance().createJoint(tempList.get(ind.first),
+                        tempList.get(ind.second), jDef, physicsWorld);
             }
         }
 
@@ -574,47 +573,35 @@ public class EntityLoader {
         }
     }
 
-	/*
-	 * private Vector2 vector = new Vector2(); private void loadBodyParts(Entity
-	 * e, PhysicsSystem pSystem) { AnimationComponent anim =
-	 * e.getComponent(AnimationComponent.class); PhysicsComponent ps =
-	 * e.getComponent(PhysicsComponent.class); final TextureAtlas atlas =
-	 * anim.getAtlas();
-	 * 
-	 * AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(atlas);
-	 * SkeletonJson json = new SkeletonJson(atlasLoader); json.setScale(1.3f);
-	 * SkeletonData skeletonData =
-	 * json.readSkeletonData(Gdx.files.internal("skeleton.json"));
-	 * 
-	 * Skeleton skeleton = new Skeleton(skeletonData);
-	 * 
-	 * for (Slot slot : skeleton.getSlots()) { if (!(slot.getAttachment()
-	 * instanceof RegionAttachment)) continue; RegionAttachment attachment =
-	 * (RegionAttachment)slot.getAttachment();
-	 * 
-	 * PolygonShape boxPoly = new PolygonShape(); boxPoly.setAsBox(
-	 * Converters.ToBox(attachment.getWidth() / 2 * attachment.getScaleX()),
-	 * Converters.ToBox(attachment.getHeight() / 2 * attachment.getScaleY()),
-	 * Converters.ToBox(vector.set(attachment.getX(), attachment.getY())),
-	 * attachment.getRotation() * MathUtils.degRad);
-	 * System.out.println(attachment.getName()); BodyDef boxBodyDef = new
-	 * BodyDef(); boxBodyDef.type = BodyType.StaticBody;
-	 * ps.createBody(pSystem.getWorld(),boxBodyDef, attachment.getName());
-	 * ps.createFixture(boxPoly, attachment.getName());
-	 * 
-	 * boxPoly.dispose(); } }
-	 */
-	private void loadFixtures(PhysicsComponent pComp, Body body) {
-		Array<Fixture> fixtures = body.getFixtureList();
-
-		if ((fixtures != null) && (fixtures.size > 0)) {
-			// for each fixture on the body...
-			for (int j = 0; j < fixtures.size; j++) {
-				Fixture fixture = fixtures.get(j);
-				pComp.createFixture(fixture,
-						((BodyUserData) body.getUserData()).mName);
-			}
-		}
-	}
-
 }
+
+    /*
+     * private Vector2 vector = new Vector2(); private void loadBodyParts(Entity
+     * e, PhysicsSystem pSystem) { AnimationComponent anim =
+     * e.getComponent(AnimationComponent.class); PhysicsComponent ps =
+     * e.getComponent(PhysicsComponent.class); final TextureAtlas atlas =
+     * anim.getAtlas();
+     *
+     * AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(atlas);
+     * SkeletonJson json = new SkeletonJson(atlasLoader); json.setScale(1.3f);
+     * SkeletonData skeletonData =
+     * json.readSkeletonData(Gdx.files.internal("skeleton.json"));
+     *
+     * Skeleton skeleton = new Skeleton(skeletonData);
+     *
+     * for (Slot slot : skeleton.getSlots()) { if (!(slot.getAttachment()
+     * instanceof RegionAttachment)) continue; RegionAttachment attachment =
+     * (RegionAttachment)slot.getAttachment();
+     *
+     * PolygonShape boxPoly = new PolygonShape(); boxPoly.setAsBox(
+     * Converters.ToBox(attachment.getWidth() / 2 * attachment.getScaleX()),
+     * Converters.ToBox(attachment.getHeight() / 2 * attachment.getScaleY()),
+     * Converters.ToBox(vector.set(attachment.getX(), attachment.getY())),
+     * attachment.getRotation() * MathUtils.degRad);
+     * System.out.println(attachment.getName()); BodyDef boxBodyDef = new
+     * BodyDef(); boxBodyDef.type = BodyType.StaticBody;
+     * ps.createBody(pSystem.getWorld(),boxBodyDef, attachment.getName());
+     * ps.createFixture(boxPoly, attachment.getName());
+     *
+     * boxPoly.dispose(); } }
+     */

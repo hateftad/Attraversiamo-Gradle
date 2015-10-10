@@ -21,7 +21,7 @@ public class CharacterMovementComponent extends BaseComponent {
 
     public void standStill(){
         m_wheelJoint.enableMotor(true);
-        m_wheelJoint.setMotorSpeed(m_wheelJoint.getMotorSpeed()/2);
+        m_wheelJoint.setMotorSpeed(0);
     }
 
     public float getSpeed(){
