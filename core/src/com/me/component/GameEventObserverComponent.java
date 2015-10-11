@@ -1,7 +1,5 @@
 package com.me.component;
 
-import com.artemis.Entity;
-import com.me.event.GameEvent;
 import com.me.event.GameEventType;
 
 /**

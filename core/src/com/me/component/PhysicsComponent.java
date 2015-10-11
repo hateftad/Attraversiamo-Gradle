@@ -5,15 +5,8 @@ import java.util.Map.Entry;
 
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.MassData;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Values;
 import com.me.event.GameEvent;
@@ -26,14 +19,14 @@ public class PhysicsComponent extends BaseComponent {
 	public static float LOW_FRICTION = 0.1f;
 	public static float HIGH_FRICTION = 20f;
 
-	private ObjectMap<String, Body> m_body = new ObjectMap<String, Body>();
+	protected ObjectMap<String, Body> m_body = new ObjectMap<String, Body>();
 	private ObjectMap<Body, RBUserData> m_userData = new ObjectMap<Body, RBUserData>();
 	private Vector2 m_worldPosition;
 	private ObjectMap<Body, Vector2> m_previousPositions;
 	private float m_previousAngle = 0;
 	private Vector2 m_startPosition;
 	private boolean m_isActive;
-	private String m_name;
+	protected String m_name;
 	private boolean m_isPlayer;
 	private boolean m_isDynamic = true;
     private FixtureData m_fixtureData;
@@ -150,36 +143,29 @@ public class PhysicsComponent extends BaseComponent {
 
 	public void disableAllFilters() {
 
-		Iterator<ObjectMap.Entry<String, Body>> it = m_body.entries().iterator();
-
-		while (it.hasNext()) {
-			@SuppressWarnings("rawtypes")
-			ObjectMap.Entry<String, Body> pairs = (ObjectMap.Entry<String, Body>) it.next();
-			Body b = (Body) pairs.value;
-			short bits;
-			Filter filter = b.getFixtureList().get(0).getFilterData();
-			bits = filter.categoryBits;
-			filterData.put((String) pairs.key, new Short(bits));
-			filter.categoryBits = 1;
-			b.getFixtureList().get(0).setFilterData(filter);
-		}
+        for (ObjectMap.Entry<String, Body> pairs : m_body.entries()) {
+            Body b = pairs.value;
+            short bits;
+            Filter filter = b.getFixtureList().get(0).getFilterData();
+            bits = filter.categoryBits;
+            filterData.put(pairs.key, bits);
+            filter.categoryBits = 1;
+            b.getFixtureList().get(0).setFilterData(filter);
+        }
 	}
 
 	public void enableAllFilters() {
-		Iterator<Entry<String, Short>> it = filterData.entrySet().iterator();
-		while (it.hasNext()) {
-			@SuppressWarnings("rawtypes")
-			Map.Entry pairs = (Map.Entry) it.next();
-			Filter filter = m_body.get((String) pairs.getKey()).getFixtureList().get(0).getFilterData();
-			short bits = (Short) pairs.getValue();
-			filter.categoryBits = bits;
-			m_body.get((String) pairs.getKey()).getFixtureList().get(0)
-					.setFilterData(filter);
-		}
+        for (Entry<String, Short> stringShortEntry : filterData.entrySet()) {
+            Entry pairs = (Entry) stringShortEntry;
+            Filter filter = m_body.get((String) pairs.getKey()).getFixtureList().get(0).getFilterData();
+            short bits = (Short) pairs.getValue();
+            filter.categoryBits = bits;
+            m_body.get((String) pairs.getKey()).getFixtureList().get(0).setFilterData(filter);
+        }
 
 	}
 
-	public boolean movingForward() {
+	public boolean isMovingForward() {
 		if (Math.abs(m_body.get(m_name).getLinearVelocity().x) > 1) {
 			return true;
 		}
@@ -391,7 +377,6 @@ public class PhysicsComponent extends BaseComponent {
 	}
 
 	public void destroy() {
-
 		m_body.clear();
 		m_previousPositions.clear();
 		m_userData.clear();

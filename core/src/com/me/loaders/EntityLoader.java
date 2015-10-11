@@ -216,7 +216,7 @@ public class EntityLoader {
 				buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 1), 1.5f, 2);
                 entityWorld.addObserver(buoyancyComponent);
 				entity.addComponent(buoyancyComponent);
-				entity.addComponent(new ShaderComponent("",body));
+				//entity.addComponent(new ShaderComponent("",body));
                 entity.addComponent(new TriggerComponent());
 
 			}
@@ -291,49 +291,41 @@ public class EntityLoader {
 						entity.addComponent(sComp);
 					}
 				}
-
 			} else {
 				if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("leg")) {
-
+                    String name = ((BodyUserData) body.getUserData()).mName;
 					if (pComp != null) {
-						pComp.addBody(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
-					} else {
-						pComp = new PhysicsComponent(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
-						pComp.setMass(0.001f,
-								((BodyUserData) body.getUserData()).mName);
-						entity.addComponent(pComp);
-					}
-				} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
+                        pComp.addBody(physicsWorld, body, name);
+                    } else {
+                        pComp = new PhysicsComponent(physicsWorld, body, name);
+                        pComp.setMass(0.001f, name);
+                        entity.addComponent(pComp);
+                    }
+
+                    FeetComponent feetComponent = new FeetComponent(name);
+                    entity.addComponent(feetComponent);
+
+                } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
                         "hand")) {
 					if (pComp != null)
-						pComp.addBody(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
+						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
 					else {
-						pComp = new PhysicsComponent(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
+						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
-				} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
-                        "LHand")) {
+				} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("LHand")) {
 					if (pComp != null) {
-						pComp.addBody(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
-						pComp.setMass(0.01f,
-								((BodyUserData) body.getUserData()).mName);
+						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+						pComp.setMass(0.01f,((BodyUserData) body.getUserData()).mName);
 					} else {
-						pComp = new PhysicsComponent(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
+						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
 				} else {
 					if (pComp != null)
-						pComp.addBody(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
+						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
 					else {
-						pComp = new PhysicsComponent(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
+						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
 						entity.addComponent(pComp);
 					}
 				}
@@ -449,9 +441,9 @@ public class EntityLoader {
 
 			BodyUserData ud = (BodyUserData) body.getUserData();
 
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
-			pComp.setUserData(entity, ud.mName);
-			tempList.add(pComp.getBody(ud.mName));
+            pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
+            pComp.setUserData(entity, ud.mName);
+            tempList.add(pComp.getBody(ud.mName));
 		}
         Array<Joint> joints = m_scene.getJoints();
         if(joints!= null && joints.size > 0){

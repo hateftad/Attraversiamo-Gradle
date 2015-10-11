@@ -5,7 +5,6 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.Gdx;
-import com.esotericsoftware.spine.AnimationState;
 import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
@@ -33,6 +32,7 @@ public class PlayerOneSystem extends PlayerSystem  {
     @Mapper ComponentMapper<PushComponent> m_pushComps;
     @Mapper ComponentMapper<EventComponent> m_taskComps;
     @Mapper ComponentMapper<CharacterMovementComponent> m_movementComps;
+    @Mapper ComponentMapper<FeetComponent> m_rayCastComps;
 
 	@SuppressWarnings("unchecked")
 	public PlayerOneSystem(LevelEventListener listener) {
@@ -58,7 +58,9 @@ public class PlayerOneSystem extends PlayerSystem  {
 		TouchComponent touch = m_touchComps.get(entity);
 		PhysicsComponent physicsComponent = m_physComps.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        System.out.println("Ground touch is "+touch.m_groundTouch);
+        FeetComponent feetComponent = m_rayCastComps.get(entity);
+        JumpComponent jumpComponent = m_jumpComps.get(entity);
+        //System.out.println("Ground touch is "+touch.m_groundTouch);
         boolean finish = player.isFinishing();
 
 		if (m_inputMgr.isDown(skinChange)) {
@@ -88,10 +90,10 @@ public class PlayerOneSystem extends PlayerSystem  {
 		VelocityLimitComponent vel = m_velComps.get(entity);
 
 		if (player.isActive() && !m.m_lockControls && !grabComponent.m_lifting && !finish && player.getState() != State.WAITTILDONE) {
-			if (touch.m_groundTouch && !touch.m_boxTouch && !touch.m_footEdge) {
+			if (feetComponent.hasCollided() && !touch.m_boxTouch && !touch.m_footEdge) {
 				animation.setupPose();
 			}
-			if (!m.isMoving() && touch.m_groundTouch && !touch.m_ladderTouch) {
+			if (!m.isMoving() && feetComponent.hasCollided() && !touch.m_ladderTouch) {
 				vel.m_velocity = 0;
 				if (!grabComponent.m_gonnaGrab) {
 					if (!animation.getState().equals(AnimState.PULLUP)) {
@@ -124,17 +126,16 @@ public class PlayerOneSystem extends PlayerSystem  {
 			}
 
 			if (m_jumpComps.has(entity)) {
-				if (m.m_jump && touch.m_groundTouch) {
-					player.setOnGround(false);
-					if (m.m_left || m.m_right) {
+				if (m.m_jump && feetComponent.hasCollided() && !jumpComponent.m_jumped) {
+					if (m.isMoving()) {
 						animation.setAnimationState(AnimState.JUMPING);
                         if(velocityLimitForJumpBoost(entity)) {
-                            physicsComponent.applyLinearImpulse((m.m_left ? -3 : 3) + physicsComponent.getLinearVelocity().x, 200);
+                            physicsComponent.applyLinearImpulse((m.m_left ? -10 : 10) + physicsComponent.getLinearVelocity().x, 60);
                         } else {
-                            physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 200);
+                            physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 60);
                         }
 					} else if (!touch.m_boxTouch) {
-						physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 100);
+						physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 25);
 						animation.setAnimationState(AnimState.UPJUMP);
 					}
 					player.setState(State.JUMPING);
@@ -194,7 +195,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 			}
 		}
 
-		if (physicsComponent.isFalling() && physicsComponent.movingForward()) {
+		if (physicsComponent.isFalling() && physicsComponent.isMovingForward()) {
 			if(!physicsComponent.isSubmerged() && !touch.m_feetToBox) {
 				animation.setAnimationState(AnimState.FALLING);
 			}
@@ -233,6 +234,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		AnimationComponent animation = m_animComps.get(e);
 		VelocityLimitComponent vel = m_velComps.get(e);
 		PhysicsComponent ps = m_physComps.get(e);
+        FeetComponent feetComponent = m_rayCastComps.get(e);
         CharacterMovementComponent movementComponent = m_movementComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		LadderClimbComponent ladderComp = m_ladderComps.get(e);
@@ -243,7 +245,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		}
 		if (vel.m_velocity > 0)
 			vel.m_velocity = -VELOCITYINR;
-		if (touch.m_groundTouch) {
+		if (feetComponent.hasCollided()) {
 			if (m_hangComps.has(e)) {
 				PushComponent push = m_pushComps.get(e);
 				if (m_ladderComps.has(e) && !h.m_isHanging) {
@@ -286,6 +288,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		VelocityLimitComponent vel = m_velComps.get(e);
 		PhysicsComponent ps = m_physComps.get(e);
         CharacterMovementComponent movementComponent = m_movementComps.get(e);
+        FeetComponent feetComponent = m_rayCastComps.get(e);
 		TouchComponent touch = m_touchComps.get(e);
 		LadderClimbComponent l = m_ladderComps.get(e);
 		HangComponent h = m_hangComps.get(e);
@@ -293,7 +296,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 
 		if (vel.m_velocity < 0)
 			vel.m_velocity = VELOCITYINR;
-		if (touch.m_groundTouch) {
+		if (feetComponent.hasCollided()) {
 			if (m_hangComps.has(e)) {
 				PushComponent push = m_pushComps.get(e);
 				if (m_ladderComps.has(e) && !h.m_isHanging) {

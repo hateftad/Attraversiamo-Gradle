@@ -28,7 +28,7 @@
             <playerName>littleGirl</playerName>
             <playerNr>two</playerNr>
 	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
+	        	<x name = "x">0.0</x>
 	        	<y name = "y">0.0</y>
 	        </position>
 	        <facingLeft>false</facingLeft>
@@ -65,12 +65,12 @@
             <playerName>littleGirl</playerName>
             <playerNr>two</playerNr>
 	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
+	        	<x name = "x">0.0</x>
 	        	<y name = "y">0.0</y>
 	        </position>
 	        <facingLeft>true</facingLeft>
 	        <finishAnim>suckin</finishAnim>
-        </player> 
+        </player>
          <camera>
             <zoom>7</zoom>
         </camera>
@@ -161,7 +161,7 @@
     </Level>
     <Level name="level6">
         <levelNr>6</levelNr>
-        <nrOfPlayers>2</nrOfPlayers>
+        <nrOfPlayers>1</nrOfPlayers>
         <hasPortal>false</hasPortal>
         <player>
             <skinName>silhouette</skinName>
@@ -185,7 +185,7 @@
             <playerName>littleGirl</playerName>
             <playerNr>two</playerNr>
 	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
+	        	<x name = "x">0.0</x>
 	        	<y name = "y">0.0</y>
 	        </position>
 	        <facingLeft>false</facingLeft>

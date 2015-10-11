@@ -4,15 +4,11 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.badlogic.gdx.InputProcessor;
-import com.esotericsoftware.spine.Slot;
-import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
 import com.me.component.PlayerComponent.State;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
-import com.me.utils.Converters;
 
 public class PlayerTwoSystem extends PlayerSystem {
 
@@ -26,8 +22,9 @@ public class PlayerTwoSystem extends PlayerSystem {
 	@Mapper	ComponentMapper<VelocityLimitComponent> m_velComps;
 	@Mapper	ComponentMapper<CrawlComponent> m_crawlComps;
 	@Mapper	ComponentMapper<PushComponent> m_pushComps;
-    @Mapper ComponentMapper<EventComponent> m_taskComps;
+    @Mapper ComponentMapper<EventComponent> m_eventComps;
     @Mapper ComponentMapper<CharacterMovementComponent> m_movementComps;
+    @Mapper ComponentMapper<FeetComponent> m_feetComps;
 
     private float VELOCITY = 5.5f;
 
@@ -45,6 +42,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 		AnimationComponent animation = m_animComps.get(entity);
 		GrabComponent g = m_grabComps.get(entity);
 		TouchComponent touch = m_touchComps.get(entity);
+        FeetComponent feet = m_feetComps.get(entity);
 		CrawlComponent crawlComp = m_crawlComps.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
 		boolean finish = player.isFinishing();
@@ -56,7 +54,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 		}
 
 		if (!player.isActive() && !finish) {
-			if (!g.m_gettingLifted && touch.m_groundTouch && !crawlComp.isCrawling) {
+			if (!g.m_gettingLifted && feet.hasCollided() && !crawlComp.isCrawling) {
 				animation.setAnimationState(AnimState.IDLE);
                 movementComponent.standStill();
 				if (!touch.m_feetToBox) {
@@ -77,7 +75,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 		if (player.isActive() && !m.m_lockControls && !g.m_gettingLifted
 				&& !finish && !crawlComp.isStanding && player.getState() != State.WAITTILDONE) {
 
-			if (touch.m_groundTouch && !crawlComp.isCrawling) {
+			if (feet.hasCollided() && !crawlComp.isCrawling) {
 				animation.setupPose();
 			}
 
@@ -87,7 +85,7 @@ public class PlayerTwoSystem extends PlayerSystem {
                 movementComponent.standStill();
 			}
 
-			if (m.m_left && touch.m_groundTouch) {
+			if (m.m_left && feet.hasCollided()) {
 				if (crawlComp.isCrawling) {
 					crawlLeft(entity);
 				} else {
@@ -97,7 +95,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 				m_jumpComps.get(entity).m_jumped = false;
 			}
 
-			if (m.m_right && touch.m_groundTouch) {
+			if (m.m_right && feet.hasCollided()) {
 				if (crawlComp.isCrawling) {
 					crawlRight(entity);
 				} else {
@@ -107,7 +105,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 				m_jumpComps.get(entity).m_jumped = false;
 			}
 
-			if (m.m_jump && touch.m_groundTouch && (!m.m_left && !m.m_right)
+			if (m.m_jump && feet.hasCollided() && (!m.m_left && !m.m_right)
 					&& !crawlComp.isCrawling) {
 				player.setOnGround(false);
 				m_jumpComps.get(entity).m_jumped = true;
@@ -118,8 +116,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 			if (m_jumpComps.get(entity).m_jumped) {
 				if (animation.getTime() > 0.2f) {
 					ps.setLinearVelocity(ps.getLinearVelocity().x,	m_velComps.get(entity).m_jumpLimit * 2);
-					m_jumpComps.get(entity).m_jumped = m_playerComps.get(entity)
-							.isOnGround();
+					m_jumpComps.get(entity).m_jumped = m_playerComps.get(entity).isOnGround();
 					player.setState(State.JUMPED);
 				}
 			}
@@ -130,7 +127,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 					player.setState(State.LYINGDOWN);
 				}
 				if(touch.m_pushArea){
-                    EventComponent component = m_taskComps.get(entity);
+                    EventComponent component = m_eventComps.get(entity);
 					if(touch.m_leftPushArea){
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
@@ -176,7 +173,7 @@ public class PlayerTwoSystem extends PlayerSystem {
             }
 		}
 
-		if (ps.isFalling() && ps.movingForward()) {
+		if (ps.isFalling() && ps.isMovingForward()) {
 			animation.setAnimationState(AnimState.FALLING);
 		}
 
@@ -193,10 +190,10 @@ public class PlayerTwoSystem extends PlayerSystem {
 
 		PlayerComponent player = m_playerComps.get(e);
 		AnimationComponent animation = m_animComps.get(e);
-		TouchComponent touch = m_touchComps.get(e);
 		MovementComponent m = m_movComps.get(e);
+        FeetComponent feetComponent = m_feetComps.get(e);
 
-		if (!m.m_left && !m.m_right && touch.m_groundTouch
+		if (!m.m_left && !m.m_right && feetComponent.hasCollided()
 				&& !player.getState().equals(State.JUMPING)
 				&& !animation.getAnimationState().equals(AnimState.PULLUP)
 				&& !player.getState().equals(State.LYINGDOWN)
