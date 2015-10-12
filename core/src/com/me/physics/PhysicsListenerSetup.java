@@ -395,11 +395,11 @@ public class PhysicsListenerSetup {
 				//printBodies(fixA, fixB);
 				if ((fixA.isSensor()) && (fixA.getUserData() != null)){
 					determineController((ObjectMap)fixA.getUserData(), fixB.getBody(), true);
-					//treatBouyancy(fixB.getBody(), true);
+					treatBouyancy(fixB.getBody(), true);
 				}
 				else if ((fixB.isSensor()) && (fixB.getUserData() != null)){
 					determineController((ObjectMap) fixB.getUserData(), fixA.getBody(), true);
-					//treatBouyancy(fixB.getBody(), true);
+					treatBouyancy(fixB.getBody(), true);
 				}
 			}
 
@@ -421,26 +421,26 @@ public class PhysicsListenerSetup {
 			}
 
 			private void treatBouyancy(Body body, boolean submerged){
-//				Entity entity = (Entity) body.getUserData();
-//				PhysicsComponent ps = entity.getComponent(FeetComponent.class);
-//				RBUserData otherUd = ps.getRBUserData(body);
-//
-//				if(otherUd.getType()==Type.Feet && entity.getComponent(PlayerTwoComponent.class) != null){
-//					QueueComponent queueComp = new QueueComponent();
-//					if(submerged) {
-//						queueComp.mass = 1.6f;
-//						queueComp.type = QueueType.TempMass;
-//						queueComp.bodyName = "feet";
-//					}else{
-//						queueComp.mass = 1f;
-//						queueComp.type = QueueType.TempMass;
-//						queueComp.bodyName = "feet";
-//					}
-//					entity.addComponent(queueComp);
-//				}
-//				if(otherUd.getType() == Type.Pelvis){
-//					System.out.println("Under Water");
-//				}
+				Entity entity = (Entity) body.getUserData();
+				PhysicsComponent ps = entity.getComponent(PhysicsComponent.class);
+				RBUserData otherUd = ps.getRBUserData(body);
+
+				if(otherUd.getType()==Type.Feet && entity.getComponent(PlayerTwoComponent.class) != null){
+					QueueComponent queueComp = new QueueComponent();
+					if(submerged) {
+						queueComp.mass = 1.6f;
+						queueComp.type = QueueType.TempMass;
+						queueComp.bodyName = "feet";
+					}else{
+						queueComp.mass = 1f;
+						queueComp.type = QueueType.TempMass;
+						queueComp.bodyName = "feet";
+					}
+					entity.addComponent(queueComp);
+				}
+				if(otherUd.getType() == Type.Pelvis){
+					System.out.println("Under Water");
+				}
 			}
 
 			private void printBodies(Fixture fixA, Fixture fixB){

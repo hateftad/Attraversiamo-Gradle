@@ -45,7 +45,7 @@
         <hasPortal>false</hasPortal>
         <player>
             <finishFacingLeft>false</finishFacingLeft>
-            <skinName>color</skinName>
+            <skinName>silhouette</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
@@ -54,12 +54,12 @@
 	        	<x name = "x">0.0</x> 
 	        	<y name = "y">0.0</y>
 	        </position>
-	        <facingLeft>true</facingLeft>
+	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
         <player>
             <finishFacingLeft>false</finishFacingLeft>
-            <skinName>color</skinName>
+            <skinName>silhouette</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
@@ -68,7 +68,7 @@
 	        	<x name = "x">0.0</x>
 	        	<y name = "y">0.0</y>
 	        </position>
-	        <facingLeft>true</facingLeft>
+	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
          <camera>

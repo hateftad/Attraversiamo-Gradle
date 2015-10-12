@@ -62,7 +62,6 @@ public class FeetComponent extends BaseComponent {
             PhysicsComponent component = entity.getComponent(PhysicsComponent.class);
             RBUserData other = component.getRBUserData(fixture.getBody());
             if(other.getType() == RBUserData.Type.Ground || other.getType() == RBUserData.Type.Box){
-                System.out.println("Colliding");
                 m_collided = true;
             }
 
