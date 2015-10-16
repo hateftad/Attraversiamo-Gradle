@@ -14,6 +14,7 @@ public class BuoyancyComponent extends ButtonStateObserverComponent {
 	private ObjectMap<String, BuoyancyControllerConfig> controllerInfo = new ObjectMap<String, BuoyancyControllerConfig>();
     private int m_eventId;
 
+	//pass in fluid velocity
 	public BuoyancyComponent(int taskId){
         m_eventId = taskId;
 	}

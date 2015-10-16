@@ -45,7 +45,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 		m_entityWorld.setSystem(m_physicsSystem);
 		m_entityWorld.setSystem(new PlayerAttributeSystem());
 		m_entityWorld.setSystem(new LevelSystem(this));
-
+		m_entityWorld.setSystem(new ParticlesSystem(2));
 		m_playerOneSystem = new PlayerOneSystem(m_physicsSystem);
 		m_entityWorld.setSystem(m_playerOneSystem);
 		m_playerTwoSystem = m_entityWorld.setSystem(new PlayerTwoSystem());

@@ -9,30 +9,42 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.me.event.GameEvent;
 import com.me.event.GameEventType;
+import com.me.utils.Converters;
 
 public class ParticleComponent extends GameEventObserverComponent {
-
-
-
     public enum ParticleType{
 		PORTAL,
-		PICKUP;
+		PICKUP,
+		CONTINIOUS
     }
-	private ParticleEffect m_particle;
 
+	private ParticleEffect m_particle;
     private ParticleType m_type;
     private ParticleEffectPool m_pool;
     private Array<ParticleEffectPool.PooledEffect> m_effects;
     private Vector2 m_position = Vector2.Zero;
-	public ParticleComponent(String effect, ParticleType type, int max){
-		m_particle = new ParticleEffect();
-		m_particle.load(Gdx.files.internal("data/"+effect+".p"), Gdx.files.internal("data"));
-		m_particle.start();
 
+
+	public ParticleComponent(String effect, ParticleType type, int max){
+		m_particle = loadParticle(effect);
 		m_pool = new ParticleEffectPool(m_particle, 0, max);
 		m_effects = new Array<ParticleEffectPool.PooledEffect>();
-
 		m_type = type;
+	}
+
+	public ParticleComponent(String effect, ParticleType type, Vector2 position){
+		m_particle = loadParticle(effect);
+		m_pool = new ParticleEffectPool(m_particle, 100, 10);
+		m_effects = new Array<ParticleEffectPool.PooledEffect>();
+		m_type = type;
+		setPosition(Converters.ToWorld(position));
+	}
+
+	protected ParticleEffect loadParticle(String effectName){
+		ParticleEffect particle = new ParticleEffect();
+		particle.load(Gdx.files.internal("data/particles/" + effectName + ".p"), Gdx.files.internal("data"));
+		particle.start();
+		return particle;
 	}
 
 	public ParticleType getType(){

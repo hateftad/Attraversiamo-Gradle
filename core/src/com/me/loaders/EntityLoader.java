@@ -210,6 +210,7 @@ public class EntityLoader {
 
 			if (ud.mName.equalsIgnoreCase("water")) {
                 int eventId = m_scene.getCustom(body, "taskId", 0);
+				//pass in fluid velocity
 				BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
 				buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3),  1.5f, 2);
 				buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
@@ -219,6 +220,12 @@ public class EntityLoader {
 				//entity.addComponent(new ShaderComponent("",body));
                 entity.addComponent(new TriggerComponent());
 
+			}
+
+			if(ud.mName.equalsIgnoreCase("particleEmitter")){
+				String particleName = m_scene.getCustom(body, "particlename", "");
+				ContinuousParticles particleComponent = new ContinuousParticles(particleName, body.getPosition());
+				entity.addComponent(particleComponent);
 			}
 
             if(ud.mName.equalsIgnoreCase("bodyInfo")){

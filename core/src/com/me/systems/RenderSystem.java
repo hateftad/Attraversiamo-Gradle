@@ -29,6 +29,9 @@ public class RenderSystem extends EntitySystem {
 	ComponentMapper<ParticleComponent> m_particles;
 
 	@Mapper
+	ComponentMapper<ContinuousParticles> m_continuousParticles;
+
+	@Mapper
 	ComponentMapper<ShaderComponent> m_shaderComps;
 
 	private List<Entity> m_sortedEntities;
@@ -71,8 +74,8 @@ public class RenderSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		for (int i = 0; m_sortedEntities.size() > i; i++) {
-			process(m_sortedEntities.get(i));
+		for (Entity sortedEntity : m_sortedEntities) {
+			process(sortedEntity);
 		}
 
 	}
@@ -81,6 +84,14 @@ public class RenderSystem extends EntitySystem {
 		m_batch.begin();
 
 		if (m_physics.has(e)) {
+
+			if (m_continuousParticles.has(e)) {
+				ContinuousParticles particles = m_continuousParticles.get(e);
+				if (particles.needsDrawAndUpdate()) {
+					particles.draw(m_batch, world.delta);
+				}
+			}
+
 			PhysicsComponent physics = m_physics.getSafe(e);
 			physics.updateWorldPosition();
 			if (m_sprites.has(e)) {
@@ -106,6 +117,7 @@ public class RenderSystem extends EntitySystem {
 					particles.draw(m_batch, world.delta);
 				}
 			}
+
 		}
 		m_batch.end();
 
