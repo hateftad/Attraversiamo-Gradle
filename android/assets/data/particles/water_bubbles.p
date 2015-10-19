@@ -6,12 +6,12 @@ lowMin: 1000.0
 lowMax: 1000.0
 - Count - 
 min: 0
-max: 30
+max: 20
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 100.0
-highMax: 100.0
+highMin: 10.0
+highMax: 10.0
 relative: false
 scalingCount: 2
 scaling0: 1.0
@@ -116,8 +116,8 @@ active: false
 active: false
 - Tint - 
 colorsCount: 12
-colors0: 0.34509805
-colors1: 0.34509805
+colors0: 0.2627451
+colors1: 0.32941177
 colors2: 0.34509805
 colors3: 0.60784316
 colors4: 0.60784316
@@ -157,4 +157,4 @@ additive: true
 behind: false
 premultipliedAlpha: false
 - Image Path -
-/Users/hateftadayon/Downloads/libgdx-nightly-20151015/particle.png
+particle2.png

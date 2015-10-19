@@ -52,7 +52,7 @@ public class BackgroundLoader{
 			stopProcessingSystems();
 			clearLevel();
 		} else {
-			m_game.m_gameScreen = new GameScreen(m_game);
+			m_game.m_gameScreen = new GameScreen(m_game, m_currentLevel);
 		}
 
 		m_loader.loadLevel(m_currentLevel, m_game.m_gameScreen.getEntityWorld(), m_game.m_gameScreen.getPhysicsSystem().getWorld(), m_game.m_gameScreen.getCameraSystem().getRayHandler());
@@ -87,7 +87,7 @@ public class BackgroundLoader{
 	private void clearLevel(){
 
 		m_game.m_gameScreen.clear();
-		m_game.m_gameScreen = new GameScreen(m_game);
+		m_game.m_gameScreen = new GameScreen(m_game, m_currentLevel);
 
 	}
 	

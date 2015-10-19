@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
+import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.physics.JointFactory;
 import com.me.systems.*;
@@ -27,11 +28,11 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	private boolean m_loadedNextLevel;
 
 
-	public GameScreen(Attraversiamo game){
+	public GameScreen(Attraversiamo game, Level currentLevel){
 		super(game);
 		m_camera.viewportWidth = 800;
 		m_camera.viewportHeight = 600;
-		m_camera.zoom = 9.0f;
+		m_camera.zoom = currentLevel.getLevelConfig().getZoom();
 		m_entityWorld = new GameEntityWorld();
 		m_entityWorld.setManager(new GroupManager());
 		m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -14), true));

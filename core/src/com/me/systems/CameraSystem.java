@@ -48,7 +48,8 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 		m_debugDrawer = new Box2DDebugRenderer();
 
 		m_camera = new CameraComponent(camera);
-	}
+        System.out.println("Zoom is "+m_camera.getZoom());
+    }
 	
 	public void setLevelBoundariesForCamera(Level.LevelBoundaries boundaries){
 		m_camera.setLimit(boundaries.maxX, boundaries.minX, boundaries.minY);
@@ -91,12 +92,12 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 				activePosition = ps.getPosition();
 			}
 			else{
-				m_physicsComp.get(e);
-				//zoom = Math.abs((activePosition.x - ps.getPosition().x));
-				if(zoom < 30){
-					zoom = 30;
-				}
-				//m_camera.setZoom(zoom * 0.3f);
+//                PhysicsComponent ps = m_physicsComp.get(e);
+//                zoom = Math.abs((activePosition.x - ps.getPosition().x));
+//                if(zoom < 30){
+//                    zoom = 30;
+//				}
+//				m_camera.setZoom(zoom * 0.3f);
 			}
 		}
 		if(m_lightComps.has(e)){

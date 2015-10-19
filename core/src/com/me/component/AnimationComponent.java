@@ -154,7 +154,7 @@ public abstract class AnimationComponent extends GameEventObserverComponent {
 	public void setRotation(float rotation){
 		Bone bone = m_skeleton.findBone("root");
 		bone.setRotation(rotation);
-		System.out.println("Rotation "+rotation);
+		//System.out.println("Rotation "+rotation);
 	}
 
 	public void setFacing(boolean left){

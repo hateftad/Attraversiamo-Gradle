@@ -12,6 +12,7 @@ public class LevelConfig {
 	private boolean m_hasPortal;
 	public float m_minX, m_maxX, m_minY;
     private int m_numberOfPlayers;
+    private float m_zoom;
 
 	public LevelConfig(String name) {
 		m_name = name;
@@ -29,7 +30,12 @@ public class LevelConfig {
 	public String getLevelName(){
 		return m_name;
 	}
-	
+	public void setZoom(float zoom){
+        m_zoom = zoom;
+    }
+    public float getZoom(){
+        return m_zoom;
+    }
 
 	public void setLightColor(String color){
 				

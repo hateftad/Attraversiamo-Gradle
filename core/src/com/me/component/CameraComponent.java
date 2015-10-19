@@ -31,7 +31,7 @@ public class CameraComponent extends BaseComponent {
 	}
 	
 	public void moveTo(Vector2 target){
-		m_target.set(target.x, target.y + 800, 0);
+		m_target.set(target.x, target.y + 1000, 0);
 	}
 	
 	public void update(float delta){

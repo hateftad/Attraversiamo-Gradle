@@ -46,6 +46,7 @@ public class ConfigReader {
 				config.setLightColor(child.get("lightColor"));
 				config.setHasPortal(child.getBoolean("hasPortal"));
 				config.setNumberOfPlayers(child.getInt("nrOfPlayers"));
+                config.setZoom(child.getInt("zoom"));
 				m_levelConfigs.put(child.getAttribute("name"), config);
 				
 			}

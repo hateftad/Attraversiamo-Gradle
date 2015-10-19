@@ -33,9 +33,7 @@
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
-        <camera>
-            <zoom>7</zoom>
-        </camera>
+        <zoom>11</zoom>
         <lightColor>Grey</lightColor>
     </Level>
     <Level name="level2">
@@ -56,23 +54,21 @@
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
-        <!--<player>-->
-            <!--<finishFacingLeft>false</finishFacingLeft>-->
-            <!--<skinName>silhouette</skinName>-->
-            <!--<active>false</active>-->
-            <!--<canDeactivate>true</canDeactivate>-->
-            <!--<playerName>littleGirl</playerName>-->
-            <!--<playerNr>two</playerNr>-->
-	        <!--<position name = "pos">-->
-	        	<!--<x name = "x">0.0</x>-->
-	        	<!--<y name = "y">0.0</y>-->
-	        <!--</position>-->
-	        <!--<facingLeft>false</facingLeft>-->
-	        <!--<finishAnim>suckin</finishAnim>-->
-        <!--</player>-->
-         <camera>
-            <zoom>7</zoom>
-        </camera>
+        <player>
+            <finishFacingLeft>false</finishFacingLeft>
+            <skinName>silhouette</skinName>
+            <active>false</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>littleGirl</playerName>
+            <playerNr>two</playerNr>
+	        <position name = "pos">
+	        	<x name = "x">0.0</x>
+	        	<y name = "y">0.0</y>
+	        </position>
+	        <facingLeft>false</facingLeft>
+	        <finishAnim>suckin</finishAnim>
+        </player>
+        <zoom>16</zoom>
         <lightColor>Blue</lightColor>
     </Level>
     <Level name="level3">
@@ -93,9 +89,7 @@
 	        <facingLeft>true</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
-         <camera>
-            <zoom>7</zoom>
-        </camera>
+        <zoom>7</zoom>
         <lightColor>Yellow</lightColor>
     </Level>
     <Level name="level4">
@@ -116,9 +110,7 @@
 	        <facingLeft>true</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
-         <camera>
-            <zoom>7</zoom>
-        </camera>
+        <zoom>7</zoom>
         <lightColor>Yellow</lightColor>
     </Level>
     <Level name="level5">
@@ -153,9 +145,7 @@
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>runOut</finishAnim>
         </player>
-        <camera>
-            <zoom>5</zoom>
-        </camera>
+        <zoom>5</zoom>
         <lightColor>Black</lightColor>
     </Level>
     <Level name="level6">
@@ -190,9 +180,7 @@
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
-        <camera>
-            <zoom>5</zoom>
-        </camera>
+        <zoom>5</zoom>
         <lightColor>Black</lightColor>
     </Level>
 </Levels>

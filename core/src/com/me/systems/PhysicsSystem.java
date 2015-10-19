@@ -26,6 +26,7 @@ import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
 import com.me.physics.PhysicsListenerSetup;
 import com.me.config.GlobalConfig;
+import com.me.utils.Converters;
 
 public class PhysicsSystem extends EntitySystem implements Disposable, LevelEventListener {
 
@@ -159,11 +160,13 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                         FeetComponent feetComponent = m_feetComponents.get(e);
                         feetComponent.reset();
                         feetComponent.update(physicsComponent.getBody(feetComponent.getBodyName()));
-                        m_world.rayCast(feetComponent.getRaycastCallback(), feetComponent.getPointOne(), feetComponent.getPointTwo());
-						if(feetComponent.hasCollided()) {
-							AnimationComponent animationComponent = m_animComponents.get(e);
-							animationComponent.setRotation(-feetComponent.getNormal().angle());
-						}
+                        for(int i=0; i < feetComponent.getStartPoints().size(); i++) {
+                            m_world.rayCast(feetComponent.getRaycastCallback(), feetComponent.getStartPoints().get(i), feetComponent.getEndPoints().get(i));
+                        }
+//						if(feetComponent.hasCollided()) {
+//							AnimationComponent animationComponent = m_animComponents.get(e);
+//							animationComponent.setRotation(-feetComponent.getNormal().angle());
+//						}
                     }
 				}
 			}
