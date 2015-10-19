@@ -142,13 +142,19 @@ public abstract class AnimationComponent extends GameEventObserverComponent {
 		return m_atlas;
 	}
 
-	public Vector2 getcenter(){
+	public Vector2 getCenter(){
 		return m_center;
 	}
 
 	public void setPosition(Vector2 position){
 		m_skeleton.setX(Converters.ToWorld(position.x));
 		m_skeleton.setY(Converters.ToWorld(m_center.y + position.y));
+	}
+
+	public void setRotation(float rotation){
+		Bone bone = m_skeleton.findBone("root");
+		bone.setRotation(rotation);
+		System.out.println("Rotation "+rotation);
 	}
 
 	public void setFacing(boolean left){

@@ -17,6 +17,7 @@ public class FeetComponent extends BaseComponent {
     private boolean m_collided;
     private Vector2 m_pointOne;
     private String m_name;
+    private Vector2 m_normal = new Vector2(0, 1);
 
     public FeetComponent(String name) {
         m_raycastCallback = new RaycastListener();
@@ -39,6 +40,10 @@ public class FeetComponent extends BaseComponent {
         Vector2 endPoint = m_pointOne.cpy();
         endPoint.set(endPoint.x, endPoint.y - RAY_LENGTH);
         return endPoint;
+    }
+
+    public Vector2 getNormal(){
+        return m_normal;
     }
 
     public void reset(){
@@ -64,6 +69,8 @@ public class FeetComponent extends BaseComponent {
             if(other.getType() == RBUserData.Type.Ground || other.getType() == RBUserData.Type.Box){
                 m_collided = true;
             }
+            m_normal = normal;
+            //System.out.println("Normal "+normal);
 
             return 1;
         }

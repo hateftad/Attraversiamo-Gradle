@@ -98,7 +98,7 @@ public class PlayerAnimationComponent extends AnimationComponent {
                     default:
                         break;
                 }
-                m_skeleton.setToSetupPose();
+                //m_skeleton.setToSetupPose();
             }
             m_previousState = state;
     }

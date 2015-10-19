@@ -1,8 +1,6 @@
 package com.me.systems;
 
 import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
-import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
@@ -38,7 +36,7 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
                 float x2 = (ps.getBody().getPosition().x + x);
                 float y = Converters.ToBox(slot.getBone().getWorldY());
                 float y2 = (ps.getBody().getPosition().y + y);
-                ps.getBody(attachment).setTransform(x2, animation.getcenter().y + y2, 0);
+                ps.getBody(attachment).setTransform(x2, animation.getCenter().y + y2, 0);
             }
         }
     }

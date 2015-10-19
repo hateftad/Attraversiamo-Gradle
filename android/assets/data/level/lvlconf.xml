@@ -4,7 +4,6 @@
     <Level name="level1">
         <levelNr>1</levelNr>
         <nrOfPlayers>2</nrOfPlayers>
-
         <hasPortal>true</hasPortal>
         <player>
             <finishFacingLeft>false</finishFacingLeft>
@@ -57,20 +56,20 @@
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
-        <player>
-            <finishFacingLeft>false</finishFacingLeft>
-            <skinName>silhouette</skinName>
-            <active>false</active>
-            <canDeactivate>true</canDeactivate>
-            <playerName>littleGirl</playerName>
-            <playerNr>two</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x>
-	        	<y name = "y">0.0</y>
-	        </position>
-	        <facingLeft>false</facingLeft>
-	        <finishAnim>suckin</finishAnim>
-        </player>
+        <!--<player>-->
+            <!--<finishFacingLeft>false</finishFacingLeft>-->
+            <!--<skinName>silhouette</skinName>-->
+            <!--<active>false</active>-->
+            <!--<canDeactivate>true</canDeactivate>-->
+            <!--<playerName>littleGirl</playerName>-->
+            <!--<playerNr>two</playerNr>-->
+	        <!--<position name = "pos">-->
+	        	<!--<x name = "x">0.0</x>-->
+	        	<!--<y name = "y">0.0</y>-->
+	        <!--</position>-->
+	        <!--<facingLeft>false</facingLeft>-->
+	        <!--<finishAnim>suckin</finishAnim>-->
+        <!--</player>-->
          <camera>
             <zoom>7</zoom>
         </camera>

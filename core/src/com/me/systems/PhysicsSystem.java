@@ -33,7 +33,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	ComponentMapper<PhysicsComponent> m_physicsComponents;
 
 	@Mapper
-	ComponentMapper<AnimationComponent> m_animComponents;
+	ComponentMapper<PlayerAnimationComponent> m_animComponents;
 
 	@Mapper
 	ComponentMapper<QueueComponent> m_queueComps;
@@ -141,11 +141,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 				if (m_physicsComponents.has(e)) {
 					m_physicsComponents.get(e).updateSmoothStates(m_fixedAccumulatorRatio, oneMinusRatio);
 				}
-                if(m_feetComponents.has(e)){
-                    FeetComponent feetComponent = m_feetComponents.get(e);
-                    feetComponent.reset();
-                    m_world.rayCast(feetComponent.getRaycastCallback(), feetComponent.getPointOne(), feetComponent.getPointTwo());
-                }
 			}
 		}
 	}
@@ -165,6 +160,10 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                         feetComponent.reset();
                         feetComponent.update(physicsComponent.getBody(feetComponent.getBodyName()));
                         m_world.rayCast(feetComponent.getRaycastCallback(), feetComponent.getPointOne(), feetComponent.getPointTwo());
+						if(feetComponent.hasCollided()) {
+							AnimationComponent animationComponent = m_animComponents.get(e);
+							animationComponent.setRotation(-feetComponent.getNormal().angle());
+						}
                     }
 				}
 			}
@@ -191,8 +190,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                     PhysicsComponent comp = m_physicsComponents.get(e);
                     comp.setToStart();
                     if (m_animComponents.has(e)) {
-                        m_animComponents.get(e).setAnimationState(
-                                AnimState.IDLE);
+                        m_animComponents.get(e).setAnimationState(AnimState.IDLE);
                         if (e.getComponent(PlayerTwoComponent.class) != null) {
                             comp.makeDynamic("center", 0.001f);
                         }
