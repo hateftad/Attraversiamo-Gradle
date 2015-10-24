@@ -11,7 +11,7 @@ import com.me.utils.Direction;
 
 public class BuoyancyComponent extends ButtonStateObserverComponent {
 
-	private ObjectMap<String, BuoyancyControllerConfig> controllerInfo = new ObjectMap<String, BuoyancyControllerConfig>();
+	private ObjectMap<String, BuoyancyControllerConfig> m_controllerInfo = new ObjectMap<String, BuoyancyControllerConfig>();
     private int m_eventId;
 
 	//pass in fluid velocity
@@ -20,15 +20,15 @@ public class BuoyancyComponent extends ButtonStateObserverComponent {
 	}
 
 	public void addControllerInfo(String name, Vector2 fluidVelocity, float linearDrag, float angularDrag){
-		controllerInfo.put(name, new BuoyancyControllerConfig(fluidVelocity, linearDrag, angularDrag));
+		m_controllerInfo.put(name, new BuoyancyControllerConfig(fluidVelocity, linearDrag, angularDrag));
 	}
 
 	public ObjectMap getControllerInfo(){
-		return controllerInfo;
+		return m_controllerInfo;
 	}
 
     public BuoyancyControllerConfig getController(String name){
-        return controllerInfo.get(name);
+        return m_controllerInfo.get(name);
     }
 
 	@Override
@@ -39,8 +39,9 @@ public class BuoyancyComponent extends ButtonStateObserverComponent {
 
 	@Override
 	public void restart() {
-		// TODO Auto-generated method stub
-
+		for(BuoyancyControllerConfig config : m_controllerInfo.values()){
+            config.reset();
+        }
 	}
 
     @Override
@@ -84,6 +85,10 @@ public class BuoyancyComponent extends ButtonStateObserverComponent {
 
         public void setFluidVelocity(float x, float y){
             m_fluidVelocity.set(x, y);
+        }
+
+        public void reset(){
+            setFluidVelocity(0, 1);
         }
 	}
 }

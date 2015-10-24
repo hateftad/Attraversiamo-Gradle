@@ -33,7 +33,6 @@ public class LoadingScreen implements Screen {
 	}
 	
 	public void load(int levelNr){
-		
 		m_loader.setLevel(levelNr);
 		m_loader.run();
 	}

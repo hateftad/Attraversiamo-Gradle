@@ -41,267 +41,267 @@ import com.me.utils.Converters;
 
 public class EntityLoader {
 
-	private RubeScene m_scene;
-	private RubeSceneLoader m_loader;
-	private WeakHashMap<String, Texture> m_textureMap;
-	private static final String LVLPATH = "data/level/";
-	private static final String CHARPATH = "data/character/";
+    private RubeScene m_scene;
+    private RubeSceneLoader m_loader;
+    private WeakHashMap<String, Texture> m_textureMap;
+    private static final String LVLPATH = "data/level/";
+    private static final String CHARPATH = "data/character/";
 
-	public EntityLoader() {
-		m_textureMap = new WeakHashMap<String, Texture>();
-		m_loader = new RubeSceneLoader();
-	}
+    public EntityLoader() {
+        m_textureMap = new WeakHashMap<String, Texture>();
+        m_loader = new RubeSceneLoader();
+    }
 
-	private void clearLoader() {
+    private void clearLoader() {
 
-		if (m_scene != null) {
-			m_scene.clear();
-		}
-		if (m_textureMap.size() > 0) {
-			m_textureMap.clear();
-		}
+        if (m_scene != null) {
+            m_scene.clear();
+        }
+        if (m_textureMap.size() > 0) {
+            m_textureMap.clear();
+        }
 
-	}
+    }
 
-	public void dispose() {
-		m_scene.dispose();
-		m_scene.clear();
-		for (Texture t : m_textureMap.values()) {
-			t.dispose();
-		}
-		m_textureMap.clear();
+    public void dispose() {
+        m_scene.dispose();
+        m_scene.clear();
+        for (Texture t : m_textureMap.values()) {
+            t.dispose();
+        }
+        m_textureMap.clear();
 
-	}
+    }
 
-	public void loadLevel(Level level, GameEntityWorld entityWorld,
-			com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh) {
-		String levelDirectory = level.getLevelName();
-		clearLoader();
+    public void loadLevel(Level level, GameEntityWorld entityWorld,
+                          com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh) {
+        String levelDirectory = level.getLevelName();
+        clearLoader();
 
-		m_scene = m_loader.loadScene(Gdx.files.internal("data/level/"
-				+ levelDirectory + "/" + levelDirectory+ ".json"));
-		Array<Body> bodies = m_scene.getBodies();
+        m_scene = m_loader.loadScene(Gdx.files.internal("data/level/"
+                + levelDirectory + "/" + levelDirectory + ".json"));
+        Array<Body> bodies = m_scene.getBodies();
 
-		Vector2 bodyPos = new Vector2();
-		Vector2 tmp = new Vector2();
-		PhysicsComponent pComp = null;
-		SpriteComponent sComp = null;
-		Entity entity = null;
-		RubeImage image = null;
-		Array<Body> tempList = new Array<Body>();
+        Vector2 bodyPos = new Vector2();
+        Vector2 tmp = new Vector2();
+        PhysicsComponent pComp = null;
+        SpriteComponent sComp = null;
+        Entity entity = null;
+        RubeImage image = null;
+        Array<Body> tempList = new Array<Body>();
 
-		for (int i = 0; i < bodies.size; i++) {
+        for (int i = 0; i < bodies.size; i++) {
 
-			Body body = bodies.get(i);
+            Body body = bodies.get(i);
 
-			Array<RubeImage> images = m_scene.getMappedImage(body);
-			if (images != null) {
+            Array<RubeImage> images = m_scene.getMappedImage(body);
+            if (images != null) {
 
-				bodyPos.set(body.getPosition());
-				image = images.get(0);
-				String tName = image.file;
+                bodyPos.set(body.getPosition());
+                image = images.get(0);
+                String tName = image.file;
 
-				if (tName != null) {
-					tmp.set(image.width, image.height);
-					String textureFileName = null;
-					if (!tName.contains("common")) {
-						textureFileName = LVLPATH + levelDirectory + "/"
-								+ tName;
-					} else {
-						tName = tName.substring(tName.indexOf("/") + 1);
-						textureFileName = LVLPATH + tName;
-					}
-					System.out.println(textureFileName);
-					Texture texture = m_textureMap.get(textureFileName);
-					if (texture == null) {
-						texture = new Texture(textureFileName);
-						texture.setFilter(Texture.TextureFilter.Linear,
-								Texture.TextureFilter.Nearest);
-						m_textureMap.put(textureFileName, texture);
-					}
-					if (image.body != null) {
-						sComp = new SpriteComponent(texture, image.flip,
-								image.body, image.color, tmp, image.center,
-								image.angleInRads * MathUtils.radiansToDegrees,
-								image.renderOrder);
+                if (tName != null) {
+                    tmp.set(image.width, image.height);
+                    String textureFileName = null;
+                    if (!tName.contains("common")) {
+                        textureFileName = LVLPATH + levelDirectory + "/"
+                                + tName;
+                    } else {
+                        tName = tName.substring(tName.indexOf("/") + 1);
+                        textureFileName = LVLPATH + tName;
+                    }
+                    System.out.println(textureFileName);
+                    Texture texture = m_textureMap.get(textureFileName);
+                    if (texture == null) {
+                        texture = new Texture(textureFileName);
+                        texture.setFilter(Texture.TextureFilter.Linear,
+                                Texture.TextureFilter.Nearest);
+                        m_textureMap.put(textureFileName, texture);
+                    }
+                    if (image.body != null) {
+                        sComp = new SpriteComponent(texture, image.flip,
+                                image.body, image.color, tmp, image.center,
+                                image.angleInRads * MathUtils.radiansToDegrees,
+                                image.renderOrder);
 
-						pComp = new PhysicsComponent(physicsWorld, body,
-								((BodyUserData) body.getUserData()).mName);
-						entity = entityWorld.createEntity();
-						entity.addComponent(pComp);
-						sComp.m_shouldDraw = m_scene.getCustom(image, "shouldDraw", true);
-						entity.addComponent(sComp);
+                        pComp = new PhysicsComponent(physicsWorld, body,
+                                ((BodyUserData) body.getUserData()).mName);
+                        entity = entityWorld.createEntity();
+                        entity.addComponent(pComp);
+                        sComp.m_shouldDraw = m_scene.getCustom(image, "shouldDraw", true);
+                        entity.addComponent(sComp);
 
-					}
-				}
+                    }
+                }
 
-			} else {
-				pComp = new PhysicsComponent(physicsWorld, body,
-						((BodyUserData) body.getUserData()).mName);
-				entity = entityWorld.createEntity();
-				entity.addComponent(pComp);
-			}
-			if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("light")) {
-				ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
-				entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
-				entity.addComponent(new TriggerComponent());
-				entityWorld.getManager(GroupManager.class).add(entity, "lights");
-			}
+            } else {
+                pComp = new PhysicsComponent(physicsWorld, body,
+                        ((BodyUserData) body.getUserData()).mName);
+                entity = entityWorld.createEntity();
+                entity.addComponent(pComp);
+            }
+            if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("light")) {
+                ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
+                entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
+                entity.addComponent(new TriggerComponent());
+                entityWorld.getManager(GroupManager.class).add(entity, "lights");
+            }
 
-			if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("skyLight")) {
-				CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
-				entity.addComponent(camComp);
-				PointLight light = new PointLight(rh, 500, level.getLevelConfig().getLightColor(), 1000, camComp.getCamera().position.x, camComp.getCamera().position.y);
-				entity.addComponent(new LightComponent(light, "cameraLight"));
-				entityWorld.getManager(GroupManager.class).add(entity, "lights");
-			}
-			if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("behindLight")) {
+            if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("skyLight")) {
+                CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
+                entity.addComponent(camComp);
+                PointLight light = new PointLight(rh, 500, level.getLevelConfig().getLightColor(), 1000, camComp.getCamera().position.x, camComp.getCamera().position.y);
+                entity.addComponent(new LightComponent(light, "cameraLight"));
+                entityWorld.getManager(GroupManager.class).add(entity, "lights");
+            }
+            if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("behindLight")) {
 
-				// entity.addComponent(component);
-			}
+                // entity.addComponent(component);
+            }
 
-			loadFixtures(pComp, body);
+            loadFixtures(pComp, body);
 
-			BodyUserData ud = (BodyUserData) body.getUserData();
-			if (ud.mName.equalsIgnoreCase("box")) {
-				pComp.setMass(20f, ud.mName);
-				pComp.setFriction(20.0f);
-				entity.addComponent(new RestartComponent());
-				entity.addComponent(new QueueComponent());
-			}
-			if (ud.mName.equalsIgnoreCase("portal")) {
+            BodyUserData ud = (BodyUserData) body.getUserData();
+            if (ud.mName.equalsIgnoreCase("box")) {
+                pComp.setMass(20f, ud.mName);
+                pComp.setFriction(20.0f);
+                entity.addComponent(new RestartComponent());
+                entity.addComponent(new QueueComponent());
+            }
+            if (ud.mName.equalsIgnoreCase("portal")) {
                 ParticleComponent particleComponent = new ParticleComponent("fire", ParticleType.PORTAL, 1);
                 entityWorld.addObserver(particleComponent);
-				entity.addComponent(particleComponent);
-				entity.addComponent(new TriggerComponent());
+                entity.addComponent(particleComponent);
+                entity.addComponent(new TriggerComponent());
                 ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
                 LevelComponent levelComponent = new LevelComponent();
                 entityWorld.addObserver(reachEndComponent);
                 entityWorld.addObserver(levelComponent);
                 entity.addComponent(levelComponent);
                 entity.addComponent(reachEndComponent);
-			}
-			if (ud.mName.equalsIgnoreCase("finish")) {
-				entity.addComponent(new TriggerComponent());
+            }
+            if (ud.mName.equalsIgnoreCase("finish")) {
+                entity.addComponent(new TriggerComponent());
                 ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
                 LevelComponent levelComponent = new LevelComponent();
                 entityWorld.addObserver(reachEndComponent);
                 entityWorld.addObserver(levelComponent);
                 entity.addComponent(levelComponent);
                 entity.addComponent(reachEndComponent);
-			}
-			if (ud.mName.equalsIgnoreCase("point")) {
-				entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
-				entity.addComponent(new TriggerComponent());
-
-			}
-			if (ud.mName.equalsIgnoreCase("minX")) {
-                level.getLevelBoundaries().minX = Converters.ToWorld(body.getPosition().x);
-				//System.out.println("Minx "+ Converters.ToWorld(body.getPosition().x));
-			}
-			if (ud.mName.equalsIgnoreCase("maxX")) {
-                level.getLevelBoundaries().maxX = Converters.ToWorld(body.getPosition().x);
-				//System.out.println("MaxX "+ Converters.ToWorld(body.getPosition().x));
-			}
-			if (ud.mName.equalsIgnoreCase("minY")) {
-                level.getLevelBoundaries().minY = Converters.ToWorld(body.getPosition().y);
-				//System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
-			}
-
-			if (ud.mName.equalsIgnoreCase("water")) {
-                int eventId = m_scene.getCustom(body, "taskId", 0);
-				//pass in fluid velocity
-				BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
-				buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3),  1.5f, 2);
-				buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
-				buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 1), 1.5f, 2);
-                entityWorld.addObserver(buoyancyComponent);
-				entity.addComponent(buoyancyComponent);
-				//entity.addComponent(new ShaderComponent("",body));
+            }
+            if (ud.mName.equalsIgnoreCase("point")) {
+                entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
                 entity.addComponent(new TriggerComponent());
 
-			}
+            }
+            if (ud.mName.equalsIgnoreCase("minX")) {
+                level.getLevelBoundaries().minX = Converters.ToWorld(body.getPosition().x);
+                //System.out.println("Minx "+ Converters.ToWorld(body.getPosition().x));
+            }
+            if (ud.mName.equalsIgnoreCase("maxX")) {
+                level.getLevelBoundaries().maxX = Converters.ToWorld(body.getPosition().x);
+                //System.out.println("MaxX "+ Converters.ToWorld(body.getPosition().x));
+            }
+            if (ud.mName.equalsIgnoreCase("minY")) {
+                level.getLevelBoundaries().minY = Converters.ToWorld(body.getPosition().y);
+                //System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
+            }
 
-			if(ud.mName.equalsIgnoreCase("particleEmitter")){
-				String particleName = m_scene.getCustom(body, "particlename", "");
-				ContinuousParticles particleComponent = new ContinuousParticles(particleName, body.getPosition());
-				entity.addComponent(particleComponent);
-			}
+            if (ud.mName.equalsIgnoreCase("water")) {
+                int eventId = m_scene.getCustom(body, "taskId", 0);
+                //pass in fluid velocity
+                BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
+                buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3), 1.5f, 2);
+                buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
+                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 1), 1.5f, 2);
+                entityWorld.addObserver(buoyancyComponent);
+                entity.addComponent(buoyancyComponent);
+                //entity.addComponent(new ShaderComponent("",body));
+                entity.addComponent(new TriggerComponent());
 
-            if(ud.mName.equalsIgnoreCase("bodyInfo")){
+            }
+
+            if (ud.mName.equalsIgnoreCase("particleEmitter")) {
+                String particleName = m_scene.getCustom(body, "particlename", "");
+                ContinuousParticles particleComponent = new ContinuousParticles(particleName, body.getPosition());
+                entity.addComponent(particleComponent);
+            }
+
+            if (ud.mName.equalsIgnoreCase("bodyInfo")) {
                 GameEventFactory factory = new GameEventFactory();
                 pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
             }
 
-			pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
-			pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
-			tempList.add(pComp.getBody(ud.mName));
-			entity.addToWorld();
-			entityWorld.getManager(GroupManager.class).add(entity, "worldObjects");
-		}
+            pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
+            pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
+            tempList.add(pComp.getBody(ud.mName));
+            entity.addToWorld();
+            entityWorld.getManager(GroupManager.class).add(entity, "worldObjects");
+        }
 
-		loadBodyJoints(physicsWorld, tempList, entityWorld);
-		tempList.clear();
-	}
+        loadBodyJoints(physicsWorld, tempList, entityWorld);
+        tempList.clear();
+    }
 
-	public Entity loadCharacter(Player player, GameEntityWorld entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld) {
-		String characterPath = player.getName() + "/";
-		String characterName = player.getName();
+    public Entity loadCharacter(Player player, GameEntityWorld entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld) {
+        String characterPath = player.getName() + "/";
+        String characterName = player.getName();
 
-		clearLoader();
+        clearLoader();
 
-		m_scene = m_loader.loadScene(Gdx.files.internal(CHARPATH
-				+ characterPath + "/" + characterName + ".json"));
-		Array<Body> bodies = m_scene.getBodies();
+        m_scene = m_loader.loadScene(Gdx.files.internal(CHARPATH
+                + characterPath + "/" + characterName + ".json"));
+        Array<Body> bodies = m_scene.getBodies();
 
-		Vector2 bodyPos = new Vector2();
-		Vector2 tmp = new Vector2();
-		PhysicsComponent pComp = null;
-		SpriteComponent sComp = null;
-		Entity entity = entityWorld.createEntity();
-		RubeImage image = null;
-		Array<Body> tempList = new Array<Body>();
+        Vector2 bodyPos = new Vector2();
+        Vector2 tmp = new Vector2();
+        PhysicsComponent pComp = null;
+        SpriteComponent sComp = null;
+        Entity entity = entityWorld.createEntity();
+        RubeImage image = null;
+        Array<Body> tempList = new Array<Body>();
 
-		for (int i = 0; i < bodies.size; i++) {
+        for (int i = 0; i < bodies.size; i++) {
 
-			Body body = bodies.get(i);
+            Body body = bodies.get(i);
 
-			Array<RubeImage> images = m_scene.getMappedImage(body);
-			if (images != null) {
+            Array<RubeImage> images = m_scene.getMappedImage(body);
+            if (images != null) {
 
-				bodyPos.set(body.getPosition());
-				image = images.get(0);
-				String tName = image.file;
-				if (tName != null) {
-					tmp.set(image.width, image.height);
-					String textureFileName = CHARPATH + characterPath + tName;
-					Texture texture = m_textureMap.get(textureFileName);
-					if (texture == null) {
-						texture = new Texture(textureFileName);
-						texture.setFilter(Texture.TextureFilter.Linear,
-								Texture.TextureFilter.Nearest);
-						m_textureMap.put(textureFileName, texture);
-					}
-					if (image.body != null) {
-						sComp = new SpriteComponent(texture, image.flip,
-								image.body, image.color, tmp, image.center,
-								image.angleInRads * MathUtils.radiansToDegrees,
-								image.renderOrder);
-						if (pComp != null) {
-							pComp.addBody(physicsWorld, body,
-									((BodyUserData) body.getUserData()).mName);
-						} else {
-							pComp = new PhysicsComponent(physicsWorld, body,
-									((BodyUserData) body.getUserData()).mName);
-							entity.addComponent(pComp);
-						}
-						entity.addComponent(sComp);
-					}
-				}
-			} else {
-				if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("leg")) {
+                bodyPos.set(body.getPosition());
+                image = images.get(0);
+                String tName = image.file;
+                if (tName != null) {
+                    tmp.set(image.width, image.height);
+                    String textureFileName = CHARPATH + characterPath + tName;
+                    Texture texture = m_textureMap.get(textureFileName);
+                    if (texture == null) {
+                        texture = new Texture(textureFileName);
+                        texture.setFilter(Texture.TextureFilter.Linear,
+                                Texture.TextureFilter.Nearest);
+                        m_textureMap.put(textureFileName, texture);
+                    }
+                    if (image.body != null) {
+                        sComp = new SpriteComponent(texture, image.flip,
+                                image.body, image.color, tmp, image.center,
+                                image.angleInRads * MathUtils.radiansToDegrees,
+                                image.renderOrder);
+                        if (pComp != null) {
+                            pComp.addBody(physicsWorld, body,
+                                    ((BodyUserData) body.getUserData()).mName);
+                        } else {
+                            pComp = new PhysicsComponent(physicsWorld, body,
+                                    ((BodyUserData) body.getUserData()).mName);
+                            entity.addComponent(pComp);
+                        }
+                        entity.addComponent(sComp);
+                    }
+                }
+            } else {
+                if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("leg")) {
                     String name = ((BodyUserData) body.getUserData()).mName;
-					if (pComp != null) {
+                    if (pComp != null) {
                         pComp.addBody(physicsWorld, body, name);
                     } else {
                         pComp = new PhysicsComponent(physicsWorld, body, name);
@@ -314,174 +314,174 @@ public class EntityLoader {
 
                 } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
                         "hand")) {
-					if (pComp != null)
-						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-					else {
-						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						entity.addComponent(pComp);
-					}
-				} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("LHand")) {
-					if (pComp != null) {
-						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						pComp.setMass(0.01f,((BodyUserData) body.getUserData()).mName);
-					} else {
-						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						entity.addComponent(pComp);
-					}
-				} else {
-					if (pComp != null)
-						pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-					else {
-						pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-						entity.addComponent(pComp);
-					}
-				}
-			}
+                    if (pComp != null)
+                        pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+                    else {
+                        pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+                        entity.addComponent(pComp);
+                    }
+                } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("LHand")) {
+                    if (pComp != null) {
+                        pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+                        pComp.setMass(0.01f, ((BodyUserData) body.getUserData()).mName);
+                    } else {
+                        pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+                        entity.addComponent(pComp);
+                    }
+                } else {
+                    if (pComp != null)
+                        pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+                    else {
+                        pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
+                        entity.addComponent(pComp);
+                    }
+                }
+            }
 
-			loadFixtures(pComp, body);
+            loadFixtures(pComp, body);
 
-			String skelName = m_scene.getCustom(body, "skeleton", "failed");
-			String atlasName = m_scene.getCustom(body, "atlas", "failed");
-			PlayerAnimationComponent animationComponent = null;
-			AnimationStateData stateData;
-			if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
-				animationComponent = new PlayerAnimationComponent(CHARPATH + characterPath
-						+ atlasName, CHARPATH + characterPath + skelName, 1.3f, player.getFinishAnimation());
-				entity.addComponent(animationComponent);
+            String skelName = m_scene.getCustom(body, "skeleton", "failed");
+            String atlasName = m_scene.getCustom(body, "atlas", "failed");
+            PlayerAnimationComponent animationComponent = null;
+            AnimationStateData stateData;
+            if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
+                animationComponent = new PlayerAnimationComponent(CHARPATH + characterPath
+                        + atlasName, CHARPATH + characterPath + skelName, 1.3f, player.getFinishAnimation());
+                entity.addComponent(animationComponent);
                 entityWorld.addObserver(animationComponent);
-			}
-			if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("playerOne")) {
+            }
+            if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("playerOne")) {
 
-				PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), player.isFinishFacingLeft());
-				playerComponent.setActive(player.isActive());
-				playerComponent.setFacingLeft(player.isFacingLeft());
-				playerComponent.setCanBecomeInactive(player.canDeactivate());
+                PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), player.isFinishFacingLeft());
+                playerComponent.setActive(player.isActive());
+                playerComponent.setFacingLeft(player.isFacingLeft());
+                playerComponent.setCanBecomeInactive(player.canDeactivate());
                 entityWorld.addObserver(playerComponent);
-				// entity.addComponent(new LightComponent(light, ((BodyUserData)
-				// body.getUserData()).mName));
-				entity.addComponent(playerComponent);
-				entity.addComponent(new TouchComponent());
-				entity.addComponent(new MovementComponent());
-				entity.addComponent(new JointComponent("noname"));
-				entity.addComponent(new HangComponent());
-				entity.addComponent(new RagDollComponent());
-				entity.addComponent(new LadderClimbComponent());
-				entity.addComponent(new VelocityLimitComponent(12, 14, 5, 5));
-				entity.addComponent(new PushComponent());
-				entity.addComponent(new JumpComponent());
-				entity.addComponent(new GrabComponent());
-				entity.addComponent(new PlayerOneComponent());
-				entity.addComponent(new TriggerComponent());
-				entity.addComponent(new RestartComponent());
-				entity.addComponent(new EventComponent());
+                // entity.addComponent(new LightComponent(light, ((BodyUserData)
+                // body.getUserData()).mName));
+                entity.addComponent(playerComponent);
+                entity.addComponent(new TouchComponent());
+                entity.addComponent(new MovementComponent());
+                entity.addComponent(new JointComponent("noname"));
+                entity.addComponent(new HangComponent());
+                entity.addComponent(new RagDollComponent());
+                entity.addComponent(new LadderClimbComponent());
+                entity.addComponent(new VelocityLimitComponent(12, 14, 5, 5));
+                entity.addComponent(new PushComponent());
+                entity.addComponent(new JumpComponent());
+                entity.addComponent(new GrabComponent());
+                entity.addComponent(new PlayerOneComponent());
+                entity.addComponent(new TriggerComponent());
+                entity.addComponent(new RestartComponent());
+                entity.addComponent(new EventComponent());
 
-				pComp.setName(((BodyUserData) body.getUserData()).mName);
-				pComp.setIsPlayer(true);
-				stateData = animationComponent.setUp(image);
-				animationComponent.setAnimationState(AnimState.IDLE);
-				stateData.setMix("idle1", "jogging", 0.4f);
-				stateData.setMix("jogging", "idle1", 0.4f);
-				stateData.setMix("running", "idle1", 0.4f);
-				stateData.setMix("runJumping", "running", 0.6f);
-				stateData.setMix("jogging", "running", 0.4f);
-				stateData.setMix("runJumping", "running", 0.1f);
-				stateData.setMix("upJump", "running", 0.2f);
-				stateData.setMix("idle1", "climbUp", 0.6f);
-				stateData.setMix("jogging", "pushing", 0.5f);
-				stateData.setMix("idle1", "pushing", 0.4f);
-				stateData.setMix("running", "pushing", 0.3f);
-				stateData.setMix("runJumping", "falling", 0.4f);
-				// dstateData.setMix("pushing", "idle", 0.6f);
-				// stateData.setMix("ladderHang", "running", 0.1f);
-				animationComponent.setSkin(player.getSkinName());
-				pComp.setPosition(player.getPosition());
-				// stateData.setMix("lieDown", "running", 0.3f);
+                pComp.setName(((BodyUserData) body.getUserData()).mName);
+                pComp.setIsPlayer(true);
+                stateData = animationComponent.setUp(image);
+                animationComponent.setAnimationState(AnimState.IDLE);
+                stateData.setMix("idle1", "jogging", 0.4f);
+                stateData.setMix("jogging", "idle1", 0.4f);
+                stateData.setMix("running", "idle1", 0.4f);
+                stateData.setMix("runJumping", "running", 0.6f);
+                stateData.setMix("jogging", "running", 0.4f);
+                stateData.setMix("runJumping", "running", 0.1f);
+                stateData.setMix("upJump", "running", 0.2f);
+                stateData.setMix("idle1", "climbUp", 0.6f);
+                stateData.setMix("jogging", "pushing", 0.5f);
+                stateData.setMix("idle1", "pushing", 0.4f);
+                stateData.setMix("running", "pushing", 0.3f);
+                stateData.setMix("runJumping", "falling", 0.4f);
+                // dstateData.setMix("pushing", "idle", 0.6f);
+                // stateData.setMix("ladderHang", "running", 0.1f);
+                animationComponent.setSkin(player.getSkinName());
+                pComp.setPosition(player.getPosition());
+                // stateData.setMix("lieDown", "running", 0.3f);
 
-			} else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
+            } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
                     "playerTwo")) {
-				PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), player.isFinishFacingLeft());
-				playerComponent.setActive(player.isActive());
-				playerComponent.setFacingLeft(player.isFacingLeft());
+                PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), player.isFinishFacingLeft());
+                playerComponent.setActive(player.isActive());
+                playerComponent.setFacingLeft(player.isFacingLeft());
                 playerComponent.setCanBecomeInactive(player.canDeactivate());
                 entityWorld.addObserver(playerComponent);
 
-				pComp.setName(((BodyUserData) body.getUserData()).mName);
-				pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
-				pComp.setIsPlayer(true);
-				stateData = animationComponent.setUp(image);
-				animationComponent.setAnimationState(AnimState.IDLE);
-				stateData.setMix("idle1", "walking", 0.4f);
-				stateData.setMix("running", "idle1", 0.4f);
-				stateData.setMix("walking", "idle1", 0.4f);
-				stateData.setMix("walking", "running", 0.4f);
-				// stateData.setMix("jumping", "running", 0.2f);
-				// stateData.setMix("walking", "jumping", 0.2f);
-				// stateData.setMix("falling", "idle1", 0.2f);
-				stateData.setMix("running", "falling", 0.6f);
-				stateData.setMix("idle1", "falling", 0.6f);
-				stateData.setMix("idle1", "pushing", 0.6f);
-				stateData.setMix("running", "pushing", 0.6f);
-				stateData.setMix("lieDown", "lyingDown", 0.2f);
-				stateData.setMix("crawling", "lyingDown", 0.2f);
-				stateData.setMix("lyingDown", "crawling", 0.2f);
-				stateData.setMix("standUp", "idle1", 0.2f);
-				stateData.setMix("lyingDown", "standUp", 0.2f);
-				entity.addComponent(playerComponent);
-				animationComponent.setSkin(player.getSkinName());
-				entity.addComponent(new MovementComponent());
-				VelocityLimitComponent vel = new VelocityLimitComponent(10.5f, 10);
-				vel.m_crawlLimit = 2.5f;
-				entity.addComponent(vel);
-				entity.addComponent(new TouchComponent());
-				entity.addComponent(new JumpComponent());
-				entity.addComponent(new GrabComponent());
-				entity.addComponent(new PlayerTwoComponent());
-				entity.addComponent(new TriggerComponent());
-				entity.addComponent(new CrawlComponent());
-				entity.addComponent(new RestartComponent());
-				entity.addComponent(new PushComponent());
-				entity.addComponent(new QueueComponent());
+                pComp.setName(((BodyUserData) body.getUserData()).mName);
+                pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
+                pComp.setIsPlayer(true);
+                stateData = animationComponent.setUp(image);
+                animationComponent.setAnimationState(AnimState.IDLE);
+                stateData.setMix("idle1", "walking", 0.4f);
+                stateData.setMix("running", "idle1", 0.4f);
+                stateData.setMix("walking", "idle1", 0.4f);
+                stateData.setMix("walking", "running", 0.4f);
+                // stateData.setMix("jumping", "running", 0.2f);
+                // stateData.setMix("walking", "jumping", 0.2f);
+                // stateData.setMix("falling", "idle1", 0.2f);
+                stateData.setMix("running", "falling", 0.6f);
+                stateData.setMix("idle1", "falling", 0.6f);
+                stateData.setMix("idle1", "pushing", 0.6f);
+                stateData.setMix("running", "pushing", 0.6f);
+                stateData.setMix("lieDown", "lyingDown", 0.2f);
+                stateData.setMix("crawling", "lyingDown", 0.2f);
+                stateData.setMix("lyingDown", "crawling", 0.2f);
+                stateData.setMix("standUp", "idle1", 0.2f);
+                stateData.setMix("lyingDown", "standUp", 0.2f);
+                entity.addComponent(playerComponent);
+                animationComponent.setSkin(player.getSkinName());
+                entity.addComponent(new MovementComponent());
+                VelocityLimitComponent vel = new VelocityLimitComponent(10.5f, 10);
+                vel.m_crawlLimit = 2.5f;
+                entity.addComponent(vel);
+                entity.addComponent(new TouchComponent());
+                entity.addComponent(new JumpComponent());
+                entity.addComponent(new GrabComponent());
+                entity.addComponent(new PlayerTwoComponent());
+                entity.addComponent(new TriggerComponent());
+                entity.addComponent(new CrawlComponent());
+                entity.addComponent(new RestartComponent());
+                entity.addComponent(new PushComponent());
+                entity.addComponent(new QueueComponent());
                 entity.addComponent(new EventComponent());
 
-				pComp.setPosition(player.getPosition());
-			}
+                pComp.setPosition(player.getPosition());
+            }
 
-			BodyUserData ud = (BodyUserData) body.getUserData();
+            BodyUserData ud = (BodyUserData) body.getUserData();
 
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
             pComp.setUserData(entity, ud.mName);
             tempList.add(pComp.getBody(ud.mName));
-		}
+        }
         Array<Joint> joints = m_scene.getJoints();
-        if(joints!= null && joints.size > 0){
-            for(int i=0; i < joints.size; i++ ){
+        if (joints != null && joints.size > 0) {
+            for (int i = 0; i < joints.size; i++) {
                 Joint joint = joints.get(i);
                 Indexes ind = m_scene.getJointBodyIndex(i);
                 attachToEntity(joint, ind, tempList, entity, physicsWorld, entityWorld);
             }
         }
-		// loadBodyParts(entity, ps);
-		PhysicsListenerSetup setup = new PhysicsListenerSetup(entityWorld);
-		setup.setPlayerPhysics(pComp);
-		tempList.clear();
-		entity.addToWorld();
-		entityWorld.getManager(GroupManager.class).add(entity, "players");
-		return entity;
-	}
+        // loadBodyParts(entity, ps);
+        PhysicsListenerSetup setup = new PhysicsListenerSetup(entityWorld);
+        setup.setPlayerPhysics(pComp);
+        tempList.clear();
+        entity.addToWorld();
+        entityWorld.getManager(GroupManager.class).add(entity, "players");
+        return entity;
+    }
 
-	private void loadBodyJoints(
-			World physicsWorld,
-			Array<Body> tempList, GameEntityWorld entityWorld) {
-		Array<Joint> joints = m_scene.getJoints();
-		if (joints == null)
-			return;
-		for (int j = 0; j < joints.size; j++) {
+    private void loadBodyJoints(
+            World physicsWorld,
+            Array<Body> tempList, GameEntityWorld entityWorld) {
+        Array<Joint> joints = m_scene.getJoints();
+        if (joints == null)
+            return;
+        for (int j = 0; j < joints.size; j++) {
 
-			Joint joint = joints.get(j);
-			Indexes ind = m_scene.getJointBodyIndex(j);
+            Joint joint = joints.get(j);
+            Indexes ind = m_scene.getJointBodyIndex(j);
             attachToEntity(joint, ind, tempList, entityWorld.createEntity(), physicsWorld, entityWorld);
-		}
-	}
+        }
+    }
 
     private void loadFixtures(PhysicsComponent pComp, Body body) {
         Array<Fixture> fixtures = body.getFixtureList();
@@ -495,7 +495,7 @@ public class EntityLoader {
         }
     }
 
-    private void attachToEntity(Joint joint, Indexes ind, Array<Body> tempList, Entity ent, World physicsWorld, GameEntityWorld gameEntityWorld){
+    private void attachToEntity(Joint joint, Indexes ind, Array<Body> tempList, Entity ent, World physicsWorld, GameEntityWorld gameEntityWorld) {
 
         if (joint.getType() == JointType.DistanceJoint) {
 
