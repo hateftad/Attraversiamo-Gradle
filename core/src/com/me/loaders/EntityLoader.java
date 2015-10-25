@@ -17,11 +17,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef.JointType;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
-import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
-import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
-import com.badlogic.gdx.physics.box2d.joints.WheelJointDef;
+import com.badlogic.gdx.physics.box2d.joints.*;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.me.level.Player;
@@ -495,7 +491,7 @@ public class EntityLoader {
         }
     }
 
-    private void attachToEntity(Joint joint, Indexes ind, Array<Body> tempList, Entity ent, World physicsWorld, GameEntityWorld gameEntityWorld) {
+    private void attachToEntity(Joint joint, Indexes ind, Array<Body> tempList, Entity entity, World physicsWorld, GameEntityWorld gameEntityWorld) {
 
         if (joint.getType() == JointType.DistanceJoint) {
 
@@ -507,6 +503,9 @@ public class EntityLoader {
             }
         }
 
+        if(joint.getType() == JointType.WheelJoint){
+        }
+
         if (joint.getType() == JointType.RevoluteJoint) {
 
             RevoluteJointDef jDef = (RevoluteJointDef) ind.jointDef;
@@ -516,7 +515,16 @@ public class EntityLoader {
                     CharacterMovementComponent comp = new CharacterMovementComponent(JointFactory.getInstance().createJoint(
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
-                    ent.addComponent(comp);
+                    entity.addComponent(comp);
+                } else if(name.equals("waterEngine")){
+                    int taskId = m_scene.getCustom(joint, "taskId", 0);
+                    int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                    TwoWayEngineComponent engineComponent = new TwoWayEngineComponent(taskId, JointFactory.getInstance().createJoint(
+                                                                                                tempList.get(ind.first),
+                                                                                                tempList.get(ind.second), jDef, physicsWorld));
+                    entity.addComponent(engineComponent);
+                    gameEntityWorld.addObserver(engineComponent);
+
                 } else {
                     JointFactory.getInstance().createJoint(tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld);
@@ -535,7 +543,16 @@ public class EntityLoader {
                     CharacterMovementComponent comp = new CharacterMovementComponent(JointFactory.getInstance().createJoint(
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
-                    ent.addComponent(comp);
+                    entity.addComponent(comp);
+                } else if(name.equals("waterEngine")){
+                    int taskId = m_scene.getCustom(joint, "taskId", 0);
+                    int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                    TwoWayEngineComponent engineComponent = new TwoWayEngineComponent(taskId, JointFactory.getInstance().createJoint(
+                            tempList.get(ind.first),
+                            tempList.get(ind.second), jDef, physicsWorld));
+                    entity.addComponent(engineComponent);
+                    gameEntityWorld.addObserver(engineComponent);
+
                 } else {
                     JointFactory.getInstance().createJoint(tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld);
@@ -560,9 +577,9 @@ public class EntityLoader {
                 comp.setPrismJoint(JointFactory.getInstance().createJoint(
                         tempList.get(ind.first), tempList.get(ind.second),
                         jDef, physicsWorld));
-                ent.addComponent(new TriggerComponent());
-                ent.addComponent(comp);
-                ent.addToWorld();
+                entity.addComponent(new TriggerComponent());
+                entity.addComponent(comp);
+                entity.addToWorld();
                 gameEntityWorld.addObserver(comp);
             } else {
                 JointFactory.getInstance().createJoint(

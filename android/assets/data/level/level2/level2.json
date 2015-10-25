@@ -13,6 +13,97 @@
 			[
 				
 				{
+					"int" : 2,
+					"name" : "taskId"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-groupIndex" : -1,
+					"friction" : 0.2,
+					"name" : "fixture8",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								2.046768188476562,
+								2.046768188476562,
+								-2.046768188476562,
+								-2.046768188476562
+							],
+							"y" : 
+							[
+								-2.046768188476562,
+								2.046783447265625,
+								2.046783447265625,
+								-2.046768188476562
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "body0",
+			"position" : 
+			{
+				"x" : 41.51190185546875,
+				"y" : -27.12660026550293
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -1.907348632812500e-05,
+							"y" : -1.144409179687500e-05
+						},
+						"radius" : 1.741158246994019
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture7"
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 14.43686389923096,
+			"massData-center" : 
+			{
+				"x" : -1.907348632812500e-05,
+				"y" : -1.144409088738030e-05
+			},
+			"massData-mass" : 9.524153709411621,
+			"name" : "waterWheel",
+			"position" : 
+			{
+				"x" : 41.51194000244141,
+				"y" : -27.12652969360352
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
 					"name" : "particlename",
 					"string" : "water_bubbles"
 				}
@@ -1544,7 +1635,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 21,
+			"body" : 23,
 			"center" : 
 			{
 				"x" : -64.40850067138672,
@@ -1589,7 +1680,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 0,
+			"body" : 2,
 			"center" : 
 			{
 				"x" : 0.07228089869022369,
@@ -1635,7 +1726,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 9,
+			"body" : 11,
 			"center" : 
 			{
 				"x" : -0.02298329956829548,
@@ -1681,7 +1772,53 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 5,
+			"body" : 1,
+			"center" : 
+			{
+				"x" : 0.02079749107360840,
+				"y" : 0.02221693657338619
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					-6.685537338256836,
+					6.727131843566895,
+					6.727131843566895,
+					-6.685537338256836
+				],
+				"y" : 
+				[
+					-6.350883960723877,
+					-6.350883960723877,
+					6.395317554473877,
+					6.395317554473877
+				]
+			},
+			"file" : "../common/waterwheel.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				-6.685537338256836,
+				-6.350883960723877,
+				6.727131843566895,
+				-6.350883960723877,
+				6.727131843566895,
+				6.395317554473877,
+				-6.685537338256836,
+				6.395317554473877
+			],
+			"name" : "image4",
+			"opacity" : 1,
+			"renderOrder" : 6,
+			"scale" : 12.74620151519775
+		},
+		
+		{
+			"aspectScale" : 1,
+			"body" : 7,
 			"center" : 
 			{
 				"x" : -0.03999387845396996,
@@ -1727,7 +1864,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 14,
+			"body" : 16,
 			"center" : 
 			{
 				"x" : -11.24802303314209,
@@ -1773,7 +1910,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 23,
+			"body" : 25,
 			"center" : 
 			{
 				"x" : 40.89406967163086,
@@ -1823,6 +1960,44 @@
 		{
 			"anchorA" : 
 			{
+				"x" : 2.670288085937500e-05,
+				"y" : 4.577636718750000e-05
+			},
+			"anchorB" : 
+			{
+				"x" : -4.196166992187500e-05,
+				"y" : -6.103515625000000e-05
+			},
+			"bodyA" : 0,
+			"bodyB" : 1,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "taskFinishers"
+				},
+				
+				{
+					"int" : 2,
+					"name" : "taskId"
+				}
+			],
+			"enableLimit" : false,
+			"enableMotor" : true,
+			"jointSpeed" : 0,
+			"lowerLimit" : 0,
+			"maxMotorTorque" : 0,
+			"motorSpeed" : 0,
+			"name" : "waterEngine",
+			"refAngle" : 0,
+			"type" : "revolute",
+			"upperLimit" : 0
+		},
+		
+		{
+			"anchorA" : 
+			{
 				"x" : 1.088909149169922,
 				"y" : 1.274729728698730
 			},
@@ -1831,8 +2006,8 @@
 				"x" : -1.142610549926758,
 				"y" : -1.087860107421875
 			},
-			"bodyA" : 11,
-			"bodyB" : 9,
+			"bodyA" : 13,
+			"bodyB" : 11,
 			"dampingRatio" : 0,
 			"frequency" : 0,
 			"name" : "joint1",
@@ -1851,8 +2026,8 @@
 				"x" : 1.203929901123047,
 				"y" : -0.9621467590332031
 			},
-			"bodyA" : 10,
-			"bodyB" : 9,
+			"bodyA" : 12,
+			"bodyB" : 11,
 			"dampingRatio" : 0,
 			"frequency" : 0,
 			"name" : "joint2",

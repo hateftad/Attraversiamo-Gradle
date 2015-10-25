@@ -30,7 +30,6 @@ public class CharacterMovementComponent extends BaseComponent {
 
     @Override
     public void dispose() {
-
     }
 
     @Override
