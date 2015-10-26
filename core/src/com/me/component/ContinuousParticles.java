@@ -1,7 +1,6 @@
 package com.me.component;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.event.ButtonEvent;
@@ -14,7 +13,7 @@ import com.me.utils.Direction;
  */
 public class ContinuousParticles extends ParticleComponent implements ButtonStateObserverComponent {
     public ContinuousParticles(String effect, Vector2 position) {
-        super(effect, ParticleType.CONTINIOUS, position);
+        super(effect, ParticleType.CONTINUOUS, position);
     }
 
     @Override

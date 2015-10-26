@@ -14,7 +14,7 @@ public abstract class ParticleComponent extends BaseComponent {
     public enum ParticleType{
 		PORTAL,
 		PICKUP,
-		CONTINIOUS
+        CONTINUOUS
     }
 
 	protected ParticleEffect m_particle;
