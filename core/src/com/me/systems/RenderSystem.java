@@ -26,7 +26,7 @@ public class RenderSystem extends EntitySystem {
 	ComponentMapper<PlayerAnimationComponent> m_playerAnimation;
 
 	@Mapper
-	ComponentMapper<ParticleComponent> m_particles;
+	ComponentMapper<SingleParticleComponent> m_particles;
 
 	@Mapper
 	ComponentMapper<ContinuousParticles> m_continuousParticles;

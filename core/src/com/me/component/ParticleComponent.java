@@ -1,29 +1,27 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.me.event.GameEvent;
+import com.me.component.interfaces.GameEventObserverComponent;
 import com.me.event.GameEventType;
 import com.me.utils.Converters;
 
-public class ParticleComponent extends GameEventObserverComponent {
+public abstract class ParticleComponent extends BaseComponent {
     public enum ParticleType{
 		PORTAL,
 		PICKUP,
 		CONTINIOUS
     }
 
-	private ParticleEffect m_particle;
-    private ParticleType m_type;
-    private ParticleEffectPool m_pool;
-    private Array<ParticleEffectPool.PooledEffect> m_effects;
+	protected ParticleEffect m_particle;
     private Vector2 m_position = Vector2.Zero;
-
+    protected ParticleType m_type;
+    protected ParticleEffectPool m_pool;
+    protected Array<ParticleEffectPool.PooledEffect> m_effects;
 
 	public ParticleComponent(String effect, ParticleType type, int max){
 		m_particle = loadParticle(effect);
@@ -34,11 +32,13 @@ public class ParticleComponent extends GameEventObserverComponent {
 
 	public ParticleComponent(String effect, ParticleType type, Vector2 position){
 		m_particle = loadParticle(effect);
-		m_pool = new ParticleEffectPool(m_particle, 100, 10);
+		m_pool = new ParticleEffectPool(m_particle, 10, 10);
 		m_effects = new Array<ParticleEffectPool.PooledEffect>();
 		m_type = type;
 		setPosition(Converters.ToWorld(position));
 	}
+
+    public ParticleComponent(){}
 
 	protected ParticleEffect loadParticle(String effectName){
 		ParticleEffect particle = new ParticleEffect();
@@ -79,16 +79,8 @@ public class ParticleComponent extends GameEventObserverComponent {
 		}
 	}
 
-    @Override
-    public void onNotify(GameEventType event) {
-        if(event == GameEventType.AllReachedEnd){
-            if(m_type == ParticleType.PORTAL){
-                start();
-            }
-        }
-    }
-
 	public void dispose(){
+        m_pool.freeAll(m_effects);
 		m_particle.dispose();
 	}
 

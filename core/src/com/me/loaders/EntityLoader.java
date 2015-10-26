@@ -166,7 +166,7 @@ public class EntityLoader {
                 entity.addComponent(new QueueComponent());
             }
             if (ud.mName.equalsIgnoreCase("portal")) {
-                ParticleComponent particleComponent = new ParticleComponent("fire", ParticleType.PORTAL, 1);
+                SingleParticleComponent particleComponent = new SingleParticleComponent("fire", ParticleType.PORTAL, 1);
                 entityWorld.addObserver(particleComponent);
                 entity.addComponent(particleComponent);
                 entity.addComponent(new TriggerComponent());
@@ -187,8 +187,8 @@ public class EntityLoader {
                 entity.addComponent(reachEndComponent);
             }
             if (ud.mName.equalsIgnoreCase("point")) {
-                entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
-                entity.addComponent(new TriggerComponent());
+                //entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
+                //entity.addComponent(new TriggerComponent());
 
             }
             if (ud.mName.equalsIgnoreCase("minX")) {
@@ -222,6 +222,7 @@ public class EntityLoader {
                 String particleName = m_scene.getCustom(body, "particlename", "");
                 ContinuousParticles particleComponent = new ContinuousParticles(particleName, body.getPosition());
                 entity.addComponent(particleComponent);
+                entityWorld.addObserver(particleComponent);
             }
 
             if (ud.mName.equalsIgnoreCase("bodyInfo")) {

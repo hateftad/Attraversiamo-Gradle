@@ -3,11 +3,10 @@ package com.me.systems;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.utils.Array;
-import com.me.component.ButtonStateObserverComponent;
-import com.me.component.MultiStateObserverComponent;
-import com.me.component.TaskEventObserverComponent;
+import com.me.component.interfaces.ButtonStateObserverComponent;
+import com.me.component.interfaces.TaskEventObserverComponent;
 import com.me.event.*;
-import com.me.component.GameEventObserverComponent;
+import com.me.component.interfaces.GameEventObserverComponent;
 
 /**
  * Created by hateftadayon on 7/9/15.

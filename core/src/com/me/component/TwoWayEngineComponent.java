@@ -3,6 +3,7 @@ package com.me.component;
 import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.event.ButtonEvent;
 import com.me.event.GameEventType;
 import com.me.event.HorizontalButtonEvent;
@@ -11,7 +12,7 @@ import com.me.utils.Direction;
 /**
  * Created by hateftadayon on 10/24/15.
  */
-public class TwoWayEngineComponent extends ButtonStateObserverComponent {
+public class TwoWayEngineComponent extends BaseComponent implements ButtonStateObserverComponent {
 
     private RevoluteJoint m_wheelJoint;
     private int m_eventId;

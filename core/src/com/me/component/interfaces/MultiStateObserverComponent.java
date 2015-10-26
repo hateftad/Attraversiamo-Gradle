@@ -1,4 +1,4 @@
-package com.me.component;
+package com.me.component.interfaces;
 
 import com.artemis.Entity;
 import com.me.event.MultiStateEvent;
@@ -6,7 +6,7 @@ import com.me.event.MultiStateEvent;
 /**
  * Created by hateftadayon on 7/13/15.
  */
-public abstract class MultiStateObserverComponent extends BaseComponent {
+public interface MultiStateObserverComponent{
 
 }
 

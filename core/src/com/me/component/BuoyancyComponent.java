@@ -3,13 +3,14 @@ package com.me.component;
 import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.event.ButtonEvent;
 import com.me.event.GameEventType;
 import com.me.event.HorizontalButtonEvent;
 import com.me.utils.Direction;
 
 
-public class BuoyancyComponent extends ButtonStateObserverComponent {
+public class BuoyancyComponent extends BaseComponent implements ButtonStateObserverComponent {
 
 	private ObjectMap<String, BuoyancyControllerConfig> m_controllerInfo = new ObjectMap<String, BuoyancyControllerConfig>();
     private int m_eventId;

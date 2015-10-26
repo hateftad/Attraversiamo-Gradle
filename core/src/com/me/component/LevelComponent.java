@@ -1,11 +1,12 @@
 package com.me.component;
 
+import com.me.component.interfaces.GameEventObserverComponent;
 import com.me.event.GameEventType;
 
 /**
  * Created by hateftadayon on 7/11/15.
  */
-public class LevelComponent extends GameEventObserverComponent {
+public class LevelComponent extends BaseComponent implements GameEventObserverComponent {
 
 
     private boolean m_isFinished;

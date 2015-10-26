@@ -1,11 +1,12 @@
 package com.me.component;
 
 import com.badlogic.gdx.utils.Array;
+import com.me.component.interfaces.TaskEventObserverComponent;
 
 /**
  * Created by hateftadayon on 7/11/15.
  */
-public abstract class TaskComponent extends TaskEventObserverComponent {
+public abstract class TaskComponent extends BaseComponent implements TaskEventObserverComponent {
 
     protected int m_nrfinishers;
     protected Array<PlayerComponent.PlayerNumber> m_finishers;
