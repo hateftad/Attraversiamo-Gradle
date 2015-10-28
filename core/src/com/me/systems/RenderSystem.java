@@ -77,7 +77,6 @@ public class RenderSystem extends EntitySystem {
 		for (Entity sortedEntity : m_sortedEntities) {
 			process(sortedEntity);
 		}
-
 	}
 
 	protected void process(Entity e) {

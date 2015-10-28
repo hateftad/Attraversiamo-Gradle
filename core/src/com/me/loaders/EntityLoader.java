@@ -81,9 +81,9 @@ public class EntityLoader {
         Vector2 bodyPos = new Vector2();
         Vector2 tmp = new Vector2();
         PhysicsComponent pComp = null;
-        SpriteComponent sComp = null;
+        SpriteComponent sComp;
         Entity entity = null;
-        RubeImage image = null;
+        RubeImage image;
         Array<Body> tempList = new Array<Body>();
 
         for (int i = 0; i < bodies.size; i++) {
@@ -99,7 +99,7 @@ public class EntityLoader {
 
                 if (tName != null) {
                     tmp.set(image.width, image.height);
-                    String textureFileName = null;
+                    String textureFileName;
                     if (!tName.contains("common")) {
                         textureFileName = LVLPATH + levelDirectory + "/"
                                 + tName;
@@ -426,7 +426,7 @@ public class EntityLoader {
                 entity.addComponent(playerComponent);
                 animationComponent.setSkin(player.getSkinName());
                 entity.addComponent(new MovementComponent());
-                VelocityLimitComponent vel = new VelocityLimitComponent(10.5f, 10);
+                VelocityLimitComponent vel = new VelocityLimitComponent(8.5f, 10);
                 vel.m_crawlLimit = 2.5f;
                 entity.addComponent(vel);
                 entity.addComponent(new TouchComponent());
@@ -504,7 +504,7 @@ public class EntityLoader {
             }
         }
 
-        if(joint.getType() == JointType.WheelJoint){
+        if (joint.getType() == JointType.WheelJoint) {
         }
 
         if (joint.getType() == JointType.RevoluteJoint) {
@@ -517,12 +517,12 @@ public class EntityLoader {
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
                     entity.addComponent(comp);
-                } else if(name.equals("waterEngine")){
+                } else if (name.equals("waterEngine")) {
                     int taskId = m_scene.getCustom(joint, "taskId", 0);
                     int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
                     TwoWayEngineComponent engineComponent = new TwoWayEngineComponent(taskId, JointFactory.getInstance().createJoint(
-                                                                                                tempList.get(ind.first),
-                                                                                                tempList.get(ind.second), jDef, physicsWorld));
+                            tempList.get(ind.first),
+                            tempList.get(ind.second), jDef, physicsWorld));
                     entity.addComponent(engineComponent);
                     gameEntityWorld.addObserver(engineComponent);
 
@@ -545,7 +545,7 @@ public class EntityLoader {
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
                     entity.addComponent(comp);
-                } else if(name.equals("waterEngine")){
+                } else if (name.equals("waterEngine")) {
                     int taskId = m_scene.getCustom(joint, "taskId", 0);
                     int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
                     TwoWayEngineComponent engineComponent = new TwoWayEngineComponent(taskId, JointFactory.getInstance().createJoint(

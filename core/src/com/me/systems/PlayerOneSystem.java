@@ -196,7 +196,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		}
 
 		if (physicsComponent.isFalling() && physicsComponent.isMovingForward()) {
-			if(!physicsComponent.isSubmerged() && !touch.m_feetToBox) {
+			if(!feetComponent.hasCollided()) {
 				animation.setAnimationState(AnimState.FALLING);
 			}
 		}

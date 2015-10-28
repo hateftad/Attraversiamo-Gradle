@@ -173,7 +173,7 @@ public class PlayerTwoSystem extends PlayerSystem {
             }
 		}
 
-		if (ps.isFalling() && ps.isMovingForward()) {
+		if (ps.isFalling() && ps.isMovingForward() && !feet.hasCollided()) {
 			animation.setAnimationState(AnimState.FALLING);
 		}
 
