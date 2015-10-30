@@ -56,7 +56,6 @@ public class EntityLoader {
         if (m_textureMap.size() > 0) {
             m_textureMap.clear();
         }
-
     }
 
     public void dispose() {
@@ -70,7 +69,7 @@ public class EntityLoader {
     }
 
     public void loadLevel(Level level, GameEntityWorld entityWorld,
-                          com.badlogic.gdx.physics.box2d.World physicsWorld, RayHandler rh) {
+                          World physicsWorld, RayHandler rh) {
         String levelDirectory = level.getLevelName();
         clearLoader();
 
@@ -241,7 +240,7 @@ public class EntityLoader {
         tempList.clear();
     }
 
-    public Entity loadCharacter(Player player, GameEntityWorld entityWorld, com.badlogic.gdx.physics.box2d.World physicsWorld) {
+    public Entity loadCharacter(Player player, GameEntityWorld entityWorld, World physicsWorld) {
         String characterPath = player.getName() + "/";
         String characterName = player.getName();
 
