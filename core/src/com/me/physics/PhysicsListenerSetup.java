@@ -9,8 +9,8 @@ import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
-import com.me.event.GameEventType;
-import com.me.event.TaskEvent;
+import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.physics.RBUserData.Type;
 import com.me.systems.GameEntityWorld;
 

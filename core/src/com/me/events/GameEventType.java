@@ -1,4 +1,4 @@
-package com.me.event;
+package com.me.events;
 
 /**
  * Created by hateftadayon on 7/7/15.

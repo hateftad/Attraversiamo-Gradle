@@ -16,6 +16,7 @@ import com.esotericsoftware.spine.SkeletonRenderer;
 import com.esotericsoftware.spine.Skin;
 import com.esotericsoftware.spine.attachments.AtlasAttachmentLoader;
 import com.me.component.interfaces.GameEventObserverComponent;
+import com.me.events.AnimationEvent;
 import com.me.loaders.RubeImage;
 import com.me.utils.Converters;
 
@@ -36,6 +37,8 @@ public abstract class AnimationComponent extends BaseComponent implements GameEv
 	protected AnimState m_previousState;
 
     protected Vector2 m_center;
+
+    protected AnimationEvent m_event;
 
     protected boolean m_isCompleted;
 
@@ -76,7 +79,8 @@ public abstract class AnimationComponent extends BaseComponent implements GameEv
 
             @Override
             public void event(int trackIndex, Event event) {
-
+                System.out.println(event.getData().getName());
+                m_event.setEvent(event);
             }
 
             @Override
@@ -89,6 +93,7 @@ public abstract class AnimationComponent extends BaseComponent implements GameEv
                 m_isCompleted = true;
             }
         });
+        m_event = new AnimationEvent();
 
 		m_skeleton = new Skeleton(m_skeletonData);
 		m_skeleton.setX(m_center.x);

@@ -1,4 +1,4 @@
-package com.me.event;
+package com.me.events;
 
 import com.artemis.Entity;
 import com.me.systems.GameEntityProcessingSystem;
@@ -6,7 +6,7 @@ import com.me.systems.GameEntityProcessingSystem;
 /**
  * Created by hateftadayon on 7/12/15.
  */
-public class GameEvent extends Event{
+public class GameEvent extends Events {
 
     protected GameEventType m_eventType;
 

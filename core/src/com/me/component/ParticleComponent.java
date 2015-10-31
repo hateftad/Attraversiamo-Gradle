@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.me.component.interfaces.GameEventObserverComponent;
-import com.me.event.GameEventType;
 import com.me.utils.Converters;
 
 public abstract class ParticleComponent extends BaseComponent {

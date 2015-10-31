@@ -1,12 +1,11 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Slot;
-import com.me.event.GameEvent;
-import com.me.event.GameEventType;
+import com.me.events.AnimationEvent;
+import com.me.events.GameEventType;
 import com.me.utils.Converters;
 
 /**
@@ -19,6 +18,14 @@ public class PlayerAnimationComponent extends AnimationComponent {
     public PlayerAnimationComponent(String atlas, String skeleton, float scale, AnimState finishAnimation) {
         super(atlas, skeleton, scale);
         m_finishAnimation = finishAnimation;
+    }
+
+    public AnimationEvent getEvent(){
+        return m_event;
+    }
+
+    public boolean shouldJump(){
+        return m_event.getEventType().equals(AnimationEvent.AnimationEventType.JUMPUP);
     }
 
     @Override

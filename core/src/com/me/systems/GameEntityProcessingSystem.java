@@ -3,7 +3,7 @@ package com.me.systems;
 import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
-import com.me.event.*;
+import com.me.events.*;
 
 /**
  * Created by hateftadayon on 7/9/15.

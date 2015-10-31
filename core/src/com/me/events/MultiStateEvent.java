@@ -1,4 +1,4 @@
-package com.me.event;
+package com.me.events;
 
 import com.me.level.tasks.BodyInfo;
 

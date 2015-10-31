@@ -4,9 +4,9 @@ import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.me.component.interfaces.ButtonStateObserverComponent;
-import com.me.event.ButtonEvent;
-import com.me.event.GameEventType;
-import com.me.event.HorizontalButtonEvent;
+import com.me.events.ButtonEvent;
+import com.me.events.GameEventType;
+import com.me.events.HorizontalButtonEvent;
 import com.me.utils.Direction;
 
 /**
@@ -36,7 +36,6 @@ public class TwoWayEngineComponent extends BaseComponent implements ButtonStateO
                 }
             }
         }
-        System.out.println(m_wheelJoint.getMotorSpeed());
     }
 
     public void setVelocity(float velocity){
@@ -55,6 +54,6 @@ public class TwoWayEngineComponent extends BaseComponent implements ButtonStateO
 
     @Override
     public void restart() {
-
+        standStill();
     }
 }

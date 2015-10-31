@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Values;
-import com.me.event.GameEvent;
+import com.me.events.GameEvent;
 import com.me.physics.FixtureData;
 import com.me.physics.RBUserData;
 import com.me.utils.Converters;

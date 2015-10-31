@@ -8,7 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
-import com.me.event.GameEventType;
+import com.me.events.GameEventType;
 import com.me.listeners.LevelEventListener;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;

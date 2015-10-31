@@ -5,7 +5,7 @@ import com.artemis.World;
 import com.badlogic.gdx.utils.Array;
 import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.component.interfaces.TaskEventObserverComponent;
-import com.me.event.*;
+import com.me.events.*;
 import com.me.component.interfaces.GameEventObserverComponent;
 
 /**

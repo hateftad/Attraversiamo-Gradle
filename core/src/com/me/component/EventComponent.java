@@ -1,6 +1,6 @@
 package com.me.component;
 
-import com.me.event.GameEvent;
+import com.me.events.GameEvent;
 
 /**
  * Created by hateftadayon on 6/7/15.

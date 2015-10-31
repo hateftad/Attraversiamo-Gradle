@@ -387,6 +387,8 @@ public class EntityLoader {
                 stateData.setMix("idle1", "pushing", 0.4f);
                 stateData.setMix("running", "pushing", 0.3f);
                 stateData.setMix("runJumping", "falling", 0.4f);
+                stateData.setMix("pushing", "idle1", 0.4f);
+//                stateData.setMix("upJump", "idle1", 0.7f);
                 // dstateData.setMix("pushing", "idle", 0.6f);
                 // stateData.setMix("ladderHang", "running", 0.1f);
                 animationComponent.setSkin(player.getSkinName());
@@ -410,11 +412,14 @@ public class EntityLoader {
                 stateData.setMix("running", "idle1", 0.4f);
                 stateData.setMix("walking", "idle1", 0.4f);
                 stateData.setMix("walking", "running", 0.4f);
+
                 // stateData.setMix("jumping", "running", 0.2f);
                 // stateData.setMix("walking", "jumping", 0.2f);
                 // stateData.setMix("falling", "idle1", 0.2f);
                 stateData.setMix("running", "falling", 0.6f);
                 stateData.setMix("idle1", "falling", 0.6f);
+                stateData.setMix("running", "falling", 0.6f);
+                stateData.setMix("walking", "falling", 0.6f);
                 stateData.setMix("idle1", "pushing", 0.6f);
                 stateData.setMix("running", "pushing", 0.6f);
                 stateData.setMix("lieDown", "lyingDown", 0.2f);

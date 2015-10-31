@@ -1,6 +1,6 @@
 package com.me.level.tasks;
 
-import com.me.event.GameEventType;
+import com.me.events.GameEventType;
 
 
 /**

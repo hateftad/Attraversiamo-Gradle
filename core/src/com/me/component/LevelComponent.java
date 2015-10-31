@@ -1,7 +1,7 @@
 package com.me.component;
 
 import com.me.component.interfaces.GameEventObserverComponent;
-import com.me.event.GameEventType;
+import com.me.events.GameEventType;
 
 /**
  * Created by hateftadayon on 7/11/15.

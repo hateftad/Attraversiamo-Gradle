@@ -1,7 +1,7 @@
 package com.me.component;
 
 import com.me.component.interfaces.GameEventObserverComponent;
-import com.me.event.GameEventType;
+import com.me.events.GameEventType;
 
 public class PlayerComponent extends BaseComponent implements GameEventObserverComponent {
 

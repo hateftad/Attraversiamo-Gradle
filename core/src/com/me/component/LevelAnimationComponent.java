@@ -1,10 +1,8 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.me.event.GameEvent;
-import com.me.event.GameEventType;
+import com.me.events.GameEventType;
 
 /**
  * Created by hateftadayon on 7/13/15.

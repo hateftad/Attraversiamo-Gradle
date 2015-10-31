@@ -1,9 +1,9 @@
 package com.me.factory;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.me.event.GameEvent;
-import com.me.event.HorizontalButtonEvent;
-import com.me.event.TaskEvent;
+import com.me.events.GameEvent;
+import com.me.events.HorizontalButtonEvent;
+import com.me.events.TaskEvent;
 import com.me.level.tasks.BodyInfo;
 import com.me.loaders.RubeScene;
 
