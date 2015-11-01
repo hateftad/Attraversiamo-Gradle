@@ -238,7 +238,6 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 	}
 
 	public void clearSystem() {
-		m_b2Controllers.clear();
 		Array<Body> bodies = new Array<Body>();
 		m_world.getBodies(bodies);
 
@@ -246,6 +245,8 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 			m_world.destroyBody(b);
 		}
 		m_world.setContactListener(null);
+
+        m_b2Controllers.clear();
 		dispose();
 	}
 

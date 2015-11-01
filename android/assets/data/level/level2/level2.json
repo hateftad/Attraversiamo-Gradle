@@ -13,6 +13,54 @@
 			[
 				
 				{
+					"int" : 6,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -0.02704238891601562,
+							"y" : -0.03652334213256836
+						},
+						"radius" : 1.213846683502197
+					},
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 6,
+					"friction" : 0.2,
+					"name" : "Edge",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "ledgeSensor",
+			"position" : 
+			{
+				"x" : 123.3087005615234,
+				"y" : -1.035640716552734
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
 					"int" : 2,
 					"name" : "taskId"
 				}
@@ -170,54 +218,6 @@
 			{
 				"x" : 72.69230651855469,
 				"y" : 44.20736694335938
-			},
-			"type" : 0
-		},
-		
-		{
-			"angle" : 0,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"customProperties" : 
-			[
-				
-				{
-					"int" : 6,
-					"name" : "boxIndex"
-				},
-				
-				{
-					"int" : 1,
-					"name" : "collisionGroup"
-				}
-			],
-			"fixture" : 
-			[
-				
-				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : -0.02704238891601562,
-							"y" : -0.03652334213256836
-						},
-						"radius" : 1.213846683502197
-					},
-					"density" : 1,
-					"filter-categoryBits" : 64,
-					"filter-maskBits" : 6,
-					"friction" : 0.2,
-					"name" : "Edge",
-					"sensor" : true
-				}
-			],
-			"linearVelocity" : 0,
-			"name" : "ledgeSensor",
-			"position" : 
-			{
-				"x" : 123.1473617553711,
-				"y" : -1.051141738891602
 			},
 			"type" : 0
 		},
@@ -1685,7 +1685,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 2,
+			"body" : 3,
 			"center" : 
 			{
 				"x" : 0.07228089869022369,
@@ -1823,7 +1823,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 1,
+			"body" : 2,
 			"center" : 
 			{
 				"x" : 0.02079749107360840,
@@ -1973,8 +1973,8 @@
 				"x" : -4.196166992187500e-05,
 				"y" : -6.103515625000000e-05
 			},
-			"bodyA" : 0,
-			"bodyB" : 1,
+			"bodyA" : 1,
+			"bodyB" : 2,
 			"customProperties" : 
 			[
 				

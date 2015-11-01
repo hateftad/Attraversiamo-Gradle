@@ -149,7 +149,7 @@
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>runOut</finishAnim>
         </player>
-        <zoom>5</zoom>
+        <zoom>9</zoom>
         <lightColor>Black</lightColor>
         <nextLevel>1</nextLevel>
     </Level>
