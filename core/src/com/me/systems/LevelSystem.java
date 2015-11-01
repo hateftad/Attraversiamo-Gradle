@@ -106,7 +106,7 @@ public class LevelSystem extends GameEntityProcessingSystem{
 	}
 
     private void levelFinished(){
-        m_levelListener.onFinishedLevel(m_currentLevel.getLevelNumber());
+        m_levelListener.onFinishedLevel(m_currentLevel.getNextLevel());
     }
 
 }

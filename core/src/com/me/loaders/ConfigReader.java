@@ -47,6 +47,7 @@ public class ConfigReader {
 				config.setHasPortal(child.getBoolean("hasPortal"));
 				config.setNumberOfPlayers(child.getInt("nrOfPlayers"));
                 config.setZoom(child.getInt("zoom"));
+                config.setNextLevel(child.getInt("nextLevel"));
 				m_levelConfigs.put(child.getAttribute("name"), config);
 				
 			}

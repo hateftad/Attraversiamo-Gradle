@@ -45,6 +45,10 @@ public class Level {
         return m_levelConfig.getLevelNr();
     }
 
+    public int getNextLevel(){
+        return m_levelConfig.getNextLevel();
+    }
+
     public boolean hasPortal() {
         return m_levelConfig.hasPortal();
     }

@@ -165,7 +165,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener{
 	@Override
 	public void onFinishedLevel(int nr) {
 		//nr++;
-		m_game.m_loadingScreen.load(5);
+		m_game.m_loadingScreen.load(nr);
 		m_game.setScreen(m_game.m_loadingScreen);
 		m_loadedNextLevel = true;
 		

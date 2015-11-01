@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.me.component.interfaces.TaskEventObserverComponent;
+import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.physics.RBUserData;
 
 import java.util.ArrayList;

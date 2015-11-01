@@ -13,6 +13,7 @@ public class LevelConfig {
 	public float m_minX, m_maxX, m_minY;
     private int m_numberOfPlayers;
     private float m_zoom;
+    private int m_nextLevel;
 
 	public LevelConfig(String name) {
 		m_name = name;
@@ -81,6 +82,14 @@ public class LevelConfig {
 	public void setLevelNr(int m_levelNr) {
 		this.m_levelNr = m_levelNr;
 	}
+
+    public void setNextLevel(int level){
+        m_nextLevel = level;
+    }
+
+    public int getNextLevel(){
+        return m_nextLevel;
+    }
 
     public void setNumberOfPlayers(int nrOfPlayers){
         m_numberOfPlayers = nrOfPlayers;
