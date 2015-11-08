@@ -9,6 +9,7 @@ import com.me.component.*;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.component.PlayerComponent.State;
 import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.listeners.LevelEventListener;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
@@ -190,7 +191,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 		
 		if (finish) {
 			if (animation.isCompleted()) {
-                notifyObservers(GameEventType.LevelFinished);
+                notifyObservers(new TaskEvent(GameEventType.LevelFinished));
 				player.setIsFinishedAnimating(true);
 			}
 		}

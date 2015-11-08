@@ -1,12 +1,13 @@
 package com.me.component;
 
-import com.me.component.interfaces.GameEventObserverComponent;
+import com.me.component.interfaces.TaskEventObserverComponent;
 import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 
 /**
  * Created by hateftadayon on 7/11/15.
  */
-public class LevelComponent extends BaseComponent implements GameEventObserverComponent {
+public class LevelComponent extends BaseComponent implements TaskEventObserverComponent {
 
 
     private boolean m_isFinished;
@@ -20,8 +21,8 @@ public class LevelComponent extends BaseComponent implements GameEventObserverCo
     }
 
     @Override
-    public void onNotify(GameEventType event) {
-        if(event == GameEventType.LevelFinished){
+    public void onNotify(TaskEvent event) {
+        if(event.getEventType() == GameEventType.LevelFinished){
             m_isFinished = true;
         }
     }

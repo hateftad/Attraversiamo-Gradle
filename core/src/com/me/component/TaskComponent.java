@@ -3,7 +3,6 @@ package com.me.component;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.component.interfaces.TaskEventObserverComponent;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 /**
  * Created by hateftadayon on 7/11/15.

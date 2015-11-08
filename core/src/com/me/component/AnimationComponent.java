@@ -15,12 +15,12 @@ import com.esotericsoftware.spine.SkeletonJson;
 import com.esotericsoftware.spine.SkeletonRenderer;
 import com.esotericsoftware.spine.Skin;
 import com.esotericsoftware.spine.attachments.AtlasAttachmentLoader;
-import com.me.component.interfaces.GameEventObserverComponent;
+import com.me.component.interfaces.TaskEventObserverComponent;
 import com.me.events.AnimationEvent;
 import com.me.loaders.RubeImage;
 import com.me.utils.Converters;
 
-public abstract class AnimationComponent extends BaseComponent implements GameEventObserverComponent {
+public abstract class AnimationComponent extends BaseComponent implements TaskEventObserverComponent {
 
 	protected SkeletonRenderer m_renderer;
 

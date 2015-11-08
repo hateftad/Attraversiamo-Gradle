@@ -7,6 +7,7 @@ import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.graphics.Color;
 import com.me.component.*;
 import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.ScriptManager;
@@ -88,7 +89,7 @@ public class LevelSystem extends GameEntityProcessingSystem{
 
         ReachEndComponent reachEndComponent = m_reachEndComps.get(entity);
         if (reachEndComponent.allFinished() && !m_currentLevel.isFinished()) {
-            notifyObservers(GameEventType.AllReachedEnd);
+            notifyObservers(new TaskEvent(GameEventType.AllReachedEnd));
             m_currentLevel.setFinished(true);
         }
 

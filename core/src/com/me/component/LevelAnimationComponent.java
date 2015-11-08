@@ -3,6 +3,7 @@ package com.me.component;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 
 /**
  * Created by hateftadayon on 7/13/15.
@@ -15,7 +16,7 @@ public class LevelAnimationComponent extends AnimationComponent {
     }
 
     @Override
-    public void onNotify(GameEventType event) {
+    public void onNotify(TaskEvent event) {
 
     }
 

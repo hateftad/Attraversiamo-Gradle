@@ -65,9 +65,4 @@ public class DoorComponent extends TaskComponent {
     public void restart() {
 
     }
-
-    @Override
-    public void onNotify(GameEventType type) {
-
-    }
 }

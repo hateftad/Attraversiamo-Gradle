@@ -6,6 +6,7 @@ import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Slot;
 import com.me.events.AnimationEvent;
 import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.utils.Converters;
 
 /**
@@ -147,8 +148,8 @@ public class PlayerAnimationComponent extends AnimationComponent {
     }
 
     @Override
-    public void onNotify(GameEventType event) {
-        if(event == GameEventType.AllReachedEnd){
+    public void onNotify(TaskEvent event) {
+        if(event.getEventType() == GameEventType.AllReachedEnd){
             setAnimationState(m_finishAnimation);
         }
     }

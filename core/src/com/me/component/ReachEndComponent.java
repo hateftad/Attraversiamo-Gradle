@@ -41,9 +41,4 @@ public class ReachEndComponent extends TaskComponent {
     public void restart() {
 
     }
-
-    @Override
-    public void onNotify(GameEventType type) {
-
-    }
 }

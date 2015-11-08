@@ -27,6 +27,10 @@ public class TaskEvent extends GameEvent {
         m_playerNr = playerNumber;
     }
 
+    public TaskEvent(GameEventType type){
+        super(type);
+    }
+
     public PlayerComponent.PlayerNumber getPlayerNr(){
         return m_playerNr;
     }

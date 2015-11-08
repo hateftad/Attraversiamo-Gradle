@@ -1,9 +1,10 @@
 package com.me.component;
 
-import com.me.component.interfaces.GameEventObserverComponent;
+import com.me.component.interfaces.TaskEventObserverComponent;
 import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 
-public class PlayerComponent extends BaseComponent implements GameEventObserverComponent {
+public class PlayerComponent extends BaseComponent implements TaskEventObserverComponent {
 
 
     public enum State {
@@ -101,8 +102,8 @@ public class PlayerComponent extends BaseComponent implements GameEventObserverC
     }
 
     @Override
-    public void onNotify(GameEventType event) {
-        if (event == GameEventType.AllReachedEnd) {
+    public void onNotify(TaskEvent event) {
+        if (event.getEventType() == GameEventType.AllReachedEnd) {
             setFacingLeft(m_finishFacingLeft);
             m_isFinishing = true;
         }

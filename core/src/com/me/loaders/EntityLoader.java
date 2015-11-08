@@ -165,7 +165,7 @@ public class EntityLoader {
                 entity.addComponent(new QueueComponent());
             }
             if (ud.mName.equalsIgnoreCase("portal")) {
-                SingleParticleComponent particleComponent = new SingleParticleComponent("fire", ParticleType.PORTAL, 1);
+                SingleParticleComponent particleComponent = new SingleParticleComponent("fire", ParticleType.PORTAL);
                 entityWorld.addObserver(particleComponent);
                 entity.addComponent(particleComponent);
                 entity.addComponent(new TriggerComponent());
