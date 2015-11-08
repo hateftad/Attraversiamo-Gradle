@@ -1,6 +1,5 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.me.component.interfaces.ButtonStateObserverComponent;
@@ -25,7 +24,7 @@ public class TwoWayEngineComponent extends BaseComponent implements ButtonStateO
     }
 
     @Override
-    public void onNotify(Entity entity, ButtonEvent event) {
+    public void onNotify(ButtonEvent event) {
         if(event.getEventType() == GameEventType.HorizontalButton) {
             if (m_eventId == event.getEventId()) {
                 HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;

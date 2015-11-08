@@ -12,15 +12,18 @@ import com.me.loaders.RubeScene;
  */
 public class GameEventFactory {
 
-    public GameEvent createFromBodyInfo(RubeScene scene, Body body){
+    public GameEvent createFromBodyInfo(RubeScene scene, Body body) {
         BodyInfo bodyInfo = new BodyInfo(scene.getCustom(body, "taskFinishers", 0), scene.getCustom(body, "taskId", 0), scene.getCustom(body, "eventType", ""));
-        switch (bodyInfo.getEventType()){
+        switch (bodyInfo.getEventType()) {
             case Door:
             case InsideFinishArea:
                 return new TaskEvent(bodyInfo);
             case HorizontalButton:
                 return new HorizontalButtonEvent(bodyInfo);
-            default: return new GameEvent(bodyInfo.getEventType());
+            case GroundTouch:
+                return new TaskEvent(bodyInfo);
+            default:
+                return new GameEvent(bodyInfo.getEventType());
         }
 
     }

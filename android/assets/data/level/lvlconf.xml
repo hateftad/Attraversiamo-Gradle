@@ -33,7 +33,7 @@
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
-        <zoom>11</zoom>
+        <zoom>10</zoom>
         <lightColor>Grey</lightColor>
         <nextLevel>2</nextLevel>
     </Level>
@@ -43,7 +43,7 @@
         <hasPortal>false</hasPortal>
         <player>
             <finishFacingLeft>false</finishFacingLeft>
-            <skinName>silhouette</skinName>
+            <skinName>color</skinName>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
@@ -57,7 +57,7 @@
         </player>
         <player>
             <finishFacingLeft>false</finishFacingLeft>
-            <skinName>silhouette</skinName>
+            <skinName>color</skinName>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>

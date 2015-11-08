@@ -46,15 +46,15 @@ public class GameEntityWorld extends World {
         }
     }
 
-    public void onNotify(Entity entity, TaskEvent event){
+    public void onNotify(TaskEvent event){
         for(TaskEventObserverComponent observerComponent : m_taskEventObservers){
-            observerComponent.onNotify(entity, event);
+            observerComponent.onNotify(event);
         }
     }
 
-    public void onNotify(Entity entity, ButtonEvent event){
+    public void onNotify(ButtonEvent event){
         for(ButtonStateObserverComponent observerComponent : m_buttonStateEventObservers){
-            observerComponent.onNotify(entity, event);
+            observerComponent.onNotify(event);
         }
     }
 

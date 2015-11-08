@@ -7,113 +7,114 @@ public class PlayerComponent extends BaseComponent implements GameEventObserverC
 
 
     public enum State {
-		WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE
-	}
+        WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE
+    }
 
-	public enum PlayerNumber {
-		ONE, TWO, THREE
-        }
-	private PlayerNumber m_playerNr;
+    public enum PlayerNumber {
+        ONE, TWO, THREE
+    }
 
-	private State m_state = State.IDLE;
+    private PlayerNumber m_playerNr;
 
-	private boolean m_facingLeft;
+    private State m_state = State.IDLE;
 
-	private boolean m_active;
+    private boolean m_facingLeft;
 
-	private boolean m_onGround;
+    private boolean m_active;
 
-	private boolean m_canDeactivate;
+    private boolean m_onGround;
+
+    private boolean m_canDeactivate;
 
     private boolean m_isFinishing;
 
     private boolean m_finishFacingLeft;
 
-	private boolean m_isFinishedAnimating;
+    private boolean m_isFinishedAnimating;
 
-	public PlayerComponent(String player, boolean finishFacingLeft) {
+    public PlayerComponent(String player, boolean finishFacingLeft) {
         m_finishFacingLeft = finishFacingLeft;
-		setPlayerNr(player);
-		setFacingLeft(true);
-		setState(State.IDLE);
-	}
+        setPlayerNr(player);
+        setFacingLeft(true);
+        setState(State.IDLE);
+    }
 
-	public State getState() {
-		return m_state;
-	}
+    public State getState() {
+        return m_state;
+    }
 
-	public void setState(State m_state) {
-		this.m_state = m_state;
-	}
+    public void setState(State m_state) {
+        this.m_state = m_state;
+    }
 
-	public void setCanBecomeInactive(boolean state) {
-		m_canDeactivate = state;
-	}
+    public void setCanBecomeInactive(boolean state) {
+        m_canDeactivate = state;
+    }
 
-	public boolean canDeActivate() {
-		return m_canDeactivate;
-	}
+    public boolean canDeActivate() {
+        return m_canDeactivate;
+    }
 
-	public boolean isFacingLeft() {
-		return m_facingLeft;
-	}
+    public boolean isFacingLeft() {
+        return m_facingLeft;
+    }
 
-	public void setFacingLeft(boolean m_facingLeft) {
-		this.m_facingLeft = m_facingLeft;
-	}
+    public void setFacingLeft(boolean m_facingLeft) {
+        this.m_facingLeft = m_facingLeft;
+    }
 
-	public boolean isActive() {
-		return m_active;
-	}
+    public boolean isActive() {
+        return m_active;
+    }
 
-	public void setActive(boolean active) {
-		m_active = active;
-	}
+    public void setActive(boolean active) {
+        m_active = active;
+    }
 
-	public boolean isOnGround() {
-		return m_onGround;
-	}
+    public boolean isOnGround() {
+        return m_onGround;
+    }
 
-	public void setOnGround(boolean onGround) {
-		this.m_onGround = onGround;
-	}
+    public void setOnGround(boolean onGround) {
+        this.m_onGround = onGround;
+    }
 
-    public boolean isFinishing(){
+    public boolean isFinishing() {
         return m_isFinishing;
     }
 
-	public PlayerNumber getPlayerNr() {
-		return m_playerNr;
-	}
+    public PlayerNumber getPlayerNr() {
+        return m_playerNr;
+    }
 
-	public void setPlayerNr(String playerNr) {
-		if (playerNr.equalsIgnoreCase("playerOne")) {
-			m_playerNr = PlayerNumber.ONE;
-		} else if (playerNr.equalsIgnoreCase("playerTwo")) {
-			m_playerNr = PlayerNumber.TWO;
-		}
-	}
+    public void setPlayerNr(String playerNr) {
+        if (playerNr.equalsIgnoreCase("playerOne")) {
+            m_playerNr = PlayerNumber.ONE;
+        } else if (playerNr.equalsIgnoreCase("playerTwo")) {
+            m_playerNr = PlayerNumber.TWO;
+        }
+    }
 
-	@Override
-	public void dispose() {
+    @Override
+    public void dispose() {
 
-	}
+    }
 
     @Override
     public void onNotify(GameEventType event) {
-        if(event == GameEventType.AllReachedEnd){
+        if (event == GameEventType.AllReachedEnd) {
             setFacingLeft(m_finishFacingLeft);
             m_isFinishing = true;
         }
     }
 
-	public void setIsFinishedAnimating(boolean isFinished) {
-		m_isFinishedAnimating = isFinished;
-	}
+    public void setIsFinishedAnimating(boolean isFinished) {
+        m_isFinishedAnimating = isFinished;
+    }
 
-	@Override
-	public void restart() {
-		m_facingLeft = false;
-		m_isFinishedAnimating = false;
-	}
+    @Override
+    public void restart() {
+        m_facingLeft = false;
+        m_isFinishedAnimating = false;
+    }
 }

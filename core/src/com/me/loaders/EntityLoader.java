@@ -371,6 +371,10 @@ public class EntityLoader {
                 entity.addComponent(new RestartComponent());
                 entity.addComponent(new EventComponent());
 
+                SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 1);
+                entity.addComponent(particleComponent);
+                entityWorld.addObserver(particleComponent);
+
                 pComp.setName(((BodyUserData) body.getUserData()).mName);
                 pComp.setIsPlayer(true);
                 stateData = animationComponent.setUp(image);
@@ -444,14 +448,21 @@ public class EntityLoader {
                 entity.addComponent(new QueueComponent());
                 entity.addComponent(new EventComponent());
 
+                SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 2);
+                entity.addComponent(particleComponent);
+                entityWorld.addObserver(particleComponent);
+
                 pComp.setPosition(player.getPosition());
             }
 
             BodyUserData ud = (BodyUserData) body.getUserData();
-
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
             pComp.setUserData(entity, ud.mName);
             tempList.add(pComp.getBody(ud.mName));
+            if (ud.mName.equalsIgnoreCase("feet")) {
+                GameEventFactory factory = new GameEventFactory();
+                pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
+            }
         }
         Array<Joint> joints = m_scene.getJoints();
         if (joints != null && joints.size > 0) {

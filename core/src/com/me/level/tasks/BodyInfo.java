@@ -17,24 +17,25 @@ public class BodyInfo {
     private int m_taskId;
     private GameEventType m_taskType;
 
-    public BodyInfo(int taskFinishers, int taskId,  String taskType){
+    public BodyInfo(int taskFinishers, int taskId, String taskType) {
         m_taskFinishers = taskFinishers;
         m_taskId = taskId;
         setTaskType(taskType);
     }
 
-    private void setTaskType(String taskType){
-        if("Door".equalsIgnoreCase(taskType)){
+    private void setTaskType(String taskType) {
+        if ("Door".equalsIgnoreCase(taskType)) {
             m_taskType = GameEventType.Door;
-        } else if("WaterEngine".equalsIgnoreCase(taskType)){
+        } else if ("WaterEngine".equalsIgnoreCase(taskType)) {
             m_taskType = GameEventType.WaterEngine;
-        } else if("ReachEnd".equalsIgnoreCase(taskType)){
+        } else if ("ReachEnd".equalsIgnoreCase(taskType)) {
             m_taskType = GameEventType.InsideFinishArea;
-        } else if("HorizontalButton".equalsIgnoreCase(taskType)){
+        } else if ("HorizontalButton".equalsIgnoreCase(taskType)) {
             m_taskType = GameEventType.HorizontalButton;
+        } else if ("GroundTouch".equalsIgnoreCase(taskType)){
+            m_taskType = GameEventType.GroundTouch;
         }
     }
-
 
     public int getTaskFinishers() {
         return m_taskFinishers;

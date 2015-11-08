@@ -10,8 +10,8 @@ import com.me.utils.Converters;
 
 public abstract class ParticleComponent extends BaseComponent {
     public enum ParticleType{
-		PORTAL,
-		PICKUP,
+        SINGLE,
+        PORTAL,
         CONTINUOUS
     }
 
@@ -20,6 +20,7 @@ public abstract class ParticleComponent extends BaseComponent {
     protected ParticleType m_type;
     protected ParticleEffectPool m_pool;
     protected Array<ParticleEffectPool.PooledEffect> m_effects;
+    protected String m_effect;
 
 	public ParticleComponent(String effect, ParticleType type, int max){
 		m_particle = loadParticle(effect);
@@ -39,8 +40,9 @@ public abstract class ParticleComponent extends BaseComponent {
     public ParticleComponent(){}
 
 	protected ParticleEffect loadParticle(String effectName){
+        m_effect = effectName;
 		ParticleEffect particle = new ParticleEffect();
-		particle.load(Gdx.files.internal("data/particles/" + effectName + ".p"), Gdx.files.internal("data"));
+		particle.load(Gdx.files.internal("data/particles/" + m_effect + ".p"), Gdx.files.internal("data"));
 		particle.start();
 		return particle;
 	}

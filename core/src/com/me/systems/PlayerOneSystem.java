@@ -164,13 +164,13 @@ public class PlayerOneSystem extends PlayerSystem  {
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
 						player.setState(State.WAITTILDONE);
-                        component.getEventInfo().notify(entity, this);
+                        component.getEventInfo().notify(this);
 					}
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
 						player.setState(State.WAITTILDONE);
-                        component.getEventInfo().notify(entity, this);
+                        component.getEventInfo().notify(this);
 
                     }
 				}

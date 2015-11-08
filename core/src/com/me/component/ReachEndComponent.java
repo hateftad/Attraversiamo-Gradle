@@ -1,6 +1,5 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
 
@@ -14,12 +13,23 @@ public class ReachEndComponent extends TaskComponent {
     }
 
     @Override
-    public void onNotify(Entity entity, TaskEvent event) {
+    public void onNotify(TaskEvent event) {
         if(event.getEventType() == GameEventType.InsideFinishArea){
-            m_finishers.add(entity.getComponent(PlayerComponent.class).getPlayerNr());
+            put(event.getPlayerNr());
         } else if (event.getEventType() == GameEventType.OutsideFinishArea){
-            m_finishers.removeValue(entity.getComponent(PlayerComponent.class).getPlayerNr(), false);
+            remove(event.getPlayerNr());
         }
+        System.out.println("finishers "+m_finishers.size);
+    }
+
+    private void put(PlayerComponent.PlayerNumber playerNumber){
+        if(!m_finishers.containsKey(playerNumber)){
+            m_finishers.put(playerNumber, true);
+        }
+    }
+
+    private void remove(PlayerComponent.PlayerNumber playerNumber){
+        m_finishers.remove(playerNumber);
     }
 
     @Override
@@ -29,6 +39,11 @@ public class ReachEndComponent extends TaskComponent {
 
     @Override
     public void restart() {
+
+    }
+
+    @Override
+    public void onNotify(GameEventType type) {
 
     }
 }

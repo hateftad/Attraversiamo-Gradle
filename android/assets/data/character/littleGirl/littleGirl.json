@@ -78,8 +78,18 @@
 				},
 				
 				{
+					"int" : 2,
+					"name" : "taskId"
+				},
+				
+				{
 					"name" : "characterType",
 					"string" : "leg"
+				},
+				
+				{
+					"name" : "eventType",
+					"string" : "groundTouch"
 				}
 			],
 			"fixture" : 

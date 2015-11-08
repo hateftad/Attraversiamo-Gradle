@@ -17,7 +17,6 @@ public class TouchComponent extends BaseComponent {
 	public boolean m_pushArea;
 	public boolean m_handTouch;
 	public boolean m_feetToBox;
-	public boolean m_endReach;
 	public Vector2 m_touchCenter;
 
 	public TouchComponent() {
@@ -29,17 +28,12 @@ public class TouchComponent extends BaseComponent {
 		m_footEdgeL = false;
 		m_footEdgeR = false;
 		m_handTouch = false;
-		m_endReach = false;
 		m_touchCenter = new Vector2();
 	}
 
 	@Override
 	public void dispose() {
 
-	}
-
-	public boolean endReached() {
-		return m_endReach;
 	}
 
 	@Override
@@ -52,7 +46,6 @@ public class TouchComponent extends BaseComponent {
 		m_footEdgeL = false;
 		m_footEdgeR = false;
 		m_handTouch = false;
-		m_endReach = false;
 		m_touchCenter = Vector2.Zero;
 
 	}

@@ -16,8 +16,8 @@ public class HorizontalButtonEvent extends ButtonEvent {
         m_direction = new Direction(Direction.Left);
     }
 
-    public void notify(Entity entity, GameEntityProcessingSystem entityProcessingSystem){
-        entityProcessingSystem.notifyObservers(entity, this);
+    public void notify(GameEntityProcessingSystem entityProcessingSystem){
+        entityProcessingSystem.notifyObservers(this);
     }
 
     public void update(){

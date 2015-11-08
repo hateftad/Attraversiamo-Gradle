@@ -11,5 +11,6 @@ public enum GameEventType {
     InsideFinishArea,
     OutsideFinishArea,
     AllReachedEnd,
+    GroundTouch,
     LevelFinished
 }

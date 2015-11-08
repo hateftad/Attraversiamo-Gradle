@@ -1,6 +1,5 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
 import com.me.events.GameEventType;
@@ -41,12 +40,11 @@ public class DoorComponent extends TaskComponent {
     }
 
     @Override
-    public void onNotify(Entity entity, TaskEvent event) {
+    public void onNotify(TaskEvent event) {
         if(event.getEventType().equals(GameEventType.Door)){
             if(event.getEventId() == m_taskId) {
-                PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
-                if (!m_finishers.contains(playerComponent.getPlayerNr(), false)) {
-                    m_finishers.add(playerComponent.getPlayerNr());
+                if (!m_finishers.containsKey(event.getPlayerNr())) {
+                    m_finishers.put(event.getPlayerNr(), true);
                 }
                 if (allFinished()) {
                     openDoor();
@@ -65,6 +63,11 @@ public class DoorComponent extends TaskComponent {
 
     @Override
     public void restart() {
+
+    }
+
+    @Override
+    public void onNotify(GameEventType type) {
 
     }
 }

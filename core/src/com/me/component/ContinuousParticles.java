@@ -1,6 +1,5 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.events.ButtonEvent;
@@ -17,7 +16,7 @@ public class ContinuousParticles extends ParticleComponent implements ButtonStat
     }
 
     @Override
-    public void onNotify(Entity entity, ButtonEvent event) {
+    public void onNotify(ButtonEvent event) {
         if (event.getEventType() == GameEventType.HorizontalButton) {
             HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
 

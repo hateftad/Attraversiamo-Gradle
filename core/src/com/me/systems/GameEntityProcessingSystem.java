@@ -19,12 +19,12 @@ public abstract class GameEntityProcessingSystem extends EntityProcessingSystem 
         ((GameEntityWorld)world).onNotify(event);
     }
 
-    public void notifyObservers(Entity entity, TaskEvent taskEvent){
-        ((GameEntityWorld)world).onNotify(entity, taskEvent);
+    public void notifyObservers(TaskEvent taskEvent){
+        ((GameEntityWorld)world).onNotify(taskEvent);
     }
 
-    public void notifyObservers(Entity entity, ButtonEvent taskEvent){
-        ((GameEntityWorld)world).onNotify(entity, taskEvent);
+    public void notifyObservers(ButtonEvent taskEvent){
+        ((GameEntityWorld)world).onNotify(taskEvent);
     }
 
 }

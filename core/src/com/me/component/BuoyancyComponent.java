@@ -1,6 +1,5 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.component.interfaces.ButtonStateObserverComponent;
@@ -46,7 +45,7 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
 	}
 
     @Override
-    public void onNotify(Entity entity, ButtonEvent event) {
+    public void onNotify(ButtonEvent event) {
         if(event.getEventType() == GameEventType.HorizontalButton){
             if(m_eventId == event.getEventId()){
                 HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
