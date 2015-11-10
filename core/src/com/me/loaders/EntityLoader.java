@@ -145,7 +145,7 @@ public class EntityLoader {
             if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("skyLight")) {
                 CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
                 entity.addComponent(camComp);
-                PointLight light = new PointLight(rh, 500, level.getLevelConfig().getLightColor(), 1000, camComp.getCamera().position.x, camComp.getCamera().position.y);
+                PointLight light = new PointLight(rh, 5000, level.getLevelConfig().getLightColor(), 5000, camComp.getCamera().position.x, camComp.getCamera().position.y);
                 entity.addComponent(new LightComponent(light, "cameraLight"));
                 entityWorld.getManager(GroupManager.class).add(entity, "lights");
             }
