@@ -79,7 +79,7 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 			m_camera = m_cameraComp.get(e);
 			m_camera.update(world.delta);
 			m_rayHandler.setCombinedMatrix(m_camera.getCombined());
-			//m_rayHandler.updateAndRender();
+			m_rayHandler.updateAndRender();
 		}
 
 		if(m_playerComp.has(e)){
@@ -164,8 +164,8 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 
 	@Override
 	public boolean scrolled(int amount) {
-
-		m_camera.setZoom(m_camera.getZoom() + (amount * 1f));
+        System.out.println(m_camera.getZoom() + (amount * 1f));
+        m_camera.setZoom(m_camera.getZoom() + (amount * 1f));
 		if (m_camera.getZoom() < 0.1f){
 			m_camera.setZoom(0.1f);
 		}

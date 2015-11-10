@@ -126,7 +126,6 @@ public class EntityLoader {
                         entity.addComponent(pComp);
                         sComp.m_shouldDraw = m_scene.getCustom(image, "shouldDraw", true);
                         entity.addComponent(sComp);
-
                     }
                 }
 
@@ -188,7 +187,6 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("point")) {
                 //entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
                 //entity.addComponent(new TriggerComponent());
-
             }
             if (ud.mName.equalsIgnoreCase("minX")) {
                 level.getLevelBoundaries().minX = Converters.ToWorld(body.getPosition().x);
