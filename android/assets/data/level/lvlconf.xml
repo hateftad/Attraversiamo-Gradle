@@ -71,7 +71,7 @@
         </player>
         <zoom>16</zoom>
         <lightColor>Blue</lightColor>
-        <nextLevel>5</nextLevel>
+        <nextLevel>3</nextLevel>
     </Level>
     <Level name="level3">
         <levelNr>3</levelNr>
@@ -93,7 +93,7 @@
         </player>
         <zoom>18</zoom>
         <lightColor>Yellow</lightColor>
-        <nextLevel>2</nextLevel>
+        <nextLevel>5</nextLevel>
     </Level>
     <Level name="level4">
         <levelNr>4</levelNr>
@@ -113,8 +113,8 @@
 	        <facingLeft>true</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
-        <zoom>7</zoom>
-        <lightColor>Yellow</lightColor>
+        <zoom>12</zoom>
+        <lightColor>White</lightColor>
         <nextLevel>2</nextLevel>
     </Level>
     <Level name="level5">

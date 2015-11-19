@@ -1,6 +1,5 @@
 package com.me.component;
 
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.component.interfaces.TaskEventObserverComponent;
 
@@ -12,12 +11,12 @@ public abstract class TaskComponent extends BaseComponent implements TaskEventOb
     protected int m_nrfinishers;
     protected ObjectMap<PlayerComponent.PlayerNumber, Boolean> m_finishers;
 
-    public TaskComponent(int finishers){
+    public TaskComponent(int finishers) {
         m_nrfinishers = finishers;
         m_finishers = new ObjectMap<PlayerComponent.PlayerNumber, Boolean>(m_nrfinishers);
     }
 
-    public boolean allFinished(){
+    public boolean allFinished() {
         return m_finishers.size == m_nrfinishers;
     }
 }

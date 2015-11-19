@@ -136,7 +136,7 @@ public class EntityLoader {
                 entity.addComponent(pComp);
             }
             if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("light")) {
-                ConeLight light = new ConeLight(rh, 500, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
+                ConeLight light = new ConeLight(rh, 50, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
                 entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
                 entity.addComponent(new TriggerComponent());
                 entityWorld.getManager(GroupManager.class).add(entity, "lights");
@@ -145,7 +145,7 @@ public class EntityLoader {
             if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("skyLight")) {
                 CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
                 entity.addComponent(camComp);
-                PointLight light = new PointLight(rh, 5000, level.getLevelConfig().getLightColor(), 5000, camComp.getCamera().position.x, camComp.getCamera().position.y);
+                PointLight light = new PointLight(rh, 50, level.getLevelConfig().getLightColor(), 5000, camComp.getCamera().position.x, camComp.getCamera().position.y);
                 entity.addComponent(new LightComponent(light, "cameraLight"));
                 entityWorld.getManager(GroupManager.class).add(entity, "lights");
             }

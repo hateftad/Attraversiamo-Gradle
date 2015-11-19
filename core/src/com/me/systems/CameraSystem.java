@@ -38,19 +38,20 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	private Box2DDebugRenderer m_debugDrawer;
 	private boolean debug;
 	private boolean m_process;
+	float zoom;
 
 	@SuppressWarnings("unchecked")
 	public CameraSystem(RayHandler rh, OrthographicCamera camera) {
 		super(Aspect.getAspectForOne(CameraComponent.class, PlayerComponent.class));
 		m_rayHandler = rh;
         m_rayHandler.setAmbientLight(Color.CYAN);
-        m_rayHandler.setBlurNum(3);
+        //m_rayHandler.setBlurNum(3);
 		m_debugDrawer = new Box2DDebugRenderer();
 
 		m_camera = new CameraComponent(camera);
         System.out.println("Zoom is "+m_camera.getZoom());
     }
-	
+
 	public void setLevelBoundariesForCamera(Level.LevelBoundaries boundaries){
 		m_camera.setLimit(boundaries.maxX, boundaries.minX, boundaries.minY);
 	}
@@ -71,14 +72,13 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	protected boolean checkProcessing() {
 		return m_process;
 	}
-	float zoom;
 	@Override
 	protected void process(Entity e) {
 		
 		if(m_cameraComp.has(e)){
 			m_camera = m_cameraComp.get(e);
 			m_camera.update(world.delta);
-			m_rayHandler.setCombinedMatrix(m_camera.getCombined());
+			m_rayHandler.setCombinedMatrix(m_camera.getCamera());
 			m_rayHandler.updateAndRender();
 		}
 

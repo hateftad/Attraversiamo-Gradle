@@ -133,13 +133,13 @@ public class PlayerTwoSystem extends PlayerSystem {
 						player.setFacingLeft(false);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
 						player.setState(State.WAITTILDONE);
-                        component.getEventInfo().notify(this);
+                        component.getEventInfo().notify(this, player.getPlayerNr());
                     }
 					if(touch.m_rightPushArea){
 						player.setFacingLeft(true);
 						animation.setAnimationState(AnimState.PRESSBUTTON);
 						player.setState(State.WAITTILDONE);
-                        component.getEventInfo().notify(this);
+                        component.getEventInfo().notify(this, player.getPlayerNr());
                     }
 				}
 			}

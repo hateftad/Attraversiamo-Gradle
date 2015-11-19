@@ -1,6 +1,5 @@
 package com.me.events;
 
-import com.artemis.Entity;
 import com.me.component.PlayerComponent;
 import com.me.level.tasks.BodyInfo;
 import com.me.systems.GameEntityProcessingSystem;
@@ -35,7 +34,8 @@ public class TaskEvent extends GameEvent {
         return m_playerNr;
     }
 
-    public void notify(GameEntityProcessingSystem entityProcessingSystem){
+    public void notify(GameEntityProcessingSystem entityProcessingSystem, PlayerComponent.PlayerNumber playerNumber){
+        m_playerNr = playerNumber;
         entityProcessingSystem.notifyObservers(this);
     }
 
