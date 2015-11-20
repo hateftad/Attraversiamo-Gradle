@@ -1,6 +1,6 @@
 package com.me.events;
 
-import com.artemis.Entity;
+import com.me.component.PlayerComponent;
 import com.me.level.tasks.BodyInfo;
 import com.me.systems.GameEntityProcessingSystem;
 import com.me.utils.Direction;
@@ -16,7 +16,7 @@ public class HorizontalButtonEvent extends ButtonEvent {
         m_direction = new Direction(Direction.Left);
     }
 
-    public void notify(GameEntityProcessingSystem entityProcessingSystem){
+    public void notify(GameEntityProcessingSystem entityProcessingSystem, PlayerComponent.PlayerNumber playerNumber) {
         entityProcessingSystem.notifyObservers(this);
     }
 
