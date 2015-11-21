@@ -7,8 +7,6 @@ public class PlayerConfig {
 
 
     private Vector2 m_playerPosition;
-
-
     private boolean m_facingleft;
     private boolean m_active;
     private boolean m_canDeactivate;
@@ -45,8 +43,8 @@ public class PlayerConfig {
         this.m_name = m_name;
     }
 
-    public void setPlayerPosition(float x, float y){
-        m_playerPosition.set(x, y);
+    public void setPlayerPosition(Vector2 position){
+        m_playerPosition.set(position);
     }
 
     public void setPlayerNumber(int number){

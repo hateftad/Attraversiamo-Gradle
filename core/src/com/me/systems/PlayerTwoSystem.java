@@ -38,7 +38,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 	protected void process(Entity entity) {
 
 		PhysicsComponent ps = m_physComps.get(entity);
-		PlayerComponent player = m_playerComps.get(entity);
+        PlayerComponent player = m_playerComps.get(entity);
         JumpComponent jumpComponent = m_jumpComps.get(entity);
 		PlayerAnimationComponent animation = m_animComps.get(entity);
 		GrabComponent g = m_grabComps.get(entity);
@@ -141,11 +141,13 @@ public class PlayerTwoSystem extends PlayerSystem {
 						player.setState(State.WAITTILDONE);
                         component.getEventInfo().notify(this, player.getPlayerNr());
                     }
+                    movementComponent.standStill();
 				}
 			}
 
 			if (animation.isCompleted(AnimState.LIEDOWN)) {
 				animation.setAnimationState(AnimState.LYINGDOWN);
+                player.setState(State.WAITTILDONE);
 				crawlComp.isCrawling = true;
 				ps.disableBody("center");
 			}

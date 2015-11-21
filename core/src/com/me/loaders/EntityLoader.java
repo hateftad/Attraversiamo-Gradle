@@ -227,6 +227,11 @@ public class EntityLoader {
                 pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
             }
 
+            if(ud.mName.equalsIgnoreCase("player_position")){
+                int player = m_scene.getCustom(body, "playerNr", -1);
+                level.addPlayerPosition(player, body.getPosition());
+            }
+
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
             pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
             tempList.add(pComp.getBody(ud.mName));
@@ -238,9 +243,9 @@ public class EntityLoader {
         tempList.clear();
     }
 
-    public Entity loadCharacter(Player player, GameEntityWorld entityWorld, World physicsWorld) {
-        String characterPath = player.getName() + "/";
-        String characterName = player.getName();
+    public Entity loadCharacter(Player playerConfig, GameEntityWorld entityWorld, World physicsWorld) {
+        String characterPath = playerConfig.getName() + "/";
+        String characterName = playerConfig.getName();
 
         clearLoader();
 
@@ -340,16 +345,16 @@ public class EntityLoader {
             AnimationStateData stateData;
             if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
                 animationComponent = new PlayerAnimationComponent(CHARPATH + characterPath
-                        + atlasName, CHARPATH + characterPath + skelName, 1.3f, player.getFinishAnimation());
+                        + atlasName, CHARPATH + characterPath + skelName, 1.3f, playerConfig.getFinishAnimation());
                 entity.addComponent(animationComponent);
                 entityWorld.addObserver(animationComponent);
             }
-            if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("playerOne")) {
+            if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_one")) {
 
-                PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), player.isFinishFacingLeft());
-                playerComponent.setActive(player.isActive());
-                playerComponent.setFacingLeft(player.isFacingLeft());
-                playerComponent.setCanBecomeInactive(player.canDeactivate());
+                PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), playerConfig.isFinishFacingLeft());
+                playerComponent.setActive(playerConfig.isActive());
+                playerComponent.setFacingLeft(playerConfig.isFacingLeft());
+                playerComponent.setCanBecomeInactive(playerConfig.canDeactivate());
                 entityWorld.addObserver(playerComponent);
                 // entity.addComponent(new LightComponent(light, ((BodyUserData)
                 // body.getUserData()).mName));
@@ -393,16 +398,16 @@ public class EntityLoader {
 //                stateData.setMix("upJump", "idle1", 0.7f);
                 // dstateData.setMix("pushing", "idle", 0.6f);
                 // stateData.setMix("ladderHang", "running", 0.1f);
-                animationComponent.setSkin(player.getSkinName());
-                pComp.setPosition(player.getPosition());
+                animationComponent.setSkin(playerConfig.getSkinName());
+                //pComp.setPosition();
                 // stateData.setMix("lieDown", "running", 0.3f);
+                pComp.setPosition(playerConfig.getPosition());
 
-            } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
-                    "playerTwo")) {
-                PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), player.isFinishFacingLeft());
-                playerComponent.setActive(player.isActive());
-                playerComponent.setFacingLeft(player.isFacingLeft());
-                playerComponent.setCanBecomeInactive(player.canDeactivate());
+            } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_two")) {
+                PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), playerConfig.isFinishFacingLeft());
+                playerComponent.setActive(playerConfig.isActive());
+                playerComponent.setFacingLeft(playerConfig.isFacingLeft());
+                playerComponent.setCanBecomeInactive(playerConfig.canDeactivate());
                 entityWorld.addObserver(playerComponent);
 
                 pComp.setName(((BodyUserData) body.getUserData()).mName);
@@ -414,10 +419,6 @@ public class EntityLoader {
                 stateData.setMix("running", "idle1", 0.4f);
                 stateData.setMix("walking", "idle1", 0.4f);
                 stateData.setMix("walking", "running", 0.4f);
-
-                // stateData.setMix("jumping", "running", 0.2f);
-                // stateData.setMix("walking", "jumping", 0.2f);
-                // stateData.setMix("falling", "idle1", 0.2f);
                 stateData.setMix("running", "falling", 0.6f);
                 stateData.setMix("idle1", "falling", 0.6f);
                 stateData.setMix("running", "falling", 0.6f);
@@ -430,7 +431,7 @@ public class EntityLoader {
                 stateData.setMix("standUp", "idle1", 0.2f);
                 stateData.setMix("lyingDown", "standUp", 0.2f);
                 entity.addComponent(playerComponent);
-                animationComponent.setSkin(player.getSkinName());
+                animationComponent.setSkin(playerConfig.getSkinName());
                 entity.addComponent(new MovementComponent());
                 VelocityLimitComponent vel = new VelocityLimitComponent(8.5f, 10);
                 vel.m_crawlLimit = 2.5f;
@@ -450,17 +451,19 @@ public class EntityLoader {
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
 
-                pComp.setPosition(player.getPosition());
+                pComp.setAllBodiesPosition(playerConfig.getPosition());
             }
 
             BodyUserData ud = (BodyUserData) body.getUserData();
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
             pComp.setUserData(entity, ud.mName);
             tempList.add(pComp.getBody(ud.mName));
+
             if (ud.mName.equalsIgnoreCase("feet")) {
                 GameEventFactory factory = new GameEventFactory();
                 pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
             }
+
         }
         Array<Joint> joints = m_scene.getJoints();
         if (joints != null && joints.size > 0) {

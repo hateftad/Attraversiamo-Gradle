@@ -89,9 +89,9 @@ public class PlayerComponent extends BaseComponent implements TaskEventObserverC
     }
 
     public void setPlayerNr(String playerNr) {
-        if (playerNr.equalsIgnoreCase("playerOne")) {
+        if (playerNr.equalsIgnoreCase("player_one")) {
             m_playerNr = PlayerNumber.ONE;
-        } else if (playerNr.equalsIgnoreCase("playerTwo")) {
+        } else if (playerNr.equalsIgnoreCase("player_two")) {
             m_playerNr = PlayerNumber.TWO;
         }
     }

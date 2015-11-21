@@ -61,7 +61,6 @@ public class PlayerOneSystem extends PlayerSystem  {
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
         FeetComponent feetComponent = m_rayCastComps.get(entity);
         JumpComponent jumpComponent = m_jumpComps.get(entity);
-        //System.out.println("Ground touch is "+touch.m_groundTouch);
         boolean finish = player.isFinishing();
 
 		if (m_inputMgr.isDown(skinChange)) {
@@ -143,7 +142,6 @@ public class PlayerOneSystem extends PlayerSystem  {
 				}
 			}
 			if (m_inputMgr.isDown(action)) {
-
 				if (touch.m_footEdge) {
 					if (touch.m_footEdgeL) {
 						player.setFacingLeft(true);
@@ -154,10 +152,12 @@ public class PlayerOneSystem extends PlayerSystem  {
 					physicsComponent.warp("feet", touch.m_touchCenter);
 					animation.setAnimationState(AnimState.LIEDOWN);
 					grabComponent.m_gonnaGrab = true;
+                    movementComponent.standStill();
 				}
 				if (touch.m_ladderTouch) {
 					vel.m_ladderClimbVelocity = 3;
 					ladderClimbComponent.m_goingUp = true;
+                    movementComponent.standStill();
 				}
 				if(touch.m_pushArea){
                     EventComponent component = m_taskComps.get(entity);
@@ -173,6 +173,7 @@ public class PlayerOneSystem extends PlayerSystem  {
 						player.setState(State.WAITTILDONE);
                         component.getEventInfo().notify(this, player.getPlayerNr());
                     }
+                    movementComponent.standStill();
 				}
 			}
 

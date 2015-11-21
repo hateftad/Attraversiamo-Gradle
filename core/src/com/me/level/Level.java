@@ -1,8 +1,12 @@
 package com.me.level;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.me.config.LevelConfig;
 import com.me.config.PlayerConfig;
+
+import java.util.HashMap;
 
 /**
  * Created by hateftadayon on 6/23/15.
@@ -18,6 +22,7 @@ public class Level {
     private LevelConfig m_levelConfig;
     private LevelBoundaries m_levelBoundaries;
 
+
     public boolean isFinished() {
         return m_isFinished;
     }
@@ -31,6 +36,15 @@ public class Level {
     public Level(LevelConfig levelConfig){
         m_levelConfig = levelConfig;
         m_levelBoundaries = new LevelBoundaries();
+
+    }
+
+    public void addPlayerPosition(int player, Vector2 position){
+        m_levelConfig.addPlayerPosition(player, position);
+    }
+
+    public Vector2 getPlayerPosition(int player){
+        return m_levelConfig.getPlayerPosition(player);
     }
 
     public int getNumberOfFinishers(){
@@ -61,11 +75,9 @@ public class Level {
         return m_levelBoundaries;
     }
 
-    public Array<PlayerConfig> getPlayerConfigs(){
+    public ObjectMap.Values<PlayerConfig> getPlayerConfigs(){
         return m_levelConfig.getPlayerConfigs();
     }
-
-
 
     public void restart() {
 

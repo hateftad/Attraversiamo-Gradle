@@ -11,11 +11,7 @@
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
-            <playerNr>one</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>1</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
@@ -25,11 +21,7 @@
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
-            <playerNr>two</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x>
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>2</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
@@ -47,11 +39,7 @@
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
-            <playerNr>one</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>1</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>runOut</finishAnim>
         </player>
@@ -61,11 +49,7 @@
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
-            <playerNr>two</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x>
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>2</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>runOut</finishAnim>
         </player>
@@ -83,11 +67,7 @@
             <active>true</active>
             <canDeactivate>false</canDeactivate>
             <playerName>smallCharacter</playerName>
-            <playerNr>one</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>1</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
@@ -101,17 +81,23 @@
         <hasPortal>false</hasPortal>
         <player>
             <finishFacingLeft>false</finishFacingLeft>
-            <skinName>color</skinName>
+            <skinName>silhouette</skinName>
             <active>true</active>
-            <canDeactivate>false</canDeactivate>
+            <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
-            <playerNr>one</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
-	        	<y name = "y">0.0</y>
-	        </position>
-	        <facingLeft>true</facingLeft>
+            <playerNr>1</playerNr>
+	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
+        </player>
+        <player>
+            <finishFacingLeft>false</finishFacingLeft>
+            <skinName>color</skinName>
+            <active>false</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>littleGirl</playerName>
+            <playerNr>2</playerNr>
+            <facingLeft>false</facingLeft>
+            <finishAnim>runOut</finishAnim>
         </player>
         <zoom>12</zoom>
         <lightColor>White</lightColor>
@@ -127,11 +113,7 @@
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
-            <playerNr>one</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>1</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>runOut</finishAnim>
         </player>
@@ -141,11 +123,7 @@
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
-            <playerNr>two</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>2</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>runOut</finishAnim>
         </player>
@@ -163,11 +141,7 @@
             <active>true</active>
             <canDeactivate>true</canDeactivate>
             <playerName>smallCharacter</playerName>
-            <playerNr>one</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x> 
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>1</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>
@@ -177,11 +151,7 @@
             <active>false</active>
             <canDeactivate>true</canDeactivate>
             <playerName>littleGirl</playerName>
-            <playerNr>two</playerNr>
-	        <position name = "pos">
-	        	<x name = "x">0.0</x>
-	        	<y name = "y">0.0</y>
-	        </position>
+            <playerNr>2</playerNr>
 	        <facingLeft>false</facingLeft>
 	        <finishAnim>suckin</finishAnim>
         </player>

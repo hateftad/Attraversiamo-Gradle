@@ -1,16 +1,19 @@
 package com.me.config;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+
+import java.util.HashMap;
 
 public class LevelConfig {
 
-	private Array<PlayerConfig> m_playerConfigs = new Array<PlayerConfig>();
+	private ObjectMap<Integer, PlayerConfig> m_playerConfigs = new ObjectMap<Integer, PlayerConfig>();
 	private String m_name;
 	private Color m_skyLightColor;
 	private int m_levelNr;
 	private boolean m_hasPortal;
-	public float m_minX, m_maxX, m_minY;
     private int m_numberOfPlayers;
     private float m_zoom;
     private int m_nextLevel;
@@ -20,12 +23,11 @@ public class LevelConfig {
 	}
 
     public void addPlayerConfig(PlayerConfig config){
-        m_playerConfigs.add(config);
-        config.setPlayerNumber(m_playerConfigs.size);
+        m_playerConfigs.put(config.getPlayerNumber(), config);
     }
 
-    public Array<PlayerConfig> getPlayerConfigs(){
-        return m_playerConfigs;
+    public ObjectMap.Values<PlayerConfig> getPlayerConfigs(){
+        return m_playerConfigs.values();
     }
 
 	public String getLevelName(){
@@ -66,6 +68,14 @@ public class LevelConfig {
 		}
 		
 	}
+
+    public void addPlayerPosition(int player, Vector2 position){
+        m_playerConfigs.get(player).setPlayerPosition(position);
+    }
+
+    public Vector2 getPlayerPosition(int player){
+        return m_playerConfigs.get(player).getPlayerPosition();
+    }
 		
 	public Color getLightColor(){
 		return m_skyLightColor;
@@ -105,11 +115,5 @@ public class LevelConfig {
 	
 	public boolean hasPortal(){
 		return m_hasPortal;
-	}
-	
-	public void setLimit(float minX, float maxX, float minY){
-		m_minX = minX;
-		m_maxX = maxX;
-		m_minY = minY;
 	}
 }

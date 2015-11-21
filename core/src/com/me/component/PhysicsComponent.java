@@ -208,16 +208,19 @@ public class PhysicsComponent extends BaseComponent {
 
 	public void setPosition(String name, Vector2 pos) {
 		m_body.get(name).setTransform(pos, 0);
+        updateWorldPosition();
 	}
 
 	public void setPosition(Vector2 pos) {
 		m_body.get(m_name).setTransform(pos, 0.0f);
+        updateWorldPosition();
 	}
 
 	public void setAllBodiesPosition(Vector2 pos) {
 		for (Body b : m_body.values()) {
 			b.setTransform(pos, 0);
 		}
+        updateWorldPosition();
 	}
 
 	public void warp(Vector2 pos) {

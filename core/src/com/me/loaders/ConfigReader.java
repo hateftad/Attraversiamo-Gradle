@@ -35,10 +35,10 @@ public class ConfigReader {
 						pConfig.setSkinName(gChild.get("skinName"));
 						pConfig.setActive(gChild.getBoolean("active"));
 						pConfig.setCanDeactivate(gChild.getBoolean("canDeactivate"));
-						pConfig.setPlayerPosition(gChild.getChildByName("position").getFloat("x"), gChild.getChildByName("position").getFloat("y"));
 						pConfig.setFacingleft(gChild.getBoolean("facingLeft"));
 						pConfig.setFinishAnimation(gChild.get("finishAnim"));
 						pConfig.setName(gChild.get("playerName"));
+                        pConfig.setPlayerNumber(gChild.getInt("playerNr"));
 						pConfig.setFinishFacingleft(gChild.getBoolean("finishFacingLeft"));
 						config.addPlayerConfig(pConfig);
 				}
