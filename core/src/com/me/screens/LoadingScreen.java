@@ -8,6 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.listeners.LoadCompletionListener;
 import com.me.loaders.BackgroundLoader;
+import com.me.screens.transitions.FadeInTransitionEffect;
+import com.me.screens.transitions.FadeOutTransitionEffect;
+import com.me.screens.transitions.TransitionEffect;
+
+import java.util.ArrayList;
 
 public class LoadingScreen implements Screen {
 
@@ -47,10 +52,24 @@ public class LoadingScreen implements Screen {
 		m_spriteBatch.draw(m_splsh,Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2.5f);
 		m_spriteBatch.end();
 		if(m_loadComplete){
-			m_game.setScreen(m_game.m_gameScreen);
+            changeScreen();
 		}
 
 	}
+
+    private void changeScreen(){
+        Screen current = m_game.getScreen();
+        Screen next = m_game.m_gameScreen;
+
+        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
+
+//        effects.add(new FadeInTransitionEffect(1f));
+        effects.add(new FadeOutTransitionEffect(1f));
+
+        Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
+
+        m_game.setScreen(transitionScreen);
+    }
 
 	@Override
 	public void resize(int width, int height) {

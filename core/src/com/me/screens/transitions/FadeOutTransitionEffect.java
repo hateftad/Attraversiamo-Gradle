@@ -1,6 +1,7 @@
 package com.me.screens.transitions;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.me.utils.ImmediateModeRendererUtils;
@@ -17,7 +18,8 @@ public class FadeOutTransitionEffect extends TransitionEffect {
     }
 
     @Override
-    public void render() {
+    public void render(float delta, Screen current, Screen next) {
+        current.render(delta);
         color.set(0f, 0f, 0f, getAlpha());
         Gdx.gl20.glEnable(GL20.GL_BLEND);
         ImmediateModeRendererUtils.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

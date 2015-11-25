@@ -32,12 +32,14 @@ public class TransitionScreen extends AbstractScreen {
             m_game.setScreen(next);
             return;
         }
-        current.render(delta);
-        transitionEffects.get(currentTransitionEffect).update(delta);
-        transitionEffects.get(currentTransitionEffect).render();
 
-        if (transitionEffects.get(currentTransitionEffect).isFinished())
+        transitionEffects.get(currentTransitionEffect).update(delta);
+        transitionEffects.get(currentTransitionEffect).render(delta, current, next);
+        System.out.println(currentTransitionEffect);
+
+        if (transitionEffects.get(currentTransitionEffect).isFinished()) {
             currentTransitionEffect++;
+        }
     }
 
 }

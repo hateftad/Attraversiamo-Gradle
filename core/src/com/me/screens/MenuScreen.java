@@ -52,7 +52,6 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-
         super.render(delta);
         m_camera.update();
         m_spriteBatch.setProjectionMatrix(m_camera.combined);
@@ -62,23 +61,19 @@ public class MenuScreen extends AbstractScreen {
         }
         m_spriteBatch.end();
         if (Gdx.input.justTouched()) {
-//            m_game.m_loadingScreen = new LoadingScreen(m_game);
-//            m_game.m_loadingScreen.load(4);
-//            m_game.setScreen(m_game.m_loadingScreen);
             changeScreen();
         }
     }
 
     private void changeScreen(){
-        //m_game.setScreen(new MenuScreen(m_game));
         Screen current = m_game.getScreen();
         LoadingScreen next = new LoadingScreen(m_game);
         next.load(4);
 
         ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
 
-        effects.add(new FadeOutTransitionEffect(5f));
-        effects.add(new FadeInTransitionEffect(5f));
+        effects.add(new FadeOutTransitionEffect(1f));
+        //effects.add(new FadeInTransitionEffect(1f));
 
         Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
 

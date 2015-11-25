@@ -23,7 +23,7 @@ public abstract class TransitionEffect {
         m_timeTransition.update(delta);
     }
 
-    public abstract void render();
+    public abstract void render(float delta, Screen current, Screen next);
     public boolean isFinished(){
         return m_timeTransition.isFinished();
     }
