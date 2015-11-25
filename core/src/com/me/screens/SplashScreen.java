@@ -1,12 +1,18 @@
 package com.me.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 import com.me.component.LevelAnimationComponent;
+import com.me.screens.transitions.FadeInTransitionEffect;
+import com.me.screens.transitions.FadeOutTransitionEffect;
+import com.me.screens.transitions.TransitionEffect;
+
+import java.util.ArrayList;
 
 public class SplashScreen extends AbstractScreen {
 
@@ -52,8 +58,18 @@ public class SplashScreen extends AbstractScreen {
 	}
 	
 	private void changeScreen(){
-		m_game.setScreen(new MenuScreen(m_game));
-    	System.out.println("starting");
+		//m_game.setScreen(new MenuScreen(m_game));
+		Screen current = m_game.getScreen();
+		Screen next = new MenuScreen(m_game);
+
+		ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
+
+		effects.add(new FadeOutTransitionEffect(1f));
+		effects.add(new FadeInTransitionEffect(1f));
+
+		Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
+
+		m_game.setScreen(transitionScreen);
 	}
 
 	@Override
