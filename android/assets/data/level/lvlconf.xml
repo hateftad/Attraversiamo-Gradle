@@ -54,7 +54,7 @@
 	        <finishAnim>runOut</finishAnim>
         </player>
         <zoom>16</zoom>
-        <lightColor>Blue</lightColor>
+        <lightColor>White</lightColor>
         <nextLevel>3</nextLevel>
     </Level>
     <Level name="level3">

@@ -67,15 +67,15 @@ public class MenuScreen extends AbstractScreen {
 
     private void changeScreen(){
         Screen current = m_game.getScreen();
-        LoadingScreen next = new LoadingScreen(m_game);
-        next.load(4);
+        m_game.m_loadingScreen = new LoadingScreen(m_game);
+        m_game.m_loadingScreen.load(1);
 
         ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
 
         effects.add(new FadeOutTransitionEffect(1f));
         //effects.add(new FadeInTransitionEffect(1f));
 
-        Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
+        Screen transitionScreen = new TransitionScreen(m_game, current, m_game.m_loadingScreen, effects);
 
         m_game.setScreen(transitionScreen);
     }
