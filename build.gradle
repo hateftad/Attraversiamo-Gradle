@@ -73,6 +73,8 @@ project(":android") {
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile "com.google.android.gms:play-services-analytics:8.4.0"
+        compile 'com.google.android.gms:play-services-ads:8.4.0'
     }
 }
 
@@ -89,6 +91,8 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
+        compile "org.robovm:robopods-google-analytics-ios:1.9.0"
+        compile "org.robovm:robopods-google-mobile-ads-ios:1.9.0"
     }
 }
 /*

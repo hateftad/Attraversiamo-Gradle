@@ -63,7 +63,6 @@ public class LoadingScreen implements Screen {
 
         ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
 
-//        effects.add(new FadeInTransitionEffect(1f));
         effects.add(new FadeOutTransitionEffect(1f));
 
         Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
