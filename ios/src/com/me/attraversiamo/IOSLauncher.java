@@ -46,42 +46,6 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         pool.close();
     }
 
-    public void hide() {
-        initializeAds();
-
-        final CGSize screenSize = UIScreen.getMainScreen().getBounds().getSize();
-        double screenWidth = screenSize.getWidth();
-
-        final CGSize adSize = adview.getBounds().getSize();
-        double adWidth = adSize.getWidth();
-        double adHeight = adSize.getHeight();
-
-        log.debug(String.format("Hidding ad. size[%s, %s]", adWidth, adHeight));
-
-        float bannerWidth = (float) screenWidth;
-        float bannerHeight = (float) (bannerWidth / adWidth * adHeight);
-
-        adview.setFrame(new CGRect(0, -bannerHeight, bannerWidth, bannerHeight));
-    }
-
-    public void show() {
-        initializeAds();
-
-        final CGSize screenSize = UIScreen.getMainScreen().getBounds().getSize();
-        double screenWidth = screenSize.getWidth();
-
-        final CGSize adSize = adview.getBounds().getSize();
-        double adWidth = adSize.getWidth();
-        double adHeight = adSize.getHeight();
-
-        log.debug(String.format("Showing ad. size[%s, %s]", adWidth, adHeight));
-
-        float bannerWidth = (float) screenWidth;
-        float bannerHeight = (float) (bannerWidth / adWidth * adHeight);
-
-        adview.setFrame(new CGRect((screenWidth / 2) - adWidth / 2, 0, bannerWidth, bannerHeight));
-    }
-
     public void initializeAds() {
         if (!adsInitialized) {
             log.debug("Initalizing ads...");
