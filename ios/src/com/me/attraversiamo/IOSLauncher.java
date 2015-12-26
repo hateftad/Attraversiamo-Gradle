@@ -6,15 +6,20 @@ import com.me.ads.IActivityRequestHandler;
 import com.me.config.GameConfig;
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.coregraphics.CGSize;
-import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSAutoreleasePool;
-import org.robovm.apple.foundation.NSObject;
-import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.uikit.UIApplication;
+import org.robovm.pods.google.mobileads.GADAdSize;
+import org.robovm.pods.google.mobileads.GADBannerView;
+import org.robovm.pods.google.mobileads.GADBannerViewDelegateAdapter;
+import org.robovm.pods.google.mobileads.GADRequest;
+import org.robovm.pods.google.mobileads.GADRequestError;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
 import org.robovm.apple.uikit.UIScreen;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IOSLauncher extends IOSApplication.Delegate implements IActivityRequestHandler {
 
@@ -31,8 +36,8 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         cfg.showUI = true;
         cfg.timeStep = 1/45f;
         cfg.zoom = 5f;
-
-        return new IOSApplication(new Attraversiamo(cfg), config);
+        iosApplication = new IOSApplication(new Attraversiamo(cfg, this), config);
+        return iosApplication;
     }
 
     public static void main(String[] argv) {
@@ -41,16 +46,15 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         pool.close();
     }
 
-    @Override
     public void hide() {
         initializeAds();
 
-        final CGSize screenSize = UIScreen.getMainScreen().getBounds().size();
-        double screenWidth = screenSize.width();
+        final CGSize screenSize = UIScreen.getMainScreen().getBounds().getSize();
+        double screenWidth = screenSize.getWidth();
 
-        final CGSize adSize = adview.getBounds().size();
-        double adWidth = adSize.width();
-        double adHeight = adSize.height();
+        final CGSize adSize = adview.getBounds().getSize();
+        double adWidth = adSize.getWidth();
+        double adHeight = adSize.getHeight();
 
         log.debug(String.format("Hidding ad. size[%s, %s]", adWidth, adHeight));
 
@@ -60,16 +64,15 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         adview.setFrame(new CGRect(0, -bannerHeight, bannerWidth, bannerHeight));
     }
 
-    @Override
     public void show() {
         initializeAds();
 
-        final CGSize screenSize = UIScreen.getMainScreen().getBounds().size();
-        double screenWidth = screenSize.width();
+        final CGSize screenSize = UIScreen.getMainScreen().getBounds().getSize();
+        double screenWidth = screenSize.getWidth();
 
-        final CGSize adSize = adview.getBounds().size();
-        double adWidth = adSize.width();
-        double adHeight = adSize.height();
+        final CGSize adSize = adview.getBounds().getSize();
+        double adWidth = adSize.getWidth();
+        double adHeight = adSize.getHeight();
 
         log.debug(String.format("Showing ad. size[%s, %s]", adWidth, adHeight));
 
@@ -85,15 +88,15 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
 
             adsInitialized = true;
 
-            adview = new GADBannerView(GADAdSizeManager.smartBannerPortrait());
-            adview.setAdUnitID("xxxxxxxx"); //put your secret key here
+            adview = new GADBannerView(GADAdSize.SmartBannerLandscape());
+            adview.setAdUnitID("ca-app-pub-8364054019750662/3829375835"); //put your secret key here
             adview.setRootViewController(iosApplication.getUIViewController());
             iosApplication.getUIViewController().getView().addSubview(adview);
 
-            final GADRequest request = GADRequest.request();
+            final GADRequest request = new GADRequest();
             if (USE_TEST_DEVICES) {
-                final NSArray<?> testDevices = new NSArray<NSObject>(
-                        new NSString(GADRequest.GAD_SIMULATOR_ID));
+                final List<String> testDevices = new ArrayList<>();
+                testDevices.add("21fcf2728dddd9a7e4ca8049b1ed5a76");
                 request.setTestDevices(testDevices);
                 log.debug("Test devices: " + request.getTestDevices());
             }
@@ -123,12 +126,12 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
     public void showAds(boolean show) {
         initializeAds();
 
-        final CGSize screenSize = UIScreen.getMainScreen().getBounds().size();
-        double screenWidth = screenSize.width();
+        final CGSize screenSize = UIScreen.getMainScreen().getBounds().getSize();
+        double screenWidth = screenSize.getWidth();
 
-        final CGSize adSize = adview.getBounds().size();
-        double adWidth = adSize.width();
-        double adHeight = adSize.height();
+        final CGSize adSize = adview.getBounds().getSize();
+        double adWidth = adSize.getWidth();
+        double adHeight = adSize.getHeight();
 
         log.debug(String.format("Hidding ad. size[%s, %s]", adWidth, adHeight));
 

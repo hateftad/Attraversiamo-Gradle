@@ -19,11 +19,11 @@ public class Attraversiamo extends Game implements ApplicationListener {
 	public GameScreen m_gameScreen;
 	public LoadingScreen m_loadingScreen;
 	private FPSLogger m_fpsLogger;
-    public IActivityRequestHandler m_adRequestHandler;
+    private IActivityRequestHandler m_adRequestHandler;
 	public Array<InputProcessor> m_processors = new Array<InputProcessor>();
 	public InputMultiplexer m_multiPlexer = new InputMultiplexer();
 
-	public Attraversiamo(GameConfig config){
+	public Attraversiamo(GameConfig config, IActivityRequestHandler requestHandler){
 		if(config != null){
 			GlobalConfig.getInstance().setConfig(config);
 		} else {
@@ -32,11 +32,7 @@ public class Attraversiamo extends Game implements ApplicationListener {
 			conf.showUI = false;
 			conf.timeStep = 1/60f;
 		}
-
-	}
-	
-	public Attraversiamo(){
-		this(null);
+        m_adRequestHandler = requestHandler;
 	}
 
 	@Override
@@ -46,6 +42,10 @@ public class Attraversiamo extends Game implements ApplicationListener {
 		setScreen(new SplashScreen(this));
 		m_multiPlexer.setProcessors(m_processors);		
 	}
+
+    public void showAd(boolean show){
+        m_adRequestHandler.showAds(show);
+    }
 
 	@Override
 	public void dispose() {

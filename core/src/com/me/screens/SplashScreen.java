@@ -70,6 +70,7 @@ public class SplashScreen extends AbstractScreen {
 		Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
 
 		m_game.setScreen(transitionScreen);
+        m_game.showAd(true);
 	}
 
 	@Override

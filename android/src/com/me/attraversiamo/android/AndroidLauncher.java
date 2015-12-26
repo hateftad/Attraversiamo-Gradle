@@ -37,7 +37,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
-        View gameView = initializeForView(new Attraversiamo(cfg), config);
+        View gameView = initializeForView(new Attraversiamo(cfg, this), config);
         layout.addView(gameView);
 
         setUpAd(layout);
