@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.utils.Array;
+import com.me.ads.IActivityRequestHandler;
 import com.me.screens.GameScreen;
 import com.me.screens.LoadingScreen;
 import com.me.screens.SplashScreen;
@@ -17,7 +18,8 @@ public class Attraversiamo extends Game implements ApplicationListener {
 	
 	public GameScreen m_gameScreen;
 	public LoadingScreen m_loadingScreen;
-	FPSLogger m_fpsLogger;
+	private FPSLogger m_fpsLogger;
+    public IActivityRequestHandler m_adRequestHandler;
 	public Array<InputProcessor> m_processors = new Array<InputProcessor>();
 	public InputMultiplexer m_multiPlexer = new InputMultiplexer();
 

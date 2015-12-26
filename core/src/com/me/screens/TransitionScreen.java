@@ -35,7 +35,6 @@ public class TransitionScreen extends AbstractScreen {
 
         transitionEffects.get(currentTransitionEffect).update(delta);
         transitionEffects.get(currentTransitionEffect).render(delta, current, next);
-        System.out.println(currentTransitionEffect);
 
         if (transitionEffects.get(currentTransitionEffect).isFinished()) {
             currentTransitionEffect++;
