@@ -26,5 +26,10 @@ public class DesktopLauncher {
         public void showAds(boolean show) {
 
         }
+
+        @Override
+        public void setScreenName(String name) {
+
+        }
     };
 }

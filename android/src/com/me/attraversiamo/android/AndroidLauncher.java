@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.me.ads.IActivityRequestHandler;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.attraversiamo.android.ads.AdHandler;
@@ -18,7 +19,8 @@ import com.google.android.gms.ads.*;
 
 public class AndroidLauncher extends AndroidApplication implements IActivityRequestHandler {
 
-    protected static AdHandler handler;
+    private static AdHandler handler;
+    private AnalyticsHandler analyticsHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,24 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 
         setUpAd(layout);
 
+        AttraversiamoApplication application = (AttraversiamoApplication) getApplication();
+        analyticsHandler = new AnalyticsHandler(application.getTracker(AttraversiamoApplication.TrackerName.APP_TRACKER));
+
         setContentView(layout);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+    }
+
 
     private void setUpAd(RelativeLayout layout) {
 
@@ -71,5 +89,10 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
     @Override
     public void showAds(boolean show) {
         handler.sendMessage(show);
+    }
+
+    @Override
+    public void setScreenName(String name) {
+        analyticsHandler.setScreenName(name);
     }
 }

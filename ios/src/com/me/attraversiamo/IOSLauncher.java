@@ -28,6 +28,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
     private GADBannerView adview;
     private boolean adsInitialized = false;
     private IOSApplication iosApplication;
+
     @Override
     protected IOSApplication createApplication() {
         IOSApplicationConfiguration config = new IOSApplicationConfiguration();
@@ -107,6 +108,11 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         } else {
             adview.setFrame(new CGRect(0, -bannerHeight, bannerWidth, bannerHeight));
         }
+    }
+
+    @Override
+    public void setScreenName(String name) {
+
     }
 
 }

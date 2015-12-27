@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="ga_sessionTimeout">60</integer>
+    <!-- The apps Analytics Tracking Id -->
+    <string name="ga_trackingId">UA-71748210-1</string>
+</resources>

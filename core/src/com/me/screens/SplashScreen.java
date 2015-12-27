@@ -16,97 +16,95 @@ import java.util.ArrayList;
 
 public class SplashScreen extends AbstractScreen {
 
-	private AnimationComponent m_animation;
-	private boolean timerIsOn = false;
+    private AnimationComponent m_animation;
+    private boolean timerIsOn = false;
 
-	public SplashScreen(Attraversiamo game){
-		
-		super(game);
-		m_camera.viewportWidth = 800;
-		m_camera.viewportHeight = 600;
-		m_animation = new LevelAnimationComponent("data/intro", "data/intro", 1f);
-		m_animation.setUp(new Vector2(0, 0), "intro");
-		m_camera.zoom = 2f;
-	}
+    public SplashScreen(Attraversiamo game) {
 
-	@Override
-	public void render(float delta) {
-		
-		super.render(delta);
-		m_camera.update();
-		m_spriteBatch.setProjectionMatrix(m_camera.combined);
-		m_spriteBatch.begin();
-		m_animation.update(m_spriteBatch, delta/2);
-		m_spriteBatch.end();
+        super(game);
+        m_camera.viewportWidth = 800;
+        m_camera.viewportHeight = 600;
+        m_animation = new LevelAnimationComponent("data/intro", "data/intro", 1f);
+        m_animation.setUp(new Vector2(0, 0), "intro");
+        m_camera.zoom = 2f;
+    }
 
-		 if(!timerIsOn) {
-	         timerIsOn = true;
-	         
-	         Timer.schedule(new Task() {
-	            
-	            @Override
-	            public void run() {
-	               changeScreen();
-	            }
+    @Override
+    protected String getName() {
+        return getClass().getSimpleName();
+    }
 
-	         }, 3);
-	             
-	      } else if(Gdx.input.isTouched()) {
-	           Timer.instance().clear(); 
-	           changeScreen();
-	      }
-	}
-	
-	private void changeScreen(){
-		//m_game.setScreen(new MenuScreen(m_game));
-		Screen current = m_game.getScreen();
-		Screen next = new MenuScreen(m_game);
+    @Override
+    public void render(float delta) {
+        super.render(delta);
 
-		ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
+        m_camera.update();
+        m_spriteBatch.setProjectionMatrix(m_camera.combined);
+        m_spriteBatch.begin();
+        m_animation.update(m_spriteBatch, delta / 2);
+        m_spriteBatch.end();
 
-		effects.add(new FadeOutTransitionEffect(1f));
-		effects.add(new FadeInTransitionEffect(1f));
+        if (!timerIsOn) {
+            timerIsOn = true;
 
-		Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
+            Timer.schedule(new Task() {
 
-		m_game.setScreen(transitionScreen);
+                @Override
+                public void run() {
+                    changeScreen();
+                }
+
+            }, 3);
+
+        } else if (Gdx.input.isTouched()) {
+            Timer.instance().clear();
+            changeScreen();
+        }
+    }
+
+    private void changeScreen() {
+        Screen current = m_game.getScreen();
+        Screen next = new MenuScreen(m_game);
+
+        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
+
+        effects.add(new FadeOutTransitionEffect(1f));
+        effects.add(new FadeInTransitionEffect(1f));
+
+        Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
+
+        m_game.setScreen(transitionScreen);
         m_game.showAd(true);
-	}
+    }
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
+    @Override
+    public void resize(int width, int height) {
 
-	}
+    }
 
-	@Override
-	public void show() {
+    @Override
+    public void show() {
+        m_game.setScreenName("Splash Screen");
+    }
 
+    @Override
+    public void hide() {
 
-	}
+    }
 
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
+    @Override
+    public void pause() {
 
-	}
+    }
 
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
+    @Override
+    public void resume() {
 
-	}
+    }
 
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void dispose() {
-		m_animation.dispose();
-
-	}
+    @Override
+    public void dispose() {
+        m_animation.dispose();
+    }
 
 }

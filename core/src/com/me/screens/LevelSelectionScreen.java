@@ -8,10 +8,15 @@ public class LevelSelectionScreen extends AbstractScreen {
 		super(game);
 		// TODO Auto-generated constructor stub
 	}
-	
-	@Override
+
+    @Override
+    protected String getName() {
+        return getClass().getSimpleName();
+    }
+
+    @Override
 	public void show() {
-		
+        super.show();
 	}
 	
 	@Override

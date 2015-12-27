@@ -9,16 +9,17 @@ import java.util.ArrayList;
 /**
  * Created by hateftadayon on 25/11/15.
  */
-public class TransitionScreen extends AbstractScreen {
+public class TransitionScreen implements Screen {
 
     private Screen current;
     private Screen next;
+    private Attraversiamo m_game;
 
     private int currentTransitionEffect;
     private ArrayList<TransitionEffect> transitionEffects;
 
     public TransitionScreen(Attraversiamo game, Screen current, Screen next, ArrayList<TransitionEffect> transitionEffects) {
-        super(game);
+        m_game = game;
         this.current = current;
         this.next = next;
         this.transitionEffects = transitionEffects;
@@ -26,8 +27,13 @@ public class TransitionScreen extends AbstractScreen {
     }
 
     @Override
+    public void show() {
+
+    }
+
+    @Override
     public void render(float delta) {
-        super.render(delta);
+
         if (currentTransitionEffect >= transitionEffects.size()) {
             m_game.setScreen(next);
             return;
@@ -39,6 +45,31 @@ public class TransitionScreen extends AbstractScreen {
         if (transitionEffects.get(currentTransitionEffect).isFinished()) {
             currentTransitionEffect++;
         }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 
 }

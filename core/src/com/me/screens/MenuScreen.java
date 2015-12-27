@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class MenuScreen extends AbstractScreen {
 
-
     private static final String SCENEPATH = "data/ui/menu";
     private static final float SCALE = 0.5f;
 
@@ -31,6 +30,11 @@ public class MenuScreen extends AbstractScreen {
     public MenuScreen(Attraversiamo game) {
         super(game);
         init();
+    }
+
+    @Override
+    protected String getName() {
+        return getClass().getSimpleName();
     }
 
     private void init() {
@@ -47,7 +51,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
-
+        super.show();
     }
 
     @Override
@@ -65,7 +69,7 @@ public class MenuScreen extends AbstractScreen {
         }
     }
 
-    private void changeScreen(){
+    private void changeScreen() {
         Screen current = m_game.getScreen();
         m_game.m_loadingScreen = new LoadingScreen(m_game);
         m_game.m_loadingScreen.load(1);

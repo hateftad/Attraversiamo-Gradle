@@ -15,53 +15,57 @@ import com.me.config.GameConfig.Platform;
 import com.me.config.GlobalConfig;
 
 public class Attraversiamo extends Game implements ApplicationListener {
-	
-	public GameScreen m_gameScreen;
-	public LoadingScreen m_loadingScreen;
-	private FPSLogger m_fpsLogger;
+
+    public GameScreen m_gameScreen;
+    public LoadingScreen m_loadingScreen;
+    private FPSLogger m_fpsLogger;
     private IActivityRequestHandler m_adRequestHandler;
-	public Array<InputProcessor> m_processors = new Array<InputProcessor>();
-	public InputMultiplexer m_multiPlexer = new InputMultiplexer();
+    public Array<InputProcessor> m_processors = new Array<InputProcessor>();
+    public InputMultiplexer m_multiPlexer = new InputMultiplexer();
 
-	public Attraversiamo(GameConfig config, IActivityRequestHandler requestHandler){
-		if(config != null){
-			GlobalConfig.getInstance().setConfig(config);
-		} else {
-			GameConfig conf = new GameConfig();
-			conf.platform = Platform.DESKTOP;
-			conf.showUI = false;
-			conf.timeStep = 1/60f;
-		}
+    public Attraversiamo(GameConfig config, IActivityRequestHandler requestHandler) {
+        if (config != null) {
+            GlobalConfig.getInstance().setConfig(config);
+        } else {
+            GameConfig conf = new GameConfig();
+            conf.platform = Platform.DESKTOP;
+            conf.showUI = false;
+            conf.timeStep = 1 / 60f;
+        }
         m_adRequestHandler = requestHandler;
-	}
+    }
 
-	@Override
-	public void create() {		
-		
-		m_fpsLogger = new FPSLogger();
-		setScreen(new SplashScreen(this));
-		m_multiPlexer.setProcessors(m_processors);		
-	}
+    @Override
+    public void create() {
 
-    public void showAd(boolean show){
+        m_fpsLogger = new FPSLogger();
+        setScreen(new SplashScreen(this));
+        m_multiPlexer.setProcessors(m_processors);
+    }
+
+    public void showAd(boolean show) {
         m_adRequestHandler.showAds(show);
     }
 
-	@Override
-	public void dispose() {
-		
-	}
+    public void setScreenName(String name) {
+        m_adRequestHandler.setScreenName(name);
+    }
 
-	@Override
-	public void resize(int width, int height) {
-		
-	}
+    @Override
+    public void dispose() {
 
-	@Override
-	public void pause() {
-	}
+    }
 
-	@Override
-	public void resume() {
-	}
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
 }

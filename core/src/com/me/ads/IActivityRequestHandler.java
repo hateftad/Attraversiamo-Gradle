@@ -5,4 +5,5 @@ package com.me.ads;
  */
 public interface IActivityRequestHandler {
     void showAds(boolean show);
+    void setScreenName(String name);
 }
