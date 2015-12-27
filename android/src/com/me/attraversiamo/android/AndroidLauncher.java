@@ -1,7 +1,6 @@
 package com.me.attraversiamo.android;
 
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -11,16 +10,16 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.me.ads.IActivityRequestHandler;
 import com.me.attraversiamo.Attraversiamo;
-import com.me.attraversiamo.android.ads.AdHandler;
-import com.me.attraversiamo.android.ads.AdOperationListener;
+import com.me.attraversiamo.android.ads.AdManager;
+import com.me.attraversiamo.android.analytics.AnalyticsManager;
 import com.me.config.GameConfig;
 import com.me.config.GameConfig.Platform;
-import com.google.android.gms.ads.*;
 
 public class AndroidLauncher extends AndroidApplication implements IActivityRequestHandler {
 
-    private static AdHandler handler;
-    private AnalyticsHandler analyticsHandler;
+    private AnalyticsManager analyticsHandler;
+    private AdManager adManager;
+    private RelativeLayout rootLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +32,21 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         cfg.showUI = true;
         cfg.zoom = 9f;
 
-        RelativeLayout layout = new RelativeLayout(this);
+        rootLayout = new RelativeLayout(this);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
         View gameView = initializeForView(new Attraversiamo(cfg, this), config);
-        layout.addView(gameView);
+        rootLayout.addView(gameView);
 
-        setUpAd(layout);
+        adManager = new AdManager(rootLayout);
 
         AttraversiamoApplication application = (AttraversiamoApplication) getApplication();
-        analyticsHandler = new AnalyticsHandler(application.getTracker(AttraversiamoApplication.TrackerName.APP_TRACKER));
+        analyticsHandler = new AnalyticsManager(application.getTracker(AttraversiamoApplication.TrackerName.APP_TRACKER));
 
-        setContentView(layout);
+        setContentView(rootLayout);
     }
 
     @Override
@@ -62,33 +61,12 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
-
-    private void setUpAd(RelativeLayout layout) {
-
-
-        AdView adView = new AdView(this);
-        adView.setAdUnitId(getString(R.string.ad_bottom_banner_menu));
-        adView.setAdSize(AdSize.SMART_BANNER);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("BA5C2F7E987BAD8BD945FD845BDF5D2F")
-                .build();
-        adView.loadAd(adRequest);
-
-        adView.setAdListener(new AdOperationListener());
-
-        RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        adParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-        layout.addView(adView, adParams);
-
-        handler = new AdHandler(adView);
-    }
-
     @Override
     public void showAds(boolean show) {
-        handler.sendMessage(show);
+        if(adManager == null){
+            adManager = new AdManager(rootLayout);
+        }
+        adManager.showAd(show);
     }
 
     @Override

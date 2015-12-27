@@ -3,8 +3,8 @@ package com.me.attraversiamo;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
 import com.me.ads.IActivityRequestHandler;
-import com.me.attraversiamo.ads.AdHandler;
-import com.me.attraversiamo.analytics.AnalyticsHandler;
+import com.me.attraversiamo.ads.AdManager;
+import com.me.attraversiamo.analytics.AnalyticsManager;
 import com.me.config.GameConfig;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.foundation.NSBundle;
@@ -16,8 +16,8 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
 
 
     private IOSApplication iosApplication;
-    private AnalyticsHandler analyticsHandler;
-    private AdHandler adHandler;
+    private AnalyticsManager analyticsHandler;
+    private AdManager adHandler;
 
     @Override
     protected IOSApplication createApplication() {
@@ -40,7 +40,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
     @Override
     public void showAds(boolean show) {
         if(adHandler == null){
-            adHandler = new AdHandler(iosApplication);
+            adHandler = new AdManager(iosApplication);
         }
         adHandler.showAds(show);
     }
@@ -51,12 +51,13 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
             initializeAnalytics();
         }
         analyticsHandler.trackPageView(name);
+        analyticsHandler.trackEvent("Hello", "event", "start", 0);
     }
 
     private void initializeAnalytics(){
         NSDictionary infoDictionary = NSBundle.getMainBundle().getInfoDictionary();
         String trackingId = infoDictionary.get(new NSString("TRACKING_ID")).toString();
-        analyticsHandler = new AnalyticsHandler(trackingId);
+        analyticsHandler = new AnalyticsManager(trackingId);
     }
 
 

@@ -66,8 +66,6 @@ public class LoadingScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -77,7 +75,6 @@ public class LoadingScreen extends AbstractScreen {
 
     @Override
     public void hide() {
-
     }
 
     @Override

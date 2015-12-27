@@ -14,14 +14,14 @@ import java.util.List;
 /**
  * Created by hateftadayon on 12/27/15.
  */
-public class AdHandler {
+public class AdManager {
 
-    private static final Logger log = new Logger(AdHandler.class.getName(), Application.LOG_DEBUG);
+    private static final Logger log = new Logger(AdManager.class.getName(), Application.LOG_DEBUG);
     private static final boolean USE_TEST_DEVICES = true;
 
     private GADBannerView adview;
 
-    public AdHandler(IOSApplication application) {
+    public AdManager(IOSApplication application) {
         initializeAds(application);
     }
 

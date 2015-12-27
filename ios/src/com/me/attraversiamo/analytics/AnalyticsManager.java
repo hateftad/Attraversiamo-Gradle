@@ -11,14 +11,14 @@ import org.robovm.pods.google.analytics.GAITracker;
 /**
  * Created by hateftadayon on 12/27/15.
  */
-public class AnalyticsHandler {
+public class AnalyticsManager {
 
+    private static final Logger log = new Logger(AnalyticsManager.class.getName(), Application.LOG_DEBUG);
     private String id;
-    private static final Logger log = new Logger(AnalyticsHandler.class.getName(), Application.LOG_DEBUG);
 
     private GAITracker tracker;
 
-    public AnalyticsHandler(String id) {
+    public AnalyticsManager(String id) {
         log.debug("Tracking ID is "+ id);
         this.id = id;
         startSession();
