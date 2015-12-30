@@ -2,6 +2,7 @@ package com.me.component;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Slot;
 import com.me.events.AnimationEvent;
@@ -31,6 +32,7 @@ public class PlayerAnimationComponent extends AnimationComponent {
 
     @Override
     public void setAnimationState(AnimState state) {
+
 
             if(state != m_previousState)
             {
@@ -103,12 +105,25 @@ public class PlayerAnimationComponent extends AnimationComponent {
                     case RUNOUT:
                         playAnimation("runOut", false);
                         break;
+                    case HOLDHAND:
+                        playAnimation("holdingHandsIdleLeading", false);
+                        break;
                     default:
                         break;
                 }
                 m_skeleton.setToSetupPose();
             }
             m_previousState = state;
+    }
+
+    public void rotateBoneTo(String name, Vector2 myPos, Vector2 target, boolean left){
+        Bone b = m_skeleton.findBone(name);
+        Vector3 bonePos = new Vector3(myPos.x, myPos.y, 0);
+        Vector3 targetDir = bonePos.sub(new Vector3(target.x, target.y, 0));
+        double angle = Math.atan2(targetDir.y, targetDir.x);
+        angle = angle * (180/Math.PI);
+        b.setRotation(left ? (float)-angle : (float)angle);
+
     }
 
     public Vector2 setBonePosition(String name, Vector2 position){

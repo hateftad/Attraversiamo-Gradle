@@ -4,6 +4,7 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
+import com.badlogic.gdx.math.Vector2;
 import com.me.component.*;
 import com.me.component.PlayerComponent.State;
 import com.me.component.AnimationComponent.AnimState;
@@ -26,11 +27,14 @@ public class PlayerTwoSystem extends PlayerSystem {
     @Mapper ComponentMapper<CharacterMovementComponent> m_movementComps;
     @Mapper ComponentMapper<FeetComponent> m_feetComps;
 
+    public Vector2 currentPosition;
+
     private float VELOCITY = 5.5f;
 
 	@SuppressWarnings("unchecked")
 	public PlayerTwoSystem() {
 		super(Aspect.getAspectForOne(PlayerTwoComponent.class));
+        currentPosition = Vector2.Zero;
 		m_inputMgr = InputManager.getInstance();
 	}
 
@@ -46,6 +50,7 @@ public class PlayerTwoSystem extends PlayerSystem {
         FeetComponent feet = m_feetComps.get(entity);
 		CrawlComponent crawlComp = m_crawlComps.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
+        currentPosition = ps.getPosition();
 		boolean finish = player.isFinishing();
 		if (m_inputMgr.m_playerSelected == PlayerSelection.TWO) {
 			ps.makeDynamic("center", 0.001f);
@@ -59,7 +64,7 @@ public class PlayerTwoSystem extends PlayerSystem {
                 animation.setAnimationState(AnimState.IDLE);
                 movementComponent.standStill();
                 if (!touch.m_feetToBox) {
-                    ps.makeStatic("center");
+                    //ps.makeStatic("center");
                 }
             }
         }
@@ -143,6 +148,17 @@ public class PlayerTwoSystem extends PlayerSystem {
                     }
                     movementComponent.standStill();
 				}
+                if(touch.m_handHoldArea){
+                    System.out.println("hold area");
+                    if(touch.m_rightHoldArea){
+                        System.out.println("rightHold");
+                        animation.setAnimationState(AnimState.HOLDHAND);
+                    }
+                    if(touch.m_leftHoldArea){
+                        System.out.println("leftHold");
+                        animation.setAnimationState(AnimState.HOLDHAND);
+                    }
+                }
 			}
 
 			if (animation.isCompleted(AnimState.LIEDOWN)) {
@@ -186,6 +202,7 @@ public class PlayerTwoSystem extends PlayerSystem {
 
 		animateBody(ps, player, animation);
 		animation.setFacing(player.isFacingLeft());
+        //animation.rotateBoneTo("leftUpperArm", ps.getPosition(), world.getSystem(PlayerOneSystem.class).currentPosition, player.isFacingLeft());
 
 	}
 

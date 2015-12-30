@@ -5,6 +5,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
+import com.me.component.interfaces.TaskEventObserverComponent;
+import com.me.events.TaskEvent;
 import com.me.ui.InputManager;
 import com.me.utils.Converters;
 

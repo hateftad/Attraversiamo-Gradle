@@ -160,8 +160,8 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("box")) {
                 pComp.setMass(20f, ud.mName);
                 pComp.setFriction(20.0f);
-                entity.addComponent(new RestartComponent());
-                entity.addComponent(new QueueComponent());
+                entity.addComponent(new RestartComponent())
+                        .addComponent(new QueueComponent());
             }
             if (ud.mName.equalsIgnoreCase("portal")) {
                 SingleParticleComponent particleComponent = new SingleParticleComponent("fire", ParticleType.PORTAL);
@@ -374,6 +374,10 @@ public class EntityLoader {
                 entity.addComponent(new RestartComponent());
                 entity.addComponent(new EventComponent());
 
+                HandHoldComponent handHoldComponent = new HandHoldComponent();
+                entity.addComponent(handHoldComponent);
+                entityWorld.addObserver(handHoldComponent);
+
                 SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 1);
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
@@ -401,7 +405,7 @@ public class EntityLoader {
                 animationComponent.setSkin(playerConfig.getSkinName());
                 //pComp.setPosition();
                 // stateData.setMix("lieDown", "running", 0.3f);
-                pComp.setPosition(playerConfig.getPosition());
+                pComp.setAllBodiesPosition(playerConfig.getPosition());
 
             } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_two")) {
                 PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), playerConfig.isFinishFacingLeft());
@@ -433,9 +437,7 @@ public class EntityLoader {
                 entity.addComponent(playerComponent);
                 animationComponent.setSkin(playerConfig.getSkinName());
                 entity.addComponent(new MovementComponent());
-                VelocityLimitComponent vel = new VelocityLimitComponent(8.5f, 10);
-                vel.m_crawlLimit = 2.5f;
-                entity.addComponent(vel);
+                entity.addComponent(new VelocityLimitComponent(8.5f, 10, 2.5f));
                 entity.addComponent(new TouchComponent());
                 entity.addComponent(new JumpComponent());
                 entity.addComponent(new GrabComponent());
@@ -446,6 +448,11 @@ public class EntityLoader {
                 entity.addComponent(new PushComponent());
                 entity.addComponent(new QueueComponent());
                 entity.addComponent(new EventComponent());
+
+
+                HandHoldComponent handHoldComponent = new HandHoldComponent();
+                entity.addComponent(handHoldComponent);
+                entityWorld.addObserver(handHoldComponent);
 
                 SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 2);
                 entity.addComponent(particleComponent);
@@ -462,6 +469,13 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("feet")) {
                 GameEventFactory factory = new GameEventFactory();
                 pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
+            }
+
+            if (ud.mName.equalsIgnoreCase("right_hand_hold")) {
+                pComp.setMass(PhysicsComponent.LOW_MASS, ud.mName);
+            }
+            if (ud.mName.equalsIgnoreCase("left_hand_hold")) {
+                pComp.setMass(PhysicsComponent.LOW_MASS, ud.mName);
             }
 
         }

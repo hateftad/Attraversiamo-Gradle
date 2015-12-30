@@ -48,7 +48,7 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 		CLIMBING, LADDERCLIMBUP, LADDERCLIMBDOWN, 
 		LADDERHANG, FALLING, PUSHING,
 		LIEDOWN, PULLUP, SUCKIN, WALKOUT, CRAWL, STANDUP,
-		LYINGDOWN, PRESSBUTTON, RUNOUT
+		LYINGDOWN, PRESSBUTTON, HOLDHAND, RUNOUT
 	}
 
 	public AnimationComponent(String atlas, String skeleton, float scale){
@@ -62,14 +62,14 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 	}
 
 	public AnimationStateData setUp(RubeImage image){
-
+        m_state = AnimState.IDLE;
 		AnimationStateData stateData = new AnimationStateData(m_skeletonData);
 		Vector2 size = new Vector2(image.width, image.height);
 		size = Converters.ToWorld(size);
 		m_center = new Vector2();
 		m_center.set(image.center.x - size.x/2, image.center.y - (size.y/2));
 		m_animationState = new AnimationState(stateData);
-		m_animationState.setAnimation(0, "running", true);
+		//m_animationState.setAnimation(0, "running", true);
 		m_animationState.addListener(new AnimationStateListener() {
 
             @Override

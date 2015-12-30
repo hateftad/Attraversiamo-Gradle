@@ -12,5 +12,6 @@ public enum GameEventType {
     OutsideFinishArea,
     AllReachedEnd,
     GroundTouch,
-    LevelFinished
+    LevelFinished,
+    HoldingHands
 }

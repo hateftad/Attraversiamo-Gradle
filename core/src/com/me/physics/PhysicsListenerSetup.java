@@ -10,6 +10,7 @@ import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
+import com.me.events.BinaryEvent;
 import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
@@ -162,6 +163,26 @@ public class PhysicsListenerSetup {
                                     }
                                 }
                             }
+                            if(e2.getComponent(PlayerComponent.class) != null) {
+                                //PhysicsComponent player = e.getComponent(PhysicsComponent.class);
+                                //PhysicsComponent other = e2.getComponent(PhysicsComponent.class);
+                                if (otherUd.getType() == Type.RightHandHold) {
+                                    e2.getComponent(TouchComponent.class).m_handHoldArea = true;
+                                    e2.getComponent(TouchComponent.class).m_rightHoldArea = true;
+                                }
+                                if(playerUd.getType() == Type.RightHandHold){
+                                    e.getComponent(TouchComponent.class).m_handHoldArea = true;
+                                    e.getComponent(TouchComponent.class).m_rightHoldArea = true;
+                                }
+                                if (otherUd.getType() == Type.LeftHandHold) {
+                                    e2.getComponent(TouchComponent.class).m_handHoldArea = true;
+                                    e2.getComponent(TouchComponent.class).m_leftHoldArea = true;
+                                }
+                                if(playerUd.getType() == Type.LeftHandHold){
+                                    e.getComponent(TouchComponent.class).m_handHoldArea = true;
+                                    e.getComponent(TouchComponent.class).m_leftHoldArea = true;
+                                }
+                            }
                             if (otherUd.getType() == Type.LeftCrawl && e.getComponent(CrawlComponent.class) != null) {
                                 e.getComponent(CrawlComponent.class).canCrawl = true;
                             }
@@ -302,6 +323,14 @@ public class PhysicsListenerSetup {
                         if (otherUd.getType() == Type.RightPushButton) {
                             e.getComponent(TouchComponent.class).m_pushArea = false;
                             e.getComponent(TouchComponent.class).m_rightPushArea = false;
+                        }
+                        if(otherUd.getType() == Type.LeftHandHold){
+                            e.getComponent(TouchComponent.class).m_handHoldArea = false;
+                            m_gameEntityWorld.onNotify(new BinaryEvent(GameEventType.HoldingHands, false));
+                        }
+                        if(otherUd.getType() == Type.RightHandHold){
+                            e.getComponent(TouchComponent.class).m_handHoldArea = false;
+                            m_gameEntityWorld.onNotify(new BinaryEvent(GameEventType.HoldingHands, false));
                         }
                     }
                 }

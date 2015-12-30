@@ -17,6 +17,7 @@ import com.me.utils.Converters;
 public class PhysicsComponent extends BaseComponent {
 
 	public static float LOW_FRICTION = 0.1f;
+	public static float LOW_MASS = 0.0001f;
 	public static float HIGH_FRICTION = 20f;
 
 	protected ObjectMap<String, Body> m_body = new ObjectMap<String, Body>();
@@ -42,6 +43,8 @@ public class PhysicsComponent extends BaseComponent {
 		m_body.get(m_name).setBullet(b.isBullet());
 		m_body.get(m_name).setFixedRotation(b.isFixedRotation());
 		m_body.get(m_name).setSleepingAllowed(b.isSleepingAllowed());
+		m_body.get(m_name).setGravityScale(b.getGravityScale());
+		m_body.get(m_name).setAwake(b.isAwake());
 		m_previousPositions = new ObjectMap<Body, Vector2>();
 		m_previousPositions.put(m_body.get(name), m_body.get(name).getPosition());
 		m_startPosition = new Vector2(m_body.get(name).getPosition());

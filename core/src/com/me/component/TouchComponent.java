@@ -18,8 +18,11 @@ public class TouchComponent extends BaseComponent {
 	public boolean m_handTouch;
 	public boolean m_feetToBox;
 	public Vector2 m_touchCenter;
+    public boolean m_handHoldArea;
+    public boolean m_leftHoldArea;
+    public boolean m_rightHoldArea;
 
-	public TouchComponent() {
+    public TouchComponent() {
 		m_groundTouch = false;
 		m_edgeTouch = false;
 		m_wallTouch = false;

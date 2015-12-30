@@ -23,4 +23,8 @@ public abstract class GameEntityProcessingSystem extends EntityProcessingSystem 
         ((GameEntityWorld)world).onNotify(taskEvent);
     }
 
+    public void notifyObservers(BinaryEvent event){
+        ((GameEntityWorld)world).onNotify(event);
+    }
+
 }
