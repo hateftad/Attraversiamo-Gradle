@@ -198,7 +198,7 @@ public class RBUserData {
                 filter.maskBits = CharacterSensor;
                 break;
             case 29:
-                setType(Type.LeftHandHold);
+                setType(Type.RightHandHold);
                 filter.categoryBits = CharacterSensor;
                 filter.maskBits = CharacterSensor;
                 break;

@@ -206,7 +206,7 @@ public class PlayerOneSystem extends PlayerSystem {
                         player.setState(State.WAITTILDONE);
                         TelegramEvent telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
                         telegramEvent.notify(this, entity);
-                    }   
+                    }
                     if (touch.m_leftHoldArea) {
                         animation.setAnimationState(AnimState.HOLDHANDFOLLOWING);
                         player.setState(State.WAITTILDONE);
