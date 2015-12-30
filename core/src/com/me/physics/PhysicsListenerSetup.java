@@ -1,7 +1,6 @@
 package com.me.physics;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -10,7 +9,7 @@ import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
-import com.me.events.BinaryEvent;
+import com.me.events.TelegramEvent;
 import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
@@ -326,11 +325,13 @@ public class PhysicsListenerSetup {
                         }
                         if(otherUd.getType() == Type.LeftHandHold){
                             e.getComponent(TouchComponent.class).m_handHoldArea = false;
-                            m_gameEntityWorld.onNotify(new BinaryEvent(GameEventType.HoldingHands, false));
+                            e.getComponent(HandHoldComponent.class).setHoldingHands(false);
+                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
                         if(otherUd.getType() == Type.RightHandHold){
                             e.getComponent(TouchComponent.class).m_handHoldArea = false;
-                            m_gameEntityWorld.onNotify(new BinaryEvent(GameEventType.HoldingHands, false));
+                            e.getComponent(HandHoldComponent.class).setHoldingHands(false);
+                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
                     }
                 }

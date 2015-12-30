@@ -48,7 +48,7 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 		CLIMBING, LADDERCLIMBUP, LADDERCLIMBDOWN, 
 		LADDERHANG, FALLING, PUSHING,
 		LIEDOWN, PULLUP, SUCKIN, WALKOUT, CRAWL, STANDUP,
-		LYINGDOWN, PRESSBUTTON, HOLDHAND, RUNOUT
+		LYINGDOWN, PRESSBUTTON, HOLDHANDLEADING, HOLDHANDFOLLOWING, RUNOUT
 	}
 
 	public AnimationComponent(String atlas, String skeleton, float scale){

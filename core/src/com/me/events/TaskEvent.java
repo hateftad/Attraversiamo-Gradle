@@ -12,10 +12,6 @@ public class TaskEvent extends GameEvent {
 
     private int m_eventId;
     private PlayerComponent.PlayerNumber m_playerNr;
-    public int getEventId() {
-        return m_eventId;
-    }
-
     public TaskEvent(BodyInfo bodyInfo){
         super(bodyInfo.getEventType());
         m_eventId = bodyInfo.getEventId();
@@ -28,6 +24,10 @@ public class TaskEvent extends GameEvent {
 
     public TaskEvent(GameEventType type){
         super(type);
+    }
+
+    public int getEventId() {
+        return m_eventId;
     }
 
     public PlayerComponent.PlayerNumber getPlayerNr(){

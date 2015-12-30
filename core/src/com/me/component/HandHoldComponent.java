@@ -1,22 +1,21 @@
 package com.me.component;
 
-import com.me.component.interfaces.BinaryEventObserverComponent;
-import com.me.events.BinaryEvent;
-import com.me.events.GameEventType;
 
 /**
  * Created by hateftadayon on 12/30/15.
  */
-public class HandHoldComponent extends BaseComponent implements BinaryEventObserverComponent {
+public class HandHoldComponent extends BaseComponent {
 
     private boolean m_holdingHands;
+    public HandHoldComponent(){
+
+    }
 
     public boolean isHoldingHands(){
         return m_holdingHands;
     }
-
-    public HandHoldComponent(){
-
+    public void setHoldingHands(boolean holding){
+        m_holdingHands = holding;
     }
 
     @Override
@@ -29,10 +28,4 @@ public class HandHoldComponent extends BaseComponent implements BinaryEventObser
 
     }
 
-    @Override
-    public void onNotify(BinaryEvent event) {
-        if(event.getEventType() == GameEventType.HoldingHands ){
-            m_holdingHands = event.isActive();
-        }
-    }
 }

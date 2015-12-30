@@ -1,7 +1,6 @@
 package com.me.systems;
 
 import com.artemis.Aspect;
-import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
 import com.me.events.*;
 
@@ -23,7 +22,7 @@ public abstract class GameEntityProcessingSystem extends EntityProcessingSystem 
         ((GameEntityWorld)world).onNotify(taskEvent);
     }
 
-    public void notifyObservers(BinaryEvent event){
+    public void notifyObservers(TelegramEvent event){
         ((GameEntityWorld)world).onNotify(event);
     }
 

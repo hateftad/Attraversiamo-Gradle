@@ -5,7 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.spine.Bone;
 import com.esotericsoftware.spine.Slot;
+import com.me.component.interfaces.TelegramEventObserverComponent;
 import com.me.events.AnimationEvent;
+import com.me.events.TelegramEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
 import com.me.utils.Converters;
@@ -13,13 +15,15 @@ import com.me.utils.Converters;
 /**
  * Created by hateftadayon on 7/13/15.
  */
-public class PlayerAnimationComponent extends AnimationComponent {
+public class PlayerAnimationComponent extends AnimationComponent implements TelegramEventObserverComponent {
 
     private AnimState m_finishAnimation;
+    private PlayerComponent.PlayerNumber m_playerNumber;
 
-    public PlayerAnimationComponent(String atlas, String skeleton, float scale, AnimState finishAnimation) {
+    public PlayerAnimationComponent(String atlas, String skeleton, float scale, AnimState finishAnimation, PlayerComponent.PlayerNumber playerNumber) {
         super(atlas, skeleton, scale);
         m_finishAnimation = finishAnimation;
+        m_playerNumber = playerNumber;
     }
 
     public AnimationEvent getEvent(){
@@ -105,8 +109,11 @@ public class PlayerAnimationComponent extends AnimationComponent {
                     case RUNOUT:
                         playAnimation("runOut", false);
                         break;
-                    case HOLDHAND:
+                    case HOLDHANDLEADING:
                         playAnimation("holdingHandsIdleLeading", false);
+                        break;
+                    case HOLDHANDFOLLOWING:
+                        playAnimation("holdingHandsIdleFollowing", false);
                         break;
                     default:
                         break;
@@ -144,12 +151,12 @@ public class PlayerAnimationComponent extends AnimationComponent {
                 //System.out.println(s.getAttachment().getName());
                 if(s.getAttachment().getName().equals(attachmentName)){
                     slot = s;
-                    break;
+                    return new Vector2(Converters.ToBox(m_skeleton.getX() + slot.getBone().getWorldX()), Converters.ToBox(m_skeleton.getY() + slot.getBone().getWorldY()));
                 }
             }
         }
 
-        return new Vector2(Converters.ToBox(m_skeleton.getX() + slot.getBone().getWorldX()), Converters.ToBox(m_skeleton.getY() + slot.getBone().getWorldY()));
+        return Vector2.Zero;
     }
 
     @Override
@@ -166,6 +173,12 @@ public class PlayerAnimationComponent extends AnimationComponent {
     public void onNotify(TaskEvent event) {
         if(event.getEventType() == GameEventType.AllReachedEnd){
             setAnimationState(m_finishAnimation);
+        }
+    }
+
+    @Override
+    public void onNotify(TelegramEvent event) {
+        if(event.getEventType() == GameEventType.HoldingHandsFollowing){
         }
     }
 }

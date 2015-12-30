@@ -13,5 +13,7 @@ public enum GameEventType {
     AllReachedEnd,
     GroundTouch,
     LevelFinished,
-    HoldingHands
+    HoldingHandsFollowing,
+    HoldingHandsLeading,
+    HandHoldingEnded
 }

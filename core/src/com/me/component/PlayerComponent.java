@@ -9,9 +9,11 @@ public class PlayerComponent extends BaseComponent implements TaskEventObserverC
 
     public enum State {
         WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE
+        ,HOLDINGHANDS
     }
 
     public enum PlayerNumber {
+        NONE,
         ONE, TWO, THREE
     }
 
@@ -33,9 +35,9 @@ public class PlayerComponent extends BaseComponent implements TaskEventObserverC
 
     private boolean m_isFinishedAnimating;
 
-    public PlayerComponent(String player, boolean finishFacingLeft) {
+    public PlayerComponent(PlayerNumber player, boolean finishFacingLeft) {
         m_finishFacingLeft = finishFacingLeft;
-        setPlayerNr(player);
+        m_playerNr = player;
         setFacingLeft(true);
         setState(State.IDLE);
     }
@@ -88,13 +90,7 @@ public class PlayerComponent extends BaseComponent implements TaskEventObserverC
         return m_playerNr;
     }
 
-    public void setPlayerNr(String playerNr) {
-        if (playerNr.equalsIgnoreCase("player_one")) {
-            m_playerNr = PlayerNumber.ONE;
-        } else if (playerNr.equalsIgnoreCase("player_two")) {
-            m_playerNr = PlayerNumber.TWO;
-        }
-    }
+
 
     @Override
     public void dispose() {

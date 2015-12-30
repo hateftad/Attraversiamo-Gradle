@@ -345,13 +345,13 @@ public class EntityLoader {
             AnimationStateData stateData;
             if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
                 animationComponent = new PlayerAnimationComponent(CHARPATH + characterPath
-                        + atlasName, CHARPATH + characterPath + skelName, 1.3f, playerConfig.getFinishAnimation());
+                        + atlasName, CHARPATH + characterPath + skelName, 1.3f, playerConfig.getFinishAnimation(), getPlayerNumber(playerConfig.getPlayerNumber()));
                 entity.addComponent(animationComponent);
                 entityWorld.addObserver(animationComponent);
             }
             if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_one")) {
 
-                PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), playerConfig.isFinishFacingLeft());
+                PlayerComponent playerComponent = new PlayerComponent(getPlayerNumber(playerConfig.getPlayerNumber()), playerConfig.isFinishFacingLeft());
                 playerComponent.setActive(playerConfig.isActive());
                 playerComponent.setFacingLeft(playerConfig.isFacingLeft());
                 playerComponent.setCanBecomeInactive(playerConfig.canDeactivate());
@@ -376,7 +376,6 @@ public class EntityLoader {
 
                 HandHoldComponent handHoldComponent = new HandHoldComponent();
                 entity.addComponent(handHoldComponent);
-                entityWorld.addObserver(handHoldComponent);
 
                 SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 1);
                 entity.addComponent(particleComponent);
@@ -408,7 +407,7 @@ public class EntityLoader {
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
 
             } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_two")) {
-                PlayerComponent playerComponent = new PlayerComponent(m_scene.getCustom(body, "characterType", ""), playerConfig.isFinishFacingLeft());
+                PlayerComponent playerComponent = new PlayerComponent(getPlayerNumber(playerConfig.getPlayerNumber()), playerConfig.isFinishFacingLeft());
                 playerComponent.setActive(playerConfig.isActive());
                 playerComponent.setFacingLeft(playerConfig.isFacingLeft());
                 playerComponent.setCanBecomeInactive(playerConfig.canDeactivate());
@@ -452,7 +451,6 @@ public class EntityLoader {
 
                 HandHoldComponent handHoldComponent = new HandHoldComponent();
                 entity.addComponent(handHoldComponent);
-                entityWorld.addObserver(handHoldComponent);
 
                 SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 2);
                 entity.addComponent(particleComponent);
@@ -619,6 +617,14 @@ public class EntityLoader {
                         jDef, physicsWorld);
             }
         }
+    }
+    private PlayerComponent.PlayerNumber getPlayerNumber(int playerNr) {
+        if (playerNr == 1) {
+            return PlayerComponent.PlayerNumber.ONE;
+        } else if (playerNr == 2) {
+            return PlayerComponent.PlayerNumber.TWO;
+        }
+        return PlayerComponent.PlayerNumber.NONE;
     }
 
 }
