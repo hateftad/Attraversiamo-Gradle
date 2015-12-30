@@ -376,6 +376,7 @@ public class EntityLoader {
 
                 HandHoldComponent handHoldComponent = new HandHoldComponent();
                 entity.addComponent(handHoldComponent);
+                entityWorld.addObserver(handHoldComponent);
 
                 SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 1);
                 entity.addComponent(particleComponent);
@@ -451,6 +452,7 @@ public class EntityLoader {
 
                 HandHoldComponent handHoldComponent = new HandHoldComponent();
                 entity.addComponent(handHoldComponent);
+                entityWorld.addObserver(handHoldComponent);
 
                 SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 2);
                 entity.addComponent(particleComponent);

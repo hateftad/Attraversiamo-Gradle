@@ -202,16 +202,32 @@ public class PlayerOneSystem extends PlayerSystem {
                 if (touch.m_handHoldArea) {
                     handHoldComponent.setHoldingHands(true);
                     if (touch.m_rightHoldArea) {
-                        animation.setAnimationState(AnimState.HOLDHANDLEADING);
-                        player.setState(State.WAITTILDONE);
-                        TelegramEvent telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
+                        TelegramEvent telegramEvent;
+                        if(player.isFacingLeft()){
+                            animation.setAnimationState(AnimState.HOLDHANDLEADING);
+                            handHoldComponent.setIsLeading(true);
+                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
+                        } else {
+                            animation.setAnimationState(AnimState.HOLDHANDFOLLOWING);
+                            handHoldComponent.setIsLeading(false);
+                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
+                        }
                         telegramEvent.notify(this, entity);
+                        //player.setState(State.WAITTILDONE);
                     }
                     if (touch.m_leftHoldArea) {
-                        animation.setAnimationState(AnimState.HOLDHANDFOLLOWING);
-                        player.setState(State.WAITTILDONE);
-                        TelegramEvent telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
+                        TelegramEvent telegramEvent;
+                        if(player.isFacingLeft()){
+                            animation.setAnimationState(AnimState.HOLDHANDFOLLOWING);
+                            handHoldComponent.setIsLeading(false);
+                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
+                        } else {
+                            animation.setAnimationState(AnimState.HOLDHANDLEADING);
+                            handHoldComponent.setIsLeading(true);
+                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
+                        }
                         telegramEvent.notify(this, entity);
+                        //player.setState(State.WAITTILDONE);
                     }
                 }
             }
@@ -254,7 +270,6 @@ public class PlayerOneSystem extends PlayerSystem {
         animateBody(physicsComponent, player, animation);
 
         animation.setFacing(player.isFacingLeft());
-        //animation.rotateBoneTo("rightUpperArm", physicsComponent.getPosition(), world.getSystem(PlayerTwoSystem.class).currentPosition, player.isFacingLeft());
 
     }
 

@@ -1,6 +1,7 @@
 package com.me.systems;
 
 import com.artemis.Aspect;
+import com.artemis.Entity;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
@@ -44,11 +45,11 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
     }
 
     protected boolean isDead(PhysicsComponent ps) {
+        return ps.getPosition().y < -100;
+    }
 
-        if (ps.getPosition().y < -100) {
-            return true;
-        }
-        return false;
+    protected void holdHands(Entity entity){
+
     }
 
     public void restartSystem() {

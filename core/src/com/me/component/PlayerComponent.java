@@ -1,15 +1,14 @@
 package com.me.component;
 
-import com.me.component.interfaces.TaskEventObserverComponent;
+import com.me.component.interfaces.TelegramEventObserverComponent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
+import com.me.events.TelegramEvent;
 
-public class PlayerComponent extends BaseComponent implements TaskEventObserverComponent {
-
+public class PlayerComponent extends BaseComponent implements TelegramEventObserverComponent {
 
     public enum State {
-        WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE
-        ,HOLDINGHANDS
+        WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE, HOLDINGHANDS
     }
 
     public enum PlayerNumber {
@@ -91,7 +90,6 @@ public class PlayerComponent extends BaseComponent implements TaskEventObserverC
     }
 
 
-
     @Override
     public void dispose() {
 
@@ -102,6 +100,13 @@ public class PlayerComponent extends BaseComponent implements TaskEventObserverC
         if (event.getEventType() == GameEventType.AllReachedEnd) {
             setFacingLeft(m_finishFacingLeft);
             m_isFinishing = true;
+        }
+    }
+
+    @Override
+    public void onNotify(TelegramEvent event) {
+        if(event.getEventType() == GameEventType.HoldingHandsFollowing || event.getEventType() == GameEventType.HoldingHandsLeading){
+            //setState(State.WAITTILDONE);
         }
     }
 

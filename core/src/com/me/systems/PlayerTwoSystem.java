@@ -10,6 +10,7 @@ import com.me.component.PlayerComponent.State;
 import com.me.component.AnimationComponent.AnimState;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
+import com.me.events.TelegramEvent;
 import com.me.ui.InputManager;
 import com.me.ui.InputManager.PlayerSelection;
 
@@ -86,8 +87,8 @@ public class PlayerTwoSystem extends PlayerSystem {
             player.setActive(false);
         }
 
-        if (!player.isActive() && !finish) {
-            if (crawlComp.isStanding && animation.isCompleted(AnimState.STANDUP) && !handHoldComponent.isHoldingHands()) {
+        if (!player.isActive() && !finish && !handHoldComponent.isHoldingHands()) {
+            if (crawlComp.isStanding && animation.isCompleted(AnimState.STANDUP)) {
                 crawlComp.isStanding = false;
                 player.setState(State.IDLE);
             }
@@ -172,15 +173,34 @@ public class PlayerTwoSystem extends PlayerSystem {
                     movementComponent.standStill();
                 }
                 if (touch.m_handHoldArea) {
+                    handHoldComponent.setHoldingHands(true);
                     if (touch.m_rightHoldArea) {
-                        animation.setAnimationState(AnimState.HOLDHANDLEADING);
-                        player.setState(State.WAITTILDONE);
-                        notifyObservers(new TaskEvent(GameEventType.HoldingHandsFollowing));
+                        TelegramEvent telegramEvent;
+                        if(player.isFacingLeft()){
+                            animation.setAnimationState(AnimState.HOLDHANDLEADING);
+                            handHoldComponent.setIsLeading(true);
+                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
+                        } else {
+                            animation.setAnimationState(AnimState.HOLDHANDFOLLOWING);
+                            handHoldComponent.setIsLeading(false);
+                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
+                        }
+                        telegramEvent.notify(this, entity);
+                        //player.setState(State.WAITTILDONE);
                     }
                     if (touch.m_leftHoldArea) {
-                        animation.setAnimationState(AnimState.HOLDHANDFOLLOWING);
-                        player.setState(State.WAITTILDONE);
-                        notifyObservers(new TaskEvent(GameEventType.HoldingHandsFollowing));
+                        TelegramEvent telegramEvent;
+                        if(player.isFacingLeft()){
+                            animation.setAnimationState(AnimState.HOLDHANDFOLLOWING);
+                            handHoldComponent.setIsLeading(true);
+                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
+                        } else {
+                            animation.setAnimationState(AnimState.HOLDHANDLEADING);
+                            handHoldComponent.setIsLeading(false);
+                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
+                        }
+                        telegramEvent.notify(this, entity);
+                        //player.setState(State.WAITTILDONE);
                     }
                     movementComponent.standStill();
                 }
