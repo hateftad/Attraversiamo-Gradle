@@ -7,7 +7,7 @@ public enum  PlayerState {
     Walking, Idle, Jumping,
     Running, Jogging, JogJump,
     Dying, UpJump, Hanging,
-    Climbing, LadderClimbUp, LadderClimbDown,
+    ClimbingLedge, LadderClimbUp, LadderClimbDown,
     LadderHang, Falling, Pushing,
     LieDown, PullUp, SuckIn,
     WalkOut, Crawl, StandUp,

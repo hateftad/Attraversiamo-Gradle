@@ -72,7 +72,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 						PhysicsComponent pComp = m_physComp.get(e);
 						pComp.setBodyActive(false);
 						AnimationComponent anim = m_animComps.get(e);
-						if (anim.isCompleted(PlayerState.Climbing)) {
+						if (anim.isCompleted(PlayerState.ClimbingLedge)) {
 							pComp.setAllBodiesPosition(anim.getPositionRelative("left upper leg"));
 							pComp.setBodyActive(true);
 							anim.setAnimationState(PlayerState.Idle);

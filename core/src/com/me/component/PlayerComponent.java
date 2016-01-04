@@ -11,7 +11,7 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
     public boolean isMoving() {
         return m_state == PlayerState.Walking ||
                 m_state == PlayerState.Running ||
-                isJumping();
+                m_state == PlayerState.Jogging;
     }
 
     public boolean isJumping() {
@@ -23,8 +23,16 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
         return m_state == PlayerState.Hanging;
     }
 
+    public boolean isLyingDown(){
+        return m_state == PlayerState.LyingDown || m_state == PlayerState.LieDown;
+    }
+
     public boolean shouldBeIdle(){
-        return !isMoving() && !isHanging();
+        return !isJumping() && !isHanging() && !isClimbingLedge() && !isLyingDown();
+    }
+
+    public boolean isClimbingLedge() {
+        return m_state == PlayerState.ClimbingLedge;
     }
 
     public enum PlayerNumber {

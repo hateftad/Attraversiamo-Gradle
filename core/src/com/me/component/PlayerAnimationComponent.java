@@ -70,7 +70,7 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                 case Hanging:
                     playAnimation("hang", true);
                     break;
-                case Climbing:
+                case ClimbingLedge:
                     playAnimation("climbUp", false);
                     break;
                 case LadderClimbUp:

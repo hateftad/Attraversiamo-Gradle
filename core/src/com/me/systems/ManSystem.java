@@ -96,7 +96,6 @@ public class ManSystem extends PlayerSystem {
                 jump(entity);
             }
 
-
             if (m_inputMgr.isDown(action)) {
                 if (touch.m_footEdge) {
                     if (touch.m_footEdgeL) {
@@ -127,8 +126,10 @@ public class ManSystem extends PlayerSystem {
                 if (touch.m_handHoldArea) {
                     holdHands(entity);
                 }
+                if(player.isHanging()){
+                    setPlayerState(entity, PlayerState.ClimbingLedge);
+                }
             }
-
         }
 
         setPlayerState(entity);
@@ -146,6 +147,8 @@ public class ManSystem extends PlayerSystem {
         VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
         PlayerComponent playerComponent = m_playerComps.get(entity);
 
+        System.out.println(playerComponent.getState());
+
         if (!keyInput.moved()) {
             movementComponent.standStill();
             velocityLimitComponent.m_velocity = 0;
@@ -154,7 +157,10 @@ public class ManSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
-        if (physicsComponent.isFalling() && !playerComponent.isHanging()) {
+
+
+        if (physicsComponent.isFalling() &&
+                !playerComponent.isHanging()) {
             setPlayerState(entity, PlayerState.Falling);
         }
 
@@ -230,7 +236,6 @@ public class ManSystem extends PlayerSystem {
         }
         if(player.isHanging()){
             if(hangComponent.m_hangingRight){
-                hangComponent.notHanging();
                 jointComponent.destroyHangJoint();
                 setPlayerState(entity, PlayerState.Falling);
             }
@@ -282,7 +287,6 @@ public class ManSystem extends PlayerSystem {
         }
         if(player.isHanging()){
             if(hangComponent.m_hangingLeft){
-                hangComponent.notHanging();
                 jointComponent.destroyHangJoint();
                 setPlayerState(entity, PlayerState.Falling);
             }

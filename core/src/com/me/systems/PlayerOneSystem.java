@@ -128,7 +128,7 @@ public class PlayerOneSystem extends PlayerSystem {
             if (m_hangComps.has(entity)) {
 
                 if (m.m_up && hangComponent.m_isHanging) {
-                    animation.setAnimationState(PlayerState.Climbing);
+                    animation.setAnimationState(PlayerState.ClimbingLedge);
                     hangComponent.m_climbingUp = true;
                     m.m_lockControls = true;
                 }

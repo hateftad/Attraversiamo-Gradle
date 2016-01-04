@@ -6,7 +6,6 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
 import com.me.events.states.PlayerState;
-import com.me.physics.JointFactory;
 
 /**
  * Created by hateftadayon on 1/2/16.
@@ -41,11 +40,23 @@ public class PlayerInteractionSystem extends PlayerSystem {
         JointComponent jointComponent = m_jointComp.get(entity);
         TouchComponent touchComponent = m_touchComp.get(entity);
         PlayerComponent playerComponent = m_playerComp.get(entity);
+        AnimationComponent animation = m_animComps.get(entity);
+        PhysicsComponent physicsComponent = m_physComp.get(entity);
+        HangComponent hangComponent = m_hangComp.get(entity);
 
         if (touchComponent.m_edgeTouch) {
             if(!playerComponent.isHanging()) {
                 jointComponent.createHangJoint();
                 setPlayerState(entity, PlayerState.Hanging);
+            }
+        }
+        if(playerComponent.isClimbingLedge()) {
+            if (animation.isCompleted(PlayerState.ClimbingLedge)) {
+                jointComponent.destroyHangJoint();
+                physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
+                physicsComponent.setBodyActive(true);
+                hangComponent.notHanging();
+                setPlayerState(entity, PlayerState.Idle);
             }
         }
     }
