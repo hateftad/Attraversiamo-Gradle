@@ -19,7 +19,6 @@ public class ReachEndComponent extends TaskComponent {
         } else if (event.getEventType() == GameEventType.OutsideFinishArea){
             remove(event.getPlayerNr());
         }
-        System.out.println("finishers "+m_finishers.size);
     }
 
     private void put(PlayerComponent.PlayerNumber playerNumber){

@@ -11,7 +11,7 @@ import com.me.events.AnimationEvent;
 import com.me.events.TelegramEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
-import com.me.level.Player;
+import com.me.events.states.PlayerState;
 import com.me.utils.Converters;
 
 /**
@@ -19,10 +19,10 @@ import com.me.utils.Converters;
  */
 public class PlayerAnimationComponent extends AnimationComponent implements TelegramEventObserverComponent {
 
-    private AnimState m_finishAnimation;
+    private PlayerState m_finishAnimation;
     private PlayerComponent.PlayerNumber m_playerNumber;
 
-    public PlayerAnimationComponent(String atlas, String skeleton, float scale, AnimState finishAnimation, PlayerComponent.PlayerNumber playerNumber) {
+    public PlayerAnimationComponent(String atlas, String skeleton, float scale, PlayerState finishAnimation, PlayerComponent.PlayerNumber playerNumber) {
         super(atlas, skeleton, scale);
         m_finishAnimation = finishAnimation;
         m_playerNumber = playerNumber;
@@ -37,82 +37,82 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     }
 
     @Override
-    public void setAnimationState(AnimState state) {
+    public void setAnimationState(PlayerState state) {
 
 
         if (state != m_previousState) {
             setState(state);
             switch (state) {
-                case WALKING:
+                case Walking:
                     playAnimation("walking", true);
                     break;
-                case JOGGING:
+                case Jogging:
                     playAnimation("jogging", true);
                     break;
-                case RUNNING:
+                case Running:
                     playAnimation("running", true);
                     break;
-                case JUMPING:
+                case Jumping:
                     playAnimation("runJumping", false);
                     break;
-                case JOGJUMP:
+                case JogJump:
                     playAnimation("jogjumping", false);
                     break;
-                case IDLE:
+                case Idle:
                     playAnimation("idle1", true);
                     break;
-                case UPJUMP:
+                case UpJump:
                     playAnimation("upJump", false);
                     break;
-                case FALLING:
+                case Falling:
                     playAnimation("falling", true);
                     break;
-                case HANGING:
+                case Hanging:
                     playAnimation("hang", true);
                     break;
-                case CLIMBING:
+                case Climbing:
                     playAnimation("climbUp", false);
                     break;
-                case LADDERCLIMBUP:
+                case LadderClimbUp:
                     playAnimation("ladderClimbUp", true);
                     break;
-                case LADDERCLIMBDOWN:
+                case LadderClimbDown:
                     playAnimation("ladderClimbDown", true);
                     break;
-                case LADDERHANG:
+                case LadderHang:
                     playAnimation("ladderHang", false);
                     break;
-                case PUSHING:
+                case Pushing:
                     playAnimation("pushing", true);
                     break;
-                case LIEDOWN:
+                case LieDown:
                     playAnimation("lieDown", false);
                     break;
-                case LYINGDOWN:
+                case LyingDown:
                     playAnimation("lyingDown", false);
                     break;
-                case PULLUP:
+                case PullUp:
                     playAnimation("pullUp", false);
                     break;
-                case SUCKIN:
+                case SuckIn:
                     playAnimation("suckIn", false);
                     break;
-                case STANDUP:
+                case StandUp:
                     playAnimation("standUp", false);
                     break;
-                case CRAWL:
+                case Crawl:
                     playAnimation("crawling", true);
                     break;
-                case PRESSBUTTON:
+                case PressButton:
                     playAnimation("pressButton", false);
                     break;
-                case RUNOUT:
+                case RunOut:
                     playAnimation("runOut", false);
                     break;
-                case HOLDHANDLEADING:
+                case HoldHandLeading:
                     playAnimation("holdingHandsIdleLeading", false);
                     break;
-                case HOLDHANDFOLLOWING:
+                case HoldHandFollowing:
                     playAnimation("holdingHandsIdleFollowing", false);
                     break;
                 default:
@@ -182,9 +182,9 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
         PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
         if (m_playerNumber != playerComponent.getPlayerNr()) {
             if (event.getEventType() == GameEventType.HoldingHandsFollowing) {
-                setAnimationState(AnimState.HOLDHANDFOLLOWING);
+                setAnimationState(PlayerState.HoldHandLeading);
             } else if(event.getEventType() == GameEventType.HoldingHandsLeading){
-                setAnimationState(AnimState.HOLDHANDLEADING);
+                setAnimationState(PlayerState.HoldHandFollowing);
             }
         }
     }

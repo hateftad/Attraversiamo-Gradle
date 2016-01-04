@@ -3,6 +3,7 @@ package com.me.level;
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.AnimationComponent;
 import com.me.config.PlayerConfig;
+import com.me.events.states.PlayerState;
 
 /**
  * Created by hateftadayon on 7/5/15.
@@ -46,7 +47,7 @@ public class Player {
         return m_playerConfig.getPlayerNumber();
     }
 
-    public AnimationComponent.AnimState getFinishAnimation(){
+    public PlayerState getFinishAnimation(){
         return m_playerConfig.getFinishAnimation();
     }
 }

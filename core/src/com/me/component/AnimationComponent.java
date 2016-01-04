@@ -17,6 +17,7 @@ import com.esotericsoftware.spine.Skin;
 import com.esotericsoftware.spine.attachments.AtlasAttachmentLoader;
 import com.me.component.interfaces.TaskEventObserverComponent;
 import com.me.events.AnimationEvent;
+import com.me.events.states.PlayerState;
 import com.me.loaders.RubeImage;
 import com.me.utils.Converters;
 
@@ -32,9 +33,9 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 
     protected AnimationState m_animationState;
 
-    protected AnimState m_state;
+    protected PlayerState m_state;
 
-	protected AnimState m_previousState;
+	protected PlayerState m_previousState;
 
     protected Vector2 m_center;
 
@@ -42,14 +43,6 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 
     protected boolean m_isCompleted;
 
-	public enum AnimState{
-		WALKING, IDLE, JUMPING, RUNNING, JOGGING, JOGJUMP,
-		DYING, UPJUMP, HANGING, 
-		CLIMBING, LADDERCLIMBUP, LADDERCLIMBDOWN, 
-		LADDERHANG, FALLING, PUSHING,
-		LIEDOWN, PULLUP, SUCKIN, WALKOUT, CRAWL, STANDUP,
-		LYINGDOWN, PRESSBUTTON, HOLDHANDLEADING, HOLDHANDFOLLOWING, RUNOUT
-	}
 
 	public AnimationComponent(String atlas, String skeleton, float scale){
 		m_renderer = new SkeletonRenderer();
@@ -62,7 +55,7 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 	}
 
 	public AnimationStateData setUp(RubeImage image){
-        m_state = AnimState.IDLE;
+        m_state = PlayerState.Idle;
 		AnimationStateData stateData = new AnimationStateData(m_skeletonData);
 		Vector2 size = new Vector2(image.width, image.height);
 		size = Converters.ToWorld(size);
@@ -186,11 +179,11 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 		return m_animationState;
 	}
 
-	public AnimState getState(){
+	public PlayerState getState(){
 		return m_state;
 	}
 
-	public void setState(AnimState state){
+	public void setState(PlayerState state){
 		m_state = state;
 	}
 
@@ -198,9 +191,9 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 		m_skeleton.setSkin(m_skeletonData.findSkin(skinName));
 	}
 
-	public abstract void setAnimationState(AnimState animationState);
+	public abstract void setAnimationState(PlayerState animationState);
 
-	public boolean isCompleted(AnimState state){
+	public boolean isCompleted(PlayerState state){
 		return ((state == m_state) && (m_isCompleted));
 	}
 
@@ -210,6 +203,7 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 
 	public void setupPose(){
 		m_skeleton.setBonesToSetupPose();
+        //m_skeleton.setToSetupPose();
 	}
 
 	public float getX(){
@@ -236,7 +230,7 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 
 	@Override
 	public void restart() {
-		setAnimationState(AnimState.IDLE);
+		setAnimationState(PlayerState.Idle);
 		setFacing(false);
 	}
 

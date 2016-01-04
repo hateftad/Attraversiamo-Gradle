@@ -20,10 +20,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.*;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
+import com.me.events.states.PlayerState;
 import com.me.level.Player;
 import com.me.component.*;
 import com.me.component.ParticleComponent.ParticleType;
-import com.me.component.AnimationComponent.AnimState;
 import com.me.factory.GameEventFactory;
 import com.me.level.Level;
 import com.me.loaders.BodySerializer.BodyUserData;
@@ -360,7 +360,7 @@ public class EntityLoader {
                 // body.getUserData()).mName));
                 entity.addComponent(playerComponent);
                 entity.addComponent(new TouchComponent());
-                entity.addComponent(new MovementComponent());
+                entity.addComponent(new KeyInputComponent());
                 entity.addComponent(new JointComponent("noname"));
                 entity.addComponent(new HangComponent());
                 entity.addComponent(new RagDollComponent());
@@ -385,7 +385,7 @@ public class EntityLoader {
                 pComp.setName(((BodyUserData) body.getUserData()).mName);
                 pComp.setIsPlayer(true);
                 stateData = animationComponent.setUp(image);
-                animationComponent.setAnimationState(AnimState.IDLE);
+                animationComponent.setAnimationState(PlayerState.Idle);
                 stateData.setMix("idle1", "jogging", 0.4f);
                 stateData.setMix("jogging", "idle1", 0.4f);
                 stateData.setMix("running", "idle1", 0.4f);
@@ -418,7 +418,7 @@ public class EntityLoader {
                 pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
                 pComp.setIsPlayer(true);
                 stateData = animationComponent.setUp(image);
-                animationComponent.setAnimationState(AnimState.IDLE);
+                animationComponent.setAnimationState(PlayerState.Idle);
                 stateData.setMix("idle1", "walking", 0.4f);
                 stateData.setMix("running", "idle1", 0.4f);
                 stateData.setMix("walking", "idle1", 0.4f);
@@ -436,7 +436,7 @@ public class EntityLoader {
                 stateData.setMix("lyingDown", "standUp", 0.2f);
                 entity.addComponent(playerComponent);
                 animationComponent.setSkin(playerConfig.getSkinName());
-                entity.addComponent(new MovementComponent());
+                entity.addComponent(new KeyInputComponent());
                 entity.addComponent(new VelocityLimitComponent(8.5f, 10, 2.5f));
                 entity.addComponent(new TouchComponent());
                 entity.addComponent(new JumpComponent());
@@ -623,7 +623,8 @@ public class EntityLoader {
     private PlayerComponent.PlayerNumber getPlayerNumber(int playerNr) {
         if (playerNr == 1) {
             return PlayerComponent.PlayerNumber.ONE;
-        } else if (playerNr == 2) {
+        }
+        if (playerNr == 2) {
             return PlayerComponent.PlayerNumber.TWO;
         }
         return PlayerComponent.PlayerNumber.NONE;

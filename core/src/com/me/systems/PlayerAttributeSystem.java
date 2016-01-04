@@ -6,7 +6,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.artemis.systems.EntityProcessingSystem;
 import com.me.component.*;
-import com.me.component.AnimationComponent.AnimState;
+import com.me.events.states.PlayerState;
 import com.me.physics.JointFactory;
 
 public class PlayerAttributeSystem extends EntityProcessingSystem {
@@ -22,7 +22,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 	@Mapper
 	ComponentMapper<JointComponent> m_jointComp;
 	@Mapper
-	ComponentMapper<MovementComponent> m_movComp;
+	ComponentMapper<KeyInputComponent> m_movComp;
 	@Mapper
 	ComponentMapper<GrabComponent> m_grabComps;
 	@Mapper
@@ -33,7 +33,6 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 	@SuppressWarnings("unchecked")
 	public PlayerAttributeSystem() {
 		super(Aspect.getAspectForAll(PlayerComponent.class));
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -52,7 +51,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					j.setPrismJoint(JointFactory.getInstance().createJoint(
 							j.getPJointDef()));
 				}
-				MovementComponent m = m_movComp.get(e);
+				KeyInputComponent m = m_movComp.get(e);
 				if (!touch.m_edgeTouch && !j.m_destroyed) {
 					if (h.m_isHanging) {
 						if (m.m_left && h.m_hangingRight && !h.m_climbingUp) {
@@ -66,17 +65,17 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 					}
 					if (h.m_release) {
 						AnimationComponent anim = m_animComps.get(e);
-						anim.setAnimationState(AnimState.FALLING);
+						anim.setAnimationState(PlayerState.Falling);
 						release(e);
 					}
 					if (h.m_climbingUp) {
 						PhysicsComponent pComp = m_physComp.get(e);
 						pComp.setBodyActive(false);
 						AnimationComponent anim = m_animComps.get(e);
-						if (anim.isCompleted(AnimState.CLIMBING)) {
+						if (anim.isCompleted(PlayerState.Climbing)) {
 							pComp.setAllBodiesPosition(anim.getPositionRelative("left upper leg"));
 							pComp.setBodyActive(true);
-							anim.setAnimationState(AnimState.IDLE);
+							anim.setAnimationState(PlayerState.Idle);
 							release(e);
 						}
 					}
@@ -96,9 +95,9 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 			}
 			if (g.m_lifting) {
 				AnimationComponent anim = m_animComps.get(e);
-				anim.setAnimationState(AnimState.PULLUP);
+				anim.setAnimationState(PlayerState.PullUp);
 
-				if (anim.isCompleted(AnimState.PULLUP)) {
+				if (anim.isCompleted(PlayerState.PullUp)) {
 					g.m_lifting = false;
 				}
 			}
@@ -107,17 +106,17 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 			if (g.m_gettingLifted) {
 
 				AnimationComponent anim = m_animComps.get(e);
-				anim.setAnimationState(AnimState.PULLUP);
+				anim.setAnimationState(PlayerState.PullUp);
 				PhysicsComponent pComp = m_physComp.get(e);
 				if (!g.aligned) {
 					pComp.setPosition(g.handPositionX, pComp.getPosition().y);
 					g.aligned = true;
 				}
 				pComp.setBodyActive(false);
-                if (anim.isCompleted(AnimState.PULLUP)) {
+                if (anim.isCompleted(PlayerState.PullUp)) {
 					pComp.setAllBodiesPosition(anim.getPositionRelative("left foot"));
 					pComp.setBodyActive(true);
-					anim.setAnimationState(AnimState.IDLE);
+					anim.setAnimationState(PlayerState.Idle);
 					g.m_gettingLifted = false;
 					g.aligned = false;
 				}

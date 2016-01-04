@@ -1,26 +1,73 @@
 
-buttons.png
+pack.png
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-left
+action.up
   rotate: false
-  xy: 1, 1
-  size: 128, 128
-  orig: 128, 128
+  xy: 2, 485
+  size: 481, 481
+  orig: 481, 481
   offset: 0, 0
   index: -1
-right
+left.up
   rotate: false
-  xy: 131, 1
-  size: 128, 128
-  orig: 128, 128
+  xy: 485, 485
+  size: 481, 481
+  orig: 481, 481
   offset: 0, 0
   index: -1
-up
+menu.up
   rotate: false
-  xy: 261, 1
-  size: 128, 128
-  orig: 128, 128
+  xy: 2, 2
+  size: 481, 481
+  orig: 481, 481
+  offset: 0, 0
+  index: -1
+right.up
+  rotate: false
+  xy: 485, 2
+  size: 481, 481
+  orig: 481, 481
+  offset: 0, 0
+  index: -1
+
+pack2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+change1.up
+  rotate: false
+  xy: 2, 2
+  size: 586, 542
+  orig: 586, 542
+  offset: 0, 0
+  index: -1
+
+pack3.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+change2.up
+  rotate: false
+  xy: 2, 2
+  size: 586, 542
+  orig: 586, 542
+  offset: 0, 0
+  index: -1
+
+pack4.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+up.up
+  rotate: false
+  xy: 2, 2
+  size: 481, 481
+  orig: 481, 481
   offset: 0, 0
   index: -1

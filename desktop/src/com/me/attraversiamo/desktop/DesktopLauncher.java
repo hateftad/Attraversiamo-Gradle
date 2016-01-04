@@ -16,7 +16,7 @@ public class DesktopLauncher {
 		GameConfig config = new GameConfig();
 		config.platform = Platform.DESKTOP;
 		config.timeStep = 1/45f;
-		config.showUI = false;
+		config.showUI = true;
 		config.zoom = 9f;
 		new LwjglApplication(new Attraversiamo(config, requestHandler), cfg);
 	}

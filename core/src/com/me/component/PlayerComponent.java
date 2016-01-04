@@ -4,11 +4,27 @@ import com.me.component.interfaces.TelegramEventObserverComponent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
 import com.me.events.TelegramEvent;
+import com.me.events.states.PlayerState;
 
 public class PlayerComponent extends BaseComponent implements TelegramEventObserverComponent {
 
-    public enum State {
-        WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE, HOLDINGHANDS
+    public boolean isMoving() {
+        return m_state == PlayerState.Walking ||
+                m_state == PlayerState.Running ||
+                isJumping();
+    }
+
+    public boolean isJumping() {
+        return m_state == PlayerState.Jumping ||
+                m_state == PlayerState.UpJump;
+    }
+
+    public boolean isHanging() {
+        return m_state == PlayerState.Hanging;
+    }
+
+    public boolean shouldBeIdle(){
+        return !isMoving() && !isHanging();
     }
 
     public enum PlayerNumber {
@@ -18,7 +34,7 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     private PlayerNumber m_playerNr;
 
-    private State m_state = State.IDLE;
+    private PlayerState m_state = PlayerState.Idle;
 
     private boolean m_facingLeft;
 
@@ -38,14 +54,20 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
         m_finishFacingLeft = finishFacingLeft;
         m_playerNr = player;
         setFacingLeft(true);
-        setState(State.IDLE);
+        setState(PlayerState.Idle);
     }
 
-    public State getState() {
+    public PlayerState getState() {
         return m_state;
     }
 
-    public void setState(State m_state) {
+    public boolean canBeControlled(){
+        return m_state != PlayerState.LyingDown &&
+                m_state != PlayerState.StandUp &&
+                m_state != PlayerState.PressButton;
+    }
+
+    public void setState(PlayerState m_state) {
         this.m_state = m_state;
     }
 
@@ -105,7 +127,7 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     @Override
     public void onNotify(TelegramEvent event) {
-        if(event.getEventType() == GameEventType.HoldingHandsFollowing || event.getEventType() == GameEventType.HoldingHandsLeading){
+        if (event.getEventType() == GameEventType.HoldingHandsFollowing || event.getEventType() == GameEventType.HoldingHandsLeading) {
             //setState(State.WAITTILDONE);
         }
     }

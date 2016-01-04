@@ -15,6 +15,11 @@ public class HangComponent extends BaseComponent {
 		
 	}
 
+    public void notHanging(){
+        m_hangingLeft = false;
+        m_isHanging = false;
+        m_hangingRight = false;
+    }
 
 	@Override
 	public void restart() {

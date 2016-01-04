@@ -20,7 +20,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
 
     private GameEntityWorld m_entityWorld;
     private PhysicsSystem m_physicsSystem;
-    private PlayerOneSystem m_playerOneSystem;
+    private PlayerSystem m_playerOneSystem;
     private PlayerTwoSystem m_playerTwoSystem;
     private RenderSystem m_renderSystem;
     private CameraSystem m_cameraSystem;
@@ -44,16 +44,19 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_camera));
         m_renderSystem = m_entityWorld.setSystem(new RenderSystem(m_camera));
         m_entityWorld.setSystem(m_physicsSystem);
-        m_entityWorld.setSystem(new PlayerAttributeSystem());
+//        m_entityWorld.setSystem(new PlayerAttributeSystem());
         m_entityWorld.setSystem(new LevelSystem(this));
         m_entityWorld.setSystem(new ParticlesSystem(2));
-        m_playerOneSystem = new PlayerOneSystem(m_physicsSystem);
+        m_entityWorld.setSystem(new PlayerInteractionSystem());
+        m_playerOneSystem = new ManSystem(m_physicsSystem);
         m_entityWorld.setSystem(m_playerOneSystem);
         m_playerTwoSystem = m_entityWorld.setSystem(new PlayerTwoSystem());
         m_entityWorld.initialize();
         game.m_processors.add(m_cameraSystem);
         game.m_processors.add(m_playerOneSystem);
 
+        m_userInterface = new UserInterface();
+        m_userInterface.init();
         if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
             m_userInterface = new UserInterface();
             m_userInterface.init();
@@ -94,7 +97,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         return m_cameraSystem;
     }
 
-    public PlayerOneSystem getPlayerSystem() {
+    public PlayerSystem getPlayerSystem() {
         return m_playerOneSystem;
     }
 

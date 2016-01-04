@@ -2,7 +2,7 @@ package com.me.component;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class MovementComponent extends BaseComponent {
+public class KeyInputComponent extends BaseComponent {
 
 	public boolean m_left;
 	public boolean m_right;
@@ -30,7 +30,7 @@ public class MovementComponent extends BaseComponent {
 		return (m_left || m_right);
 	}
 
-	@Override
+    @Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 	}

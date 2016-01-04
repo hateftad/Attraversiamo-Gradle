@@ -34,6 +34,10 @@ public class TouchComponent extends BaseComponent {
 		m_touchCenter = new Vector2();
 	}
 
+    public boolean isHanging(){
+        return m_edgeTouch;
+    }
+
 	@Override
 	public void dispose() {
 

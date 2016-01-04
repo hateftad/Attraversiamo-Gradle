@@ -107,6 +107,19 @@ public class JointComponent extends BaseComponent{
 		m_created = true;
 		m_destroyed = false;
 	}
+
+    public void createHangJoint(){
+        if(getPrismJoint() == null) {
+            setPrismJoint(JointFactory.getInstance().createJoint(getPJointDef()));
+        }
+    }
+
+    public void destroyHangJoint(){
+        if(getPrismJoint() != null) {
+            JointFactory.getInstance().destroyJoint(m_pJoint);
+            m_pJoint = null;
+        }
+    }
 	
 	public void climb(){
 		if(m_pJoint.getType() == JointType.PrismaticJoint){

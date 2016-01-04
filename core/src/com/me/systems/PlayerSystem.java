@@ -6,8 +6,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
-import com.me.component.interfaces.TaskEventObserverComponent;
-import com.me.events.TaskEvent;
+import com.me.events.GameEventType;
+import com.me.events.TelegramEvent;
+import com.me.events.states.PlayerState;
 import com.me.ui.InputManager;
 import com.me.utils.Converters;
 
@@ -44,19 +45,14 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
         }
     }
 
+    protected abstract void setPlayerState(Entity entity, PlayerState state);
+
     protected boolean isDead(PhysicsComponent ps) {
         return ps.getPosition().y < -100;
     }
 
-    protected void holdHands(Entity entity){
-
-    }
-
     public void restartSystem() {
         m_inputMgr.reset();
-    }
-
-    public void clearSystem() {
     }
 
     public void toggleProcessing(boolean process) {

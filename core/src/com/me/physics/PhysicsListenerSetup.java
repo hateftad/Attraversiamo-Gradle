@@ -9,7 +9,6 @@ import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
-import com.me.events.TelegramEvent;
 import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
@@ -49,7 +48,7 @@ public class PhysicsListenerSetup {
                     if (playerUd.getCollisionGroup() == otherUd.getCollisionGroup()) {
                         if (e.getComponent(PlayerComponent.class) != null) {
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Box) {
-                                if (!e.getComponent(MovementComponent.class).isMoving()) {
+                                if (!e.getComponent(KeyInputComponent.class).isMoving()) {
                                     other.setFriction(1f);
                                     contact.resetFriction();
                                 } else {
@@ -85,20 +84,25 @@ public class PhysicsListenerSetup {
                     if (player.getRBUserData(fB.getBody()).getCollisionGroup() == otherUd.getCollisionGroup()) {
                         if (e.getComponent(PlayerComponent.class) != null) {
                             PlayerComponent pl = e.getComponent(PlayerComponent.class);
-                            boolean created = false;
                             if (pl.isFacingLeft() && otherUd.getType() == Type.LeftEdge && playerUd.getType() == Type.HangHands) {
-                                JointComponent j = e.getComponent(JointComponent.class);
-                                j.createEdgeHang(other.getBody(), player.getBody("leftH"), 3, 11, 0);
-                                player.setLinearVelocity(player.getLinearVelocity().x, 0);
-                                created = true;
-                                e.getComponent(HangComponent.class).m_hangingLeft = true;
+                                if(!pl.isHanging()) {
+                                    JointComponent j = e.getComponent(JointComponent.class);
+                                    j.createEdgeHang(other.getBody(), player.getBody("leftH"), 3, 11, 0);
+                                    player.setLinearVelocity(player.getLinearVelocity().x, 0);
+                                    e.getComponent(TouchComponent.class).m_edgeTouch = true;
+                                    e.getComponent(HangComponent.class).m_hangingLeft = true;
+                                }
                             }
                             if (!pl.isFacingLeft() && otherUd.getType() == Type.RightEdge && playerUd.getType() == Type.HangHands) {
-                                JointComponent j = e.getComponent(JointComponent.class);
-                                j.createEdgeHang(other.getBody(), player.getBody("rightH"), 3, 11, 0);
-                                player.setLinearVelocity(player.getLinearVelocity().x, 0);
-                                created = true;
-                                e.getComponent(HangComponent.class).m_hangingRight = true;
+                                if(!pl.isHanging()) {
+                                    JointComponent j = e.getComponent(JointComponent.class);
+                                    j.createEdgeHang(other.getBody(), player.getBody("rightH"), 3, 11, 0);
+                                    player.setLinearVelocity(player.getLinearVelocity().x, 0);
+                                    e.getComponent(TouchComponent.class).m_edgeTouch = true;
+
+                                    e.getComponent(HangComponent.class).m_hangingRight = true;
+                                    e.getComponent(HangComponent.class).m_isHanging = true;
+                                }
                             }
                             if (otherUd.getType() == Type.RightLadder) {
                                 if (!pl.isFacingLeft()) {
@@ -163,8 +167,6 @@ public class PhysicsListenerSetup {
                                 }
                             }
 
-                            //PhysicsComponent player = e.getComponent(PhysicsComponent.class);
-                            //PhysicsComponent other = e2.getComponent(PhysicsComponent.class);
                             if (otherUd.getType() == Type.RightHandHold) {
                                 e2.getComponent(TouchComponent.class).m_handHoldArea = true;
                                 e2.getComponent(TouchComponent.class).m_rightHoldArea = true;
@@ -191,10 +193,6 @@ public class PhysicsListenerSetup {
                             if (otherUd.getType() == Type.Finish) {
                                 m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
                             }
-                            if (created) {
-                                e.getComponent(TouchComponent.class).m_edgeTouch = true;
-                                e.getComponent(MovementComponent.class).m_lockControls = false;
-                            }
                         }
 
                     }
@@ -208,7 +206,7 @@ public class PhysicsListenerSetup {
                         if (e.getComponent(PlayerComponent.class) != null) {
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Ground) {
                                 e.getComponent(TouchComponent.class).m_groundTouch = true;
-                                e.getComponent(MovementComponent.class).m_lockControls = false;
+                                e.getComponent(KeyInputComponent.class).m_lockControls = false;
                                 e.getComponent(GrabComponent.class).m_grabbed = false;
 
                                 e.getComponent(SingleParticleComponent.class).setPosition(Converters.ToWorld(e.getComponent(PhysicsComponent.class).getBody("feet").getPosition()));
@@ -220,7 +218,7 @@ public class PhysicsListenerSetup {
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Box) {
                                 e.getComponent(TouchComponent.class).m_groundTouch = true;
                                 e.getComponent(TouchComponent.class).m_feetToBox = true;
-                                e.getComponent(MovementComponent.class).m_lockControls = false;
+                                e.getComponent(KeyInputComponent.class).m_lockControls = false;
                                 e.getComponent(GrabComponent.class).m_grabbed = false;
                                 onBox = true;
                             }
@@ -229,9 +227,9 @@ public class PhysicsListenerSetup {
                                 if (!e.getComponent(TouchComponent.class).m_groundTouch) {
                                     if (e.getComponent(HangComponent.class) != null) {
                                         if (!e.getComponent(HangComponent.class).m_isHanging)
-                                            e.getComponent(MovementComponent.class).m_lockControls = true;
+                                            e.getComponent(KeyInputComponent.class).m_lockControls = true;
                                     } else {
-                                        e.getComponent(MovementComponent.class).m_lockControls = true;
+                                        e.getComponent(KeyInputComponent.class).m_lockControls = true;
                                     }
                                 }
                             }
@@ -274,7 +272,6 @@ public class PhysicsListenerSetup {
                     RBUserData otherUd = other.getRBUserData(fA.getBody());
                     RBUserData playerUd = player.getRBUserData(fB.getBody());
                     if (playerUd.getCollisionGroup() == otherUd.getCollisionGroup()) {
-                        e.getComponent(TouchComponent.class).m_edgeTouch = false;
                         if (otherUd.getType() == Type.RightLadder) {
                             e.getComponent(TouchComponent.class).m_ladderTouch = false;
                             e.getComponent(LadderClimbComponent.class).m_rightClimb = false;
@@ -349,6 +346,12 @@ public class PhysicsListenerSetup {
                             e2.getComponent(HandHoldComponent.class).setHoldingHands(false);
                             m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
+                        if (otherUd.getType() == Type.RightEdge && playerUd.getType() == Type.HangHands) {
+                            e.getComponent(TouchComponent.class).m_edgeTouch = false;
+                        }
+                        if (otherUd.getType() == Type.LeftEdge && playerUd.getType() == Type.HangHands) {
+                            e.getComponent(TouchComponent.class).m_edgeTouch = false;
+                        }
                     }
                 }
 
@@ -365,11 +368,11 @@ public class PhysicsListenerSetup {
 
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Ground) {
                                 onGround = false;
-                                e.getComponent(MovementComponent.class).m_lockControls = false;
+                                e.getComponent(KeyInputComponent.class).m_lockControls = false;
                             }
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Box) {
                                 onBox = false;
-                                e.getComponent(MovementComponent.class).m_lockControls = false;
+                                e.getComponent(KeyInputComponent.class).m_lockControls = false;
                                 e.getComponent(TouchComponent.class).m_feetToBox = false;
                             }
                             if (!onGround && !onBox) {

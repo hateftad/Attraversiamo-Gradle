@@ -1,7 +1,7 @@
 package com.me.config;
 
 import com.badlogic.gdx.math.Vector2;
-import com.me.component.AnimationComponent.AnimState;
+import com.me.events.states.PlayerState;
 
 public class PlayerConfig {
 
@@ -11,7 +11,7 @@ public class PlayerConfig {
     private boolean m_active;
     private boolean m_canDeactivate;
     private String m_name;
-    private AnimState m_finishAnimation;
+    private PlayerState m_finishAnimation;
  	private String m_skinName;
     private int m_playerNumber;
     private boolean m_finishFacingLeft;
@@ -71,7 +71,7 @@ public class PlayerConfig {
         return m_canDeactivate;
     }
 
-    public AnimState getFinishAnimation() {
+    public PlayerState getFinishAnimation() {
         return m_finishAnimation;
     }
 
@@ -82,13 +82,13 @@ public class PlayerConfig {
  	public void setFinishAnimation(String state){
  		
  		if(state.equals("suckin")){
- 			m_finishAnimation = AnimState.SUCKIN;
+ 			m_finishAnimation = PlayerState.SuckIn;
  		}
  		if(state.equals("walkout")){
- 			m_finishAnimation = AnimState.WALKOUT;
+ 			m_finishAnimation = PlayerState.WalkOut;
  		}
  		if(state.equals("runOut")){
- 			m_finishAnimation = AnimState.RUNOUT;
+ 			m_finishAnimation = PlayerState.RunOut;
  		}
  	}
  	
