@@ -4,7 +4,6 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.badlogic.gdx.math.Vector2;
 import com.me.component.*;
 import com.me.events.GameEventType;
 import com.me.events.TelegramEvent;
@@ -30,8 +29,6 @@ public class PlayerTwoSystem extends PlayerSystem {
     ComponentMapper<PhysicsComponent> m_physComps;
     @Mapper
     ComponentMapper<VelocityLimitComponent> m_velComps;
-    @Mapper
-    ComponentMapper<CrawlComponent> m_crawlComps;
     @Mapper
     ComponentMapper<PushComponent> m_pushComps;
     @Mapper
@@ -61,7 +58,6 @@ public class PlayerTwoSystem extends PlayerSystem {
         GrabComponent g = m_grabComps.get(entity);
         TouchComponent touch = m_touchComps.get(entity);
         FeetComponent feet = m_feetComps.get(entity);
-        CrawlComponent crawlComp = m_crawlComps.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
         HandHoldComponent handHoldComponent = m_handHoldComps.get(entity);
 
@@ -81,24 +77,24 @@ public class PlayerTwoSystem extends PlayerSystem {
         }
 
         if (!player.isActive() && !finish && !handHoldComponent.isHoldingHands()) {
-            if (crawlComp.isStanding && animation.isCompleted(PlayerState.StandUp)) {
-                crawlComp.isStanding = false;
-                player.setState(PlayerState.Idle);
-            }
-            if (!g.m_gettingLifted && feet.hasCollided() && !crawlComp.isCrawling) {
+//            if (crawlComp.isStanding && animation.isCompleted(PlayerState.StandUp)) {
+//                crawlComp.isStanding = false;
+//                player.setState(PlayerState.Idle);
+//            }
+            if (!g.m_gettingLifted && feet.hasCollided()) {
                 animation.setAnimationState(PlayerState.Idle);
                 movementComponent.standStill();
-                if (!touch.m_feetToBox) {
-                    //ps.makeStatic("center");
-                }
+//                if (!touch.m_feetToBox) {
+//                    ps.makeStatic("center");
+//                }
             }
         }
 
 
         if (player.isActive() && !movementComp.m_lockControls && !g.m_gettingLifted
-                && !finish && !crawlComp.isStanding && player.getState() != PlayerState.WaitTilDone) {
+                && !finish && player.getState() != PlayerState.WaitTilDone) {
 
-            if (feet.hasCollided() && !crawlComp.isCrawling) {
+            if (feet.hasCollided()) {
                 animation.setupPose();
             }
 
@@ -109,21 +105,21 @@ public class PlayerTwoSystem extends PlayerSystem {
             }
 
             if (movementComp.m_left && feet.hasCollided()) {
-                if (crawlComp.isCrawling) {
-                    crawlLeft(entity);
-                } else {
-                    walkLeft(entity);
-                }
+//                if (crawlComp.isCrawling) {
+//                    crawlLeft(entity);
+//                } else {
+//                    walkLeft(entity);
+//                }
                 player.setFacingLeft(true);
                 jumpComponent.m_jumped = false;
             }
 
             if (movementComp.m_right && feet.hasCollided()) {
-                if (crawlComp.isCrawling) {
-                    crawlRight(entity);
-                } else {
-                    walkRight(entity);
-                }
+//                if (crawlComp.isCrawling) {
+//                    crawlRight(entity);
+//                } else {
+//                    walkRight(entity);
+//                }
                 player.setFacingLeft(false);
                 jumpComponent.m_jumped = false;
             }
@@ -145,10 +141,10 @@ public class PlayerTwoSystem extends PlayerSystem {
             }
 
             if (m_inputMgr.isDown(action)) {
-                if (crawlComp.canCrawl && !crawlComp.isCrawling) {
-                    animation.setAnimationState(PlayerState.LieDown);
-                    player.setState(PlayerState.LyingDown);
-                }
+//                if (crawlComp.m_canCrawl && !crawlComp.isCrawling) {
+//                    animation.setAnimationState(PlayerState.LieDown);
+//                    player.setState(PlayerState.LyingDown);
+//                }
                 if (touch.m_pushArea) {
                     EventComponent component = m_eventComps.get(entity);
                     if (touch.m_leftPushArea) {
@@ -202,7 +198,7 @@ public class PlayerTwoSystem extends PlayerSystem {
             if (animation.isCompleted(PlayerState.LieDown)) {
                 animation.setAnimationState(PlayerState.LyingDown);
                 player.setState(PlayerState.WaitTilDone);
-                crawlComp.isCrawling = true;
+//                crawlComp.isCrawling = true;
                 ps.disableBody("center");
             }
 
@@ -211,13 +207,13 @@ public class PlayerTwoSystem extends PlayerSystem {
                 movementComponent.standStill();
             }
 
-            if (!crawlComp.canCrawl && crawlComp.isCrawling) {
-                animation.setAnimationState(PlayerState.StandUp);
-                crawlComp.isCrawling = false;
-                crawlComp.isStanding = true;
-                ps.enableBody("center");
-                movementComponent.standStill();
-            }
+//            if (!crawlComp.m_canCrawl && crawlComp.isCrawling) {
+//                animation.setAnimationState(PlayerState.StandUp);
+//                crawlComp.isCrawling = false;
+//                crawlComp.isStanding = true;
+//                ps.enableBody("center");
+//                movementComponent.standStill();
+//            }
         }
 
         if (animation.isCompleted() && player.getState() == PlayerState.WaitTilDone) {
@@ -246,10 +242,9 @@ public class PlayerTwoSystem extends PlayerSystem {
     private boolean canJump(Entity entity) {
         FeetComponent feet = m_feetComps.get(entity);
         KeyInputComponent m = m_movComps.get(entity);
-        CrawlComponent crawlComp = m_crawlComps.get(entity);
         JumpComponent jumpComponent = m_jumpComps.get(entity);
 
-        return feet.hasCollided() && !m.isMoving() && !crawlComp.isCrawling && !jumpComponent.m_jumped;
+        return feet.hasCollided() && !m.isMoving() && !jumpComponent.m_jumped;
     }
 
     private boolean isIdle(Entity e) {

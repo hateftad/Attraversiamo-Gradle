@@ -2,7 +2,6 @@ package com.me.screens;
 
 import box2dLight.RayHandler;
 
-import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -21,7 +20,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     private GameEntityWorld m_entityWorld;
     private PhysicsSystem m_physicsSystem;
     private PlayerSystem m_playerOneSystem;
-    private PlayerTwoSystem m_playerTwoSystem;
+    private PlayerSystem m_playerTwoSystem;
     private RenderSystem m_renderSystem;
     private CameraSystem m_cameraSystem;
     private UserInterface m_userInterface;
@@ -47,10 +46,11 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
 //        m_entityWorld.setSystem(new PlayerAttributeSystem());
         m_entityWorld.setSystem(new LevelSystem(this));
         m_entityWorld.setSystem(new ParticlesSystem(2));
-        m_entityWorld.setSystem(new PlayerInteractionSystem());
+        m_entityWorld.setSystem(new ManInteractionSystem());
+        m_entityWorld.setSystem(new GirlInteractionSystem());
         m_playerOneSystem = new ManSystem(m_physicsSystem);
         m_entityWorld.setSystem(m_playerOneSystem);
-        m_playerTwoSystem = m_entityWorld.setSystem(new PlayerTwoSystem());
+        m_playerTwoSystem = m_entityWorld.setSystem(new GirlSystem());
         m_entityWorld.initialize();
         game.m_processors.add(m_cameraSystem);
         game.m_processors.add(m_playerOneSystem);

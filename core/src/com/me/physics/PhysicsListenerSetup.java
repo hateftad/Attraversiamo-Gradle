@@ -184,8 +184,8 @@ public class PhysicsListenerSetup {
                                 e.getComponent(TouchComponent.class).m_leftHoldArea = true;
                             }
 
-                            if (otherUd.getType() == Type.LeftCrawl && e.getComponent(CrawlComponent.class) != null) {
-                                e.getComponent(CrawlComponent.class).canCrawl = true;
+                            if (otherUd.getType() == Type.LeftCrawl) {
+                                e.getComponent(TouchComponent.class).m_canCrawl = true;
                             }
                             if (otherUd.getType() == Type.Portal) {
                                 m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
@@ -303,8 +303,8 @@ public class PhysicsListenerSetup {
                                 }
                             }
                         }
-                        if (otherUd.getType() == Type.LeftCrawl && e.getComponent(CrawlComponent.class) != null) {
-                            e.getComponent(CrawlComponent.class).canCrawl = false;
+                        if (otherUd.getType() == Type.LeftCrawl) {
+                            e.getComponent(TouchComponent.class).m_canCrawl = false;
                         }
                         if (otherUd.getType() == Type.Portal) {
                             m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.OutsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));

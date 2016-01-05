@@ -443,7 +443,6 @@ public class EntityLoader {
                 entity.addComponent(new GrabComponent());
                 entity.addComponent(new PlayerTwoComponent());
                 entity.addComponent(new TriggerComponent());
-                entity.addComponent(new CrawlComponent());
                 entity.addComponent(new RestartComponent());
                 entity.addComponent(new PushComponent());
                 entity.addComponent(new QueueComponent());

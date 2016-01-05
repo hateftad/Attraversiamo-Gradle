@@ -42,7 +42,7 @@ public class ManSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<PushComponent> m_pushComps;
     @Mapper
-    ComponentMapper<EventComponent> m_taskComps;
+    ComponentMapper<EventComponent> m_eventComps;
     @Mapper
     ComponentMapper<CharacterMovementComponent> m_movementComps;
     @Mapper
@@ -86,10 +86,10 @@ public class ManSystem extends PlayerSystem {
 
             if (keyInputComponent.m_left) {
                 moveLeft(entity);
-            }
-            if (keyInputComponent.m_right) {
+            } else if (keyInputComponent.m_right) {
                 moveRight(entity);
             }
+
             if (keyInputComponent.m_jump) {
                 jump(entity);
             }
@@ -108,7 +108,7 @@ public class ManSystem extends PlayerSystem {
                     movementComponent.standStill();
                 }
                 if (touch.m_pushArea) {
-                    EventComponent component = m_taskComps.get(entity);
+                    EventComponent component = m_eventComps.get(entity);
                     if (touch.m_leftPushArea) {
                         player.setFacingLeft(false);
                         setPlayerState(entity, PlayerState.PressButton);
@@ -146,8 +146,6 @@ public class ManSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = m_physComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
         PlayerComponent playerComponent = m_playerComps.get(entity);
-
-        System.out.println(playerComponent.getState());
 
         if (!keyInput.moved()) {
             movementComponent.standStill();

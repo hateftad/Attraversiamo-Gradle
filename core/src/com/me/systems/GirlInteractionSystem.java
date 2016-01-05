@@ -7,12 +7,14 @@ import com.artemis.annotations.Mapper;
 import com.me.component.*;
 import com.me.events.states.PlayerState;
 
+import static com.artemis.Aspect.getAspectForAll;
+
 /**
- * Created by hateftadayon on 1/2/16.
+ * Created by hateftadayon on 1/5/16.
  */
-public class PlayerInteractionSystem extends PlayerSystem {
-    @Mapper
-    ComponentMapper<PlayerComponent> m_playerComps;
+public class GirlInteractionSystem extends PlayerSystem {
+
+
     @Mapper
     ComponentMapper<PlayerAnimationComponent> m_animComps;
     @Mapper
@@ -22,50 +24,54 @@ public class PlayerInteractionSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<TouchComponent> m_touchComp;
     @Mapper
-    ComponentMapper<HangComponent> m_hangComp;
+    ComponentMapper<GrabComponent> m_grabComps;
     @Mapper
-    ComponentMapper<JointComponent> m_jointComp;
+    ComponentMapper<CharacterMovementComponent> m_movementComps;
 
     @SuppressWarnings("unchecked")
-    public PlayerInteractionSystem() {
-        super(Aspect.getAspectForAll(PlayerOneComponent.class));
+    public GirlInteractionSystem() {
+        super(getAspectForAll(PlayerTwoComponent.class));
     }
 
     @Override
     protected void process(Entity entity) {
-        JointComponent jointComponent = m_jointComp.get(entity);
+
         TouchComponent touchComponent = m_touchComp.get(entity);
         PlayerComponent playerComponent = m_playerComp.get(entity);
         AnimationComponent animation = m_animComps.get(entity);
         PhysicsComponent physicsComponent = m_physComp.get(entity);
-        HangComponent hangComponent = m_hangComp.get(entity);
+        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
 
-        if (touchComponent.m_edgeTouch) {
-            if(!playerComponent.isHanging()) {
-                jointComponent.createHangJoint();
-            }
-        }
-        if(jointComponent.isHanging() && !playerComponent.isClimbingLedge()){
-            setPlayerState(entity, PlayerState.Hanging);
-        }
-        if(playerComponent.isClimbingLedge()) {
-            if (animation.isCompleted(PlayerState.ClimbingLedge)) {
-                jointComponent.destroyHangJoint();
-                physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
-                physicsComponent.setBodyActive(true);
-                hangComponent.notHanging();
-                setPlayerState(entity, PlayerState.Idle);
-            }
-        }
-        if (touchComponent.canPullUp()) {
+        if(touchComponent.m_handTouch){
             if(!playerComponent.isPullingUp()){
+                GrabComponent grabComponent = m_grabComps.get(entity);
+                physicsComponent.setBodyActive(false);
+                physicsComponent.setPosition(grabComponent.handPositionX, physicsComponent.getPosition().y);
                 setPlayerState(entity, PlayerState.PullUp);
             }
         }
-        if(playerComponent.isPullingUp()){
+        if (playerComponent.isPullingUp()) {
             if(animation.isCompleted(PlayerState.PullUp)){
+                physicsComponent.setBodyActive(true);
                 setPlayerState(entity, PlayerState.Idle);
             }
+        }
+        if(playerComponent.lyingDown()){
+            if(animation.isCompleted(PlayerState.LieDown)){
+                physicsComponent.disableBody("center");
+                setPlayerState(entity, PlayerState.LyingDown);
+            }
+        }
+        if(playerComponent.isCrawling() && !touchComponent.m_canCrawl){
+            setPlayerState(entity, PlayerState.StandUp);
+        }
+
+        if(playerComponent.isGettingUp()){
+            if(animation.isCompleted(PlayerState.StandUp)){
+                physicsComponent.enableBody("center");
+                setPlayerState(entity, PlayerState.Idle);
+            }
+            movementComponent.standStill();
         }
     }
 

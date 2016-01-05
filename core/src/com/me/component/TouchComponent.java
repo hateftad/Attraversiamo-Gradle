@@ -21,6 +21,7 @@ public class TouchComponent extends BaseComponent {
     public boolean m_handHoldArea;
     public boolean m_leftHoldArea;
     public boolean m_rightHoldArea;
+    public boolean m_canCrawl;
 
     public TouchComponent() {
 		m_groundTouch = false;
