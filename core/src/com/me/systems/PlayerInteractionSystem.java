@@ -25,10 +25,6 @@ public class PlayerInteractionSystem extends PlayerSystem {
     ComponentMapper<HangComponent> m_hangComp;
     @Mapper
     ComponentMapper<JointComponent> m_jointComp;
-    @Mapper
-    ComponentMapper<KeyInputComponent> m_movComp;
-    @Mapper
-    ComponentMapper<GrabComponent> m_grabComps;
 
     @SuppressWarnings("unchecked")
     public PlayerInteractionSystem() {
@@ -61,9 +57,14 @@ public class PlayerInteractionSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
-        if (touchComponent.m_handTouch && touchComponent.m_footEdge) {
+        if (touchComponent.canPullUp()) {
             if(!playerComponent.isPullingUp()){
                 setPlayerState(entity, PlayerState.PullUp);
+            }
+        }
+        if(playerComponent.isPullingUp()){
+            if(animation.isCompleted(PlayerState.PullUp)){
+                setPlayerState(entity, PlayerState.Idle);
             }
         }
     }

@@ -36,8 +36,6 @@ public class ManSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<HangComponent> m_hangComps;
     @Mapper
-    ComponentMapper<LadderClimbComponent> m_ladderComps;
-    @Mapper
     ComponentMapper<VelocityLimitComponent> m_velComps;
     @Mapper
     ComponentMapper<GrabComponent> m_grabComps;

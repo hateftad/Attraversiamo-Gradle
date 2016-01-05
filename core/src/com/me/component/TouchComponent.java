@@ -38,6 +38,10 @@ public class TouchComponent extends BaseComponent {
         return m_edgeTouch;
     }
 
+    public boolean canPullUp(){
+        return m_handTouch && m_footEdge;
+    }
+
 	@Override
 	public void dispose() {
 
