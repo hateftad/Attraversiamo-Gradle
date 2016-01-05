@@ -12,6 +12,7 @@ import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
 import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
+import com.me.level.Player;
 import com.me.physics.RBUserData.Type;
 import com.me.systems.GameEntityWorld;
 import com.me.utils.Converters;
@@ -85,7 +86,7 @@ public class PhysicsListenerSetup {
                         if (e.getComponent(PlayerComponent.class) != null) {
                             PlayerComponent pl = e.getComponent(PlayerComponent.class);
                             if (pl.isFacingLeft() && otherUd.getType() == Type.LeftEdge && playerUd.getType() == Type.HangHands) {
-                                if(!pl.isHanging()) {
+                                if (!pl.isHanging()) {
                                     JointComponent j = e.getComponent(JointComponent.class);
                                     j.createEdgeHang(other.getBody(), player.getBody("leftH"), 3, 11, 0);
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
@@ -94,7 +95,7 @@ public class PhysicsListenerSetup {
                                 }
                             }
                             if (!pl.isFacingLeft() && otherUd.getType() == Type.RightEdge && playerUd.getType() == Type.HangHands) {
-                                if(!pl.isHanging()) {
+                                if (!pl.isHanging()) {
                                     JointComponent j = e.getComponent(JointComponent.class);
                                     j.createEdgeHang(other.getBody(), player.getBody("rightH"), 3, 11, 0);
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
@@ -147,31 +148,35 @@ public class PhysicsListenerSetup {
                                 e.getComponent(EventComponent.class).setEventInfo(other.getEventInfo());
                             }
 
-                            if (otherUd.getType() == Type.Hand) {
-                                if (e2.getComponent(JointComponent.class) != null) {
-                                    if (e2.getComponent(GrabComponent.class).m_gonnaGrab) {
-                                        if (e2.getComponent(PlayerComponent.class).isFacingLeft() && e.getComponent(PlayerComponent.class).isFacingLeft())
-                                            return;
-                                        if (!e2.getComponent(PlayerComponent.class).isFacingLeft() && !e.getComponent(PlayerComponent.class).isFacingLeft())
-                                            return;
-                                        JointComponent j = e2.getComponent(JointComponent.class);
-                                        j.createHandHang(fA.getBody(), player.getBody(), e2.getComponent(TouchComponent.class).m_footEdgeR);
-                                        e2.getComponent(TouchComponent.class).m_handTouch = true;
-                                        e.getComponent(TouchComponent.class).m_handTouch = true;
-                                        e.getComponent(GrabComponent.class).m_grabbed = true;
-                                        e.getComponent(GrabComponent.class).m_gettingLifted = true;
-                                        e.getComponent(GrabComponent.class).handPositionX = fA.getBody().getPosition().x;
-                                        e2.getComponent(GrabComponent.class).m_gonnaGrab = false;
-                                        e2.getComponent(GrabComponent.class).m_lifting = true;
+                            if (otherUd.getType() == Type.Hand && playerUd.getType() == Type.Hand) {
+
+                                PlayerComponent girl = e.getComponent(PlayerComponent.class);
+                                PlayerComponent man = e2.getComponent(PlayerComponent.class);
+                                if (man.isFacingLeft() && girl.isFacingLeft() || !man.isFacingLeft() && !girl.isFacingLeft()) {
+
+                                } else {
+                                    if (e.getComponent(PlayerTwoComponent.class) != null) {
+                                        if(girl.isJumping()) {
+                                            e.getComponent(TouchComponent.class).m_handTouch = true;
+                                        }
                                     }
+                                    if (e2.getComponent(PlayerOneComponent.class) != null) {
+                                        if(man.lyingDown()) {
+                                            e2.getComponent(TouchComponent.class).m_handTouch = true;
+                                        }
+                                    }
+                                    System.out.println("handTouch");
+                                    e.getComponent(GrabComponent.class).handPositionX = fA.getBody().getPosition().x;
                                 }
+
+
                             }
 
                             if (otherUd.getType() == Type.RightHandHold) {
                                 e2.getComponent(TouchComponent.class).m_handHoldArea = true;
                                 e2.getComponent(TouchComponent.class).m_rightHoldArea = true;
                             }
-                            if(playerUd.getType() == Type.RightHandHold){
+                            if (playerUd.getType() == Type.RightHandHold) {
                                 e.getComponent(TouchComponent.class).m_handHoldArea = true;
                                 e.getComponent(TouchComponent.class).m_rightHoldArea = true;
                             }
@@ -179,7 +184,7 @@ public class PhysicsListenerSetup {
                                 e2.getComponent(TouchComponent.class).m_handHoldArea = true;
                                 e2.getComponent(TouchComponent.class).m_leftHoldArea = true;
                             }
-                            if(playerUd.getType() == Type.LeftHandHold){
+                            if (playerUd.getType() == Type.LeftHandHold) {
                                 e.getComponent(TouchComponent.class).m_handHoldArea = true;
                                 e.getComponent(TouchComponent.class).m_leftHoldArea = true;
                             }
@@ -207,7 +212,6 @@ public class PhysicsListenerSetup {
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Ground) {
                                 e.getComponent(TouchComponent.class).m_groundTouch = true;
                                 e.getComponent(KeyInputComponent.class).m_lockControls = false;
-                                e.getComponent(GrabComponent.class).m_grabbed = false;
 
                                 e.getComponent(SingleParticleComponent.class).setPosition(Converters.ToWorld(e.getComponent(PhysicsComponent.class).getBody("feet").getPosition()));
                                 GameEvent event = e.getComponent(PhysicsComponent.class).getEventInfo();
@@ -219,7 +223,6 @@ public class PhysicsListenerSetup {
                                 e.getComponent(TouchComponent.class).m_groundTouch = true;
                                 e.getComponent(TouchComponent.class).m_feetToBox = true;
                                 e.getComponent(KeyInputComponent.class).m_lockControls = false;
-                                e.getComponent(GrabComponent.class).m_grabbed = false;
                                 onBox = true;
                             }
 
@@ -294,14 +297,14 @@ public class PhysicsListenerSetup {
                             e.getComponent(TouchComponent.class).m_footEdgeR = false;
                             e.getComponent(TouchComponent.class).m_footEdge = false;
                         }
-                        if (otherUd.getType() == Type.Hand) {
-                            if (e.getComponent(JointComponent.class) != null) {
-                                if (e.getComponent(GrabComponent.class).m_grabbed) {
-                                    e.getComponent(TouchComponent.class).m_handTouch = false;
-                                    e2.getComponent(TouchComponent.class).m_handTouch = false;
-                                    e.getComponent(GrabComponent.class).m_grabbed = false;
-                                }
-                            }
+                        if (otherUd.getType() == Type.Hand && playerUd.getType() == Type.Hand) {
+//                            if (e.getComponent(PlayerTwoComponent.class) != null) {
+//                                e.getComponent(TouchComponent.class).m_handTouch = false;
+//                            }
+//                            if (e.getComponent(PlayerOneComponent.class) != null) {
+//                                e.getComponent(TouchComponent.class).m_handTouch = false;
+//                            }
+                            System.out.println("not touching");
                         }
                         if (otherUd.getType() == Type.LeftCrawl) {
                             e.getComponent(TouchComponent.class).m_canCrawl = false;

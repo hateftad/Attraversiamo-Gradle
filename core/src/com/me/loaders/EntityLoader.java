@@ -438,6 +438,7 @@ public class EntityLoader {
                 animationComponent.setSkin(playerConfig.getSkinName());
                 entity.addComponent(new KeyInputComponent());
                 entity.addComponent(new VelocityLimitComponent(8.5f, 10, 2.5f));
+                entity.addComponent(new JointComponent("noname"));
                 entity.addComponent(new TouchComponent());
                 entity.addComponent(new JumpComponent());
                 entity.addComponent(new GrabComponent());

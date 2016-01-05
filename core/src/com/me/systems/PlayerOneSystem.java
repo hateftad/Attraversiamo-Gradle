@@ -101,172 +101,172 @@ public class PlayerOneSystem extends PlayerSystem {
             player.setActive(false);
         }
 
-        if (!player.isActive() && !finish) {
-            if (!grabComponent.m_gonnaGrab &&
-                    !hangComponent.m_isHanging &&
-                    !grabComponent.m_lifting &&
-                    !handHoldComponent.isHoldingHands()) {
-                animation.setAnimationState(PlayerState.Idle);
-                movementComponent.standStill();
-            }
-        }
-
-
-        if (player.isActive() && !m.m_lockControls && !grabComponent.m_lifting && !finish && player.getState() != PlayerState.WaitTilDone) {
-            if (feetComponent.hasCollided() && !touch.m_boxTouch && !touch.m_footEdge) {
-                animation.setupPose();
-            }
-            if (!m.isMoving() && feetComponent.hasCollided() && !touch.m_ladderTouch) {
-                vel.m_velocity = 0;
-                if (!grabComponent.m_gonnaGrab) {
-                    if (!animation.getState().equals(PlayerState.PullUp) && !animation.getState().equals(PlayerState.HoldHandLeading)) {
-                        animation.setAnimationState(PlayerState.Idle);
-                    }
-                    movementComponent.standStill();
-                }
-            }
-            if (m_hangComps.has(entity)) {
-
-                if (m.m_up && hangComponent.m_isHanging) {
-                    animation.setAnimationState(PlayerState.ClimbingLedge);
-                    hangComponent.m_climbingUp = true;
-                    m.m_lockControls = true;
-                }
-                if (hangComponent.m_isHanging && !hangComponent.m_climbingUp) {
-                    animation.setAnimationState(PlayerState.Hanging);
-                }
-            }
-            if (m_ladderComps.has(entity)) {
-                if (touch.m_ladderTouch) {
-                    climbLadder(entity);
-                }
-            }
-            if (m.m_left) {
-                moveLeft(entity);
-            }
-            if (m.m_right) {
-                moveRight(entity);
-            }
-
-            if (m_jumpComps.has(entity)) {
-                if (m.m_jump && feetComponent.hasCollided() && !jumpComponent.m_jumped) {
-                    if (m.isMoving()) {
-                        animation.setAnimationState(PlayerState.Jumping);
-                        if (velocityLimitForJumpBoost(entity)) {
-                            physicsComponent.applyLinearImpulse((m.m_left ? -10 : 10) + physicsComponent.getLinearVelocity().x, 60);
-                        } else {
-                            physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 60);
-                        }
-                    } else if (!touch.m_boxTouch) {
-                        physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 25);
-                        animation.setAnimationState(PlayerState.UpJump);
-                    }
-                    player.setState(PlayerState.Jumping);
-                }
-            }
-            if (m_inputMgr.isDown(action)) {
-                if (touch.m_footEdge) {
-                    if (touch.m_footEdgeL) {
-                        player.setFacingLeft(true);
-                    }
-                    if (touch.m_footEdgeR) {
-                        player.setFacingLeft(false);
-                    }
-                    physicsComponent.warp("feet", touch.m_touchCenter);
-                    animation.setAnimationState(PlayerState.LieDown);
-                    grabComponent.m_gonnaGrab = true;
-                    movementComponent.standStill();
-                }
-                if (touch.m_ladderTouch) {
-                    vel.m_ladderClimbVelocity = 3;
-                    ladderClimbComponent.m_goingUp = true;
-                    movementComponent.standStill();
-                }
-                if (touch.m_pushArea) {
-                    EventComponent component = m_taskComps.get(entity);
-                    if (touch.m_leftPushArea) {
-                        player.setFacingLeft(false);
-                        animation.setAnimationState(PlayerState.PressButton);
-                        player.setState(PlayerState.WaitTilDone);
-                        component.getEventInfo().notify(this, player.getPlayerNr());
-                    }
-                    if (touch.m_rightPushArea) {
-                        player.setFacingLeft(true);
-                        animation.setAnimationState(PlayerState.PressButton);
-                        player.setState(PlayerState.WaitTilDone);
-                        component.getEventInfo().notify(this, player.getPlayerNr());
-                    }
-                    movementComponent.standStill();
-                }
-                if (touch.m_handHoldArea) {
-                    handHoldComponent.setHoldingHands(true);
-                    if (touch.m_rightHoldArea) {
-                        TelegramEvent telegramEvent;
-                        if(player.isFacingLeft()){
-                            animation.setAnimationState(PlayerState.HoldHandLeading);
-                            handHoldComponent.setIsLeading(true);
-                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
-                        } else {
-                            animation.setAnimationState(PlayerState.HoldHandFollowing);
-                            handHoldComponent.setIsLeading(false);
-                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
-                        }
-                        telegramEvent.notify(this, entity);
-                    }
-                    if (touch.m_leftHoldArea) {
-                        TelegramEvent telegramEvent;
-                        if(player.isFacingLeft()){
-                            animation.setAnimationState(PlayerState.HoldHandFollowing);
-                            handHoldComponent.setIsLeading(false);
-                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
-                        } else {
-                            animation.setAnimationState(PlayerState.HoldHandLeading);
-                            handHoldComponent.setIsLeading(true);
-                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
-                        }
-                        telegramEvent.notify(this, entity);
-                    }
-                }
-            }
-
-            if (grabComponent.m_gonnaGrab) {
-                physicsComponent.warp("feet", touch.m_touchCenter);
-            }
-            if (m.moved()) {
-                grabComponent.m_gonnaGrab = false;
-            }
-        }
-
-        if (animation.isCompleted() && player.getState() == PlayerState.WaitTilDone) {
-            player.setState(PlayerState.Idle);
-        }
-
-        if (finish) {
-            if (animation.isCompleted()) {
-                notifyObservers(new TaskEvent(GameEventType.LevelFinished));
-                player.setIsFinishedAnimating(true);
-            }
-        }
-
-        if (physicsComponent.isFalling() && physicsComponent.isMovingForward()) {
-            if (!feetComponent.hasCollided()) {
-                animation.setAnimationState(PlayerState.Falling);
-            }
-        }
-
-        if (physicsComponent.isSubmerged()) {
-            animation.setAnimationState(PlayerState.Idle);
-        }
-
-        if (isDead(physicsComponent)) {
-            // world should call restart
-            m_inputMgr.callRestart();
-        }
-
-        // TOO MUCH PROCESSING!!
-        animateBody(physicsComponent, player, animation);
-
-        animation.setFacing(player.isFacingLeft());
+//        if (!player.isActive() && !finish) {
+//            if (!grabComponent.m_gonnaGrab &&
+//                    !hangComponent.m_isHanging &&
+//                    !grabComponent.m_lifting &&
+//                    !handHoldComponent.isHoldingHands()) {
+//                animation.setAnimationState(PlayerState.Idle);
+//                movementComponent.standStill();
+//            }
+//        }
+//
+//
+//        if (player.isActive() && !m.m_lockControls && !grabComponent.m_lifting && !finish && player.getState() != PlayerState.WaitTilDone) {
+//            if (feetComponent.hasCollided() && !touch.m_boxTouch && !touch.m_footEdge) {
+//                animation.setupPose();
+//            }
+//            if (!m.isMoving() && feetComponent.hasCollided() && !touch.m_ladderTouch) {
+//                vel.m_velocity = 0;
+//                if (!grabComponent.m_gonnaGrab) {
+//                    if (!animation.getState().equals(PlayerState.PullUp) && !animation.getState().equals(PlayerState.HoldHandLeading)) {
+//                        animation.setAnimationState(PlayerState.Idle);
+//                    }
+//                    movementComponent.standStill();
+//                }
+//            }
+//            if (m_hangComps.has(entity)) {
+//
+//                if (m.m_up && hangComponent.m_isHanging) {
+//                    animation.setAnimationState(PlayerState.ClimbingLedge);
+//                    hangComponent.m_climbingUp = true;
+//                    m.m_lockControls = true;
+//                }
+//                if (hangComponent.m_isHanging && !hangComponent.m_climbingUp) {
+//                    animation.setAnimationState(PlayerState.Hanging);
+//                }
+//            }
+//            if (m_ladderComps.has(entity)) {
+//                if (touch.m_ladderTouch) {
+//                    climbLadder(entity);
+//                }
+//            }
+//            if (m.m_left) {
+//                moveLeft(entity);
+//            }
+//            if (m.m_right) {
+//                moveRight(entity);
+//            }
+//
+//            if (m_jumpComps.has(entity)) {
+//                if (m.m_jump && feetComponent.hasCollided() && !jumpComponent.m_jumped) {
+//                    if (m.isMoving()) {
+//                        animation.setAnimationState(PlayerState.Jumping);
+//                        if (velocityLimitForJumpBoost(entity)) {
+//                            physicsComponent.applyLinearImpulse((m.m_left ? -10 : 10) + physicsComponent.getLinearVelocity().x, 60);
+//                        } else {
+//                            physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 60);
+//                        }
+//                    } else if (!touch.m_boxTouch) {
+//                        physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 25);
+//                        animation.setAnimationState(PlayerState.UpJump);
+//                    }
+//                    player.setState(PlayerState.Jumping);
+//                }
+//            }
+//            if (m_inputMgr.isDown(action)) {
+//                if (touch.m_footEdge) {
+//                    if (touch.m_footEdgeL) {
+//                        player.setFacingLeft(true);
+//                    }
+//                    if (touch.m_footEdgeR) {
+//                        player.setFacingLeft(false);
+//                    }
+//                    physicsComponent.warp("feet", touch.m_touchCenter);
+//                    animation.setAnimationState(PlayerState.LieDown);
+//                    grabComponent.m_gonnaGrab = true;
+//                    movementComponent.standStill();
+//                }
+//                if (touch.m_ladderTouch) {
+//                    vel.m_ladderClimbVelocity = 3;
+//                    ladderClimbComponent.m_goingUp = true;
+//                    movementComponent.standStill();
+//                }
+//                if (touch.m_pushArea) {
+//                    EventComponent component = m_taskComps.get(entity);
+//                    if (touch.m_leftPushArea) {
+//                        player.setFacingLeft(false);
+//                        animation.setAnimationState(PlayerState.PressButton);
+//                        player.setState(PlayerState.WaitTilDone);
+//                        component.getEventInfo().notify(this, player.getPlayerNr());
+//                    }
+//                    if (touch.m_rightPushArea) {
+//                        player.setFacingLeft(true);
+//                        animation.setAnimationState(PlayerState.PressButton);
+//                        player.setState(PlayerState.WaitTilDone);
+//                        component.getEventInfo().notify(this, player.getPlayerNr());
+//                    }
+//                    movementComponent.standStill();
+//                }
+//                if (touch.m_handHoldArea) {
+//                    handHoldComponent.setHoldingHands(true);
+//                    if (touch.m_rightHoldArea) {
+//                        TelegramEvent telegramEvent;
+//                        if(player.isFacingLeft()){
+//                            animation.setAnimationState(PlayerState.HoldHandLeading);
+//                            handHoldComponent.setIsLeading(true);
+//                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
+//                        } else {
+//                            animation.setAnimationState(PlayerState.HoldHandFollowing);
+//                            handHoldComponent.setIsLeading(false);
+//                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
+//                        }
+//                        telegramEvent.notify(this, entity);
+//                    }
+//                    if (touch.m_leftHoldArea) {
+//                        TelegramEvent telegramEvent;
+//                        if(player.isFacingLeft()){
+//                            animation.setAnimationState(PlayerState.HoldHandFollowing);
+//                            handHoldComponent.setIsLeading(false);
+//                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsFollowing);
+//                        } else {
+//                            animation.setAnimationState(PlayerState.HoldHandLeading);
+//                            handHoldComponent.setIsLeading(true);
+//                            telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
+//                        }
+//                        telegramEvent.notify(this, entity);
+//                    }
+//                }
+//            }
+//
+//            if (grabComponent.m_gonnaGrab) {
+//                physicsComponent.warp("feet", touch.m_touchCenter);
+//            }
+//            if (m.moved()) {
+//                grabComponent.m_gonnaGrab = false;
+//            }
+//        }
+//
+//        if (animation.isCompleted() && player.getState() == PlayerState.WaitTilDone) {
+//            player.setState(PlayerState.Idle);
+//        }
+//
+//        if (finish) {
+//            if (animation.isCompleted()) {
+//                notifyObservers(new TaskEvent(GameEventType.LevelFinished));
+//                player.setIsFinishedAnimating(true);
+//            }
+//        }
+//
+//        if (physicsComponent.isFalling() && physicsComponent.isMovingForward()) {
+//            if (!feetComponent.hasCollided()) {
+//                animation.setAnimationState(PlayerState.Falling);
+//            }
+//        }
+//
+//        if (physicsComponent.isSubmerged()) {
+//            animation.setAnimationState(PlayerState.Idle);
+//        }
+//
+//        if (isDead(physicsComponent)) {
+//            // world should call restart
+//            m_inputMgr.callRestart();
+//        }
+//
+//        // TOO MUCH PROCESSING!!
+//        animateBody(physicsComponent, player, animation);
+//
+//        animation.setFacing(player.isFacingLeft());
 
     }
 

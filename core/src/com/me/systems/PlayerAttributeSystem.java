@@ -89,39 +89,39 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 				}
 			}
 		}
-		if (!m_playerTwo.has(e)) {
-			if (!g.m_grabbed && touch.m_handTouch && touch.m_footEdge) {
-				g.m_grabbed = true;
-			}
-			if (g.m_lifting) {
-				AnimationComponent anim = m_animComps.get(e);
-				anim.setAnimationState(PlayerState.PullUp);
-
-				if (anim.isCompleted(PlayerState.PullUp)) {
-					g.m_lifting = false;
-				}
-			}
-		}
-		if (m_playerTwo.has(e)) {
-			if (g.m_gettingLifted) {
-
-				AnimationComponent anim = m_animComps.get(e);
-				anim.setAnimationState(PlayerState.PullUp);
-				PhysicsComponent pComp = m_physComp.get(e);
-				if (!g.aligned) {
-					pComp.setPosition(g.handPositionX, pComp.getPosition().y);
-					g.aligned = true;
-				}
-				pComp.setBodyActive(false);
-                if (anim.isCompleted(PlayerState.PullUp)) {
-					pComp.setAllBodiesPosition(anim.getPositionRelative("left foot"));
-					pComp.setBodyActive(true);
-					anim.setAnimationState(PlayerState.Idle);
-					g.m_gettingLifted = false;
-					g.aligned = false;
-				}
-			}
-		}
+//		if (!m_playerTwo.has(e)) {
+//			if (!g.m_grabbed && touch.m_handTouch && touch.m_footEdge) {
+//				g.m_grabbed = true;
+//			}
+//			if (g.m_lifting) {
+//				AnimationComponent anim = m_animComps.get(e);
+//				anim.setAnimationState(PlayerState.PullUp);
+//
+//				if (anim.isCompleted(PlayerState.PullUp)) {
+//					g.m_lifting = false;
+//				}
+//			}
+//		}
+//		if (m_playerTwo.has(e)) {
+//			if (g.m_gettingLifted) {
+//
+//				AnimationComponent anim = m_animComps.get(e);
+//				anim.setAnimationState(PlayerState.PullUp);
+//				PhysicsComponent pComp = m_physComp.get(e);
+//				if (!g.aligned) {
+//					pComp.setPosition(g.handPositionX, pComp.getPosition().y);
+//					g.aligned = true;
+//				}
+//				pComp.setBodyActive(false);
+//                if (anim.isCompleted(PlayerState.PullUp)) {
+//					pComp.setAllBodiesPosition(anim.getPositionRelative("left foot"));
+//					pComp.setBodyActive(true);
+//					anim.setAnimationState(PlayerState.Idle);
+//					g.m_gettingLifted = false;
+//					g.aligned = false;
+//				}
+//			}
+//		}
 	}
 
 	private void release(Entity e) {

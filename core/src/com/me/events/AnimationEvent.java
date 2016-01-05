@@ -26,8 +26,9 @@ public class AnimationEvent {
     private AnimationEventType determineEvent(String eventName){
         if(eventName.equalsIgnoreCase(AnimationEventType.JUMPUP.name())){
             return AnimationEventType.JUMPUP;
+        } else if(eventName.equalsIgnoreCase(AnimationEventType.JUMP.name())){
+            return AnimationEventType.JUMP;
         }
-
         return AnimationEventType.NONE;
     }
 
@@ -35,9 +36,9 @@ public class AnimationEvent {
         m_event = new Event(new EventData(AnimationEventType.NONE.name()));
     }
 
-
     public enum AnimationEventType {
         JUMPUP,
+        JUMP,
         NONE
     }
 }

@@ -51,15 +51,11 @@ public class GirlSystem extends PlayerSystem {
     @Override
     protected void process(Entity entity) {
 
-        PhysicsComponent ps = m_physComps.get(entity);
+        PhysicsComponent physicsComponent = m_physComps.get(entity);
         PlayerComponent player = m_playerComps.get(entity);
-        JumpComponent jumpComponent = m_jumpComps.get(entity);
         PlayerAnimationComponent animation = m_animComps.get(entity);
-        GrabComponent g = m_grabComps.get(entity);
         TouchComponent touch = m_touchComps.get(entity);
-        FeetComponent feet = m_feetComps.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        HandHoldComponent handHoldComponent = m_handHoldComps.get(entity);
         KeyInputComponent keyInputComponent = m_movComps.get(entity);
 
         keyInputComponent.set(m_inputMgr.isDown(left),
@@ -77,6 +73,9 @@ public class GirlSystem extends PlayerSystem {
                 moveLeft(entity);
             } else if (keyInputComponent.m_right) {
                 moveRight(entity);
+            }
+            if (keyInputComponent.m_jump) {
+                jump(entity);
             }
             if (m_inputMgr.isDown(action)) {
                 if (touch.m_canCrawl && !player.isCrawling()) {
@@ -102,6 +101,22 @@ public class GirlSystem extends PlayerSystem {
 
         setPlayerState(entity);
 
+        animateBody(physicsComponent, player, animation);
+
+    }
+
+    private void jump(Entity entity) {
+
+        PlayerComponent player = m_playerComps.get(entity);
+        KeyInputComponent keyInputComponent = m_movComps.get(entity);
+
+        if (!player.isJumping()) {
+            if (keyInputComponent.isMoving()) {
+                setPlayerState(entity, PlayerState.Jumping);
+            } else {
+                setPlayerState(entity, PlayerState.UpJump);
+            }
+        }
     }
 
     private void setPlayerState(Entity entity) {
@@ -111,7 +126,7 @@ public class GirlSystem extends PlayerSystem {
         VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
         PlayerComponent playerComponent = m_playerComps.get(entity);
 
-        System.out.println(playerComponent.getState());
+        //System.out.println(playerComponent.getState());
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
@@ -126,7 +141,7 @@ public class GirlSystem extends PlayerSystem {
         }
 
         if (physicsComponent.isFalling() &&
-                !playerComponent.isHanging()) {
+                !playerComponent.isHanging() && !playerComponent.isJumping()) {
             setPlayerState(entity, PlayerState.Falling);
         }
 
@@ -138,7 +153,10 @@ public class GirlSystem extends PlayerSystem {
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
         VelocityLimitComponent vel = m_velComps.get(entity);
         TouchComponent touch = m_touchComps.get(entity);
-        if (!player.isCrawling()) {
+        FeetComponent feetComponent = m_feetComps.get(entity);
+
+
+        if (feetComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.m_boxTouch) {
                 if (vel.m_velocity > 0) {
                     vel.m_velocity = 0;
@@ -176,8 +194,9 @@ public class GirlSystem extends PlayerSystem {
         PlayerComponent player = m_playerComps.get(entity);
         VelocityLimitComponent vel = m_velComps.get(entity);
         TouchComponent touch = m_touchComps.get(entity);
+        FeetComponent feetComponent = m_feetComps.get(entity);
 
-        if (!player.isCrawling()) {
+        if (feetComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.m_boxTouch) {
                 if (vel.m_velocity < 0) {
                     vel.m_velocity = 0;

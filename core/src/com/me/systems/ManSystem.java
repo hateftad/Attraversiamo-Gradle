@@ -104,7 +104,6 @@ public class ManSystem extends PlayerSystem {
                     }
                     physicsComponent.warp("feet", touch.m_touchCenter);
                     setPlayerState(entity, PlayerState.LieDown);
-                    grabComponent.m_gonnaGrab = true;
                     movementComponent.standStill();
                 }
                 if (touch.m_pushArea) {
@@ -146,6 +145,8 @@ public class ManSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = m_physComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
         PlayerComponent playerComponent = m_playerComps.get(entity);
+
+//        System.out.println(playerComponent.getState());
 
         if (!keyInput.moved()) {
             movementComponent.standStill();

@@ -32,7 +32,14 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
     }
 
     public boolean shouldBeIdle(){
-        return !isJumping() && !isHanging() && !isClimbingLedge() && !isLyingDown() && !lyingDown() && !isPullingUp() && !isPressingButton() && !isCrawling();
+        return !isJumping() &&
+                !isHanging() &&
+                !isClimbingLedge() &&
+                !isLyingDown() &&
+                !lyingDown() &&
+                !isPullingUp() &&
+                !isPressingButton() &&
+                !isCrawling();
     }
 
     public boolean isClimbingLedge() {

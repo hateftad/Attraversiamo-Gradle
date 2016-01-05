@@ -56,13 +56,14 @@ public class ManInteractionSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
-        if (touchComponent.canPullUp()) {
-            if(!playerComponent.isPullingUp()){
-                setPlayerState(entity, PlayerState.PullUp);
-            }
+        if (touchComponent.canPullUp() &&
+                !playerComponent.isPullingUp() &&
+                playerComponent.lyingDown()) {
+            setPlayerState(entity, PlayerState.PullUp);
         }
         if(playerComponent.isPullingUp()){
             if(animation.isCompleted(PlayerState.PullUp)){
+                touchComponent.m_handTouch = false;
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
