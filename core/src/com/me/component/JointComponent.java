@@ -78,11 +78,11 @@ public class JointComponent extends BaseComponent{
 	
 	public void createEdgeHang(Body b1, Body b2, float initial, int uL, int lL){
 		//Vector2 bodPos = b2.getBody().getLocalCenter();
-		m_pJointDef = JointFactory.getInstance().createPrismJoint(
+		m_pJointDef = JointFactory.getInstance().createWeldJoint(
 				b1, b2, 
 				Vector2.Zero, 
 				Vector2.Zero,
-				initial,0,true, false, new Vector2(0,1));
+				true);
 		m_created = true;
 		m_destroyed = false;
 		m_lowerLimit = lL;
@@ -116,7 +116,7 @@ public class JointComponent extends BaseComponent{
 
     public void destroyHangJoint(){
         if(getPrismJoint() != null) {
-            JointFactory.getInstance().destroyJoint(m_pJoint);
+            JointFactory.getInstance().destroyJoint(getPrismJoint());
             m_pJoint = null;
         }
     }
@@ -165,4 +165,8 @@ public class JointComponent extends BaseComponent{
 			JointFactory.getInstance().destroyJoint(m_dJoint);
 		}
 	}
+
+    public boolean isHanging() {
+        return m_pJoint != null;
+    }
 }

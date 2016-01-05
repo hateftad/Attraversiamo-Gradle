@@ -138,6 +138,8 @@ public class ManSystem extends PlayerSystem {
             m_inputMgr.callRestart();
         }
 
+        animateBody(physicsComponent, player, animation);
+
     }
 
     private void setPlayerState(Entity entity) {
@@ -157,7 +159,6 @@ public class ManSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
-
 
         if (physicsComponent.isFalling() &&
                 !playerComponent.isHanging()) {
@@ -207,7 +208,7 @@ public class ManSystem extends PlayerSystem {
         if (vel.m_velocity > 0) {
             vel.m_velocity = -VELOCITYINR;
         }
-        if (feetComponent.hasCollided() && !hangComponent.m_isHanging) {
+        if (feetComponent.hasCollided() && !player.isHanging()) {
             if (!touch.m_boxTouch) {
                 vel.m_velocity -= VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.m_velocity);
@@ -259,7 +260,7 @@ public class ManSystem extends PlayerSystem {
             vel.m_velocity = VELOCITYINR;
         }
 
-        if (feetComponent.hasCollided() && !hangComponent.m_isHanging) {
+        if (feetComponent.hasCollided() && !player.isHanging()) {
             if (!touch.m_boxTouch) {
                 vel.m_velocity += VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.m_velocity);
@@ -335,7 +336,7 @@ public class ManSystem extends PlayerSystem {
     private void choose(PlayerComponent player) {
         if (m_inputMgr.m_playerSelected == InputManager.PlayerSelection.ONE) {
             player.setActive(true);
-        } else if (player.canDeActivate() && !player.canBeControlled()) {
+        } else if (player.canDeActivate()) {
             player.setActive(false);
         }
     }

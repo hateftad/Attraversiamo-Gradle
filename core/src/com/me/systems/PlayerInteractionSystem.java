@@ -47,8 +47,10 @@ public class PlayerInteractionSystem extends PlayerSystem {
         if (touchComponent.m_edgeTouch) {
             if(!playerComponent.isHanging()) {
                 jointComponent.createHangJoint();
-                setPlayerState(entity, PlayerState.Hanging);
             }
+        }
+        if(jointComponent.isHanging() && !playerComponent.isClimbingLedge()){
+            setPlayerState(entity, PlayerState.Hanging);
         }
         if(playerComponent.isClimbingLedge()) {
             if (animation.isCompleted(PlayerState.ClimbingLedge)) {
@@ -57,6 +59,11 @@ public class PlayerInteractionSystem extends PlayerSystem {
                 physicsComponent.setBodyActive(true);
                 hangComponent.notHanging();
                 setPlayerState(entity, PlayerState.Idle);
+            }
+        }
+        if (touchComponent.m_handTouch && touchComponent.m_footEdge) {
+            if(!playerComponent.isPullingUp()){
+                setPlayerState(entity, PlayerState.PullUp);
             }
         }
     }
