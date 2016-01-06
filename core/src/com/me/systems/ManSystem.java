@@ -123,7 +123,7 @@ public class ManSystem extends PlayerSystem {
                 if (touch.m_handHoldArea) {
                     holdHands(entity);
                 }
-                if(player.isHanging()){
+                if (player.isHanging()) {
                     setPlayerState(entity, PlayerState.ClimbingLedge);
                 }
             }
@@ -152,7 +152,7 @@ public class ManSystem extends PlayerSystem {
             movementComponent.standStill();
             velocityLimitComponent.m_velocity = 0;
             if (playerComponent.shouldBeIdle() &&
-                    !physicsComponent.isFalling()){
+                    !physicsComponent.isFalling()) {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
@@ -232,8 +232,8 @@ public class ManSystem extends PlayerSystem {
                 touch.m_ladderTouch = false;
             }
         }
-        if(player.isHanging()){
-            if(hangComponent.m_hangingRight){
+        if (player.isHanging()) {
+            if (hangComponent.m_hangingRight) {
                 jointComponent.destroyHangJoint();
                 setPlayerState(entity, PlayerState.Falling);
             }
@@ -283,8 +283,8 @@ public class ManSystem extends PlayerSystem {
                 touch.m_ladderTouch = false;
             }
         }
-        if(player.isHanging()){
-            if(hangComponent.m_hangingLeft){
+        if (player.isHanging()) {
+            if (hangComponent.m_hangingLeft) {
                 jointComponent.destroyHangJoint();
                 setPlayerState(entity, PlayerState.Falling);
             }

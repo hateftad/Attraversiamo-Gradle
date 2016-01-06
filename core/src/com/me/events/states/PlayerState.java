@@ -3,7 +3,7 @@ package com.me.events.states;
 /**
  * Created by hateftadayon on 12/31/15.
  */
-public enum  PlayerState {
+public enum PlayerState {
     Walking, Idle, Jumping,
     Running, Jogging, JogJump,
     Dying, UpJump, Hanging,

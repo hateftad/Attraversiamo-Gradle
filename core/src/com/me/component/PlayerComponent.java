@@ -39,7 +39,8 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
                 !lyingDown() &&
                 !isPullingUp() &&
                 !isPressingButton() &&
-                !isCrawling();
+                !isCrawling() &&
+                !isFinishing();
     }
 
     public boolean isClimbingLedge() {
@@ -166,8 +167,9 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     @Override
     public void onNotify(TelegramEvent event) {
-        if (event.getEventType() == GameEventType.HoldingHandsFollowing || event.getEventType() == GameEventType.HoldingHandsLeading) {
-            //setState(State.WAITTILDONE);
+        if (event.getEventType() == GameEventType.HoldingHandsFollowing ||
+                event.getEventType() == GameEventType.HoldingHandsLeading) {
+            //setState();
         }
     }
 

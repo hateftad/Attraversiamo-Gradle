@@ -4,9 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class TouchComponent extends BaseComponent {
 
-	public boolean m_groundTouch;
 	public boolean m_edgeTouch;
-	public boolean m_wallTouch;
 	public boolean m_ladderTouch;
 	public boolean m_boxTouch;
 	public boolean m_footEdgeL;
@@ -16,7 +14,6 @@ public class TouchComponent extends BaseComponent {
 	public boolean m_leftPushArea;
 	public boolean m_pushArea;
 	public boolean m_handTouch;
-	public boolean m_feetToBox;
 	public Vector2 m_touchCenter;
     public boolean m_handHoldArea;
     public boolean m_leftHoldArea;
@@ -24,15 +21,13 @@ public class TouchComponent extends BaseComponent {
     public boolean m_canCrawl;
 
     public TouchComponent() {
-		m_groundTouch = false;
 		m_edgeTouch = false;
-		m_wallTouch = false;
 		m_ladderTouch = false;
 		m_boxTouch = false;
 		m_footEdgeL = false;
 		m_footEdgeR = false;
 		m_handTouch = false;
-		m_touchCenter = new Vector2();
+		m_touchCenter = Vector2.Zero;
 	}
 
     public boolean isHanging(){
@@ -50,9 +45,7 @@ public class TouchComponent extends BaseComponent {
 
 	@Override
 	public void restart() {
-		m_groundTouch = false;
 		m_edgeTouch = false;
-		m_wallTouch = false;
 		m_ladderTouch = false;
 		m_boxTouch = false;
 		m_footEdgeL = false;

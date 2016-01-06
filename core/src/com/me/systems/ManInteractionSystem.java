@@ -40,14 +40,14 @@ public class ManInteractionSystem extends PlayerSystem {
         HangComponent hangComponent = m_hangComp.get(entity);
 
         if (touchComponent.m_edgeTouch) {
-            if(!playerComponent.isHanging()) {
+            if (!playerComponent.isHanging()) {
                 jointComponent.createHangJoint();
             }
         }
-        if(jointComponent.isHanging() && !playerComponent.isClimbingLedge()){
+        if (jointComponent.isHanging() && !playerComponent.isClimbingLedge()) {
             setPlayerState(entity, PlayerState.Hanging);
         }
-        if(playerComponent.isClimbingLedge()) {
+        if (playerComponent.isClimbingLedge()) {
             if (animation.isCompleted(PlayerState.ClimbingLedge)) {
                 jointComponent.destroyHangJoint();
                 physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
@@ -61,8 +61,8 @@ public class ManInteractionSystem extends PlayerSystem {
                 playerComponent.lyingDown()) {
             setPlayerState(entity, PlayerState.PullUp);
         }
-        if(playerComponent.isPullingUp()){
-            if(animation.isCompleted(PlayerState.PullUp)){
+        if (playerComponent.isPullingUp()) {
+            if (animation.isCompleted(PlayerState.PullUp)) {
                 touchComponent.m_handTouch = false;
                 setPlayerState(entity, PlayerState.Idle);
             }

@@ -33,6 +33,7 @@ public class GameEntityWorld extends World {
     }
 
     public void addObserver(TelegramEventObserverComponent observerComponent){
+        m_taskEventObservers.add(observerComponent);
         m_binaryEventObservers.add(observerComponent);
     }
 

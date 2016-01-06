@@ -43,8 +43,8 @@ public class GirlInteractionSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = m_physComp.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
 
-        if(touchComponent.m_handTouch && playerComponent.isJumping()){
-            if(!playerComponent.isPullingUp()){
+        if (touchComponent.m_handTouch && playerComponent.isJumping()) {
+            if (!playerComponent.isPullingUp()) {
                 GrabComponent grabComponent = m_grabComps.get(entity);
                 physicsComponent.setBodyActive(false);
                 physicsComponent.setPosition(grabComponent.handPositionX, physicsComponent.getPosition().y);
@@ -52,39 +52,39 @@ public class GirlInteractionSystem extends PlayerSystem {
             }
         }
         if (playerComponent.isPullingUp()) {
-            if(animation.isCompleted(PlayerState.PullUp)){
+            if (animation.isCompleted(PlayerState.PullUp)) {
                 physicsComponent.setBodyActive(true);
                 physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left foot"));
                 touchComponent.m_handTouch = false;
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
-        if(playerComponent.lyingDown()){
-            if(animation.isCompleted(PlayerState.LieDown)){
+        if (playerComponent.lyingDown()) {
+            if (animation.isCompleted(PlayerState.LieDown)) {
                 physicsComponent.disableBody("center");
                 setPlayerState(entity, PlayerState.LyingDown);
             }
         }
-        if(playerComponent.isCrawling() && !touchComponent.m_canCrawl){
+        if (playerComponent.isCrawling() && !touchComponent.m_canCrawl) {
             setPlayerState(entity, PlayerState.StandUp);
         }
 
-        if(playerComponent.isGettingUp()){
-            if(animation.isCompleted(PlayerState.StandUp)){
+        if (playerComponent.isGettingUp()) {
+            if (animation.isCompleted(PlayerState.StandUp)) {
                 physicsComponent.enableBody("center");
                 setPlayerState(entity, PlayerState.Idle);
             }
             movementComponent.standStill();
         }
-        if(playerComponent.isJumping()){
-            if(animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMPUP){
+        if (playerComponent.isJumping()) {
+            if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMPUP) {
                 animation.getEvent().resetEvent();
                 physicsComponent.setLinearVelocity(0, 25);
-            } else if(animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMP){
+            } else if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMP) {
                 animation.getEvent().resetEvent();
                 physicsComponent.setLinearVelocity(physicsComponent.getLinearVelocity().x, 7f);
             }
-            if(animation.isCompleted(PlayerState.UpJump) || animation.isCompleted(PlayerState.Jumping)) {
+            if (animation.isCompleted(PlayerState.UpJump) || animation.isCompleted(PlayerState.Jumping)) {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }

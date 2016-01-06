@@ -126,7 +126,6 @@ public class GirlSystem extends PlayerSystem {
         VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
         PlayerComponent playerComponent = m_playerComps.get(entity);
 
-        //System.out.println(playerComponent.getState());
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
@@ -135,7 +134,7 @@ public class GirlSystem extends PlayerSystem {
                     !physicsComponent.isFalling()) {
                 setPlayerState(entity, PlayerState.Idle);
             }
-            if(playerComponent.crawling()){
+            if (playerComponent.crawling()) {
                 setPlayerState(entity, PlayerState.LyingDown);
             }
         }
@@ -230,7 +229,6 @@ public class GirlSystem extends PlayerSystem {
 
     private void choose(PlayerComponent playerComponent) {
         if (m_inputMgr.m_playerSelected == InputManager.PlayerSelection.TWO) {
-            //ps.makeDynamic("center", 0.001f);
             playerComponent.setActive(true);
         } else if (playerComponent.canDeActivate()) {
             playerComponent.setActive(false);
