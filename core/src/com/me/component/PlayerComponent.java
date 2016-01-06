@@ -107,6 +107,10 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
                 m_state != PlayerState.PressButton;
     }
 
+    public boolean isSuckingIn(){
+        return m_state == PlayerState.SuckIn;
+    }
+
     public void setState(PlayerState m_state) {
         this.m_state = m_state;
     }
@@ -133,14 +137,6 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     public void setActive(boolean active) {
         m_active = active;
-    }
-
-    public boolean isOnGround() {
-        return m_onGround;
-    }
-
-    public void setOnGround(boolean onGround) {
-        this.m_onGround = onGround;
     }
 
     public boolean isFinishing() {

@@ -32,4 +32,8 @@ public class SingleParticleComponent extends ParticleComponent implements TaskEv
             }
         }
     }
+
+    public boolean isPortalComplete(){
+        return m_type == ParticleType.PORTAL && isCompleted();
+    }
 }

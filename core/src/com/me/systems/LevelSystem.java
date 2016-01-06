@@ -22,8 +22,7 @@ public class LevelSystem extends GameEntityProcessingSystem{
 
 	@Mapper ComponentMapper<LightComponent> m_lightComps;
 	@Mapper ComponentMapper<ReachEndComponent> m_reachEndComps;
-	@Mapper ComponentMapper<LevelComponent> m_levelComp;
-	@Mapper ComponentMapper<ParticleComponent> m_particleComps;
+	@Mapper ComponentMapper<SingleParticleComponent> m_particleComps;
 
 
 	@SuppressWarnings("unchecked")
@@ -93,15 +92,14 @@ public class LevelSystem extends GameEntityProcessingSystem{
             m_currentLevel.setFinished(true);
         }
 
-        LevelComponent levelComponent = m_levelComp.get(entity);
-        if (levelComponent.isFinished()) {
-            if(!m_particleComps.has(entity)) {
-                levelFinished();
-            } else {
-                ParticleComponent particleComponent = m_particleComps.get(entity);
-                if(particleComponent.isCompleted()){
+        if (m_currentLevel.isFinished()) {
+            if(m_particleComps.has(entity)) {
+                SingleParticleComponent particleComponent = m_particleComps.get(entity);
+                if(particleComponent.isPortalComplete()){
                     levelFinished();
                 }
+            } else {
+                levelFinished();
             }
         }
 	}

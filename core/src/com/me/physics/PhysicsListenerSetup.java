@@ -203,13 +203,10 @@ public class PhysicsListenerSetup {
 
                         if (e.getComponent(PlayerComponent.class) != null) {
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Ground) {
-                                e.getComponent(KeyInputComponent.class).m_lockControls = false;
-
                                 e.getComponent(SingleParticleComponent.class).setPosition(Converters.ToWorld(e.getComponent(PhysicsComponent.class).getBody("feet").getPosition()));
                                 GameEvent event = e.getComponent(PhysicsComponent.class).getEventInfo();
                                 event.notify(m_gameEntityWorld);
                             }
-
 
                             if (playerUd.getType() == Type.Torso && otherUd.getType() == Type.Box) {
                                 if (e.getComponent(FeetComponent.class).hasCollided()) {
@@ -272,12 +269,7 @@ public class PhysicsListenerSetup {
                             e.getComponent(TouchComponent.class).m_footEdge = false;
                         }
                         if (otherUd.getType() == Type.Hand && playerUd.getType() == Type.Hand) {
-//                            if (e.getComponent(PlayerTwoComponent.class) != null) {
-//                                e.getComponent(TouchComponent.class).m_handTouch = false;
-//                            }
-//                            if (e.getComponent(PlayerOneComponent.class) != null) {
-//                                e.getComponent(TouchComponent.class).m_handTouch = false;
-//                            }
+
                         }
                         if (otherUd.getType() == Type.LeftCrawl) {
                             e.getComponent(TouchComponent.class).m_canCrawl = false;

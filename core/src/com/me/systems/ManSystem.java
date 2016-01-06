@@ -49,6 +49,8 @@ public class ManSystem extends PlayerSystem {
     ComponentMapper<FeetComponent> m_rayCastComps;
     @Mapper
     ComponentMapper<HandHoldComponent> m_handHoldComps;
+    @Mapper
+    ComponentMapper<LevelComponent> m_levelComp;
 
     @SuppressWarnings("unchecked")
     public ManSystem(LevelEventListener listener) {
@@ -160,6 +162,12 @@ public class ManSystem extends PlayerSystem {
         if (physicsComponent.isFalling() &&
                 !playerComponent.isHanging()) {
             setPlayerState(entity, PlayerState.Falling);
+        }
+
+        if(playerComponent.isFinishing()){
+            if(!playerComponent.isSuckingIn()){
+                levelFinished();
+            }
         }
 
     }

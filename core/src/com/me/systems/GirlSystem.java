@@ -144,6 +144,12 @@ public class GirlSystem extends PlayerSystem {
             setPlayerState(entity, PlayerState.Falling);
         }
 
+        if(playerComponent.isFinishing()){
+            if(!playerComponent.isSuckingIn()){
+                levelFinished();
+            }
+        }
+
     }
 
     private void moveLeft(Entity entity) {
@@ -236,7 +242,7 @@ public class GirlSystem extends PlayerSystem {
     }
 
     private boolean canBeControlled(PlayerComponent player) {
-        return player.isActive() && !player.isFinishing() && !player.lyingDown() && !player.isGettingUp();
+        return player.isActive() && !player.isFinishing() && !player.lyingDown() && !player.isGettingUp() && !player.isPullingUp();
     }
 
     protected void setPlayerState(Entity entity, PlayerState state) {

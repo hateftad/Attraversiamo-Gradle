@@ -13,18 +13,16 @@ import com.me.component.ContinuousParticles;
 public class ParticlesSystem extends IntervalEntityProcessingSystem {
 
     @Mapper
-    ComponentMapper<ContinuousParticles> m_particleComps;
+    ComponentMapper<ContinuousParticles> m_continuousParticles;
 
+    @SuppressWarnings("unchecked")
     public ParticlesSystem(float interval) {
         super(Aspect.getAspectForOne(ContinuousParticles.class), interval);
-
     }
 
     @Override
     protected void process(Entity e) {
-        ContinuousParticles particle = m_particleComps.get(e);
-        //if (particle.isCompleted()) {
-            particle.start();
-        //}
+        ContinuousParticles particle = m_continuousParticles.get(e);
+        particle.start();
     }
 }

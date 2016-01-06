@@ -45,6 +45,10 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
         }
     }
 
+    protected void levelFinished() {
+        world.getSystem(LevelSystem.class).getCurrentLevel().setFinished(true);
+    }
+
     protected abstract void setPlayerState(Entity entity, PlayerState state);
 
     protected boolean isDead(PhysicsComponent ps) {

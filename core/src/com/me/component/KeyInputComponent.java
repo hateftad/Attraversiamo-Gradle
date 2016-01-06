@@ -1,6 +1,5 @@
 package com.me.component;
 
-import com.badlogic.gdx.math.Vector2;
 
 public class KeyInputComponent extends BaseComponent {
 
@@ -11,8 +10,7 @@ public class KeyInputComponent extends BaseComponent {
 	public boolean m_jump;
 	public boolean m_movingUp = false;
 	public boolean m_movingDown = false;
-	public boolean m_lockControls = false;
-	
+
 	public void set(boolean left, boolean right, boolean up, boolean down, boolean jump){
 		m_left = left;
 		m_right = right;
@@ -45,7 +43,6 @@ public class KeyInputComponent extends BaseComponent {
 		m_jump = false;
 		m_movingUp = false;
 		m_movingDown = false;
-		m_lockControls = false;
 	}
 	
 }
