@@ -5,6 +5,8 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
+import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.events.states.PlayerState;
 import com.me.ui.InputManager;
 
@@ -172,6 +174,7 @@ public class GirlSystem extends PlayerSystem {
                     movementComponent.setVelocity(-vel.m_walkLimit);
                     setPlayerState(entity, PlayerState.Running);
                     vel.m_velocity = -vel.m_walkLimit;
+                    notifyObservers(new TaskEvent(GameEventType.LeftImpulse));
                 } else {
                     setPlayerState(entity, PlayerState.Walking);
                 }
@@ -190,6 +193,7 @@ public class GirlSystem extends PlayerSystem {
             movementComponent.setVelocity(vel.m_velocity);
             setPlayerState(entity, PlayerState.Crawl);
         }
+
         player.setFacingLeft(true);
     }
 

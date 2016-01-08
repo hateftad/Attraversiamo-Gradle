@@ -9,12 +9,15 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Values;
+import com.me.component.interfaces.TaskEventObserverComponent;
 import com.me.events.GameEvent;
+import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.physics.FixtureData;
 import com.me.physics.RBUserData;
 import com.me.utils.Converters;
 
-public class PhysicsComponent extends BaseComponent {
+public class PhysicsComponent extends BaseComponent implements TaskEventObserverComponent{
 
 	public static float LOW_FRICTION = 0.1f;
 	public static float LOW_MASS = 0.0001f;
@@ -332,6 +335,10 @@ public class PhysicsComponent extends BaseComponent {
 		}
 	}
 
+    public void setFixedRotation(boolean rotation){
+        m_body.get("center").setFixedRotation(rotation);
+    }
+
 	public void updateSmoothStates(float accumulatorRatio, double oneMinusRatio) {
 
 		for (Body b : m_body.values()) {
@@ -412,8 +419,17 @@ public class PhysicsComponent extends BaseComponent {
 		this.m_submerged = submerged;
 	}
 
+    @Override
+    public void onNotify(TaskEvent event) {
+        if(event.getEventType() == GameEventType.LeftImpulse){
+            applyLinearImpulse(-10, 0);
+        } else if(event.getEventType() == GameEventType.RightImpulse){
+            applyLinearImpulse(10, 0);
+        }
+    }
 
-	public interface ImmediateModePhysicsListener {
+
+    public interface ImmediateModePhysicsListener {
 
 		void beginContact(Entity e, Contact contact, boolean fixtureA);
 

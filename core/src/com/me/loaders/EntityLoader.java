@@ -200,6 +200,9 @@ public class EntityLoader {
                 level.getLevelBoundaries().minY = Converters.ToWorld(body.getPosition().y);
                 //System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
             }
+            if(ud.mName.equalsIgnoreCase("cage")){
+                entityWorld.addObserver(pComp);
+            }
 
             if (ud.mName.equalsIgnoreCase("water")) {
                 int eventId = m_scene.getCustom(body, "taskId", 0);
@@ -212,7 +215,6 @@ public class EntityLoader {
                 entity.addComponent(buoyancyComponent);
                 //entity.addComponent(new ShaderComponent("",body));
                 entity.addComponent(new TriggerComponent());
-
             }
 
             if (ud.mName.equalsIgnoreCase("particleEmitter")) {
@@ -361,7 +363,7 @@ public class EntityLoader {
                 entity.addComponent(playerComponent);
                 entity.addComponent(new TouchComponent());
                 entity.addComponent(new KeyInputComponent());
-                entity.addComponent(new JointComponent("noname"));
+                entity.addComponent(new JointComponent());
                 entity.addComponent(new HangComponent());
                 entity.addComponent(new RagDollComponent());
                 entity.addComponent(new LadderClimbComponent());
@@ -438,7 +440,7 @@ public class EntityLoader {
                 animationComponent.setSkin(playerConfig.getSkinName());
                 entity.addComponent(new KeyInputComponent());
                 entity.addComponent(new VelocityLimitComponent(8.5f, 10, 2.5f));
-                entity.addComponent(new JointComponent("noname"));
+                entity.addComponent(new JointComponent());
                 entity.addComponent(new TouchComponent());
                 entity.addComponent(new JumpComponent());
                 entity.addComponent(new GrabComponent());

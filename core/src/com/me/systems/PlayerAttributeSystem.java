@@ -49,7 +49,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 				if (!h.m_isHanging && touch.m_edgeTouch) {
 					h.m_isHanging = true;
 					j.setPrismJoint(JointFactory.getInstance().createJoint(
-							j.getPJointDef()));
+							j.getJointDef()));
 				}
 				KeyInputComponent m = m_movComp.get(e);
 				if (!touch.m_edgeTouch && !j.m_destroyed) {
@@ -128,7 +128,7 @@ public class PlayerAttributeSystem extends EntityProcessingSystem {
 
 		HangComponent h = m_hangComp.get(e);
 		JointComponent j = m_jointComp.get(e);
-		JointFactory.getInstance().destroyJoint(j.getPrismJoint());
+		JointFactory.getInstance().destroyJoint(j.getJoint());
 		j.m_destroyed = true;
 		j.setPrismJoint(null);
 		h.m_isHanging = false;

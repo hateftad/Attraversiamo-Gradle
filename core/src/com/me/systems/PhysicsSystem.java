@@ -215,7 +215,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 					e.removeComponent(comp);
 				}else if (comp.type == QueueType.Joint) {
 					JointComponent joint = m_jointComps.get(e);
-					JointFactory.getInstance().destroyJoint(joint.getDJoint());
+					JointFactory.getInstance().destroyJoint(joint.getJoint());
 					e.removeComponent(comp);
 				} else if (comp.type == QueueType.BodyState){
                     System.out.println("removing component");

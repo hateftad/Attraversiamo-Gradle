@@ -186,8 +186,9 @@ public class ManSystem extends PlayerSystem {
         TouchComponent touch = m_touchComps.get(entity);
         PhysicsComponent physicsComponent = m_physComps.get(entity);
         KeyInputComponent keyInputComponent = m_movComps.get(entity);
+        FeetComponent feetComponent = m_rayCastComps.get(entity);
 
-        if (!player.isJumping()) {
+        if (feetComponent.hasCollided() && !player.isJumping()) {
             if (keyInputComponent.isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
                     physicsComponent.applyLinearImpulse((keyInputComponent.m_left ? -10 : 10) + physicsComponent.getLinearVelocity().x, 60);

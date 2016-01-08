@@ -103,16 +103,16 @@ public class FeetComponent extends BaseComponent {
             startPoints.add(Vector2.Zero);
 
             endPoints = new ArrayList<Vector2>();
-            endPoints.add(new Vector2(0, -000.1f));
-            endPoints.add(new Vector2(0, -000.1f));
-            endPoints.add(new Vector2(0, -000.1f));
+            endPoints.add(new Vector2(0, 0));
+            endPoints.add(new Vector2(0, 0));
+            endPoints.add(new Vector2(0, 0));
         }
 
         private void updatePoints(Vector2 bodyPosition){
             Vector2 startCpy = bodyPosition.cpy();
-            Vector2 left = startPoints.get(0).set(startCpy.x - 0.3f, startCpy.y);
+            Vector2 left = startPoints.get(0).set(startCpy.x - 0.4f, startCpy.y);
             Vector2 middle = startPoints.get(1).set(startCpy.x, startCpy.y);
-            Vector2 right = startPoints.get(2).set(startCpy.x + 0.3f, startCpy.y);
+            Vector2 right = startPoints.get(2).set(startCpy.x + 0.4f, startCpy.y);
 
 
             endPoints.get(0).set(left.x, left.y - RAY_LENGTH);
