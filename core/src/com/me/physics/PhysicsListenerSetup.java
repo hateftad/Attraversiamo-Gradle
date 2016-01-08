@@ -85,7 +85,7 @@ public class PhysicsListenerSetup {
                             if (pl.isFacingLeft() && otherUd.getType() == Type.LeftEdge && playerUd.getType() == Type.HangHands) {
                                 if (!pl.isHanging()) {
                                     JointComponent j = e.getComponent(JointComponent.class);
-                                    j.createEdgeHang(other.getBody(), player.getBody("leftH"), 3, 11, 0);
+                                    j.createEdgeHang(other.getBody(), player.getBody("leftH"));
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
                                     e.getComponent(TouchComponent.class).m_edgeTouch = true;
                                     e.getComponent(HangComponent.class).m_hangingLeft = true;
@@ -94,12 +94,31 @@ public class PhysicsListenerSetup {
                             if (!pl.isFacingLeft() && otherUd.getType() == Type.RightEdge && playerUd.getType() == Type.HangHands) {
                                 if (!pl.isHanging()) {
                                     JointComponent j = e.getComponent(JointComponent.class);
-                                    j.createEdgeHang(other.getBody(), player.getBody("rightH"), 3, 11, 0);
+                                    j.createEdgeHang(other.getBody(), player.getBody("rightH"));
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
                                     e.getComponent(TouchComponent.class).m_edgeTouch = true;
-
                                     e.getComponent(HangComponent.class).m_hangingRight = true;
-                                    e.getComponent(HangComponent.class).m_isHanging = true;
+                                }
+                            }
+
+                            if (pl.isFacingLeft() && otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
+                                if (!pl.isHanging()) {
+                                    JointComponent j = e.getComponent(JointComponent.class);
+                                    j.createEdgeHang(other.getBody(), player.getBody("leftH"));
+                                    player.setLinearVelocity(player.getLinearVelocity().x, 0);
+                                    e.getComponent(TouchComponent.class).m_edgeTouch = true;
+                                    e.getComponent(TouchComponent.class).m_pullEdgeTouch = true;
+                                    e.getComponent(HangComponent.class).m_hangingLeft = true;
+                                }
+                            }
+                            if (!pl.isFacingLeft() && otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
+                                if (!pl.isHanging()) {
+                                    JointComponent j = e.getComponent(JointComponent.class);
+                                    j.createEdgeHang(other.getBody(), player.getBody("rightH"));
+                                    player.setLinearVelocity(player.getLinearVelocity().x, 0);
+                                    e.getComponent(TouchComponent.class).m_edgeTouch = true;
+                                    e.getComponent(TouchComponent.class).m_pullEdgeTouch = true;
+                                    e.getComponent(HangComponent.class).m_hangingRight = true;
                                 }
                             }
                             if (otherUd.getType() == Type.RightLadder) {

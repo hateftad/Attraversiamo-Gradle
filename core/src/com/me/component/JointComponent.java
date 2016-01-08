@@ -25,11 +25,7 @@ public class JointComponent extends BaseComponent{
 	public boolean m_destroyed;
 	
 	private boolean setToDestroy;
-	
-	private int m_lowerLimit = 0;
-	
-	private int m_upperLimit = 0;
-	
+
 	private String name;
 	
 	public JointComponent(String name){
@@ -76,8 +72,7 @@ public class JointComponent extends BaseComponent{
 		this.m_dJoint = m_dJoint;
 	}
 	
-	public void createEdgeHang(Body b1, Body b2, float initial, int uL, int lL){
-		//Vector2 bodPos = b2.getBody().getLocalCenter();
+	public void createEdgeHang(Body b1, Body b2){
 		m_pJointDef = JointFactory.getInstance().createWeldJoint(
 				b1, b2, 
 				Vector2.Zero, 
@@ -85,8 +80,6 @@ public class JointComponent extends BaseComponent{
 				true);
 		m_created = true;
 		m_destroyed = false;
-		m_lowerLimit = lL;
-		m_upperLimit = uL;
 	}
 	
 	public void createLadderHang(Body b1, Body b2, float uL){
@@ -97,8 +90,6 @@ public class JointComponent extends BaseComponent{
 				uL,-20,true, false, new Vector2(0,1));
 		m_created = true;
 		m_destroyed = false;
-		m_upperLimit = 0;
-		m_lowerLimit = -20;
 	}
 	
 	public void createHandHang(Body b1, Body b2, boolean left){
@@ -120,14 +111,6 @@ public class JointComponent extends BaseComponent{
             m_pJoint = null;
         }
     }
-	
-	public void climb(){
-		if(m_pJoint.getType() == JointType.PrismaticJoint){
-			PrismaticJoint j = (PrismaticJoint) m_pJoint;
-			j.enableMotor(true);
-			j.setLimits(m_lowerLimit, m_upperLimit);
-		}
-	}
 
 	public boolean isFullLength(){
 		if(m_pJoint!=null){

@@ -95,11 +95,11 @@ public class PlayerOneSystem extends PlayerSystem {
             animation.setSkin(m_inputMgr.toggleSkins());
         }
 
-        if (m_inputMgr.m_playerSelected == PlayerSelection.ONE) {
-            player.setActive(true);
-        } else if (player.canDeActivate() && player.getState() != PlayerState.WaitTilDone) {
-            player.setActive(false);
-        }
+//        if (m_inputMgr.m_playerSelected == PlayerSelection.ONE) {
+//            player.setActive(true);
+//        } else if (player.canDeActivate() && player.getState() != PlayerState.WaitTilDone) {
+//            player.setActive(false);
+//        }
 
 //        if (!player.isActive() && !finish) {
 //            if (!grabComponent.m_gonnaGrab &&

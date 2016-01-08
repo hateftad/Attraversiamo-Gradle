@@ -5,6 +5,9 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
+import com.me.events.AnimationEvent;
+import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.events.states.PlayerState;
 
 /**
@@ -35,7 +38,7 @@ public class ManInteractionSystem extends PlayerSystem {
         JointComponent jointComponent = m_jointComp.get(entity);
         TouchComponent touchComponent = m_touchComp.get(entity);
         PlayerComponent playerComponent = m_playerComp.get(entity);
-        AnimationComponent animation = m_animComps.get(entity);
+        PlayerAnimationComponent animation = m_animComps.get(entity);
         PhysicsComponent physicsComponent = m_physComp.get(entity);
         HangComponent hangComponent = m_hangComp.get(entity);
 
@@ -44,8 +47,16 @@ public class ManInteractionSystem extends PlayerSystem {
                 jointComponent.createHangJoint();
             }
         }
+
         if (jointComponent.isHanging() && !playerComponent.isClimbingLedge()) {
-            setPlayerState(entity, PlayerState.Hanging);
+            if(!playerComponent.isPullingLedge()) {
+                setPlayerState(entity, PlayerState.Hanging);
+            }
+            if(animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.PULLLEDGE){
+                notifyObservers(new TaskEvent(GameEventType.PullingLedge));
+                jointComponent.destroyHangJoint();
+                setPlayerState(entity, PlayerState.Idle);
+            }
         }
         if (playerComponent.isClimbingLedge()) {
             if (animation.isCompleted(PlayerState.ClimbingLedge)) {
@@ -67,6 +78,7 @@ public class ManInteractionSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
+
     }
 
     @Override

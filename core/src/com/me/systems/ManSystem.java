@@ -126,7 +126,11 @@ public class ManSystem extends PlayerSystem {
                     holdHands(entity);
                 }
                 if (player.isHanging()) {
-                    setPlayerState(entity, PlayerState.ClimbingLedge);
+                    if(touch.m_pullEdgeTouch){
+                        setPlayerState(entity, PlayerState.PullingLedge);
+                    } else {
+                        setPlayerState(entity, PlayerState.ClimbingLedge);
+                    }
                 }
             }
         }

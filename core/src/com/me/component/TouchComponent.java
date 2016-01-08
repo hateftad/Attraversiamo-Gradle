@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public class TouchComponent extends BaseComponent {
 
 	public boolean m_edgeTouch;
+    public boolean m_pullEdgeTouch;
 	public boolean m_ladderTouch;
 	public boolean m_boxTouch;
 	public boolean m_footEdgeL;

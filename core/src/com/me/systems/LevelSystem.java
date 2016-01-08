@@ -12,79 +12,55 @@ import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.ScriptManager;
 
-public class LevelSystem extends GameEntityProcessingSystem{
+public class LevelSystem extends GameEntityProcessingSystem {
 
-	private float inc = 0.0f;
-	private LevelEventListener m_levelListener;
-	private ScriptManager m_scriptMgr;
+    private LevelEventListener m_levelListener;
+    private ScriptManager m_scriptMgr;
     private Level m_currentLevel;
-	private boolean m_enable;
+    private boolean m_enable;
 
-	@Mapper ComponentMapper<LightComponent> m_lightComps;
-	@Mapper ComponentMapper<ReachEndComponent> m_reachEndComps;
-	@Mapper ComponentMapper<SingleParticleComponent> m_particleComps;
+    @Mapper
+    ComponentMapper<ReachEndComponent> m_reachEndComps;
+    @Mapper
+    ComponentMapper<SingleParticleComponent> m_particleComps;
 
 
-	@SuppressWarnings("unchecked")
-	public LevelSystem(LevelEventListener listener) {
-		super(Aspect.getAspectForAll(TriggerComponent.class));
-		m_levelListener = listener;
-	}
+    @SuppressWarnings("unchecked")
+    public LevelSystem(LevelEventListener listener) {
+        super(Aspect.getAspectForAll(TriggerComponent.class));
+        m_levelListener = listener;
+    }
 
-    public void setCurrentLevel(Level level){
+    public void setCurrentLevel(Level level) {
         m_currentLevel = level;
     }
 
-    public Level getCurrentLevel(){
+    public Level getCurrentLevel() {
         return m_currentLevel;
     }
 
-	public void setProcessing(boolean enable){
-		m_enable = enable;
-	}
+    public void setProcessing(boolean enable) {
+        m_enable = enable;
+    }
 
-	@Override
-	protected void process(Entity e) {
+    @Override
+    protected void process(Entity e) {
 
-		//m_scriptMgr.update();
+        //m_scriptMgr.update();
 
-		if(m_lightComps.has(e)){
-			updateLights(m_lightComps.get(e));
-		}
+        if (m_reachEndComps.has(e)) {
+            checkFinished(e);
+        }
 
-        if(m_reachEndComps.has(e)) {
-			checkFinished(e);
-		}
-		
-	}
+    }
 
-	@Override
-	protected boolean checkProcessing() {
-		return m_enable;
-	}
+    @Override
+    protected boolean checkProcessing() {
+        return m_enable;
+    }
 
-	private void updateLights(LightComponent light){
-		if(light.getName().equals("portalLight")){
-			float a = light.getAlpha();
 
-			if(!m_currentLevel.isFinished()){
-				if(a >= 1){
-					light.setColor(Color.RED);
-					inc = -0.01f;
-				}else if(a < 0.1f){
-					inc = 0.01f;
-				}
-				light.setAlpha(a + inc);
-
-			} else {
-				light.setAlpha(1);
-				light.setColor(Color.GREEN);
-				world.getSystem(CameraSystem.class).getRayHandler().setAmbientLight(1f);
-			}
-		}
-	}
-	
-	private void checkFinished(Entity entity){
+    private void checkFinished(Entity entity) {
 
         ReachEndComponent reachEndComponent = m_reachEndComps.get(entity);
         if (reachEndComponent.allFinished() && !m_currentLevel.isFinished()) {
@@ -93,18 +69,18 @@ public class LevelSystem extends GameEntityProcessingSystem{
         }
 
         if (m_currentLevel.isFinished()) {
-            if(m_particleComps.has(entity)) {
+            if (m_particleComps.has(entity)) {
                 SingleParticleComponent particleComponent = m_particleComps.get(entity);
-                if(particleComponent.isPortalComplete()){
+                if (particleComponent.isPortalComplete()) {
                     levelFinished();
                 }
             } else {
                 levelFinished();
             }
         }
-	}
+    }
 
-    private void levelFinished(){
+    private void levelFinished() {
         m_levelListener.onFinishedLevel(m_currentLevel.getNextLevel());
     }
 

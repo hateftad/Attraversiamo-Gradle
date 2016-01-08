@@ -23,15 +23,15 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
         return m_state == PlayerState.Hanging;
     }
 
-    public boolean isLyingDown(){
+    public boolean isLyingDown() {
         return m_state == PlayerState.LyingDown;
     }
 
-    public boolean lyingDown(){
+    public boolean lyingDown() {
         return m_state == PlayerState.LieDown;
     }
 
-    public boolean shouldBeIdle(){
+    public boolean shouldBeIdle() {
         return !isJumping() &&
                 !isHanging() &&
                 !isClimbingLedge() &&
@@ -40,7 +40,8 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
                 !isPullingUp() &&
                 !isPressingButton() &&
                 !isCrawling() &&
-                !isFinishing();
+                !isFinishing() &&
+                !isPullingLedge();
     }
 
     public boolean isClimbingLedge() {
@@ -55,7 +56,7 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
         return crawling() || isLyingDown() || lyingDown();
     }
 
-    public boolean crawling(){
+    public boolean crawling() {
         return m_state == PlayerState.Crawl;
     }
 
@@ -65,6 +66,10 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     public boolean isGettingUp() {
         return m_state == PlayerState.StandUp;
+    }
+
+    public boolean isPullingLedge() {
+        return m_state == PlayerState.PullingLedge;
     }
 
     public enum PlayerNumber {
@@ -80,15 +85,11 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     private boolean m_active;
 
-    private boolean m_onGround;
-
     private boolean m_canDeactivate;
 
     private boolean m_isFinishing;
 
     private boolean m_finishFacingLeft;
-
-    private boolean m_isFinishedAnimating;
 
     public PlayerComponent(PlayerNumber player, boolean finishFacingLeft) {
         m_finishFacingLeft = finishFacingLeft;
@@ -101,13 +102,13 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
         return m_state;
     }
 
-    public boolean canBeControlled(){
+    public boolean canBeControlled() {
         return m_state != PlayerState.LyingDown &&
                 m_state != PlayerState.StandUp &&
                 m_state != PlayerState.PressButton;
     }
 
-    public boolean isSuckingIn(){
+    public boolean isSuckingIn() {
         return m_state == PlayerState.SuckIn;
     }
 
@@ -169,13 +170,9 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
         }
     }
 
-    public void setIsFinishedAnimating(boolean isFinished) {
-        m_isFinishedAnimating = isFinished;
-    }
-
     @Override
     public void restart() {
         m_facingLeft = false;
-        m_isFinishedAnimating = false;
+        setState(PlayerState.Idle);
     }
 }

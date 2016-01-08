@@ -115,6 +115,8 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                 case HoldHandFollowing:
                     playAnimation("holdingHandsIdleFollowing", false);
                     break;
+                case PullingLedge:
+                    playAnimation("pullingLedge", false);
                 default:
                     break;
             }

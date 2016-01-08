@@ -12,7 +12,7 @@ public class RBUserData {
         Ladder, LeftLadder, RightLadder, TopLadder, BottomLadder,
         Box, LeftPullup, RightPullup, Hand, BoxHand, Portal, ObjectWorldCollision,
         Finish, LeftCrawl, RightCrawl, CrawlCanal, LeftPushButton, RightPushButton,
-        HangHands, FootSensor, Water, RightHandHold, LeftHandHold
+        HangHands, FootSensor, Water, RightHandHold, LeftHandHold, PullLedge
     }
 
     public static final int
@@ -202,7 +202,11 @@ public class RBUserData {
                 filter.categoryBits = CharacterSensor;
                 filter.maskBits = CharacterSensor;
                 break;
-
+            case 30:
+                setType(Type.PullLedge);
+                filter.categoryBits = WorldSensor;
+                filter.maskBits = CharacterSensor;
+                break;
             default:
                 break;
         }

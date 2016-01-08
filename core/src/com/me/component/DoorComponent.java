@@ -34,8 +34,8 @@ public class DoorComponent extends TaskComponent {
 
     private void openDoor(){
         if(m_joint != null){
-            PrismaticJoint j = (PrismaticJoint) m_joint;
-            j.enableMotor(true);
+            PrismaticJoint prismaticJoint = (PrismaticJoint) m_joint;
+            prismaticJoint.enableMotor(true);
         }
     }
 

@@ -556,6 +556,14 @@ public class EntityLoader {
                             tempList.get(ind.second), jDef, physicsWorld));
                     entity.addComponent(engineComponent);
                     gameEntityWorld.addObserver(engineComponent);
+                } else if (name.equals("hinge")) {
+                    int taskId = m_scene.getCustom(joint, "taskId", 0);
+                    int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                    HingeComponent engineComponent = new HingeComponent(taskId, JointFactory.getInstance().createJoint(
+                            tempList.get(ind.first),
+                            tempList.get(ind.second), jDef, physicsWorld));
+                    entity.addComponent(engineComponent);
+                    gameEntityWorld.addObserver(engineComponent);
                 } else {
                     JointFactory.getInstance().createJoint(tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld);
