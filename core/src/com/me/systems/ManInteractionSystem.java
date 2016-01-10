@@ -44,7 +44,6 @@ public class ManInteractionSystem extends PlayerSystem {
 
         if (touchComponent.m_edgeTouch) {
             if (!playerComponent.isHanging()) {
-                physicsComponent.setFixedRotation(false);
                 jointComponent.createHangJoint();
             }
         }

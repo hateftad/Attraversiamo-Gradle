@@ -335,10 +335,6 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 		}
 	}
 
-    public void setFixedRotation(boolean rotation){
-        m_body.get("center").setFixedRotation(rotation);
-    }
-
 	public void updateSmoothStates(float accumulatorRatio, double oneMinusRatio) {
 
 		for (Body b : m_body.values()) {

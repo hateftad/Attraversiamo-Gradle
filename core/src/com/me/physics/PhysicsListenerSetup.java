@@ -339,6 +339,14 @@ public class PhysicsListenerSetup {
                         if (otherUd.getType() == Type.LeftEdge && playerUd.getType() == Type.HangHands) {
                             e.getComponent(TouchComponent.class).m_edgeTouch = false;
                         }
+                        if (otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
+                            e.getComponent(TouchComponent.class).m_edgeTouch = false;
+                            e.getComponent(TouchComponent.class).m_pullEdgeTouch = false;
+                        }
+                        if (otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
+                            e.getComponent(TouchComponent.class).m_edgeTouch = false;
+                            e.getComponent(TouchComponent.class).m_pullEdgeTouch = false;
+                        }
                     }
                 }
 

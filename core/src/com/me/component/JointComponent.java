@@ -69,6 +69,7 @@ public class JointComponent extends BaseComponent{
 		// TODO Auto-generated method stub
 		if(m_joint != null){
 			JointFactory.getInstance().destroyJoint(m_joint);
+            m_joint = null;
 		}
 	}
 
