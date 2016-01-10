@@ -321,6 +321,7 @@ public class EntityLoader {
                         pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
                         entity.addComponent(pComp);
                     }
+                    pComp.setMass(1f, ((BodyUserData) body.getUserData()).mName);
                 } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("LHand")) {
                     if (pComp != null) {
                         pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);

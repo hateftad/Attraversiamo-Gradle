@@ -114,7 +114,6 @@ public class FeetComponent extends BaseComponent {
             Vector2 middle = startPoints.get(1).set(startCpy.x, startCpy.y);
             Vector2 right = startPoints.get(2).set(startCpy.x, startCpy.y);
 
-
             endPoints.get(0).set(left.x - 0.4f, left.y - RAY_LENGTH + 0.1f);
             endPoints.get(1).set(middle.x, middle.y - RAY_LENGTH);
             endPoints.get(2).set(right.x + 0.4f, right.y - RAY_LENGTH + 0.1f);

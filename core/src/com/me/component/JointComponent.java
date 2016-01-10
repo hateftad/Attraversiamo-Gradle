@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef;
 import com.me.physics.JointFactory;
+import com.me.utils.Converters;
 
 public class JointComponent extends BaseComponent{
 
@@ -34,9 +35,9 @@ public class JointComponent extends BaseComponent{
 	
 	public void createEdgeHang(Body b1, Body b2){
 		m_jointDef = JointFactory.getInstance().createWeldJoint(
-                b1, b2,
-                Vector2.Zero,
-                Vector2.Zero,
+                b2, b1,
+                Converters.ToBox(b2.getPosition()),
+                Converters.ToBox(b2.getPosition()),
                 true);
 		m_created = true;
 		m_destroyed = false;
