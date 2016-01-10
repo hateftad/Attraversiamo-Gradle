@@ -136,6 +136,9 @@ public class PhysicsListenerSetup {
                             if (otherUd.getType() == Type.BottomLadder) {
                                 e.getComponent(LadderClimbComponent.class).m_bottomLadder = true;
                             }
+                            if(otherUd.getType() == Type.ColorChangeSensor){
+                                m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.ColorSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                            }
                             if (otherUd.getType() == Type.TopLadder) {
                                 e.getComponent(LadderClimbComponent.class).m_topLadder = true;
                                 e.getComponent(VelocityLimitComponent.class).m_ladderClimbVelocity = 0;
@@ -289,6 +292,9 @@ public class PhysicsListenerSetup {
                         }
                         if (otherUd.getType() == Type.Hand && playerUd.getType() == Type.Hand) {
 
+                        }
+                        if(otherUd.getType() == Type.ColorChangeSensor){
+                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.BlackSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
                         }
                         if (otherUd.getType() == Type.LeftCrawl) {
                             e.getComponent(TouchComponent.class).m_canCrawl = false;

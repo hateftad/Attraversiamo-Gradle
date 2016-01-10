@@ -175,6 +175,10 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     public void onNotify(TaskEvent event) {
         if (event.getEventType() == GameEventType.AllReachedEnd) {
             setAnimationState(m_finishAnimation);
+        } else if(event.getEventType() == GameEventType.ColorSkin && event.getPlayerNr() == m_playerNumber){
+            m_skeleton.setSkin(ColorSkin);
+        } else if(event.getEventType() == GameEventType.BlackSkin && event.getPlayerNr() == m_playerNumber){
+            m_skeleton.setSkin(BlackSkin);
         }
     }
 

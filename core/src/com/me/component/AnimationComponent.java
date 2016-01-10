@@ -43,6 +43,8 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 
     protected boolean m_isCompleted;
 
+    protected static final String BlackSkin = "silhouette", ColorSkin = "color";
+
 
 	public AnimationComponent(String atlas, String skeleton, float scale){
 		m_renderer = new SkeletonRenderer();
