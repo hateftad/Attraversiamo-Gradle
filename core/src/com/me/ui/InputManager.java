@@ -76,6 +76,7 @@ public class InputManager {
 		for(LevelEventListener listener: m_levelListeners){
 			listener.onRestartLevel();
 		}
+        reset();
 	}
 	
 	public boolean isDown(int nr){

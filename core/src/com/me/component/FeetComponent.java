@@ -71,7 +71,7 @@ public class FeetComponent extends BaseComponent {
             Entity entity = (Entity) bodyA.getUserData();
             PhysicsComponent component = entity.getComponent(PhysicsComponent.class);
             RBUserData other = component.getRBUserData(fixture.getBody());
-            if(other.getType() == RBUserData.Type.Ground || other.getType() == RBUserData.Type.Box){
+            if(other.getType() == RBUserData.Type.Ground || other.getType() == RBUserData.Type.Box || other.getType() == RBUserData.Type.CageHatch){
                 m_collided = true;
             }
             m_normal = normal;

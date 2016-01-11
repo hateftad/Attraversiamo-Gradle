@@ -49,8 +49,6 @@ public class ManSystem extends PlayerSystem {
     ComponentMapper<FeetComponent> m_rayCastComps;
     @Mapper
     ComponentMapper<HandHoldComponent> m_handHoldComps;
-    @Mapper
-    ComponentMapper<LevelComponent> m_levelComp;
 
     @SuppressWarnings("unchecked")
     public ManSystem(LevelEventListener listener) {
@@ -340,7 +338,9 @@ public class ManSystem extends PlayerSystem {
     }
 
     private boolean canBeControlled(PlayerComponent player) {
-        return player.isActive() && !player.isFinishing();
+        return player.isActive() && !player.isFinishing() &&
+                !player.isClimbingLedge() && !player.isPullingLedge() &&
+                !player.isPullingUp();
     }
 
     private void choose(PlayerComponent player) {

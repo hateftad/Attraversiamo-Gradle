@@ -205,6 +205,10 @@ public class PhysicsListenerSetup {
                                 e.getComponent(TouchComponent.class).m_leftHoldArea = true;
                             }
 
+                            if(otherUd.getType() == Type.InsideCage){
+                                e.getComponent(PhysicsComponent.class).setFixedRotation("center", false);
+                            }
+
                             if (otherUd.getType() == Type.LeftCrawl) {
                                 e.getComponent(TouchComponent.class).m_canCrawl = true;
                             }
@@ -352,6 +356,9 @@ public class PhysicsListenerSetup {
                         if (otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
                             e.getComponent(TouchComponent.class).m_edgeTouch = false;
                             e.getComponent(TouchComponent.class).m_pullEdgeTouch = false;
+                        }
+                        if(otherUd.getType() == Type.InsideCage){
+                            e.getComponent(PhysicsComponent.class).setFixedRotation("center", true);
                         }
                     }
                 }
