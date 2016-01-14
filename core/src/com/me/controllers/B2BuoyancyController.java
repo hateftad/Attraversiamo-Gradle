@@ -80,7 +80,7 @@ public class B2BuoyancyController extends B2Controller {
                                 float surfaceHeight, float fluidDensity, float linearDrag, float angularDrag) {
         mSurfaceNormal.set(surfaceNormal);
         mFluidVelocity = fluidVelocity;
-        mGravity.set(gravity);
+        mGravity.set(new Vector2(0, -8));
         mSurfaceHeight = surfaceHeight;
         mFluidDensity = fluidDensity;
         mLinearDrag = linearDrag;

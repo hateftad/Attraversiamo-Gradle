@@ -419,7 +419,7 @@ public class PhysicsListenerSetup {
                 Fixture fixB = contact.getFixtureB();
 
                 if ((fixA.isSensor()) && (fixA.getUserData() != null)) {
-                    determineController((ObjectMap) fixA.getUserData(), fixB.getBody(), true);
+                    determineController((ObjectMap) fixA.getUserData(), fixB.getBody(), false);
                     //treatBouyancy(fixB.getBody(), false);
                 } else if ((fixB.isSensor()) && (fixB.getUserData() != null)) {
                     determineController((ObjectMap) fixB.getUserData(), fixA.getBody(), false);
@@ -444,13 +444,13 @@ public class PhysicsListenerSetup {
             private void determineController(ObjectMap<String, B2BuoyancyController> controllerMap, Body body, boolean add) {
                 Entity entity = (Entity) body.getUserData();
                 B2BuoyancyController b2c;
-//                if (entity.getComponent(PlayerOneComponent.class) != null) {
-//                    b2c = controllerMap.get(PlayerOneComponent.PlayerOne);
-//                } else if (entity.getComponent(PlayerTwoComponent.class) != null) {
-//                    b2c = controllerMap.get(PlayerTwoComponent.PlayerTwo);
-//                } else {
+                if (entity.getComponent(PlayerOneComponent.class) != null) {
+                    b2c = controllerMap.get(PlayerOneComponent.PlayerOne);
+                } else if (entity.getComponent(PlayerTwoComponent.class) != null) {
+                    b2c = controllerMap.get(PlayerTwoComponent.PlayerTwo);
+                } else {
                     b2c = controllerMap.get(WorldObjectComponent.WorldObject);
-//                }
+                }
                 if (add) {
                     b2c.addBody(body);
                 } else {

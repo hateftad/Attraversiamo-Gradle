@@ -33,7 +33,6 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 
 	}
 
