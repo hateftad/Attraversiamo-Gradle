@@ -444,13 +444,13 @@ public class PhysicsListenerSetup {
             private void determineController(ObjectMap<String, B2BuoyancyController> controllerMap, Body body, boolean add) {
                 Entity entity = (Entity) body.getUserData();
                 B2BuoyancyController b2c;
-                if (entity.getComponent(PlayerOneComponent.class) != null) {
-                    b2c = controllerMap.get(PlayerOneComponent.PlayerOne);
-                } else if (entity.getComponent(PlayerTwoComponent.class) != null) {
-                    b2c = controllerMap.get(PlayerTwoComponent.PlayerTwo);
-                } else {
+//                if (entity.getComponent(PlayerOneComponent.class) != null) {
+//                    b2c = controllerMap.get(PlayerOneComponent.PlayerOne);
+//                } else if (entity.getComponent(PlayerTwoComponent.class) != null) {
+//                    b2c = controllerMap.get(PlayerTwoComponent.PlayerTwo);
+//                } else {
                     b2c = controllerMap.get(WorldObjectComponent.WorldObject);
-                }
+//                }
                 if (add) {
                     b2c.addBody(body);
                 } else {

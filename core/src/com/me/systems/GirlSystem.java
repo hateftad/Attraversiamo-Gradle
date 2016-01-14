@@ -24,10 +24,6 @@ public class GirlSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<TouchComponent> m_touchComps;
     @Mapper
-    ComponentMapper<JumpComponent> m_jumpComps;
-    @Mapper
-    ComponentMapper<GrabComponent> m_grabComps;
-    @Mapper
     ComponentMapper<PhysicsComponent> m_physComps;
     @Mapper
     ComponentMapper<VelocityLimitComponent> m_velComps;
@@ -39,8 +35,6 @@ public class GirlSystem extends PlayerSystem {
     ComponentMapper<CharacterMovementComponent> m_movementComps;
     @Mapper
     ComponentMapper<FeetComponent> m_feetComps;
-    @Mapper
-    ComponentMapper<HandHoldComponent> m_handHoldComps;
 
     private float VELOCITY = 5.5f;
 
@@ -60,15 +54,11 @@ public class GirlSystem extends PlayerSystem {
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
         KeyInputComponent keyInputComponent = m_movComps.get(entity);
 
-        keyInputComponent.set(m_inputMgr.isDown(left),
-                m_inputMgr.isDown(right),
-                m_inputMgr.isDown(action),
-                m_inputMgr.isDown(down),
-                m_inputMgr.isDown(jump));
-
         animation.setFacing(player.isFacingLeft());
 
         choose(player);
+
+        keyInputComponent.update(m_inputMgr);
 
         if (canBeControlled(player)) {
             if (keyInputComponent.m_left) {
@@ -135,6 +125,7 @@ public class GirlSystem extends PlayerSystem {
             if (playerComponent.shouldBeIdle() &&
                     !physicsComponent.isFalling()) {
                 setPlayerState(entity, PlayerState.Idle);
+                movementComponent.standStill();
             }
             if (playerComponent.crawling()) {
                 setPlayerState(entity, PlayerState.LyingDown);
@@ -243,6 +234,7 @@ public class GirlSystem extends PlayerSystem {
         } else if (playerComponent.canDeActivate()) {
             playerComponent.setActive(false);
         }
+        m_inputMgr.reset();
     }
 
     private boolean canBeControlled(PlayerComponent player) {
@@ -256,11 +248,14 @@ public class GirlSystem extends PlayerSystem {
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        m_inputMgr.keyDown(keycode);
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        return false;
+        m_inputMgr.keyUp(keycode);
+        return true;
+
     }
 }

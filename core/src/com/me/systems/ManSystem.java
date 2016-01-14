@@ -38,8 +38,6 @@ public class ManSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<VelocityLimitComponent> m_velComps;
     @Mapper
-    ComponentMapper<GrabComponent> m_grabComps;
-    @Mapper
     ComponentMapper<PushComponent> m_pushComps;
     @Mapper
     ComponentMapper<EventComponent> m_eventComps;
@@ -66,21 +64,16 @@ public class ManSystem extends PlayerSystem {
     protected void process(Entity entity) {
         PlayerComponent player = m_playerComps.get(entity);
         PlayerAnimationComponent animation = m_animComps.get(entity);
-        GrabComponent grabComponent = m_grabComps.get(entity);
         TouchComponent touch = m_touchComps.get(entity);
         PhysicsComponent physicsComponent = m_physComps.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
         KeyInputComponent keyInputComponent = m_movComps.get(entity);
 
-        keyInputComponent.set(m_inputMgr.isDown(left),
-                m_inputMgr.isDown(right),
-                m_inputMgr.isDown(action),
-                m_inputMgr.isDown(down),
-                m_inputMgr.isDown(jump));
-
         animation.setFacing(player.isFacingLeft());
 
         choose(player);
+
+        keyInputComponent.update(m_inputMgr);
 
         if (canBeControlled(player)) {
 
@@ -150,14 +143,12 @@ public class ManSystem extends PlayerSystem {
         VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
         PlayerComponent playerComponent = m_playerComps.get(entity);
 
-//        System.out.println(playerComponent.getState());
-
         if (!keyInput.moved()) {
             movementComponent.standStill();
             velocityLimitComponent.m_velocity = 0;
-            if (playerComponent.shouldBeIdle() &&
-                    !physicsComponent.isFalling()) {
+            if (playerComponent.shouldBeIdle() && !physicsComponent.isFalling()) {
                 setPlayerState(entity, PlayerState.Idle);
+                movementComponent.standStill();
             }
         }
 
@@ -349,6 +340,7 @@ public class ManSystem extends PlayerSystem {
         } else if (player.canDeActivate()) {
             player.setActive(false);
         }
+        m_inputMgr.reset();
     }
 
     private boolean velocityLimitForJumpBoost(Entity entity) {

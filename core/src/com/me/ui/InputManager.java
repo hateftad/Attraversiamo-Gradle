@@ -7,7 +7,7 @@ import com.me.listeners.LevelEventListener;
 
 public class InputManager {
 
-	private int left = 0, right = 1, restart = 2, down = 3, jump = 4, rag = 5, first = 6, action = 7, skinChange = 8; 
+	public static int left = 0, right = 1, restart = 2, down = 3, jump = 4, rag = 5, first = 6, action = 7, skinChange = 8;
 	
 	public enum PlayerSelection{
 		ONE,

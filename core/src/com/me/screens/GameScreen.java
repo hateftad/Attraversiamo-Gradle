@@ -131,20 +131,24 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     @Override
     public void show() {
         super.show();
+        System.out.println("show()");
         OnStartLevel();
         m_game.showAd(false);
     }
 
     @Override
     public void hide() {
+        System.out.println("hide()");
     }
 
     @Override
     public void pause() {
+        System.out.println("pause()");
     }
 
     @Override
     public void resume() {
+        System.out.println("resume()");
     }
 
     @Override

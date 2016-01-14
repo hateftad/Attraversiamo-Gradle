@@ -159,4 +159,32 @@
         <lightColor>Black</lightColor>
         <nextLevel>2</nextLevel>
     </Level>
+    <Level name="level7">
+        <levelNr>7</levelNr>
+        <nrOfPlayers>2</nrOfPlayers>
+        <hasPortal>false</hasPortal>
+        <player>
+            <skinName>silhouette</skinName>
+            <finishFacingLeft>false</finishFacingLeft>
+            <active>true</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>smallCharacter</playerName>
+            <playerNr>1</playerNr>
+            <facingLeft>false</facingLeft>
+            <finishAnim>suckin</finishAnim>
+        </player>
+        <player>
+            <skinName>silhouette</skinName>
+            <finishFacingLeft>false</finishFacingLeft>
+            <active>false</active>
+            <canDeactivate>true</canDeactivate>
+            <playerName>littleGirl</playerName>
+            <playerNr>2</playerNr>
+            <facingLeft>false</facingLeft>
+            <finishAnim>suckin</finishAnim>
+        </player>
+        <zoom>12</zoom>
+        <lightColor>Black</lightColor>
+        <nextLevel>2</nextLevel>
+    </Level>
 </Levels>

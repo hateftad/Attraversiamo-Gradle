@@ -208,9 +208,9 @@ public class EntityLoader {
                 int eventId = m_scene.getCustom(body, "taskId", 0);
                 //pass in fluid velocity
                 BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
-                buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3), 1.5f, 2);
-                buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
-                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 1), 1.5f, 2);
+//                buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3), 1.5f, 2);
+//                buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
+                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 1), 0.5f, 0.1f);
                 entityWorld.addObserver(buoyancyComponent);
                 entity.addComponent(buoyancyComponent);
                 //entity.addComponent(new ShaderComponent("",body));
@@ -606,6 +606,12 @@ public class EntityLoader {
 
         if (joint.getType() == JointType.WeldJoint) {
             WeldJointDef jDef = (WeldJointDef) ind.jointDef;
+            JointFactory.getInstance().createJoint(tempList.get(ind.first),
+                    tempList.get(ind.second), jDef, physicsWorld);
+        }
+
+        if (joint.getType() == JointType.RopeJoint) {
+            RopeJointDef jDef = (RopeJointDef) ind.jointDef;
             JointFactory.getInstance().createJoint(tempList.get(ind.first),
                     tempList.get(ind.second), jDef, physicsWorld);
         }
