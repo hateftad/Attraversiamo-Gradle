@@ -210,7 +210,7 @@ public class EntityLoader {
                 BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
                 buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3), 1, 2);
                 buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
-                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(0, 5), 3, 2);
+                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(-1, 4), 3, 2);
                 entityWorld.addObserver(buoyancyComponent);
                 entity.addComponent(buoyancyComponent);
                 //entity.addComponent(new ShaderComponent("",body));

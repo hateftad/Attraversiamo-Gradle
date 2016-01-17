@@ -71,7 +71,7 @@ public class ManSystem extends PlayerSystem {
 
         animation.setFacing(player.isFacingLeft());
 
-        choose(player);
+        choose(entity);
 
         keyInputComponent.update(m_inputMgr);
 
@@ -161,6 +161,17 @@ public class ManSystem extends PlayerSystem {
             if(!playerComponent.isSuckingIn()){
                 levelFinished();
             }
+        }
+
+        if(!playerComponent.isActive() &&
+                !physicsComponent.isFalling() &&
+                !playerComponent.isFinishing() &&
+                !playerComponent.isClimbingLedge() &&
+                !playerComponent.isPullingLedge() &&
+                !playerComponent.isPullingUp() &&
+                !playerComponent.lyingDown()){
+            setPlayerState(entity, PlayerState.Idle);
+            movementComponent.standStill();
         }
 
     }
@@ -334,12 +345,14 @@ public class ManSystem extends PlayerSystem {
                 !player.isPullingUp();
     }
 
-    private void choose(PlayerComponent player) {
+    private void choose(Entity entity) {
         if (m_inputMgr.m_playerSelected == InputManager.PlayerSelection.ONE) {
-            player.setActive(true);
-        } else if (player.canDeActivate()) {
-            player.setActive(false);
+            m_playerComps.get(entity).setActive(true);
+        } else if (m_playerComps.get(entity).canDeActivate()) {
+            m_playerComps.get(entity).setActive(false);
+            m_velComps.get(entity).m_velocity = 0;
         }
+
         m_inputMgr.reset();
     }
 

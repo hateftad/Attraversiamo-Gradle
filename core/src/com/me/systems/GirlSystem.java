@@ -56,7 +56,7 @@ public class GirlSystem extends PlayerSystem {
 
         animation.setFacing(player.isFacingLeft());
 
-        choose(player);
+        choose(entity);
 
         keyInputComponent.update(m_inputMgr);
 
@@ -141,6 +141,16 @@ public class GirlSystem extends PlayerSystem {
             if(!playerComponent.isSuckingIn()){
                 levelFinished();
             }
+        }
+
+        if(!playerComponent.isActive() &&
+                !physicsComponent.isFalling() &&
+                !playerComponent.isFinishing() &&
+                !playerComponent.lyingDown() &&
+                !playerComponent.isGettingUp() &&
+                !playerComponent.isPullingUp()){
+            setPlayerState(entity, PlayerState.Idle);
+            movementComponent.standStill();
         }
 
     }
@@ -228,11 +238,12 @@ public class GirlSystem extends PlayerSystem {
         player.setFacingLeft(false);
     }
 
-    private void choose(PlayerComponent playerComponent) {
+    private void choose(Entity entity) {
         if (m_inputMgr.m_playerSelected == InputManager.PlayerSelection.TWO) {
-            playerComponent.setActive(true);
-        } else if (playerComponent.canDeActivate()) {
-            playerComponent.setActive(false);
+            m_playerComps.get(entity).setActive(true);
+        } else if (m_playerComps.get(entity).canDeActivate()) {
+            m_playerComps.get(entity).setActive(false);
+            m_velComps.get(entity).m_velocity = 0;
         }
         m_inputMgr.reset();
     }

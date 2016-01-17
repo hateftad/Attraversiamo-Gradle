@@ -87,7 +87,7 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
         }
 
         public void reset(){
-            setFluidVelocity(0, 1);
+            //setFluidVelocity(0, 1);
         }
 	}
 }
