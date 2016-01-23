@@ -422,9 +422,9 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
     @Override
     public void onNotify(TaskEvent event) {
         if(event.getEventType() == GameEventType.LeftImpulse){
-            applyLinearImpulse(-10, 0);
+            applyLinearImpulse(-100, 0);
         } else if(event.getEventType() == GameEventType.RightImpulse){
-            applyLinearImpulse(10, 0);
+            applyLinearImpulse(100, 0);
         }
     }
 

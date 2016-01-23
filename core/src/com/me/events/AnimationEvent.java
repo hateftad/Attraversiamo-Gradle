@@ -30,6 +30,8 @@ public class AnimationEvent {
             return AnimationEventType.JUMP;
         } else if(eventName.equalsIgnoreCase(AnimationEventType.PULLLEDGE.name())){
             return AnimationEventType.PULLLEDGE;
+        } else if (eventName.equalsIgnoreCase(AnimationEventType.SWING.name())){
+            return AnimationEventType.SWING;
         }
         return AnimationEventType.NONE;
     }
@@ -42,6 +44,7 @@ public class AnimationEvent {
         JUMPUP,
         JUMP,
         PULLLEDGE,
+        SWING,
         NONE
     }
 }

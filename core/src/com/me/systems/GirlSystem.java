@@ -5,8 +5,6 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
-import com.me.events.GameEventType;
-import com.me.events.TaskEvent;
 import com.me.events.states.PlayerState;
 import com.me.ui.InputManager;
 
@@ -88,7 +86,19 @@ public class GirlSystem extends PlayerSystem {
                     }
                     movementComponent.standStill();
                 }
+                if(touch.m_cageTouch){
+                    if(!player.isHoldingCage()){
+                        setPlayerState(entity, PlayerState.HoldingCage);
+                    }
+                    if(!player.isSwingingCage() && player.isHoldingCage()) {
+                        setPlayerState(entity, PlayerState.Swinging);
+                    }
+                }
             }
+        }
+
+        if (isDead(physicsComponent)) {
+            m_inputMgr.callRestart();
         }
 
         setPlayerState(entity);
@@ -172,7 +182,6 @@ public class GirlSystem extends PlayerSystem {
                     movementComponent.setVelocity(-vel.m_walkLimit);
                     setPlayerState(entity, PlayerState.Running);
                     vel.m_velocity = -vel.m_walkLimit;
-                    notifyObservers(new TaskEvent(GameEventType.LeftImpulse));
                 } else {
                     setPlayerState(entity, PlayerState.Walking);
                 }

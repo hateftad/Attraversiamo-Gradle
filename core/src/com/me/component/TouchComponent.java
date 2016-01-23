@@ -20,6 +20,7 @@ public class TouchComponent extends BaseComponent {
     public boolean m_leftHoldArea;
     public boolean m_rightHoldArea;
     public boolean m_canCrawl;
+    public boolean m_cageTouch;
 
     public TouchComponent() {
 		m_edgeTouch = false;
@@ -47,12 +48,24 @@ public class TouchComponent extends BaseComponent {
 	@Override
 	public void restart() {
 		m_edgeTouch = false;
-		m_ladderTouch = false;
-		m_boxTouch = false;
 		m_footEdgeL = false;
 		m_footEdgeR = false;
 		m_handTouch = false;
 		m_touchCenter = Vector2.Zero;
+        m_edgeTouch = false;
+        m_pullEdgeTouch = false;
+        m_ladderTouch = false;
+        m_boxTouch = false;
+        m_footEdge = false;
+        m_rightPushArea = false;
+        m_leftPushArea = false;
+        m_pushArea = false;
+        m_handTouch = false;
+        m_handHoldArea = false;
+        m_leftHoldArea = false;
+        m_rightHoldArea = false;
+        m_canCrawl = false;
+        m_cageTouch = false;
 
 	}
 

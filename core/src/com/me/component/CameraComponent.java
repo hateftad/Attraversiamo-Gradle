@@ -40,9 +40,9 @@ public class CameraComponent extends BaseComponent {
 		
 		position.x += (m_target.x - position.x) * m_lerp;
 		position.y += (m_target.y - position.y) * m_lerp;
-		if(getCamera().position.y < m_minY){
-			getCamera().position.y = m_minY;
+		if(position.y < m_minY){
 			position.y = m_minY;
+//			position.y = m_minY;
 		}
 		
 		m_camera.update();

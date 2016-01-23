@@ -117,6 +117,13 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     break;
                 case PullingLedge:
                     playAnimation("pullingLedge", false);
+                    break;
+                case Swinging:
+                    playAnimation("swinging", false);
+                    break;
+                case HoldingCage:
+                    playAnimation("holdingCage", false);
+                    break;
                 default:
                     break;
             }

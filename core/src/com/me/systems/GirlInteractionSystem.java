@@ -1,11 +1,12 @@
 package com.me.systems;
 
-import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
 import com.me.events.AnimationEvent;
+import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.events.states.PlayerState;
 
 import static com.artemis.Aspect.getAspectForAll;
@@ -86,6 +87,12 @@ public class GirlInteractionSystem extends PlayerSystem {
             }
             if (animation.isCompleted(PlayerState.UpJump) || animation.isCompleted(PlayerState.Jumping)) {
                 setPlayerState(entity, PlayerState.Idle);
+            }
+        }
+        if(playerComponent.isSwingingCage()){
+            if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.SWING) {
+                animation.getEvent().resetEvent();
+                notifyObservers(new TaskEvent(playerComponent.isFacingLeft() ? GameEventType.LeftImpulse : GameEventType.RightImpulse));
             }
         }
     }

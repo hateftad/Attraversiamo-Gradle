@@ -41,7 +41,16 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
                 !isPressingButton() &&
                 !isCrawling() &&
                 !isFinishing() &&
-                !isPullingLedge();
+                !isPullingLedge() &&
+                !isSwingingCage();
+    }
+
+    public boolean isHoldingCage(){
+        return m_state == PlayerState.HoldingCage;
+    }
+
+    public boolean isSwingingCage(){
+        return m_state == PlayerState.Swinging;
     }
 
     public boolean isIdle(){

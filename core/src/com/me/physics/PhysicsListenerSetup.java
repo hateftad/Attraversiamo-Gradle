@@ -218,6 +218,12 @@ public class PhysicsListenerSetup {
                             if (otherUd.getType() == Type.Finish) {
                                 m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
                             }
+                            if(otherUd.getType() == Type.InsideCage){
+                                e.getComponent(PhysicsComponent.class).setFixedRotation("center", true);
+                            }
+                            if(otherUd.getType() == Type.InsideCage){
+                                e.getComponent(TouchComponent.class).m_cageTouch = true;
+                            }
                         }
                     }
                 }
@@ -358,7 +364,10 @@ public class PhysicsListenerSetup {
                             e.getComponent(TouchComponent.class).m_pullEdgeTouch = false;
                         }
                         if(otherUd.getType() == Type.InsideCage){
-                            e.getComponent(PhysicsComponent.class).setFixedRotation("center", true);
+                            e.getComponent(PhysicsComponent.class).setFixedRotation("center", false);
+                        }
+                        if(otherUd.getType() == Type.InsideCage){
+                            e.getComponent(TouchComponent.class).m_cageTouch = false;
                         }
                     }
                 }

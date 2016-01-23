@@ -12,5 +12,6 @@ public enum PlayerState {
     LieDown, PullUp, SuckIn,
     WalkOut, Crawl, StandUp,
     LyingDown, PressButton, HoldHandLeading,
-    HoldHandFollowing, RunOut, PullingLedge
+    HoldHandFollowing, RunOut, Swinging, PullingLedge,
+    HoldingCage
 }

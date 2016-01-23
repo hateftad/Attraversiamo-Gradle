@@ -88,8 +88,6 @@ public class ManInteractionSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
-
-
     }
 
     @Override
