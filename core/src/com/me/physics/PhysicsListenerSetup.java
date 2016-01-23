@@ -175,12 +175,12 @@ public class PhysicsListenerSetup {
 
                                 } else {
                                     if (e.getComponent(PlayerTwoComponent.class) != null) {
-                                        if (girl.isJumping()) {
+                                        if (girl.isJumping() && man.lyingDown()) {
                                             e.getComponent(TouchComponent.class).m_handTouch = true;
                                         }
                                     }
                                     if (e2.getComponent(PlayerOneComponent.class) != null) {
-                                        if (man.lyingDown()) {
+                                        if (man.lyingDown() && girl.isJumping()) {
                                             e2.getComponent(TouchComponent.class).m_handTouch = true;
                                         }
                                     }

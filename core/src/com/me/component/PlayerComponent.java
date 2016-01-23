@@ -44,6 +44,10 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
                 !isPullingLedge();
     }
 
+    public boolean isIdle(){
+        return m_state == PlayerState.Idle;
+    }
+
     public boolean isClimbingLedge() {
         return m_state == PlayerState.ClimbingLedge;
     }

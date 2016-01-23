@@ -79,6 +79,17 @@ public class ManInteractionSystem extends PlayerSystem {
             }
         }
 
+        if (playerComponent.isJumping()) {
+            if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMPUP) {
+                animation.getEvent().resetEvent();
+                physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 100);
+            }
+            if (animation.isCompleted(PlayerState.UpJump)) {
+                setPlayerState(entity, PlayerState.Idle);
+            }
+        }
+
+
     }
 
     @Override

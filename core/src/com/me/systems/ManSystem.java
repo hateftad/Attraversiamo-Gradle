@@ -165,11 +165,7 @@ public class ManSystem extends PlayerSystem {
 
         if(!playerComponent.isActive() &&
                 !physicsComponent.isFalling() &&
-                !playerComponent.isFinishing() &&
-                !playerComponent.isClimbingLedge() &&
-                !playerComponent.isPullingLedge() &&
-                !playerComponent.isPullingUp() &&
-                !playerComponent.lyingDown()){
+                playerComponent.shouldBeIdle()){
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
         }
@@ -196,8 +192,7 @@ public class ManSystem extends PlayerSystem {
                     physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 60);
                 }
                 setPlayerState(entity, PlayerState.Jumping);
-            } else if (!touch.m_boxTouch) {
-                physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 100);
+            } else {
                 setPlayerState(entity, PlayerState.UpJump);
             }
         }

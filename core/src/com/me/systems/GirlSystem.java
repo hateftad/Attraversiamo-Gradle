@@ -145,10 +145,7 @@ public class GirlSystem extends PlayerSystem {
 
         if(!playerComponent.isActive() &&
                 !physicsComponent.isFalling() &&
-                !playerComponent.isFinishing() &&
-                !playerComponent.lyingDown() &&
-                !playerComponent.isGettingUp() &&
-                !playerComponent.isPullingUp()){
+                playerComponent.shouldBeIdle()){
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
         }
