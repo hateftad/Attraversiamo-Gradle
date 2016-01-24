@@ -64,7 +64,7 @@ public class RBUserData {
             case 1:
                 setType(Type.Ground);
                 filter.categoryBits = Boundary;
-                filter.maskBits = Character | WorldObject | Boundary;
+                filter.maskBits = Character | WorldObject | Boundary | WorldSensor;
                 break;
             case 2:
                 setType(Type.Wall);
@@ -222,6 +222,10 @@ public class RBUserData {
                 filter.categoryBits = Boundary;
                 filter.maskBits = ALL;
                 break;
+            case 34:
+                filter.categoryBits = WorldSensor;
+                filter.maskBits = Boundary;
+
             default:
                 break;
         }

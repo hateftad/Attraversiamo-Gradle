@@ -158,8 +158,8 @@ public class EntityLoader {
 
             BodyUserData ud = (BodyUserData) body.getUserData();
             if (ud.mName.equalsIgnoreCase("box")) {
-                pComp.setMass(20f, ud.mName);
-                pComp.setFriction(20.0f);
+                //pComp.setMass(20f, ud.mName);
+                //pComp.setFriction(20.0f);
                 entity.addComponent(new RestartComponent())
                         .addComponent(new QueueComponent());
             }

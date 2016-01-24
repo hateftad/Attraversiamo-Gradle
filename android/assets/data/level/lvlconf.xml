@@ -164,7 +164,7 @@
         <nrOfPlayers>2</nrOfPlayers>
         <hasPortal>false</hasPortal>
         <player>
-            <skinName>silhouette</skinName>
+            <skinName>color</skinName>
             <finishFacingLeft>false</finishFacingLeft>
             <active>true</active>
             <canDeactivate>true</canDeactivate>
@@ -174,7 +174,7 @@
             <finishAnim>suckin</finishAnim>
         </player>
         <player>
-            <skinName>silhouette</skinName>
+            <skinName>color</skinName>
             <finishFacingLeft>false</finishFacingLeft>
             <active>false</active>
             <canDeactivate>true</canDeactivate>
