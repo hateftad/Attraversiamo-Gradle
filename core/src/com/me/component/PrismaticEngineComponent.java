@@ -1,6 +1,7 @@
 package com.me.component;
 
 import com.badlogic.gdx.physics.box2d.Joint;
+import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.events.ButtonEvent;
@@ -9,28 +10,28 @@ import com.me.events.HorizontalButtonEvent;
 import com.me.utils.Direction;
 
 /**
- * Created by hateftadayon on 10/24/15.
+ * Created by hateftadayon on 25/01/16.
  */
-public class TwoWayEngineComponent extends BaseComponent implements ButtonStateObserverComponent {
+public class PrismaticEngineComponent extends BaseComponent implements ButtonStateObserverComponent {
 
-    private RevoluteJoint m_wheelJoint;
+    private PrismaticJoint m_wheelJoint;
     private int m_eventId;
     private static final int SPEED = 3;
 
-    public TwoWayEngineComponent(int taskId, Joint wheelJoint){
+    public PrismaticEngineComponent(int taskId, Joint wheelJoint){
         m_eventId = taskId;
-        m_wheelJoint = (RevoluteJoint) wheelJoint;
-        m_wheelJoint.setMaxMotorTorque(3000);
+        m_wheelJoint = (PrismaticJoint) wheelJoint;
+        m_wheelJoint.setMaxMotorForce(3000);
     }
 
     @Override
     public void onNotify(ButtonEvent event) {
-        if(event.getEventType() == GameEventType.HorizontalButton) {
+        if(event.getEventType() == GameEventType.VerticalButton) {
             if (m_eventId == event.getEventId()) {
                 HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
-                if(buttonEvent.getDirection() == Direction.Left){
+                if(buttonEvent.getDirection() == Direction.Up){
                     setVelocity(SPEED);
-                } else if(buttonEvent.getDirection() == Direction.Right){
+                } else if(buttonEvent.getDirection() == Direction.Down){
                     setVelocity(-SPEED);
                 }
             }
@@ -41,11 +42,6 @@ public class TwoWayEngineComponent extends BaseComponent implements ButtonStateO
         m_wheelJoint.setMotorSpeed(velocity);
     }
 
-    public void standStill(){
-        m_wheelJoint.enableMotor(true);
-        m_wheelJoint.setMotorSpeed(0);
-    }
-
     @Override
     public void dispose() {
 
@@ -53,6 +49,6 @@ public class TwoWayEngineComponent extends BaseComponent implements ButtonStateO
 
     @Override
     public void restart() {
-        standStill();
+
     }
 }

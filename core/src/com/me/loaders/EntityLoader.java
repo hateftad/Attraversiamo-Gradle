@@ -554,7 +554,7 @@ public class EntityLoader {
                 } else if (name.equals("waterEngine")) {
                     int taskId = m_scene.getCustom(joint, "taskId", 0);
                     int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
-                    TwoWayEngineComponent engineComponent = new TwoWayEngineComponent(taskId, JointFactory.getInstance().createJoint(
+                    RevoluteEngineComponent engineComponent = new RevoluteEngineComponent(taskId, JointFactory.getInstance().createJoint(
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
                     entity.addComponent(engineComponent);
@@ -590,7 +590,7 @@ public class EntityLoader {
                 } else if (name.equals("waterEngine")) {
                     int taskId = m_scene.getCustom(joint, "taskId", 0);
                     int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
-                    TwoWayEngineComponent engineComponent = new TwoWayEngineComponent(taskId, JointFactory.getInstance().createJoint(
+                    RevoluteEngineComponent engineComponent = new RevoluteEngineComponent(taskId, JointFactory.getInstance().createJoint(
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
                     entity.addComponent(engineComponent);
@@ -630,7 +630,16 @@ public class EntityLoader {
                 entity.addComponent(comp);
                 entity.addToWorld();
                 gameEntityWorld.addObserver(comp);
-            } else {
+            } else if (name.equals("elevatorMotor")) {
+                int taskId = m_scene.getCustom(joint, "taskId", 0);
+                int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                PrismaticEngineComponent engineComponent = new PrismaticEngineComponent(taskId, JointFactory.getInstance().createJoint(
+                        tempList.get(ind.first),
+                        tempList.get(ind.second), jDef, physicsWorld));
+                entity.addComponent(engineComponent);
+                gameEntityWorld.addObserver(engineComponent);
+            }
+            else {
                 JointFactory.getInstance().createJoint(
                         tempList.get(ind.first), tempList.get(ind.second),
                         jDef, physicsWorld);
