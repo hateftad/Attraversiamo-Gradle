@@ -25,6 +25,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+        config.useImmersiveMode = true;
 
         GameConfig cfg = new GameConfig();
         cfg.platform = Platform.ANDROID;

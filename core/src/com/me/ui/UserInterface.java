@@ -12,17 +12,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.me.config.PlayerConfig;
+import com.me.level.Level;
 
 public class UserInterface {
 
     private Stage m_stage;
     private Skin m_skin;
+    private int m_nrOfPlayers;
 
 
-    public UserInterface(){
+    public UserInterface(Level level){
 		m_stage = new Stage();
         loadSkin();
-	}
+        m_nrOfPlayers = level.getNumberOfFinishers();
+        for (PlayerConfig playerConfig : level.getPlayerConfigs()) {
+
+        }
+    }
 
     private void loadSkin(){
         TextureAtlas m_atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas"));
@@ -64,6 +71,36 @@ public class UserInterface {
             }
         });
 
+
+
+
+		int size = Gdx.graphics.getWidth() / 10;
+        setupBottomRightButtons(size);
+
+        Table bottomLeftBtnsTable = new Table();
+        Table topBtnsTable = new Table();
+		
+		bottomLeftBtnsTable.setFillParent(true);
+		bottomLeftBtnsTable.bottom().left();
+		bottomLeftBtnsTable.add(leftBtn).bottom().left().space(20).width(size).height(size).padRight(20).padLeft(20);
+		bottomLeftBtnsTable.add(rightBtn).bottom().left().width(size).height(size);
+
+		topBtnsTable.setFillParent(true);
+		topBtnsTable.top().left();
+		topBtnsTable.add(menuBtn).width(100).height(100).padLeft(10).padTop(10);
+		
+		m_stage.addActor(topBtnsTable);
+		m_stage.addActor(bottomLeftBtnsTable);
+
+
+
+		if(Gdx.app.getType() != ApplicationType.Desktop){
+			Gdx.input.setInputProcessor(m_stage);
+		}
+	}
+
+    private void setupBottomRightButtons(int size){
+
         UIButton jumpBtn = createButton("up.up", new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.SPACE);
@@ -86,67 +123,50 @@ public class UserInterface {
             }
         });
 
-        final TextButtonStyle btnStyleFirst = new TextButtonStyle();
-        final TextButtonStyle btnStyleSecond = new TextButtonStyle();
-        btnStyleFirst.up = m_skin.getDrawable("change1.up");
-        btnStyleSecond.up = m_skin.getDrawable("change2.up");
-        final UIButton charSwitchBtn = createButton(btnStyleFirst);
-        charSwitchBtn.addListener(new InputListener() {
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                InputManager.getInstance().characterSwitch();
-
-                return true;
-            }
-
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                InputManager.getInstance().keyUp(Input.Keys.C);
-            }
-        });
-        charSwitchBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(InputManager.getInstance().playerOneActive){
-                    charSwitchBtn.setStyle(btnStyleSecond);
-                } else {
-                    charSwitchBtn.setStyle(btnStyleFirst);
-                }
-            }
-        });
-
-		int size = Gdx.graphics.getWidth() / 10;
-
-        Table bottomLeftBtnsTable = new Table();
         Table bottomRightBtnsTable = new Table();
-        Table charSwitchTable = new Table();
-        Table topBtnsTable = new Table();
-		
-		bottomLeftBtnsTable.setFillParent(true);
-		bottomLeftBtnsTable.bottom().left();
-		bottomLeftBtnsTable.add(leftBtn).bottom().left().space(20).width(size).height(size).padRight(20).padLeft(20);
-		bottomLeftBtnsTable.add(rightBtn).bottom().left().width(size).height(size);
-		
-		bottomRightBtnsTable.setFillParent(true);
-		bottomRightBtnsTable.bottom().right().setHeight(size);
-		bottomRightBtnsTable.add(actionBtn).bottom().right().space(20).width(size).height(size);
-		bottomRightBtnsTable.add(jumpBtn).bottom().right().padRight(size).width(size).height(size);
+        if(m_nrOfPlayers > 1) {
+            final TextButtonStyle btnStyleFirst = new TextButtonStyle();
+            final TextButtonStyle btnStyleSecond = new TextButtonStyle();
+            btnStyleFirst.up = m_skin.getDrawable("change1.up");
+            btnStyleSecond.up = m_skin.getDrawable("change2.up");
 
-        charSwitchTable.setFillParent(true);
-        charSwitchTable.bottom().right().padBottom(size);
-        charSwitchTable.add(charSwitchBtn).bottom().right().width(size * 1.5f).height(size * 1.5f);
-		
-		topBtnsTable.setFillParent(true);
-		topBtnsTable.top().left();
-		topBtnsTable.add(menuBtn).width(100).height(100).padLeft(10).padTop(10);
-		
-		m_stage.addActor(topBtnsTable);
-		m_stage.addActor(bottomLeftBtnsTable);
-		m_stage.addActor(bottomRightBtnsTable);
-        m_stage.addActor(charSwitchTable);
+            final UIButton charSwitchBtn = createButton(btnStyleSecond);
+            charSwitchBtn.addListener(new InputListener() {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    InputManager.getInstance().characterSwitch();
+                    return true;
+                }
 
-		if(Gdx.app.getType() != ApplicationType.Desktop){
-			Gdx.input.setInputProcessor(m_stage);
-		}
-	}
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    InputManager.getInstance().keyUp(Input.Keys.C);
+                }
+            });
+
+            charSwitchBtn.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    if (InputManager.getInstance().playerOneActive) {
+                        charSwitchBtn.setStyle(btnStyleSecond);
+                    } else {
+                        charSwitchBtn.setStyle(btnStyleFirst);
+                    }
+                }
+            });
+
+            Table charSwitchTable = new Table();
+            m_stage.addActor(charSwitchTable);
+            charSwitchTable.setFillParent(true);
+            charSwitchTable.bottom().right().padBottom(size);
+            charSwitchTable.add(charSwitchBtn).bottom().right().width(size * 1.5f).height(size * 1.5f);
+        }
+        bottomRightBtnsTable.setFillParent(true);
+        bottomRightBtnsTable.bottom().right().setHeight(size);
+        bottomRightBtnsTable.add(actionBtn).bottom().right().space(20).width(size).height(size);
+        bottomRightBtnsTable.add(jumpBtn).bottom().right().padRight(size).width(size).height(size);
+
+
+        m_stage.addActor(bottomRightBtnsTable);
+    }
 
     private UIButton createButton(String drawableName, InputListener inputListener){
         TextButtonStyle btnStyle = new TextButtonStyle();

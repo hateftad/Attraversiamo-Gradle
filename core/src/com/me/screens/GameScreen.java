@@ -37,13 +37,12 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -14), true));
         JointFactory.getInstance().initialize(m_physicsSystem.getWorld());
         RayHandler rayHandler = new RayHandler(m_physicsSystem.getWorld());
-        rayHandler.setAmbientLight(1f);
+        rayHandler.setAmbientLight(0.5f);
         rayHandler.setShadows(false);
         rayHandler.setAmbientLight(Color.GREEN);
         m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_camera));
         m_renderSystem = m_entityWorld.setSystem(new RenderSystem(m_camera));
         m_entityWorld.setSystem(m_physicsSystem);
-//        m_entityWorld.setSystem(new PlayerAttributeSystem());
         m_entityWorld.setSystem(new LevelSystem(this));
         m_entityWorld.setSystem(new ParticlesSystem(2));
         m_entityWorld.setSystem(new ManInteractionSystem());
@@ -55,10 +54,8 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         game.m_processors.add(m_cameraSystem);
         game.m_processors.add(m_playerOneSystem);
 
-        m_userInterface = new UserInterface();
-        m_userInterface.init();
         if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
-            m_userInterface = new UserInterface();
+            m_userInterface = new UserInterface(currentLevel);
             m_userInterface.init();
         } else {
             Gdx.input.setInputProcessor(game.m_multiPlexer);
