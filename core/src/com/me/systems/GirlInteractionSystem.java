@@ -95,6 +95,12 @@ public class GirlInteractionSystem extends PlayerSystem {
                 notifyObservers(new TaskEvent(playerComponent.isFacingLeft() ? GameEventType.LeftImpulse : GameEventType.RightImpulse));
             }
         }
+
+        if(playerComponent.isFinishing()){
+            if(animation.isCompleted(PlayerState.RunOut) || animation.isCompleted(PlayerState.SuckIn)){
+                notifyObservers(new TaskEvent(GameEventType.LevelFinished, playerComponent.getPlayerNr()));
+            }
+        }
     }
 
     @Override

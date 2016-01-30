@@ -1,12 +1,9 @@
 package com.me.level;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.config.LevelConfig;
 import com.me.config.PlayerConfig;
-
-import java.util.HashMap;
 
 /**
  * Created by hateftadayon on 6/23/15.

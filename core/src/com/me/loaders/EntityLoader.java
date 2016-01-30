@@ -169,7 +169,7 @@ public class EntityLoader {
                 entity.addComponent(particleComponent);
                 entity.addComponent(new TriggerComponent());
                 ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
-                LevelComponent levelComponent = new LevelComponent();
+                LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers());
                 entityWorld.addObserver(reachEndComponent);
                 entityWorld.addObserver(levelComponent);
                 entity.addComponent(levelComponent);
@@ -178,7 +178,7 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("finish")) {
                 entity.addComponent(new TriggerComponent());
                 ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
-                LevelComponent levelComponent = new LevelComponent();
+                LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers());
                 entityWorld.addObserver(reachEndComponent);
                 entityWorld.addObserver(levelComponent);
                 entity.addComponent(levelComponent);
@@ -198,6 +198,10 @@ public class EntityLoader {
             }
             if (ud.mName.equalsIgnoreCase("minY")) {
                 level.getLevelBoundaries().minY = Converters.ToWorld(body.getPosition().y);
+                //System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
+            }
+            if (ud.mName.equalsIgnoreCase("maxY")) {
+                level.getLevelBoundaries().maxY = Converters.ToWorld(body.getPosition().y);
                 //System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
             }
             if(ud.mName.equalsIgnoreCase("cage")){

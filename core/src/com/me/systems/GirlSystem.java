@@ -147,12 +147,6 @@ public class GirlSystem extends PlayerSystem {
             setPlayerState(entity, PlayerState.Falling);
         }
 
-        if(playerComponent.isFinishing()){
-            if(!playerComponent.isSuckingIn()){
-                levelFinished();
-            }
-        }
-
         if(!playerComponent.isActive() &&
                 !physicsComponent.isFalling() &&
                 playerComponent.shouldBeIdle()){

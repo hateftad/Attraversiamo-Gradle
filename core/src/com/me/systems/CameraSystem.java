@@ -53,7 +53,7 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
     }
 
 	public void setLevelBoundariesForCamera(Level.LevelBoundaries boundaries){
-		m_camera.setLimit(boundaries.maxX, boundaries.minX, boundaries.minY);
+		m_camera.setLimit(boundaries);
 	}
 
 	public CameraComponent getCameraComponent(){

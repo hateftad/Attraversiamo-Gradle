@@ -7,23 +7,18 @@ import com.me.events.TaskEvent;
 /**
  * Created by hateftadayon on 7/11/15.
  */
-public class LevelComponent extends BaseComponent implements TaskEventObserverComponent {
+public class LevelComponent extends TaskComponent implements TaskEventObserverComponent {
 
-
-    private boolean m_isFinished;
-
-    public LevelComponent(){
-
-    }
-
-    public boolean isFinished(){
-        return m_isFinished;
+    public LevelComponent(int finishers){
+        super(finishers);
     }
 
     @Override
     public void onNotify(TaskEvent event) {
         if(event.getEventType() == GameEventType.LevelFinished){
-            m_isFinished = true;
+            if (!m_finishers.containsKey(event.getPlayerNr())) {
+                m_finishers.put(event.getPlayerNr(), true);
+            }
         }
     }
 

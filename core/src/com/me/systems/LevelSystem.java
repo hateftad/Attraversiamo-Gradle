@@ -23,6 +23,8 @@ public class LevelSystem extends GameEntityProcessingSystem {
     ComponentMapper<ReachEndComponent> m_reachEndComps;
     @Mapper
     ComponentMapper<SingleParticleComponent> m_particleComps;
+    @Mapper
+    ComponentMapper<LevelComponent> m_levelComps;
 
 
     @SuppressWarnings("unchecked")
@@ -33,10 +35,6 @@ public class LevelSystem extends GameEntityProcessingSystem {
 
     public void setCurrentLevel(Level level) {
         m_currentLevel = level;
-    }
-
-    public Level getCurrentLevel() {
-        return m_currentLevel;
     }
 
     public void setProcessing(boolean enable) {
@@ -62,13 +60,13 @@ public class LevelSystem extends GameEntityProcessingSystem {
 
     private void checkFinished(Entity entity) {
 
+        LevelComponent levelComponent = m_levelComps.get(entity);
         ReachEndComponent reachEndComponent = m_reachEndComps.get(entity);
         if (reachEndComponent.allFinished() && !m_currentLevel.isFinished()) {
             notifyObservers(new TaskEvent(GameEventType.AllReachedEnd));
             m_currentLevel.setFinished(true);
         }
-
-        if (m_currentLevel.isFinished()) {
+        if (levelComponent.allFinished()) {
             if (m_particleComps.has(entity)) {
                 SingleParticleComponent particleComponent = m_particleComps.get(entity);
                 if (particleComponent.isPortalComplete()) {
