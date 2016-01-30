@@ -69,7 +69,7 @@
             <playerName>smallCharacter</playerName>
             <playerNr>1</playerNr>
 	        <facingLeft>false</facingLeft>
-	        <finishAnim>suckin</finishAnim>
+	        <finishAnim>runOut</finishAnim>
         </player>
         <zoom>18</zoom>
         <lightColor>Yellow</lightColor>
@@ -77,7 +77,7 @@
     </Level>
     <Level name="level4">
         <levelNr>4</levelNr>
-        <nrOfPlayers>1</nrOfPlayers>
+        <nrOfPlayers>2</nrOfPlayers>
         <hasPortal>false</hasPortal>
         <player>
             <finishFacingLeft>false</finishFacingLeft>
@@ -99,7 +99,7 @@
             <facingLeft>false</facingLeft>
             <finishAnim>runOut</finishAnim>
         </player>
-        <zoom>12</zoom>
+        <zoom>13</zoom>
         <lightColor>White</lightColor>
         <nextLevel>2</nextLevel>
     </Level>

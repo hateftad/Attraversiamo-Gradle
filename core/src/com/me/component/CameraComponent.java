@@ -38,7 +38,7 @@ public class CameraComponent extends BaseComponent {
 	
 	public void update(float delta){
 		
-		Vector3 position = getCamera().position;a
+		Vector3 position = getCamera().position;
 		
 		position.x += (m_target.x - position.x) * m_lerp;
 		position.y += (m_target.y - position.y) * m_lerp;
