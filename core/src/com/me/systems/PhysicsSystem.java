@@ -90,8 +90,8 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
         super(Aspect.getAspectForAll(PhysicsComponent.class));
         m_world = physicsWorld;
         m_world.setAutoClearForces(true);
-        m_world.setContinuousPhysics(false);
-        m_world.setWarmStarting(false);
+        m_world.setContinuousPhysics(true);
+        m_world.setWarmStarting(true);
         m_velocityItr = velocityIterations;
         m_positionItr = positionIterations;
         m_physicsContactListener = new PhysicsContactListener();

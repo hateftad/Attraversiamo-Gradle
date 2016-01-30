@@ -213,10 +213,14 @@ public class PhysicsListenerSetup {
                                 e.getComponent(TouchComponent.class).m_canCrawl = true;
                             }
                             if (otherUd.getType() == Type.Portal) {
-                                m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                                if(e.getComponent(FeetComponent.class).hasCollided()) {
+                                    m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                                }
                             }
                             if (otherUd.getType() == Type.Finish) {
-                                m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                                if(e.getComponent(FeetComponent.class).hasCollided()) {
+                                    m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                                }
                             }
                             if(otherUd.getType() == Type.InsideCage){
                                 e.getComponent(PhysicsComponent.class).setFixedRotation("center", true);
@@ -307,6 +311,7 @@ public class PhysicsListenerSetup {
                             m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.BlackSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
                         }
                         if (otherUd.getType() == Type.LeftCrawl) {
+                            e.getComponent(PhysicsComponent.class).enableBody("center");
                             e.getComponent(TouchComponent.class).m_canCrawl = false;
                         }
                         if (otherUd.getType() == Type.Portal) {

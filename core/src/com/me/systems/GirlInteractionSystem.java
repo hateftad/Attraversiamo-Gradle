@@ -72,7 +72,6 @@ public class GirlInteractionSystem extends PlayerSystem {
 
         if (playerComponent.isGettingUp()) {
             if (animation.isCompleted(PlayerState.StandUp)) {
-                physicsComponent.enableBody("center");
                 setPlayerState(entity, PlayerState.Idle);
             }
             movementComponent.standStill();

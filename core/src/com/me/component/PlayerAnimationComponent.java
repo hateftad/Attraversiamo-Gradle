@@ -110,10 +110,10 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     playAnimation("runOut", false);
                     break;
                 case HoldHandLeading:
-                    playAnimation("holdingHandsIdleLeading", false);
+//                    playAnimation("holdingHandsIdleLeading", false);
                     break;
                 case HoldHandFollowing:
-                    playAnimation("holdingHandsIdleFollowing", false);
+//                    playAnimation("holdingHandsIdleFollowing", false);
                     break;
                 case PullingLedge:
                     playAnimation("pullingLedge", false);
