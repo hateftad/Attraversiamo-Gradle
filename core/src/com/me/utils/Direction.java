@@ -24,4 +24,12 @@ public class Direction {
             m_currentDirection = Left;
         }
     }
+
+    public void upToDown(){
+        if(m_currentDirection == Up){
+            m_currentDirection = Down;
+        } else {
+            m_currentDirection = Up;
+        }
+    }
 }

@@ -89,6 +89,12 @@ public class ManInteractionSystem extends PlayerSystem {
             }
         }
 
+        if(playerComponent.isPressingButton()){
+            if(animation.isCompleted(PlayerState.PressButton)){
+                setPlayerState(entity, PlayerState.Idle);
+            }
+        }
+
         if(playerComponent.isFinishing()){
             if(animation.isCompleted(PlayerState.RunOut) || animation.isCompleted(PlayerState.SuckIn)){
                 notifyObservers(new TaskEvent(GameEventType.LevelFinished, playerComponent.getPlayerNr()));

@@ -7,6 +7,7 @@ import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.events.ButtonEvent;
 import com.me.events.GameEventType;
 import com.me.events.HorizontalButtonEvent;
+import com.me.events.VerticalButtonEvent;
 import com.me.utils.Direction;
 
 /**
@@ -21,14 +22,14 @@ public class PrismaticEngineComponent extends BaseComponent implements ButtonSta
     public PrismaticEngineComponent(int taskId, Joint wheelJoint){
         m_eventId = taskId;
         m_wheelJoint = (PrismaticJoint) wheelJoint;
-        m_wheelJoint.setMaxMotorForce(3000);
     }
 
     @Override
     public void onNotify(ButtonEvent event) {
         if(event.getEventType() == GameEventType.VerticalButton) {
             if (m_eventId == event.getEventId()) {
-                HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
+                VerticalButtonEvent buttonEvent = (VerticalButtonEvent) event;
+                buttonEvent.update();
                 if(buttonEvent.getDirection() == Direction.Up){
                     setVelocity(SPEED);
                 } else if(buttonEvent.getDirection() == Direction.Down){

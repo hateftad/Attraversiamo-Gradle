@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.me.events.GameEvent;
 import com.me.events.HorizontalButtonEvent;
 import com.me.events.TaskEvent;
+import com.me.events.VerticalButtonEvent;
 import com.me.level.tasks.BodyInfo;
 import com.me.loaders.RubeScene;
 
@@ -20,6 +21,8 @@ public class GameEventFactory {
                 return new TaskEvent(bodyInfo);
             case HorizontalButton:
                 return new HorizontalButtonEvent(bodyInfo);
+            case VerticalButton:
+                return new VerticalButtonEvent(bodyInfo);
             case GroundTouch:
                 return new TaskEvent(bodyInfo);
             default:

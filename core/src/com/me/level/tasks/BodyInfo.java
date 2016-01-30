@@ -34,6 +34,8 @@ public class BodyInfo {
             m_taskType = GameEventType.HorizontalButton;
         } else if ("GroundTouch".equalsIgnoreCase(taskType)){
             m_taskType = GameEventType.GroundTouch;
+        } else if ("VerticalButton".equalsIgnoreCase(taskType)) {
+            m_taskType = GameEventType.VerticalButton;
         }
     }
 

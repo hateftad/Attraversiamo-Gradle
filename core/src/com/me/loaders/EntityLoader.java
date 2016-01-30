@@ -149,16 +149,12 @@ public class EntityLoader {
                 entity.addComponent(new LightComponent(light, "cameraLight"));
                 entityWorld.getManager(GroupManager.class).add(entity, "lights");
             }
-            if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("behindLight")) {
-
-                // entity.addComponent(component);
-            }
 
             loadFixtures(pComp, body);
 
             BodyUserData ud = (BodyUserData) body.getUserData();
             if (ud.mName.equalsIgnoreCase("box")) {
-                //pComp.setMass(20f, ud.mName);
+                pComp.setMass(20f, ud.mName);
                 //pComp.setFriction(20.0f);
                 entity.addComponent(new RestartComponent())
                         .addComponent(new QueueComponent());
@@ -242,7 +238,7 @@ public class EntityLoader {
             pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
             tempList.add(pComp.getBody(ud.mName));
             entity.addToWorld();
-            entityWorld.getManager(GroupManager.class).add(entity, "worldObjects");
+
         }
 
         loadBodyJoints(physicsWorld, tempList, entityWorld);
