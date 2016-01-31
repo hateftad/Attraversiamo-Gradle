@@ -1,7 +1,9 @@
 package com.me.component;
 
+import com.me.component.interfaces.ParticleEventObserverComponent;
 import com.me.component.interfaces.TaskEventObserverComponent;
 import com.me.events.GameEventType;
+import com.me.events.ParticleEvent;
 import com.me.events.TaskEvent;
 
 /**

@@ -224,6 +224,14 @@ public class EntityLoader {
                 entityWorld.addObserver(particleComponent);
             }
 
+            if (ud.mName.equalsIgnoreCase("singleParticleEmitter")) {
+                String particleName = m_scene.getCustom(body, "particlename", "");
+                int particleId = m_scene.getCustom(body, "taskId", 0);
+                EventParticleComponent particleComponent = new EventParticleComponent(particleName, particleId, body.getPosition());
+                entity.addComponent(particleComponent);
+                entityWorld.addObserver(particleComponent);
+            }
+
             if (ud.mName.equalsIgnoreCase("bodyInfo")) {
                 GameEventFactory factory = new GameEventFactory();
                 pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));

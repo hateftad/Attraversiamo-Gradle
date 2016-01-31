@@ -26,4 +26,8 @@ public abstract class GameEntityProcessingSystem extends EntityProcessingSystem 
         ((GameEntityWorld)world).onNotify(event);
     }
 
+    public void notifyObservers(ParticleEvent event){
+        ((GameEntityWorld)world).onNotify(event);
+    }
+
 }

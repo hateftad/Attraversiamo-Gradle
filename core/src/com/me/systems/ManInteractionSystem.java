@@ -7,6 +7,7 @@ import com.artemis.annotations.Mapper;
 import com.me.component.*;
 import com.me.events.AnimationEvent;
 import com.me.events.GameEventType;
+import com.me.events.ParticleEvent;
 import com.me.events.TaskEvent;
 import com.me.events.states.PlayerState;
 
@@ -54,6 +55,7 @@ public class ManInteractionSystem extends PlayerSystem {
             }
             if(animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.PULLLEDGE){
                 notifyObservers(new TaskEvent(GameEventType.PullingLedge));
+                notifyObservers(new ParticleEvent(GameEventType.Particle, 1));
                 jointComponent.destroyHangJoint();
                 setPlayerState(entity, PlayerState.Idle);
             }

@@ -16,5 +16,6 @@ public enum GameEventType {
     HoldingHandsFollowing,
     HoldingHandsLeading,
     HandHoldingEnded,
-    LeftImpulse, RightImpulse, ColorSkin, BlackSkin, VerticalButton, PullingLedge
+    LeftImpulse, RightImpulse, ColorSkin, BlackSkin, VerticalButton, PullingLedge,
+    Particle
 }

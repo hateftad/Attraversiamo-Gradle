@@ -9,6 +9,8 @@ import com.me.component.*;
 import com.me.config.GameConfig;
 import com.me.config.GlobalConfig;
 import com.me.events.GameEventType;
+import com.me.events.ParticleEvent;
+import com.me.events.TaskEvent;
 import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
 import com.me.listeners.LevelEventListener;
