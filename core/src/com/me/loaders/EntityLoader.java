@@ -8,6 +8,7 @@ import box2dLight.RayHandler;
 import com.artemis.Entity;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
@@ -72,9 +73,8 @@ public class EntityLoader {
                           World physicsWorld, RayHandler rh) {
         String levelDirectory = level.getLevelName();
         clearLoader();
-
-        m_scene = m_loader.loadScene(Gdx.files.internal("data/level/"
-                + levelDirectory + "/" + levelDirectory + ".json"));
+        FileHandle fileHandle = Gdx.files.internal("data/level/" + levelDirectory + "/" + levelDirectory + ".json");
+        m_scene = m_loader.loadScene(fileHandle);
         Array<Body> bodies = m_scene.getBodies();
 
         Vector2 bodyPos = new Vector2();

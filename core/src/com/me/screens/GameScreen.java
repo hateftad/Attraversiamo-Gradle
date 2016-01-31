@@ -61,6 +61,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
             Gdx.input.setInputProcessor(game.m_multiPlexer);
         }
 
+        InputManager.getInstance().reset();
     }
 
     @Override
@@ -141,11 +142,13 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     @Override
     public void pause() {
         System.out.println("pause()");
+        m_physicsSystem.setEnabled(false);
     }
 
     @Override
     public void resume() {
         System.out.println("resume()");
+        m_physicsSystem.setEnabled(true);
     }
 
     @Override
