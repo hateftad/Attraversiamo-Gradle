@@ -1,4 +1,4 @@
-Untitled
+Spark
 - Delay -
 active: false
 - Duration - 
@@ -104,7 +104,7 @@ active: false
 - Tint - 
 colorsCount: 3
 colors0: 0.6392157
-colors1: 0.6
+colors1: 0.5921569
 colors2: 0.03137255
 timelineCount: 1
 timeline0: 0.0

@@ -31,6 +31,9 @@ public class RenderSystem extends EntitySystem {
 	@Mapper
 	ComponentMapper<ContinuousParticles> m_continuousParticles;
 
+    @Mapper
+    ComponentMapper<EventParticleComponent> m_eventParticles;
+
 	@Mapper
 	ComponentMapper<ShaderComponent> m_shaderComps;
 
@@ -90,6 +93,13 @@ public class RenderSystem extends EntitySystem {
 					particles.draw(m_batch, world.delta);
 				}
 			}
+
+            if (m_eventParticles.has(e)) {
+                EventParticleComponent particles = m_eventParticles.get(e);
+                if (particles.needsDrawAndUpdate()) {
+                    particles.draw(m_batch, world.delta);
+                }
+            }
 
 			PhysicsComponent physics = m_physics.getSafe(e);
 			physics.updateWorldPosition();

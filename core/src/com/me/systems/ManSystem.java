@@ -90,6 +90,7 @@ public class ManSystem extends PlayerSystem {
             }
 
             if (m_inputMgr.isDown(action)) {
+                notifyObservers(new ParticleEvent(GameEventType.Particle, 1));
                 if (touch.m_footEdge) {
                     if (touch.m_footEdgeL) {
                         player.setFacingLeft(true);

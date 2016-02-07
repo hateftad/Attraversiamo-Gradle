@@ -227,7 +227,7 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("singleParticleEmitter")) {
                 String particleName = m_scene.getCustom(body, "particlename", "");
                 int particleId = m_scene.getCustom(body, "taskId", 0);
-                EventParticleComponent particleComponent = new EventParticleComponent(particleName, particleId, body.getPosition());
+                EventParticleComponent particleComponent = new EventParticleComponent(particleName, particleId, pComp.getPosition());
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
             }
