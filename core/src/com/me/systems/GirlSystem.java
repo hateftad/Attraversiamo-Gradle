@@ -28,8 +28,6 @@ public class GirlSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<PushComponent> m_pushComps;
     @Mapper
-    ComponentMapper<EventComponent> m_eventComps;
-    @Mapper
     ComponentMapper<CharacterMovementComponent> m_movementComps;
     @Mapper
     ComponentMapper<FeetComponent> m_feetComps;
@@ -73,16 +71,13 @@ public class GirlSystem extends PlayerSystem {
                     movementComponent.standStill();
                 }
                 if (touch.m_pushArea) {
-                    EventComponent component = m_eventComps.get(entity);
                     if (touch.m_leftPushArea) {
                         player.setFacingLeft(false);
                         setPlayerState(entity, PlayerState.PressButton);
-                        component.getEventInfo().notify(this, player.getPlayerNr());
                     }
                     if (touch.m_rightPushArea) {
                         player.setFacingLeft(true);
                         setPlayerState(entity, PlayerState.PressButton);
-                        component.getEventInfo().notify(this, player.getPlayerNr());
                     }
                     movementComponent.standStill();
                 }

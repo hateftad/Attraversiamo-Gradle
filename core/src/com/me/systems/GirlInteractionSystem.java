@@ -29,6 +29,8 @@ public class GirlInteractionSystem extends PlayerSystem {
     ComponentMapper<GrabComponent> m_grabComps;
     @Mapper
     ComponentMapper<CharacterMovementComponent> m_movementComps;
+    @Mapper
+    ComponentMapper<EventComponent> m_eventComps;
 
     @SuppressWarnings("unchecked")
     public GirlInteractionSystem() {
@@ -79,7 +81,7 @@ public class GirlInteractionSystem extends PlayerSystem {
         if (playerComponent.isJumping()) {
             if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMPUP) {
                 animation.getEvent().resetEvent();
-                physicsComponent.applyLinearImpulse(0, 3);
+                physicsComponent.applyLinearImpulse(0, 3.5f);
             } else if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMP) {
                 animation.getEvent().resetEvent();
                 physicsComponent.setLinearVelocity(physicsComponent.getLinearVelocity().x, 7f);
@@ -96,6 +98,12 @@ public class GirlInteractionSystem extends PlayerSystem {
         }
 
         if(playerComponent.isPressingButton()){
+            if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.PRESSINGBUTTON){
+                animation.getEvent().resetEvent();
+                EventComponent component = m_eventComps.get(entity);
+                component.getEventInfo().notify(this, playerComponent.getPlayerNr());
+            }
+
             if(animation.isCompleted(PlayerState.PressButton)){
                 setPlayerState(entity, PlayerState.Idle);
             }

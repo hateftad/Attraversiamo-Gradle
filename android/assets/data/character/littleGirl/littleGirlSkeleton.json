@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "VVJtiQH2o4VrrVojC3/BHsWr+Qs", "spine": "3.0.08", "width": 165.36, "height": 494.6, "images": "./../Images/" },
+"skeleton": { "hash": "oqwWyLJWNPG2FuT9jqniDjDlslM", "spine": "3.0.10", "width": 165.36, "height": 494.6, "images": "./../Images/" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "hip", "parent": "root", "x": 6.09, "y": 247.83 },
@@ -208,6 +208,7 @@
 "events": {
 	"jump": {},
 	"jumpUp": {},
+	"pressingButton": {},
 	"swing": {}
 },
 "animations": {
@@ -1672,7 +1673,10 @@
 					{ "time": 0, "x": 1, "y": 1 }
 				]
 			}
-		}
+		},
+		"events": [
+			{ "time": 0.5, "name": "pressingButton" }
+		]
 	},
 	"pullUp": {
 		"bones": {

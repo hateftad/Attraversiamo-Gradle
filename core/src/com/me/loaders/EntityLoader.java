@@ -150,6 +150,8 @@ public class EntityLoader {
                 entityWorld.getManager(GroupManager.class).add(entity, "lights");
             }
 
+
+
             loadFixtures(pComp, body);
 
             BodyUserData ud = (BodyUserData) body.getUserData();
@@ -210,7 +212,7 @@ public class EntityLoader {
                 BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
                 buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 1), 4, 4);
                 buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 0.2f, 0);
-                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(-1, 4), 3, 2);
+                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(-1, 4), 5, 2);
                 entityWorld.addObserver(buoyancyComponent);
                 entity.addComponent(buoyancyComponent);
                 //entity.addComponent(new ShaderComponent("",body));
@@ -241,6 +243,16 @@ public class EntityLoader {
                 int player = m_scene.getCustom(body, "playerNr", -1);
                 level.addPlayerPosition(player, body.getPosition());
             }
+
+            if(ud.mName.equalsIgnoreCase("level_animation")){
+//                String atlas = m_scene.getCustom(body, "atlas", "");
+//                String skeleton = m_scene.getCustom(body, "skeleton", "");
+//                LevelAnimationComponent levelAnimationComponent = new LevelAnimationComponent(atlas, skeleton, 1f);
+//                entity.addComponent(levelAnimationComponent);
+//                entityWorld.addObserver(levelAnimationComponent);
+
+            }
+
 
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
             pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);

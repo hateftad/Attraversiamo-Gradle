@@ -32,6 +32,8 @@ public class AnimationEvent {
             return AnimationEventType.PULLLEDGE;
         } else if (eventName.equalsIgnoreCase(AnimationEventType.SWING.name())){
             return AnimationEventType.SWING;
+        } else if (eventName.equalsIgnoreCase(AnimationEventType.PRESSINGBUTTON.name())){
+            return AnimationEventType.PRESSINGBUTTON;
         }
         return AnimationEventType.NONE;
     }
@@ -45,6 +47,7 @@ public class AnimationEvent {
         JUMP,
         PULLLEDGE,
         SWING,
+        PRESSINGBUTTON,
         NONE
     }
 }
