@@ -79,7 +79,7 @@ public class GirlInteractionSystem extends PlayerSystem {
         if (playerComponent.isJumping()) {
             if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMPUP) {
                 animation.getEvent().resetEvent();
-                physicsComponent.applyLinearImpulse(0, 16);
+                physicsComponent.applyLinearImpulse(0, 3);
             } else if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMP) {
                 animation.getEvent().resetEvent();
                 physicsComponent.setLinearVelocity(physicsComponent.getLinearVelocity().x, 7f);

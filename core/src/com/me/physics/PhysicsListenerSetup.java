@@ -458,18 +458,23 @@ public class PhysicsListenerSetup {
             private void determineController(ObjectMap<String, B2BuoyancyController> controllerMap, Body body, boolean add) {
                 Entity entity = (Entity) body.getUserData();
                 B2BuoyancyController b2c;
+                String key;
                 if (entity.getComponent(PlayerOneComponent.class) != null) {
                     b2c = controllerMap.get(PlayerOneComponent.PlayerOne);
+                    key = PlayerOneComponent.PlayerOne;
                 } else if (entity.getComponent(PlayerTwoComponent.class) != null) {
                     b2c = controllerMap.get(PlayerTwoComponent.PlayerTwo);
+                    key = PlayerTwoComponent.PlayerTwo;
                 } else {
                     b2c = controllerMap.get(WorldObjectComponent.WorldObject);
+                    key = WorldObjectComponent.WorldObject;
                 }
                 if (add) {
                     b2c.addBody(body);
                 } else {
                     b2c.removeBody(body);
                 }
+                System.out.println("adding ? "+add + "in controller "+ key);
             }
 
             private void treatBouyancy(Body body, boolean submerged) {

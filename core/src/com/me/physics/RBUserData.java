@@ -17,10 +17,11 @@ public class RBUserData {
 
     public static final int
             Boundary = 0x0001,
-            Character = 0x0002,
-            WorldObject = 0x0004,
-            CharacterSensor = 0x0008,
-            WorldSensor = 0x0010,
+            CharacterFeet = 0x0002,
+            CharacterTorso = 0x0004,
+            WorldObject = 0x0008,
+            CharacterSensor = 0x00010,
+            WorldSensor = 0x0020,
             DEFAULT_1 = 0x0020,
             DEFAULT_2 = 0x0040,
             DEFAULT_3 = 0x0080,
@@ -64,19 +65,19 @@ public class RBUserData {
             case 1:
                 setType(Type.Ground);
                 filter.categoryBits = Boundary;
-                filter.maskBits = Character | WorldObject | Boundary | WorldSensor;
+                filter.maskBits = CharacterFeet | WorldObject | Boundary | WorldSensor;
                 break;
             case 2:
                 setType(Type.Wall);
                 break;
             case 3:
                 setType(Type.Torso);
-                filter.categoryBits = Character;
+                filter.categoryBits = CharacterTorso;
                 filter.maskBits = Boundary | WorldObject | WorldSensor;
                 break;
             case 4:
                 setType(Type.Feet);
-                filter.categoryBits = Character;
+                filter.categoryBits = CharacterFeet;
                 filter.maskBits = Boundary | WorldObject | WorldSensor;
                 break;
             case 5:
@@ -117,12 +118,12 @@ public class RBUserData {
             case 12:
                 setType(Type.LeftPullup);
                 filter.categoryBits = WorldSensor;
-                filter.maskBits = CharacterSensor | Character;
+                filter.maskBits = CharacterSensor | CharacterFeet;
                 break;
             case 13:
                 setType(Type.Box);
                 filter.categoryBits = WorldObject;
-                filter.maskBits = Character | Boundary | WorldSensor | WorldObject;
+                filter.maskBits = CharacterTorso | CharacterFeet | Boundary | WorldSensor | WorldObject;
                 break;
             case 14:
                 setType(Type.Hand);
@@ -165,17 +166,17 @@ public class RBUserData {
             case 22:
                 setType(Type.RightPullup);
                 filter.categoryBits = WorldSensor;
-                filter.maskBits = CharacterSensor | Character;
+                filter.maskBits = CharacterSensor | CharacterFeet;
                 break;
             case 23:
                 setType(Type.RightPushButton);
                 filter.categoryBits = WorldSensor;
-                filter.maskBits = Character;
+                filter.maskBits = CharacterFeet;
                 break;
             case 24:
                 setType(Type.LeftPushButton);
                 filter.categoryBits = WorldSensor;
-                filter.maskBits = Character;
+                filter.maskBits = CharacterFeet;
                 break;
             case 25:
                 setType(Type.HangHands);
@@ -190,7 +191,7 @@ public class RBUserData {
             case 27:
                 setType(Type.Water);
                 filter.categoryBits = WorldSensor;
-                filter.maskBits = CharacterSensor | Character | WorldObject;
+                filter.maskBits = CharacterSensor | CharacterTorso | WorldObject;
                 break;
             case 28:
                 setType(Type.LeftHandHold);

@@ -208,8 +208,8 @@ public class EntityLoader {
                 int eventId = m_scene.getCustom(body, "taskId", 0);
                 //pass in fluid velocity
                 BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
-                buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 3), 1, 2);
-                buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 1.5f, 2);
+                buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 1), 4, 4);
+                buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 0.2f, 0);
                 buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(-1, 4), 3, 2);
                 entityWorld.addObserver(buoyancyComponent);
                 entity.addComponent(buoyancyComponent);
@@ -312,9 +312,10 @@ public class EntityLoader {
                     String name = ((BodyUserData) body.getUserData()).mName;
                     if (pComp != null) {
                         pComp.addBody(physicsWorld, body, name);
+//                        pComp.setMass(20f, name);
                     } else {
                         pComp = new PhysicsComponent(physicsWorld, body, name);
-                        pComp.setMass(0.001f, name);
+//                        pComp.setMass(20f, name);
                         entity.addComponent(pComp);
                     }
 
@@ -323,9 +324,9 @@ public class EntityLoader {
 
                 } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
                         "hand")) {
-                    if (pComp != null)
+                    if (pComp != null) {
                         pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
-                    else {
+                    } else {
                         pComp = new PhysicsComponent(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
                         entity.addComponent(pComp);
                     }

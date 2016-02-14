@@ -274,12 +274,13 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                 BuoyancyComponent.BuoyancyControllerConfig controllerInfo = (BuoyancyComponent.BuoyancyControllerConfig) pairs.value;
                 B2BuoyancyController b2c = new B2BuoyancyController(B2BuoyancyController.DEFAULT_SURFACE_NORMAL,
                         controllerInfo.getFluidVelocity(),
-                        m_world.getGravity(),
+                        new Vector2(0, 10),
                         maxHeight,
                         fixture.getDensity(),
                         controllerInfo.getLinearDrag(),
                         controllerInfo.getAngularDrag());
                 controllers.put((String) pairs.key, b2c);
+                System.out.println(" fixture density "+fixture.getDensity());
             }
             fixture.setUserData(controllers);
             m_b2Controllers = controllers;
