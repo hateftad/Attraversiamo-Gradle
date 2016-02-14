@@ -59,9 +59,9 @@ public class GirlSystem extends PlayerSystem {
         keyInputComponent.update(m_inputMgr);
 
         if (canBeControlled(player)) {
-            if (keyInputComponent.m_left) {
+            if (keyInputComponent.m_percentageX < 0) {
                 moveLeft(entity);
-            } else if (keyInputComponent.m_right) {
+            } else if (keyInputComponent.m_percentageX > 0) {
                 moveRight(entity);
             }
             if (keyInputComponent.m_jump) {
@@ -163,6 +163,7 @@ public class GirlSystem extends PlayerSystem {
         VelocityLimitComponent vel = m_velComps.get(entity);
         TouchComponent touch = m_touchComps.get(entity);
         FeetComponent feetComponent = m_feetComps.get(entity);
+        KeyInputComponent keyInputComponent = m_movComps.get(entity);
 
 
         if (feetComponent.hasCollided() && !player.isCrawling()) {
@@ -170,8 +171,7 @@ public class GirlSystem extends PlayerSystem {
                 if (vel.m_velocity > 0) {
                     vel.m_velocity = 0;
                 }
-                vel.m_velocity -= VELOCITY * world.delta;
-                movementComponent.setVelocity(vel.m_velocity);
+                movementComponent.setVelocity(keyInputComponent.m_percentageX * 10);
                 if (movementComponent.getSpeed() < -vel.m_walkLimit) {
                     movementComponent.setVelocity(-vel.m_walkLimit);
                     setPlayerState(entity, PlayerState.Running);
@@ -205,14 +205,14 @@ public class GirlSystem extends PlayerSystem {
         VelocityLimitComponent vel = m_velComps.get(entity);
         TouchComponent touch = m_touchComps.get(entity);
         FeetComponent feetComponent = m_feetComps.get(entity);
+        KeyInputComponent keyInputComponent = m_movComps.get(entity);
 
         if (feetComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.m_boxTouch) {
                 if (vel.m_velocity < 0) {
                     vel.m_velocity = 0;
                 }
-                vel.m_velocity += VELOCITY * world.delta;
-                movementComponent.setVelocity(vel.m_velocity);
+                movementComponent.setVelocity(keyInputComponent.m_percentageX * 10);
                 if (movementComponent.getSpeed() > vel.m_walkLimit) {
                     movementComponent.setVelocity(vel.m_walkLimit);
                     setPlayerState(entity, PlayerState.Running);

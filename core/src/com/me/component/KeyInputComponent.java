@@ -10,6 +10,8 @@ public class KeyInputComponent extends BaseComponent {
     public boolean m_down;
     public boolean m_up;
     public boolean m_jump;
+    public float m_percentageX;
+    public float m_percentageY;
 
     public void set(boolean left, boolean right, boolean up, boolean down, boolean jump) {
         m_left = left;
@@ -24,14 +26,17 @@ public class KeyInputComponent extends BaseComponent {
         m_left = manager.isDown(InputManager.left);
         m_right = manager.isDown(InputManager.right);
         m_jump = manager.isDown(InputManager.jump);
+        m_percentageX = manager.getPercentageX();
+        m_percentageY = manager.getPercentageY();
+
     }
 
     public boolean moved() {
-        return (m_left) || (m_right) || (m_jump);
+        return (m_percentageX < 0) || (m_percentageX > 0) || (m_jump);
     }
 
     public boolean isMoving() {
-        return (m_left || m_right);
+        return ((m_percentageX < 0) || (m_percentageX > 0));
     }
 
     @Override

@@ -8,12 +8,27 @@ import com.me.listeners.LevelEventListener;
 public class InputManager {
 
 	public static int left = 0, right = 1, restart = 2, down = 3, jump = 4, rag = 5, first = 6, action = 7, skinChange = 8;
-	
-	public enum PlayerSelection{
+
+    public void setPercentage(float knobPercentX, float knobPercentY) {
+        m_percentageX = knobPercentX;
+        m_percentageY = knobPercentY;
+    }
+
+    public float getPercentageY() {
+        return m_percentageY;
+    }
+
+    public float getPercentageX() {
+        return m_percentageX;
+    }
+
+    public enum PlayerSelection{
 		ONE,
 		TWO
 	}
-	
+
+    private float m_percentageX, m_percentageY;
+
 	public PlayerSelection m_playerSelected;
 	public boolean playerOneActive;
 	private ArrayList<LevelEventListener> m_levelListeners;

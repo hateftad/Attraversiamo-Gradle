@@ -3,6 +3,7 @@ package com.me.ui;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,7 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.me.config.PlayerConfig;
 import com.me.level.Level;
 
@@ -21,6 +24,7 @@ public class UserInterface {
     private Skin m_skin;
     private int m_nrOfPlayers;
 
+    private Touchpad touchpad;
 
     public UserInterface(Level level){
 		m_stage = new Stage();
@@ -38,6 +42,18 @@ public class UserInterface {
 	
 	public void init(){
 
+		int size = Gdx.graphics.getWidth() / 10;
+        setupBottomRightButtons(size);
+//        setupControlButtons(size);
+        setUpTopButtons();
+        setupTouchPad(size);
+
+		if(Gdx.app.getType() != ApplicationType.Desktop){
+			Gdx.input.setInputProcessor(m_stage);
+		}
+	}
+
+    private void setupControlButtons(int size){
         UIButton leftBtn = createButton("left.up", new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.A);
@@ -60,6 +76,52 @@ public class UserInterface {
             }
         });
 
+
+        Table bottomLeftBtnsTable = new Table();
+        bottomLeftBtnsTable.setFillParent(true);
+        bottomLeftBtnsTable.bottom().left();
+        bottomLeftBtnsTable.add(leftBtn).bottom().left().space(20).width(size).height(size).padRight(20).padLeft(20);
+        bottomLeftBtnsTable.add(rightBtn).bottom().left().width(size).height(size);
+
+
+        m_stage.addActor(bottomLeftBtnsTable);
+
+    }
+
+    private void setupTouchPad(int size){
+        Touchpad.TouchpadStyle touchpadStyle;
+        Skin touchpadSkin;
+        touchpadSkin = new Skin();
+        //Set background image
+        touchpadSkin.add("touchBackground", new Texture("data/ui/touchpad_ring.png"));
+        //Set knob image
+        touchpadSkin.add("touchKnob", new Texture("data/ui/touchpad_knob.png"));
+        //Create TouchPad Style
+        touchpadStyle = new Touchpad.TouchpadStyle();
+        //Create Drawable's from TouchPad skin
+        Drawable touchBackground = touchpadSkin.getDrawable("touchBackground");
+        Drawable touchKnob = touchpadSkin.getDrawable("touchKnob");
+        //Apply the Drawables to the TouchPad Style
+        touchpadStyle.background = touchBackground;
+        touchpadStyle.knob = touchKnob;
+        //Create new TouchPad with the created style
+        touchpad = new Touchpad(10, touchpadStyle);
+        //setBounds(x,y,width,height)
+        touchpad.setBounds(15, 15, size * 2, size * 2);
+
+        touchpad.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                InputManager.getInstance().setPercentage(touchpad.getKnobPercentX(), touchpad.getKnobPercentY());
+            }
+        });
+
+        m_stage.addActor(touchpad);
+
+    }
+
+    private void setUpTopButtons(){
+        Table topBtnsTable = new Table();
         UIButton menuBtn = createButton("menu.up", new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().callRestart();
@@ -71,33 +133,12 @@ public class UserInterface {
             }
         });
 
+        topBtnsTable.setFillParent(true);
+        topBtnsTable.top().left();
+        topBtnsTable.add(menuBtn).width(100).height(100).padLeft(10).padTop(10);
 
-
-
-		int size = Gdx.graphics.getWidth() / 10;
-        setupBottomRightButtons(size);
-
-        Table bottomLeftBtnsTable = new Table();
-        Table topBtnsTable = new Table();
-		
-		bottomLeftBtnsTable.setFillParent(true);
-		bottomLeftBtnsTable.bottom().left();
-		bottomLeftBtnsTable.add(leftBtn).bottom().left().space(20).width(size).height(size).padRight(20).padLeft(20);
-		bottomLeftBtnsTable.add(rightBtn).bottom().left().width(size).height(size);
-
-		topBtnsTable.setFillParent(true);
-		topBtnsTable.top().left();
-		topBtnsTable.add(menuBtn).width(100).height(100).padLeft(10).padTop(10);
-		
-		m_stage.addActor(topBtnsTable);
-		m_stage.addActor(bottomLeftBtnsTable);
-
-
-
-		if(Gdx.app.getType() != ApplicationType.Desktop){
-			Gdx.input.setInputProcessor(m_stage);
-		}
-	}
+        m_stage.addActor(topBtnsTable);
+    }
 
     private void setupBottomRightButtons(int size){
 

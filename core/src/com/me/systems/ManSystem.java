@@ -79,9 +79,9 @@ public class ManSystem extends PlayerSystem {
 
         if (canBeControlled(player)) {
 
-            if (keyInputComponent.m_left) {
+            if (keyInputComponent.m_percentageX < 0) {
                 moveLeft(entity);
-            } else if (keyInputComponent.m_right) {
+            } else if (keyInputComponent.m_percentageX > 0) {
                 moveRight(entity);
             }
 
@@ -206,6 +206,7 @@ public class ManSystem extends PlayerSystem {
         PushComponent push = m_pushComps.get(entity);
         FeetComponent feetComponent = m_rayCastComps.get(entity);
         JointComponent jointComponent = m_jointComp.get(entity);
+        KeyInputComponent keyInputComponent = m_movComps.get(entity);
 
         if (vel.m_velocity > 0) {
             vel.m_velocity = -VELOCITYINR;
@@ -213,11 +214,10 @@ public class ManSystem extends PlayerSystem {
         if (feetComponent.hasCollided() && !player.isHanging()) {
             if (!touch.m_boxTouch) {
                 vel.m_velocity -= VELOCITY * world.delta;
-                movementComponent.setVelocity(vel.m_velocity);
+                movementComponent.setVelocity(keyInputComponent.m_percentageX * 15);
                 if (movementComponent.getSpeed() < -vel.m_walkLimit) {
                     movementComponent.setVelocity(-vel.m_walkLimit);
                     setPlayerState(entity, PlayerState.Running);
-                    vel.m_velocity = -vel.m_walkLimit;
                 } else {
                     setPlayerState(entity, PlayerState.Jogging);
                 }
@@ -257,6 +257,7 @@ public class ManSystem extends PlayerSystem {
         PushComponent push = m_pushComps.get(entity);
         FeetComponent feetComponent = m_rayCastComps.get(entity);
         JointComponent jointComponent = m_jointComp.get(entity);
+        KeyInputComponent keyInputComponent = m_movComps.get(entity);
 
         if (vel.m_velocity < 0) {
             vel.m_velocity = VELOCITYINR;
@@ -264,12 +265,10 @@ public class ManSystem extends PlayerSystem {
 
         if (feetComponent.hasCollided() && !player.isHanging()) {
             if (!touch.m_boxTouch) {
-                vel.m_velocity += VELOCITY * world.delta;
-                movementComponent.setVelocity(vel.m_velocity);
+                movementComponent.setVelocity(keyInputComponent.m_percentageX * 15);
                 if (movementComponent.getSpeed() > vel.m_walkLimit) {
                     movementComponent.setVelocity(vel.m_walkLimit);
                     setPlayerState(entity, PlayerState.Running);
-                    vel.m_velocity = vel.m_walkLimit;
                 } else {
                     setPlayerState(entity, PlayerState.Jogging);
                 }
