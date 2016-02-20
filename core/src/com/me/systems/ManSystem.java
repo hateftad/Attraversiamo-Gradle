@@ -176,7 +176,6 @@ public class ManSystem extends PlayerSystem {
 
     private void jump(Entity entity) {
         PlayerComponent player = m_playerComps.get(entity);
-        TouchComponent touch = m_touchComps.get(entity);
         PhysicsComponent physicsComponent = m_physComps.get(entity);
         KeyInputComponent keyInputComponent = m_movComps.get(entity);
         FeetComponent feetComponent = m_rayCastComps.get(entity);

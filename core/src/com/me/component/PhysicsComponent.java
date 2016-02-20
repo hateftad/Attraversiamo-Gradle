@@ -130,18 +130,21 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 		}
 
 		Filter t1 = m_fixtureData.getCurrentFilter();
-		t1.categoryBits = 0;
-		m_body.get(name).getFixtureList().get(0).setFilterData(t1);
-
+		t1.categoryBits = RBUserData.None;
+        t1.maskBits = RBUserData.None;
+        for (Fixture fixture : m_body.get(name).getFixtureList()) {
+            fixture.setFilterData(t1);
+        }
 	}
 
 	public void enableBody(String name) {
 
 		if (m_fixtureData != null) {
 			m_fixtureData.restoreCategoryBits();
-			m_body.get(name).getFixtureList().get(0).setFilterData(m_fixtureData.getCurrentFilter());
-            m_body.get(name).getFixtureList().get(0).setFriction(m_fixtureData.getCurrentFriction());
-
+            for (Fixture fixture : m_body.get(name).getFixtureList()) {
+                fixture.setFilterData(m_fixtureData.getCurrentFilter());
+                fixture.setFriction(m_fixtureData.getCurrentFriction());
+            }
 		}
 	}
 

@@ -44,7 +44,7 @@
 					"filter-categoryBits" : 2,
 					"filter-maskBits" : 2,
 					"friction" : 0.2,
-					"name" : "fixture10",
+					"name" : "hand",
 					"sensor" : true
 				}
 			],
@@ -100,8 +100,8 @@
 					{
 						"center" : 
 						{
-							"x" : -4.768371582031250e-07,
-							"y" : -1.192092895507812e-07
+							"x" : -4.768369876728684e-07,
+							"y" : -1.192089982282596e-07
 						},
 						"radius" : 0.6605488657951355
 					},
@@ -109,15 +109,15 @@
 					"filter-categoryBits" : 4,
 					"filter-maskBits" : 68,
 					"friction" : 100.0,
-					"name" : "fixture9"
+					"name" : "feet"
 				}
 			],
 			"linearVelocity" : 0,
 			"massData-I" : 0.05980943515896797,
 			"massData-center" : 
 			{
-				"x" : -4.768371582031250e-07,
-				"y" : -1.192092895507812e-07
+				"x" : -4.768369876728684e-07,
+				"y" : -1.192090053336869e-07
 			},
 			"massData-mass" : 0.2741509675979614,
 			"name" : "feet",
@@ -168,10 +168,10 @@
 				
 				{
 					"density" : 1.123346090316772,
-					"filter-categoryBits" : 4,
-					"filter-maskBits" : 65,
+					"filter-categoryBits" : 2,
+					"filter-maskBits" : 12,
 					"friction" : 0.2,
-					"name" : "fixture8",
+					"name" : "center",
 					"polygon" : 
 					{
 						"vertices" : 
@@ -200,10 +200,10 @@
 				
 				{
 					"density" : 1.123346090316772,
-					"filter-categoryBits" : 4,
-					"filter-maskBits" : 65,
+					"filter-categoryBits" : 2,
+					"filter-maskBits" : 12,
 					"friction" : 0.2,
-					"name" : "fixture8",
+					"name" : "center",
 					"polygon" : 
 					{
 						"vertices" : 
@@ -272,7 +272,7 @@
 						"radius" : 0.5
 					},
 					"friction" : 0.2,
-					"name" : "fixture1",
+					"name" : "right_hand",
 					"sensor" : true
 				}
 			],
@@ -315,7 +315,7 @@
 						"radius" : 0.5
 					},
 					"friction" : 0.2,
-					"name" : "fixture1",
+					"name" : "left_hand",
 					"sensor" : true
 				}
 			],
@@ -360,7 +360,7 @@
 					"density" : 9.000000136438757e-05,
 					"filter-categoryBits" : 256,
 					"friction" : 0.2,
-					"name" : "fixture0",
+					"name" : "pelvik_sensor",
 					"sensor" : true
 				}
 			],

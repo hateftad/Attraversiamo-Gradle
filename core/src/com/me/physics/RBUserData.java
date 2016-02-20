@@ -16,6 +16,7 @@ public class RBUserData {
     }
 
     public static final int
+            None = 0x0000,
             Boundary = 0x0001,
             CharacterFeet = 0x0002,
             CharacterTorso = 0x0004,
