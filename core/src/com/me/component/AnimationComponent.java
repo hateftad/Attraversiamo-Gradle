@@ -216,8 +216,6 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 		return m_skeleton.getY();
 	}
 	
-	public abstract Vector2 getPositionRelative(String attachmentName);
-
 	public abstract void update(SpriteBatch sb, float dt);
 
 	@Override

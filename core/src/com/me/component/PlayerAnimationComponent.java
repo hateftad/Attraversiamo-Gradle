@@ -175,7 +175,6 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
         m_skeleton.update(dt);
         m_skeleton.updateWorldTransform();
         m_renderer.draw(sb, m_skeleton);
-
     }
 
     @Override

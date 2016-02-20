@@ -4,10 +4,7 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.me.component.interfaces.ButtonStateObserverComponent;
-import com.me.events.ButtonEvent;
-import com.me.events.GameEventType;
-import com.me.events.HorizontalButtonEvent;
-import com.me.events.VerticalButtonEvent;
+import com.me.events.*;
 import com.me.utils.Direction;
 
 /**
@@ -50,6 +47,11 @@ public class PrismaticEngineComponent extends BaseComponent implements ButtonSta
 
     @Override
     public void restart() {
+
+    }
+
+    @Override
+    public void onNotify(TaskEvent event) {
 
     }
 }

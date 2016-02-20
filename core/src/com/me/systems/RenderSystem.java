@@ -25,6 +25,10 @@ public class RenderSystem extends EntitySystem {
 	@Mapper
 	ComponentMapper<PlayerAnimationComponent> m_playerAnimation;
 
+
+    @Mapper
+    ComponentMapper<LevelAnimationComponent> m_levelAnimation;
+
 	@Mapper
 	ComponentMapper<SingleParticleComponent> m_particles;
 
@@ -112,12 +116,20 @@ public class RenderSystem extends EntitySystem {
 					PlayerAnimationComponent anim = m_playerAnimation.get(e);
 					anim.setPosition(physics.getPosition());
 					anim.update(m_batch, world.delta);
-				} else {
+                } else {
 					if(sprite.m_shouldDraw){
 						sprite.draw(m_batch);
 					}
 				}
+                if(m_levelAnimation.has(e)) {
+                    LevelAnimationComponent anim = m_levelAnimation.get(e);
+                    anim.setPosition(physics.getPosition());
+                    anim.update(m_batch, world.delta);
+                }
+
+
 			}
+
 
 			if (m_particles.has(e)) {
 				ParticleComponent particles = m_particles.get(e);

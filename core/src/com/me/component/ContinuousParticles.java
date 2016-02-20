@@ -5,6 +5,7 @@ import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.events.ButtonEvent;
 import com.me.events.GameEventType;
 import com.me.events.HorizontalButtonEvent;
+import com.me.events.TaskEvent;
 import com.me.utils.Direction;
 
 /**
@@ -37,5 +38,10 @@ public class ContinuousParticles extends ParticleComponent implements ButtonStat
             }
 
         }
+    }
+
+    @Override
+    public void onNotify(TaskEvent event) {
+
     }
 }

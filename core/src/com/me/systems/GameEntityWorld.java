@@ -27,13 +27,13 @@ public class GameEntityWorld extends World {
         m_particleEventObservers = new Array<ParticleEventObserverComponent>();
     }
 
-
     public void addObserver(TaskEventObserverComponent observerComponent){
         m_taskEventObservers.add(observerComponent);
     }
 
     public void addObserver(ButtonStateObserverComponent observerComponent){
         m_buttonStateEventObservers.add(observerComponent);
+        m_taskEventObservers.add(observerComponent);
     }
 
     public void addObserver(ParticleEventObserverComponent observerComponent){

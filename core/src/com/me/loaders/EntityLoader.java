@@ -82,7 +82,7 @@ public class EntityLoader {
         PhysicsComponent pComp = null;
         SpriteComponent sComp;
         Entity entity = null;
-        RubeImage image;
+        RubeImage image = null;
         Array<Body> tempList = new Array<Body>();
 
         for (int i = 0; i < bodies.size; i++) {
@@ -151,7 +151,6 @@ public class EntityLoader {
             }
 
 
-
             loadFixtures(pComp, body);
 
             BodyUserData ud = (BodyUserData) body.getUserData();
@@ -202,7 +201,7 @@ public class EntityLoader {
                 level.getLevelBoundaries().maxY = Converters.ToWorld(body.getPosition().y);
                 //System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
             }
-            if(ud.mName.equalsIgnoreCase("cage")){
+            if (ud.mName.equalsIgnoreCase("cage")) {
                 entityWorld.addObserver(pComp);
             }
 
@@ -239,26 +238,31 @@ public class EntityLoader {
                 pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
             }
 
-            if(ud.mName.equalsIgnoreCase("player_position")){
+            if (ud.mName.equalsIgnoreCase("player_position")) {
                 int player = m_scene.getCustom(body, "playerNr", -1);
                 level.addPlayerPosition(player, body.getPosition());
             }
 
-            if(ud.mName.equalsIgnoreCase("level_animation")){
-//                String atlas = m_scene.getCustom(body, "atlas", "");
-//                String skeleton = m_scene.getCustom(body, "skeleton", "");
-//                LevelAnimationComponent levelAnimationComponent = new LevelAnimationComponent(atlas, skeleton, 1f);
-//                entity.addComponent(levelAnimationComponent);
-//                entityWorld.addObserver(levelAnimationComponent);
+            if (ud.mName.equalsIgnoreCase("animating_body")) {
+                String atlas = m_scene.getCustom(body, "atlas", "");
+                String skeleton = m_scene.getCustom(body, "skeleton", "");
+                boolean flip = m_scene.getCustom(body, "flip_animation", false);
+                int eventId = m_scene.getCustom(body, "taskId", 0);
+                atlas = LVLPATH + "animation/" + atlas;
+                skeleton = LVLPATH + "animation/" + skeleton;
+                LevelAnimationComponent levelAnimationComponent = new LevelAnimationComponent(atlas, skeleton, 5f, eventId);
+                levelAnimationComponent.setUp(bodyPos, "idle");
+                levelAnimationComponent.setFacing(flip);
+                levelAnimationComponent.setAnimationState(PlayerState.Idle);
+                entity.addComponent(levelAnimationComponent);
+                entityWorld.addObserver(levelAnimationComponent);
 
             }
-
 
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
             pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
             tempList.add(pComp.getBody(ud.mName));
             entity.addToWorld();
-
         }
 
         loadBodyJoints(physicsWorld, tempList, entityWorld);
@@ -659,14 +663,14 @@ public class EntityLoader {
                         tempList.get(ind.second), jDef, physicsWorld));
                 entity.addComponent(engineComponent);
                 gameEntityWorld.addObserver(engineComponent);
-            }
-            else {
+            } else {
                 JointFactory.getInstance().createJoint(
                         tempList.get(ind.first), tempList.get(ind.second),
                         jDef, physicsWorld);
             }
         }
     }
+
     private PlayerComponent.PlayerNumber getPlayerNumber(int playerNr) {
         if (playerNr == 1) {
             return PlayerComponent.PlayerNumber.ONE;

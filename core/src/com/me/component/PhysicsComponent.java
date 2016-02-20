@@ -150,7 +150,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 
 	private HashMap<String, Short> filterData = new HashMap<String, Short>();
 
-	public void disableAllFilters() {
+	private void disableAllFilters() {
 
         for (ObjectMap.Entry<String, Body> pairs : m_body.entries()) {
             Body b = pairs.value;
@@ -163,7 +163,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         }
 	}
 
-	public void enableAllFilters() {
+    private void enableAllFilters() {
         for (Entry<String, Short> stringShortEntry : filterData.entrySet()) {
             Entry pairs = (Entry) stringShortEntry;
             Filter filter = m_body.get((String) pairs.getKey()).getFixtureList().get(0).getFilterData();
