@@ -12,7 +12,7 @@ import com.me.utils.Direction;
 
 public class BuoyancyComponent extends BaseComponent implements ButtonStateObserverComponent {
 
-	private ObjectMap<String, BuoyancyControllerConfig> m_controllerInfo = new ObjectMap<String, BuoyancyControllerConfig>();
+	private ObjectMap<String, BuoyancyControllerConfig> m_controllerInfo = new ObjectMap<>();
     private int m_eventId;
 
 	//pass in fluid velocity

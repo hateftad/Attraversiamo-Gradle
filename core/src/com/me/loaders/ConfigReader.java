@@ -20,7 +20,7 @@ public class ConfigReader {
 	
 	public ConfigReader(){
 
-		m_levelConfigs = new HashMap<String, LevelConfig>();
+		m_levelConfigs = new HashMap<>();
 		m_reader = new XmlReader();
 
 		try {

@@ -13,7 +13,7 @@ public abstract class TaskComponent extends BaseComponent implements TaskEventOb
 
     public TaskComponent(int finishers) {
         m_nrfinishers = finishers;
-        m_finishers = new ObjectMap<PlayerComponent.PlayerNumber, Boolean>(m_nrfinishers);
+        m_finishers = new ObjectMap<>(m_nrfinishers);
     }
 
     public boolean allFinished() {

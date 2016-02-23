@@ -13,7 +13,7 @@ public class JointFactory {
 
 	
 	private World m_world;
-	private ArrayList<JointDef> m_joints = new ArrayList<JointDef>();
+	private ArrayList<JointDef> m_joints = new ArrayList<>();
 	
 	private JointFactory()
 	{}

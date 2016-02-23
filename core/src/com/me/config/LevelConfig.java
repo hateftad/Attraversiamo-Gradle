@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class LevelConfig {
 
-	private ObjectMap<Integer, PlayerConfig> m_playerConfigs = new ObjectMap<Integer, PlayerConfig>();
+	private ObjectMap<Integer, PlayerConfig> m_playerConfigs = new ObjectMap<>();
 	private String m_name;
 	private Color m_skyLightColor;
 	private int m_levelNr;

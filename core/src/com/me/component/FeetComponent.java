@@ -97,12 +97,12 @@ public class FeetComponent extends BaseComponent {
         }
 
         private void init(){
-            startPoints = new ArrayList<Vector2>();
+            startPoints = new ArrayList<>();
             startPoints.add(Vector2.Zero);
             startPoints.add(Vector2.Zero);
             startPoints.add(Vector2.Zero);
 
-            endPoints = new ArrayList<Vector2>();
+            endPoints = new ArrayList<>();
             endPoints.add(new Vector2(0, 0));
             endPoints.add(new Vector2(0, 0));
             endPoints.add(new Vector2(0, 0));

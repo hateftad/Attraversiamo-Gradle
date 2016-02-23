@@ -77,7 +77,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     public PhysicsSystem(World physicsWorld) {
         this(physicsWorld, 50, 30);
         m_timeStep = GlobalConfig.getInstance().config.timeStep;
-        m_b2Controllers = new ObjectMap<String, B2Controller>();
+        m_b2Controllers = new ObjectMap<>();
     }
 
     public void toggleProcessing(boolean process) {
@@ -132,7 +132,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     private void smoothStates() {
 
         final double oneMinusRatio = 1.0 - m_fixedAccumulatorRatio;
-        Array<Body> bodies = new Array<Body>();
+        Array<Body> bodies = new Array<>();
         m_world.getBodies(bodies);
 
         for (Body b : bodies) {
@@ -147,7 +147,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
     private void resetSmoothStates() {
 
-        Array<Body> bodies = new Array<Body>();
+        Array<Body> bodies = new Array<>();
         m_world.getBodies(bodies);
         for (Body b : bodies) {
             Entity e = (Entity) b.getUserData();
@@ -194,7 +194,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                         }
                     }
                 }
-                Bag<Component> fillBag = new Bag<Component>();
+                Bag<Component> fillBag = new Bag<>();
                 e.getComponents(fillBag);
                 for (int x = 0; x < fillBag.size(); x++) {
                     BaseComponent comp = (BaseComponent) fillBag.get(x);
@@ -238,7 +238,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     }
 
     public void clearSystem() {
-        Array<Body> bodies = new Array<Body>();
+        Array<Body> bodies = new Array<>();
         m_world.getBodies(bodies);
 
         for (Body b : bodies) {
@@ -268,7 +268,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
             }
 
             BuoyancyComponent buoyancyComponent = m_bouyComps.get(e);
-            ObjectMap<String, B2Controller> controllers = new ObjectMap<String, B2Controller>();
+            ObjectMap<String, B2Controller> controllers = new ObjectMap<>();
             for (Object o : buoyancyComponent.getControllerInfo().entries()) {
                 ObjectMap.Entry pairs = (ObjectMap.Entry) o;
                 BuoyancyComponent.BuoyancyControllerConfig controllerInfo = (BuoyancyComponent.BuoyancyControllerConfig) pairs.value;

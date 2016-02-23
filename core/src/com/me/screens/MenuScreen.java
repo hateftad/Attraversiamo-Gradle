@@ -41,7 +41,7 @@ public class MenuScreen extends AbstractScreen {
         m_camera.viewportWidth = 800;
         m_camera.viewportHeight = 600;
         m_camera.zoom = 2f;
-        m_animation = new Array<AnimationComponent>();
+        m_animation = new Array<>();
 
         Vector2 middlePoint = new Vector2(0, 0);
         AnimationComponent scene = new LevelAnimationComponent(SCENEPATH, SCENEPATH, SCALE);

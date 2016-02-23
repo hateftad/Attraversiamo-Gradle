@@ -21,10 +21,10 @@ public class GameEntityWorld extends World {
 
     public GameEntityWorld(){
         super();
-        m_taskEventObservers = new Array<TaskEventObserverComponent>();
-        m_buttonStateEventObservers = new Array<ButtonStateObserverComponent>();
-        m_binaryEventObservers = new Array<TelegramEventObserverComponent>();
-        m_particleEventObservers = new Array<ParticleEventObserverComponent>();
+        m_taskEventObservers = new Array<>();
+        m_buttonStateEventObservers = new Array<>();
+        m_binaryEventObservers = new Array<>();
+        m_particleEventObservers = new Array<>();
     }
 
     public void addObserver(TaskEventObserverComponent observerComponent){

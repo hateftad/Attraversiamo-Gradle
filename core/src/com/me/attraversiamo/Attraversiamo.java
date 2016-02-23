@@ -20,7 +20,7 @@ public class Attraversiamo extends Game implements ApplicationListener {
     public LoadingScreen m_loadingScreen;
     private FPSLogger m_fpsLogger;
     private IActivityRequestHandler m_adRequestHandler;
-    public Array<InputProcessor> m_processors = new Array<InputProcessor>();
+    public Array<InputProcessor> m_processors = new Array<>();
     public InputMultiplexer m_multiPlexer = new InputMultiplexer();
 
     public Attraversiamo(GameConfig config, IActivityRequestHandler requestHandler) {

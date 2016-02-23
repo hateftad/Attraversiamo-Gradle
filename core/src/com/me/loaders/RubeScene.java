@@ -30,11 +30,11 @@ public class RubeScene {
 
 
         public CustomProperties() {
-            m_customPropertyMap_int = new HashMap<String, Integer>();
-            m_customPropertyMap_float = new HashMap<String, Float>();
-            m_customPropertyMap_string = new HashMap<String, String>();
-            m_customPropertyMap_Vector2 = new HashMap<String, Vector2>();
-            m_customPropertyMap_bool = new HashMap<String, Boolean>();
+            m_customPropertyMap_int = new HashMap<>();
+            m_customPropertyMap_float = new HashMap<>();
+            m_customPropertyMap_string = new HashMap<>();
+            m_customPropertyMap_Vector2 = new HashMap<>();
+            m_customPropertyMap_bool = new HashMap<>();
         }
     }
 
@@ -82,9 +82,9 @@ public class RubeScene {
         stepsPerSecond = RubeDefaults.World.stepsPerSecond;
         positionIterations = RubeDefaults.World.positionIterations;
         velocityIterations = RubeDefaults.World.velocityIterations;
-        mCustomPropertiesMap = new HashMap<Object, CustomProperties>();
-        mBodyImageMap = new HashMap<Body, Array<RubeImage>>();
-        mJointIndex = new Array<RubeScene.Indexes>();
+        mCustomPropertiesMap = new HashMap<>();
+        mBodyImageMap = new HashMap<>();
+        mJointIndex = new Array<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -221,7 +221,7 @@ public class RubeScene {
         if (mJointIndex != null) {
             mJointIndex.clear();
         }
-        Array<Body> bodies = new Array<Body>();
+        Array<Body> bodies = new Array<>();
         world.getBodies(bodies);
         for (Body b : bodies) {
             world.destroyBody(b);
@@ -249,7 +249,7 @@ public class RubeScene {
     public void addFixtures(Array<Fixture> fixtures) {
         if (fixtures != null) {
             if (mFixtures == null) {
-                mFixtures = new Array<Fixture>();
+                mFixtures = new Array<>();
             }
             mFixtures.addAll(fixtures);
         }
@@ -281,7 +281,7 @@ public class RubeScene {
         // if the mapping hasn't been created yet...
         if (images == null) {
             // initialize the key's value...
-            images = new Array<RubeImage>(false, 1); // expectation is that most, if not all, bodies will have a single image.
+            images = new Array<>(false, 1); // expectation is that most, if not all, bodies will have a single image.
             images.add(image);
             mBodyImageMap.put(body, images);
         } else {
@@ -322,7 +322,7 @@ public class RubeScene {
 
     public void dispose() {
 
-        Array<Body> bodies = new Array<Body>();
+        Array<Body> bodies = new Array<>();
         world.getBodies(bodies);
         for (Body b : bodies) {
             world.destroyBody(b);

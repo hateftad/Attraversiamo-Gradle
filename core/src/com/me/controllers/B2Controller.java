@@ -22,7 +22,7 @@ public class B2Controller {
 
     public void addBody(Body body) {
         if (m_bodyList == null) {
-            m_bodyList = new Array<Body>();
+            m_bodyList = new Array<>();
         }
 
         // if the list does not already contain this body...

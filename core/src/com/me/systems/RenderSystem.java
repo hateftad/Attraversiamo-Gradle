@@ -58,7 +58,7 @@ public class RenderSystem extends EntitySystem {
 	@Override
 	protected void initialize() {
 		m_batch = new SpriteBatch();
-		m_sortedEntities = new ArrayList<Entity>();
+		m_sortedEntities = new ArrayList<>();
 	}
 
 	@Override
@@ -175,7 +175,7 @@ public class RenderSystem extends EntitySystem {
 		m_batch.dispose();
         Iterator<Entity> iterator = m_sortedEntities.iterator();
 		while(iterator.hasNext()){
-			Bag<Component> bag = new Bag<Component>();
+			Bag<Component> bag = new Bag<>();
 			Entity e = iterator.next();
             e.getComponents(bag);
 			for (int i = 0; i < bag.size(); i++) {

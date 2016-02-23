@@ -25,14 +25,14 @@ public abstract class ParticleComponent extends BaseComponent {
 	public ParticleComponent(String effect, ParticleType type, int max){
 		m_particle = loadParticle(effect);
 		m_pool = new ParticleEffectPool(m_particle, 0, max);
-		m_effects = new Array<ParticleEffectPool.PooledEffect>();
+		m_effects = new Array<>();
 		m_type = type;
 	}
 
 	public ParticleComponent(String effect, ParticleType type, Vector2 position){
 		m_particle = loadParticle(effect);
 		m_pool = new ParticleEffectPool(m_particle, 10, 10);
-		m_effects = new Array<ParticleEffectPool.PooledEffect>();
+		m_effects = new Array<>();
 		m_type = type;
 		setPosition(Converters.ToWorld(position));
 	}

@@ -45,7 +45,7 @@ public class EntityLoader {
     private static final String CHARPATH = "data/character/";
 
     public EntityLoader() {
-        m_textureMap = new WeakHashMap<String, Texture>();
+        m_textureMap = new WeakHashMap<>();
         m_loader = new RubeSceneLoader();
     }
 
@@ -83,7 +83,7 @@ public class EntityLoader {
         SpriteComponent sComp;
         Entity entity = null;
         RubeImage image = null;
-        Array<Body> tempList = new Array<Body>();
+        Array<Body> tempList = new Array<>();
 
         for (int i = 0; i < bodies.size; i++) {
 
@@ -285,7 +285,7 @@ public class EntityLoader {
         SpriteComponent sComp = null;
         Entity entity = entityWorld.createEntity();
         RubeImage image = null;
-        Array<Body> tempList = new Array<Body>();
+        Array<Body> tempList = new Array<>();
 
         for (int i = 0; i < bodies.size; i++) {
 

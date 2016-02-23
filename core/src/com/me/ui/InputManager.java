@@ -47,7 +47,7 @@ public class InputManager {
 	
 	private InputManager(){
 		
-		m_levelListeners = new ArrayList<LevelEventListener>(); 
+		m_levelListeners = new ArrayList<>();
 
 		for (@SuppressWarnings("unused") boolean b : m_button) {
 			b = false;

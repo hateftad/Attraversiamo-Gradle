@@ -23,8 +23,8 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 	public static float LOW_MASS = 0.0001f;
 	public static float HIGH_FRICTION = 20f;
 
-	protected ObjectMap<String, Body> m_body = new ObjectMap<String, Body>();
-	private ObjectMap<Body, RBUserData> m_userData = new ObjectMap<Body, RBUserData>();
+	protected ObjectMap<String, Body> m_body = new ObjectMap<>();
+	private ObjectMap<Body, RBUserData> m_userData = new ObjectMap<>();
 	private Vector2 m_worldPosition;
 	private ObjectMap<Body, Vector2> m_previousPositions;
 	private float m_previousAngle = 0;
@@ -48,7 +48,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 		m_body.get(m_name).setSleepingAllowed(b.isSleepingAllowed());
 		m_body.get(m_name).setGravityScale(b.getGravityScale());
 		m_body.get(m_name).setAwake(b.isAwake());
-		m_previousPositions = new ObjectMap<Body, Vector2>();
+		m_previousPositions = new ObjectMap<>();
 		m_previousPositions.put(m_body.get(name), m_body.get(name).getPosition());
 		m_startPosition = new Vector2(m_body.get(name).getPosition());
 	}
@@ -148,7 +148,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 		}
 	}
 
-	private HashMap<String, Short> filterData = new HashMap<String, Short>();
+	private HashMap<String, Short> filterData = new HashMap<>();
 
 	private void disableAllFilters() {
 

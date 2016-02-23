@@ -20,7 +20,7 @@ allprojects {
     ext {
         artemisVersion = '0.5.0'
         appName = "Attraversiamo"
-        gdxVersion = '1.7.1'
+        gdxVersion = '1.9.2'
         roboVMVersion = '1.9.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.6.0'
@@ -76,8 +76,8 @@ project(":android") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
 //        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
 
-        compile "com.google.android.gms:play-services-analytics:8.3.0"
-        compile 'com.google.android.gms:play-services-ads:8.3.0'
+        compile "com.google.android.gms:play-services-analytics:8.4.0"
+        compile 'com.google.android.gms:play-services-ads:8.4.0'
     }
 }
 

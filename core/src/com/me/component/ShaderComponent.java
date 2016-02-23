@@ -51,7 +51,7 @@ public class ShaderComponent extends BaseComponent {
         m_matrix = new Matrix4();
         m_waterShader.setUniformMatrix("u_projTrans", m_matrix);
         PolygonShape shape = (PolygonShape) body.getFixtureList().get(0).getShape();
-        ArrayList<Vector2> vertices = new ArrayList<Vector2>();
+        ArrayList<Vector2> vertices = new ArrayList<>();
         for(int i = 0; i < shape.getVertexCount(); i++){
             Vector2 vertex = new Vector2();
             shape.getVertex(i, vertex);
