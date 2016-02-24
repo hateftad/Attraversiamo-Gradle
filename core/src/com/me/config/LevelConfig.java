@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.me.utils.GameUtils;
 
 import java.util.HashMap;
 
@@ -41,32 +42,7 @@ public class LevelConfig {
     }
 
 	public void setLightColor(String color){
-				
-		if(color.equals("Gray")){
-			m_skyLightColor = Color.GRAY;
-		}
-		if(color.equals("Blue")){
-			m_skyLightColor = Color.BLUE;
-		}
-		if(color.equals("Red")){
-			m_skyLightColor = Color.RED;
-		}
-		if(color.equals("Black")){
-			m_skyLightColor = Color.BLACK;
-		}
-		if(color.equals("Green")){
-			m_skyLightColor = Color.GREEN;
-		}
-		if(color.equals("Clear")){
-			m_skyLightColor = Color.CLEAR;
-		}
-		if(color.equals("Magenta")){
-			m_skyLightColor = Color.MAGENTA;
-		}
-		if(color.equals("Yellow")){
-			m_skyLightColor = Color.YELLOW;
-		}
-		
+		m_skyLightColor = GameUtils.getColor(color);
 	}
 
     public void addPlayerPosition(int player, Vector2 position){

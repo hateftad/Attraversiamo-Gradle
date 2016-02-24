@@ -35,6 +35,7 @@ import com.me.physics.RBUserData;
 import com.me.systems.CameraSystem;
 import com.me.systems.GameEntityWorld;
 import com.me.utils.Converters;
+import com.me.utils.GameUtils;
 
 public class EntityLoader {
 
@@ -135,12 +136,7 @@ public class EntityLoader {
                 entity = entityWorld.createEntity();
                 entity.addComponent(pComp);
             }
-            if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("light")) {
-                ConeLight light = new ConeLight(rh, 50, Color.GREEN, 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
-                entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
-                entity.addComponent(new TriggerComponent());
-                entityWorld.getManager(GroupManager.class).add(entity, "lights");
-            }
+
 
             if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("skyLight")) {
                 CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
@@ -154,6 +150,13 @@ public class EntityLoader {
             loadFixtures(pComp, body);
 
             BodyUserData ud = (BodyUserData) body.getUserData();
+            if (ud.mName.equalsIgnoreCase("light")) {
+                String color = m_scene.getCustom(body, "light", "");
+                ConeLight light = new ConeLight(rh, 50, GameUtils.getColor(color), 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
+                entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
+                entity.addComponent(new TriggerComponent());
+                entityWorld.getManager(GroupManager.class).add(entity, "lights");
+            }
             if (ud.mName.equalsIgnoreCase("box")) {
                 pComp.setMass(20f, ud.mName);
                 //pComp.setFriction(20.0f);
@@ -386,21 +389,21 @@ public class EntityLoader {
                 entityWorld.addObserver(playerComponent);
                 // entity.addComponent(new LightComponent(light, ((BodyUserData)
                 // body.getUserData()).mName));
-                entity.addComponent(playerComponent);
-                entity.addComponent(new TouchComponent());
-                entity.addComponent(new KeyInputComponent());
-                entity.addComponent(new JointComponent());
-                entity.addComponent(new HangComponent());
-                entity.addComponent(new RagDollComponent());
-                entity.addComponent(new LadderClimbComponent());
-                entity.addComponent(new VelocityLimitComponent(12, 14, 5, 5));
-                entity.addComponent(new PushComponent());
-                entity.addComponent(new JumpComponent());
-                entity.addComponent(new GrabComponent());
-                entity.addComponent(new PlayerOneComponent());
-                entity.addComponent(new TriggerComponent());
-                entity.addComponent(new RestartComponent());
-                entity.addComponent(new EventComponent());
+                entity.addComponent(playerComponent)
+                        .addComponent(new TouchComponent())
+                        .addComponent(new KeyInputComponent())
+                        .addComponent(new JointComponent())
+                        .addComponent(new HangComponent())
+                        .addComponent(new RagDollComponent())
+                        .addComponent(new LadderClimbComponent())
+                        .addComponent(new VelocityLimitComponent(12, 14, 5, 5))
+                        .addComponent(new PushComponent())
+                        .addComponent(new JumpComponent())
+                        .addComponent(new GrabComponent())
+                        .addComponent(new PlayerOneComponent())
+                        .addComponent(new TriggerComponent())
+                        .addComponent(new RestartComponent())
+                        .addComponent(new EventComponent());
 
                 HandHoldComponent handHoldComponent = new HandHoldComponent();
                 entity.addComponent(handHoldComponent);
@@ -464,18 +467,18 @@ public class EntityLoader {
                 stateData.setMix("lyingDown", "standUp", 0.2f);
                 entity.addComponent(playerComponent);
                 animationComponent.setSkin(playerConfig.getSkinName());
-                entity.addComponent(new KeyInputComponent());
-                entity.addComponent(new VelocityLimitComponent(8.5f, 10, 2.5f));
-                entity.addComponent(new JointComponent());
-                entity.addComponent(new TouchComponent());
-                entity.addComponent(new JumpComponent());
-                entity.addComponent(new GrabComponent());
-                entity.addComponent(new PlayerTwoComponent());
-                entity.addComponent(new TriggerComponent());
-                entity.addComponent(new RestartComponent());
-                entity.addComponent(new PushComponent());
-                entity.addComponent(new QueueComponent());
-                entity.addComponent(new EventComponent());
+                entity.addComponent(new KeyInputComponent())
+                        .addComponent(new VelocityLimitComponent(8.5f, 10, 2.5f))
+                        .addComponent(new JointComponent())
+                        .addComponent(new TouchComponent())
+                        .addComponent(new JumpComponent())
+                        .addComponent(new GrabComponent())
+                        .addComponent(new PlayerTwoComponent())
+                        .addComponent(new TriggerComponent())
+                        .addComponent(new RestartComponent())
+                        .addComponent(new PushComponent())
+                        .addComponent(new QueueComponent())
+                        .addComponent(new EventComponent());
 
 
                 HandHoldComponent handHoldComponent = new HandHoldComponent();
