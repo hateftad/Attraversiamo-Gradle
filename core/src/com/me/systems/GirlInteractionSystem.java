@@ -114,6 +114,10 @@ public class GirlInteractionSystem extends PlayerSystem {
                 notifyObservers(new TaskEvent(GameEventType.LevelFinished, playerComponent.getPlayerNr()));
             }
         }
+
+        if(touchComponent.m_waterTouch){
+            setPlayerState(entity, PlayerState.Drowning);
+        }
     }
 
     @Override

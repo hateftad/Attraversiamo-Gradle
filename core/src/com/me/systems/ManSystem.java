@@ -131,7 +131,7 @@ public class ManSystem extends PlayerSystem {
 
         setPlayerState(entity);
 
-        if (isDead(physicsComponent)) {
+        if (isDead(physicsComponent) || animation.isCompleted(PlayerState.Drowning)) {
             m_inputMgr.callRestart();
         }
 

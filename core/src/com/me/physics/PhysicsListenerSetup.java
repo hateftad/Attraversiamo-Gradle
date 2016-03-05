@@ -482,19 +482,9 @@ public class PhysicsListenerSetup {
                 PhysicsComponent ps = entity.getComponent(PhysicsComponent.class);
                 RBUserData otherUd = ps.getRBUserData(body);
 
-//                if (otherUd.getType() == Type.Feet && entity.getComponent(PlayerTwoComponent.class) != null) {
-//                    QueueComponent queueComp = new QueueComponent();
-//                    if (submerged) {
-//                        queueComp.mass = 1.6f;
-//                        queueComp.type = QueueType.TempMass;
-//                        queueComp.bodyName = "feet";
-//                    } else {
-//                        queueComp.mass = 1f;
-//                        queueComp.type = QueueType.TempMass;
-//                        queueComp.bodyName = "feet";
-//                    }
-//                    entity.addComponent(queueComp);
-//                }
+                if (entity.getComponent(PlayerComponent.class) != null) {
+                    entity.getComponent(TouchComponent.class).m_waterTouch = true;
+                }
                 if (otherUd.getType() == Type.Pelvis) {
                     System.out.println("Under Water");
                 }

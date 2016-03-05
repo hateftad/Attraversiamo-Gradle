@@ -21,6 +21,7 @@ public class TouchComponent extends BaseComponent {
     public boolean m_rightHoldArea;
     public boolean m_canCrawl;
     public boolean m_cageTouch;
+    public boolean m_waterTouch;
 
     public TouchComponent() {
 		m_edgeTouch = false;
@@ -66,6 +67,7 @@ public class TouchComponent extends BaseComponent {
         m_rightHoldArea = false;
         m_canCrawl = false;
         m_cageTouch = false;
+        m_waterTouch = false;
 
 	}
 

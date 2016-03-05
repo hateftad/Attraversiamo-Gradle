@@ -124,6 +124,9 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                 case HoldingCage:
                     playAnimation("holdingCage", false);
                     break;
+                case Drowning:
+                    playAnimation("drowning", false);
+                    break;
                 default:
                     break;
             }

@@ -42,7 +42,8 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
                 !isCrawling() &&
                 !isFinishing() &&
                 !isPullingLedge() &&
-                !isSwingingCage();
+                !isSwingingCage() &&
+                !isDrowning();
     }
 
     public boolean isHoldingCage(){
@@ -83,6 +84,10 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     public boolean isPullingLedge() {
         return m_state == PlayerState.PullingLedge;
+    }
+
+    public boolean isDrowning() {
+        return m_state == PlayerState.Drowning;
     }
 
     public enum PlayerNumber {

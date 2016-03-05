@@ -76,8 +76,8 @@ project(":android") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
 //        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
 
-        compile "com.google.android.gms:play-services-analytics:8.4.0"
-        compile 'com.google.android.gms:play-services-ads:8.4.0'
+        compile "com.google.android.gms:play-services-analytics:8.3.0"
+        compile 'com.google.android.gms:play-services-ads:8.3.0'
     }
 }
 
