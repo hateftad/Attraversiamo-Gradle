@@ -28,6 +28,8 @@ public class ManInteractionSystem extends PlayerSystem {
     ComponentMapper<HangComponent> m_hangComp;
     @Mapper
     ComponentMapper<JointComponent> m_jointComp;
+    @Mapper
+    ComponentMapper<EventComponent> m_eventComps;
 
     @SuppressWarnings("unchecked")
     public ManInteractionSystem() {
@@ -100,6 +102,18 @@ public class ManInteractionSystem extends PlayerSystem {
         if(playerComponent.isFinishing()){
             if(animation.isCompleted(PlayerState.RunOut) || animation.isCompleted(PlayerState.SuckIn)){
                 notifyObservers(new TaskEvent(GameEventType.LevelFinished, playerComponent.getPlayerNr()));
+            }
+        }
+
+        if(playerComponent.isPressingButton()){
+            if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.PRESSINGBUTTON){
+                animation.getEvent().resetEvent();
+                EventComponent component = m_eventComps.get(entity);
+                component.getEventInfo().notify(this, playerComponent.getPlayerNr());
+            }
+
+            if(animation.isCompleted(PlayerState.PressButton)){
+                setPlayerState(entity, PlayerState.Idle);
             }
         }
 

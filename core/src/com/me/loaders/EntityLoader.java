@@ -430,12 +430,9 @@ public class EntityLoader {
                 stateData.setMix("running", "pushing", 0.3f);
                 stateData.setMix("runJumping", "falling", 0.4f);
                 stateData.setMix("pushing", "idle1", 0.4f);
-//                stateData.setMix("upJump", "idle1", 0.7f);
-                // dstateData.setMix("pushing", "idle", 0.6f);
-                // stateData.setMix("ladderHang", "running", 0.1f);
+                stateData.setMix("falling", "drowning", 0.4f);
+
                 animationComponent.setSkin(playerConfig.getSkinName());
-                //pComp.setPosition();
-                // stateData.setMix("lieDown", "running", 0.3f);
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
 
             } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_two")) {
@@ -465,6 +462,7 @@ public class EntityLoader {
                 stateData.setMix("lyingDown", "crawling", 0.2f);
                 stateData.setMix("standUp", "idle1", 0.2f);
                 stateData.setMix("lyingDown", "standUp", 0.2f);
+                stateData.setMix("falling", "drowning", 0.4f);
                 entity.addComponent(playerComponent);
                 animationComponent.setSkin(playerConfig.getSkinName());
                 entity.addComponent(new KeyInputComponent())

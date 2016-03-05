@@ -107,12 +107,10 @@ public class ManSystem extends PlayerSystem {
                     if (touch.m_leftPushArea) {
                         player.setFacingLeft(false);
                         setPlayerState(entity, PlayerState.PressButton);
-                        component.getEventInfo().notify(this, player.getPlayerNr());
                     }
                     if (touch.m_rightPushArea) {
                         player.setFacingLeft(true);
                         setPlayerState(entity, PlayerState.PressButton);
-                        component.getEventInfo().notify(this, player.getPlayerNr());
                     }
                     movementComponent.standStill();
                 }
