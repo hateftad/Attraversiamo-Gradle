@@ -434,10 +434,10 @@ public class PhysicsListenerSetup {
 
                 if ((fixA.isSensor()) && (fixA.getUserData() != null)) {
                     determineController((ObjectMap) fixA.getUserData(), fixB.getBody(), false);
-                    //treatBouyancy(fixB.getBody(), false);
+                    treatBouyancy(fixB.getBody(), false);
                 } else if ((fixB.isSensor()) && (fixB.getUserData() != null)) {
                     determineController((ObjectMap) fixB.getUserData(), fixA.getBody(), false);
-                    //treatBouyancy(fixA.getBody(), false);
+                    treatBouyancy(fixA.getBody(), false);
                 }
             }
 
@@ -445,7 +445,7 @@ public class PhysicsListenerSetup {
             public void beginContact(Entity e, Contact contact, boolean fixtureA) {
                 Fixture fixA = contact.getFixtureA();
                 Fixture fixB = contact.getFixtureB();
-                //printBodies(fixA, fixB);
+                printBodies(fixA, fixB);
                 if ((fixA.isSensor()) && (fixA.getUserData() != null)) {
                     determineController((ObjectMap) fixA.getUserData(), fixB.getBody(), true);
                     treatBouyancy(fixB.getBody(), true);
@@ -482,10 +482,11 @@ public class PhysicsListenerSetup {
                 PhysicsComponent ps = entity.getComponent(PhysicsComponent.class);
                 RBUserData otherUd = ps.getRBUserData(body);
 
-                if (entity.getComponent(PlayerComponent.class) != null) {
-                    entity.getComponent(TouchComponent.class).m_waterTouch = true;
-                }
+
                 if (otherUd.getType() == Type.Pelvis) {
+                    if (entity.getComponent(PlayerComponent.class) != null) {
+                        entity.getComponent(TouchComponent.class).m_waterTouch = true;
+                    }
                     System.out.println("Under Water");
                 }
             }

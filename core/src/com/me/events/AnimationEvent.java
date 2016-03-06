@@ -12,7 +12,7 @@ public class AnimationEvent {
     private Event m_event;
 
     public AnimationEvent(){
-        m_event = new Event(new EventData(AnimationEventType.NONE.name()));
+        m_event = new Event(0, new EventData(AnimationEventType.NONE.name()));
     }
 
     public void setEvent(Event event) {
@@ -39,7 +39,7 @@ public class AnimationEvent {
     }
 
     public void resetEvent() {
-        m_event = new Event(new EventData(AnimationEventType.NONE.name()));
+        m_event = new Event(0, new EventData(AnimationEventType.NONE.name()));
     }
 
     public enum AnimationEventType {

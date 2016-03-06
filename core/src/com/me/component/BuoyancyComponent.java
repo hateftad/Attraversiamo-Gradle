@@ -51,10 +51,11 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
                 HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
                 buttonEvent.update();
                 //get fluid velocity from other component
+                Vector2 fluidVelocity = getController(WorldObjectComponent.WorldObject).getFluidVelocity();
                 if(buttonEvent.getDirection() == Direction.Left){
-                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(-3, 1);
+                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(-3, fluidVelocity.y);
                 } else if(buttonEvent.getDirection() == Direction.Right){
-                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(3, 1);
+                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(3, fluidVelocity.y);
                 }
             }
         }
