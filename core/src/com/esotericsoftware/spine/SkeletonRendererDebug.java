@@ -1,25 +1,26 @@
 /******************************************************************************
  * Spine Runtimes Software License
- * Version 2.1
+ * Version 2.3
  * 
- * Copyright (c) 2013, Esoteric Software
+ * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
  * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * non-transferable license to use, install, execute and perform the Spine
+ * Runtimes Software (the "Software") and derivative works solely for personal
+ * or internal use. Without the written permission of Esoteric Software (see
+ * Section 2 of the Spine Software License Agreement), you may not (a) modify,
+ * translate, adapt or otherwise create derivative works, improvements of the
+ * Software or develop new applications using the Software or (b) remove,
+ * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
  * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -33,7 +34,7 @@ package com.esotericsoftware.spine;
 import com.esotericsoftware.spine.attachments.Attachment;
 import com.esotericsoftware.spine.attachments.MeshAttachment;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
-import com.esotericsoftware.spine.attachments.SkinnedMeshAttachment;
+import com.esotericsoftware.spine.attachments.WeightedMeshAttachment;
 
 import static com.badlogic.gdx.graphics.g2d.Batch.*;
 
@@ -86,8 +87,8 @@ public class SkeletonRendererDebug {
 			for (int i = 0, n = bones.size; i < n; i++) {
 				Bone bone = bones.get(i);
 				if (bone.parent == null) continue;
-				float x = skeletonX + bone.data.length * bone.m00 + bone.worldX;
-				float y = skeletonY + bone.data.length * bone.m10 + bone.worldY;
+				float x = skeletonX + bone.data.length * bone.a + bone.worldX;
+				float y = skeletonY + bone.data.length * bone.c + bone.worldY;
 				shapes.rectLine(skeletonX + bone.worldX, skeletonY + bone.worldY, x, y, boneWidth * scale);
 			}
 			shapes.end();
@@ -104,8 +105,7 @@ public class SkeletonRendererDebug {
 				Attachment attachment = slot.attachment;
 				if (attachment instanceof RegionAttachment) {
 					RegionAttachment regionAttachment = (RegionAttachment)attachment;
-					regionAttachment.updateWorldVertices(slot, false);
-					float[] vertices = regionAttachment.getWorldVertices();
+					float[] vertices = regionAttachment.updateWorldVertices(slot, false);
 					shapes.line(vertices[X1], vertices[Y1], vertices[X2], vertices[Y2]);
 					shapes.line(vertices[X2], vertices[Y2], vertices[X3], vertices[Y3]);
 					shapes.line(vertices[X3], vertices[Y3], vertices[X4], vertices[Y4]);
@@ -128,8 +128,8 @@ public class SkeletonRendererDebug {
 					vertices = mesh.getWorldVertices();
 					triangles = mesh.getTriangles();
 					hullLength = mesh.getHullLength();
-				} else if (attachment instanceof SkinnedMeshAttachment) {
-					SkinnedMeshAttachment mesh = (SkinnedMeshAttachment)attachment;
+				} else if (attachment instanceof WeightedMeshAttachment) {
+					WeightedMeshAttachment mesh = (WeightedMeshAttachment)attachment;
 					mesh.updateWorldVertices(slot, false);
 					vertices = mesh.getWorldVertices();
 					triangles = mesh.getTriangles();

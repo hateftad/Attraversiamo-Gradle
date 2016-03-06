@@ -1,25 +1,26 @@
 /******************************************************************************
  * Spine Runtimes Software License
- * Version 2.1
+ * Version 2.3
  * 
- * Copyright (c) 2013, Esoteric Software
+ * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
  * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * non-transferable license to use, install, execute and perform the Spine
+ * Runtimes Software (the "Software") and derivative works solely for personal
+ * or internal use. Without the written permission of Esoteric Software (see
+ * Section 2 of the Spine Software License Agreement), you may not (a) modify,
+ * translate, adapt or otherwise create derivative works, improvements of the
+ * Software or develop new applications using the Software or (b) remove,
+ * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
  * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -41,7 +42,7 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.NumberUtils;
 
 /** Attachment that displays a texture region. */
-public class SkinnedMeshAttachment extends Attachment {
+public class WeightedMeshAttachment extends Attachment implements FfdAttachment {
 	private TextureRegion region;
 	private String path;
 	private int[] bones;
@@ -50,12 +51,14 @@ public class SkinnedMeshAttachment extends Attachment {
 	private float[] worldVertices;
 	private final Color color = new Color(1, 1, 1, 1);
 	private int hullLength;
+	private WeightedMeshAttachment parentMesh;
+	private boolean inheritFFD;
 
 	// Nonessential.
 	private int[] edges;
 	private float width, height;
 
-	public SkinnedMeshAttachment (String name) {
+	public WeightedMeshAttachment (String name) {
 		super(name);
 	}
 
@@ -98,7 +101,8 @@ public class SkinnedMeshAttachment extends Attachment {
 		}
 	}
 
-	public void updateWorldVertices (Slot slot, boolean premultipliedAlpha) {
+	/** @return The updated world vertices. */
+	public float[] updateWorldVertices (Slot slot, boolean premultipliedAlpha) {
 		Skeleton skeleton = slot.getSkeleton();
 		Color skeletonColor = skeleton.getColor();
 		Color meshColor = slot.getColor();
@@ -125,8 +129,8 @@ public class SkinnedMeshAttachment extends Attachment {
 				for (; v < nn; v++, b += 3) {
 					Bone bone = (Bone)skeletonBones[bones[v]];
 					float vx = weights[b], vy = weights[b + 1], weight = weights[b + 2];
-					wx += (vx * bone.getM00() + vy * bone.getM01() + bone.getWorldX()) * weight;
-					wy += (vx * bone.getM10() + vy * bone.getM11() + bone.getWorldY()) * weight;
+					wx += (vx * bone.getA() + vy * bone.getB() + bone.getWorldX()) * weight;
+					wy += (vx * bone.getC() + vy * bone.getD() + bone.getWorldY()) * weight;
 				}
 				worldVertices[w] = wx + x;
 				worldVertices[w + 1] = wy + y;
@@ -140,14 +144,19 @@ public class SkinnedMeshAttachment extends Attachment {
 				for (; v < nn; v++, b += 3, f += 2) {
 					Bone bone = (Bone)skeletonBones[bones[v]];
 					float vx = weights[b] + ffd[f], vy = weights[b + 1] + ffd[f + 1], weight = weights[b + 2];
-					wx += (vx * bone.getM00() + vy * bone.getM01() + bone.getWorldX()) * weight;
-					wy += (vx * bone.getM10() + vy * bone.getM11() + bone.getWorldY()) * weight;
+					wx += (vx * bone.getA() + vy * bone.getB() + bone.getWorldX()) * weight;
+					wy += (vx * bone.getC() + vy * bone.getD() + bone.getWorldY()) * weight;
 				}
 				worldVertices[w] = wx + x;
 				worldVertices[w + 1] = wy + y;
 				worldVertices[w + 2] = color;
 			}
 		}
+		return worldVertices;
+	}
+
+	public boolean applyFFD (Attachment sourceAttachment) {
+		return this == sourceAttachment || (inheritFFD && parentMesh == sourceAttachment);
 	}
 
 	public float[] getWorldVertices () {
@@ -233,5 +242,30 @@ public class SkinnedMeshAttachment extends Attachment {
 
 	public void setHeight (float height) {
 		this.height = height;
+	}
+
+	/** Returns the source mesh if this is a linked mesh, else returns null. */
+	public WeightedMeshAttachment getParentMesh () {
+		return parentMesh;
+	}
+
+	/** @param parentMesh May be null. */
+	public void setParentMesh (WeightedMeshAttachment parentMesh) {
+		this.parentMesh = parentMesh;
+		if (parentMesh != null) {
+			bones = parentMesh.bones;
+			weights = parentMesh.weights;
+			regionUVs = parentMesh.regionUVs;
+			triangles = parentMesh.triangles;
+			hullLength = parentMesh.hullLength;
+		}
+	}
+
+	public boolean getInheritFFD () {
+		return inheritFFD;
+	}
+
+	public void setInheritFFD (boolean inheritFFD) {
+		this.inheritFFD = inheritFFD;
 	}
 }

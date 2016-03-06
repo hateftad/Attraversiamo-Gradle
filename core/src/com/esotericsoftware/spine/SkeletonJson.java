@@ -1,25 +1,26 @@
 /******************************************************************************
  * Spine Runtimes Software License
- * Version 2.1
+ * Version 2.3
  * 
- * Copyright (c) 2013, Esoteric Software
+ * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
  * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * non-transferable license to use, install, execute and perform the Spine
+ * Runtimes Software (the "Software") and derivative works solely for personal
+ * or internal use. Without the written permission of Esoteric Software (see
+ * Section 2 of the Spine Software License Agreement), you may not (a) modify,
+ * translate, adapt or otherwise create derivative works, improvements of the
+ * Software or develop new applications using the Software or (b) remove,
+ * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
  * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -45,8 +46,6 @@ import com.esotericsoftware.spine.Animation.CurveTimeline;
 import com.esotericsoftware.spine.Animation.DrawOrderTimeline;
 import com.esotericsoftware.spine.Animation.EventTimeline;
 import com.esotericsoftware.spine.Animation.FfdTimeline;
-import com.esotericsoftware.spine.Animation.FlipXTimeline;
-import com.esotericsoftware.spine.Animation.FlipYTimeline;
 import com.esotericsoftware.spine.Animation.IkConstraintTimeline;
 import com.esotericsoftware.spine.Animation.RotateTimeline;
 import com.esotericsoftware.spine.Animation.ScaleTimeline;
@@ -59,11 +58,12 @@ import com.esotericsoftware.spine.attachments.AttachmentType;
 import com.esotericsoftware.spine.attachments.BoundingBoxAttachment;
 import com.esotericsoftware.spine.attachments.MeshAttachment;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
-import com.esotericsoftware.spine.attachments.SkinnedMeshAttachment;
+import com.esotericsoftware.spine.attachments.WeightedMeshAttachment;
 
 public class SkeletonJson {
 	private final AttachmentLoader attachmentLoader;
 	private float scale = 1;
+	private Array<LinkedMesh> linkedMeshes = new Array();
 
 	public SkeletonJson (TextureAtlas atlas) {
 		attachmentLoader = new AtlasAttachmentLoader(atlas);
@@ -117,8 +117,6 @@ public class SkeletonJson {
 			boneData.rotation = boneMap.getFloat("rotation", 0);
 			boneData.scaleX = boneMap.getFloat("scaleX", 1);
 			boneData.scaleY = boneMap.getFloat("scaleY", 1);
-			boneData.flipX = boneMap.getBoolean("flipX", false);
-			boneData.flipY = boneMap.getBoolean("flipY", false);
 			boneData.inheritScale = boneMap.getBoolean("inheritScale", true);
 			boneData.inheritRotation = boneMap.getBoolean("inheritRotation", true);
 
@@ -149,6 +147,25 @@ public class SkeletonJson {
 			skeletonData.ikConstraints.add(ikConstraintData);
 		}
 
+		// Transform constraints.
+		for (JsonValue transformMap = root.getChild("transform"); transformMap != null; transformMap = transformMap.next) {
+			TransformConstraintData transformConstraintData = new TransformConstraintData(transformMap.getString("name"));
+
+			String boneName = transformMap.getString("bone");
+			transformConstraintData.bone = skeletonData.findBone(boneName);
+			if (transformConstraintData.bone == null) throw new SerializationException("Bone not found: " + boneName);
+
+			String targetName = transformMap.getString("target");
+			transformConstraintData.target = skeletonData.findBone(targetName);
+			if (transformConstraintData.target == null) throw new SerializationException("Target bone not found: " + targetName);
+
+			transformConstraintData.translateMix = transformMap.getFloat("translateMix", 1);
+			transformConstraintData.x = transformMap.getFloat("x", 0) * scale;
+			transformConstraintData.y = transformMap.getFloat("y", 0) * scale;
+
+			skeletonData.transformConstraints.add(transformConstraintData);
+		}
+
 		// Slots.
 		for (JsonValue slotMap = root.getChild("slots"); slotMap != null; slotMap = slotMap.next) {
 			String slotName = slotMap.getString("name");
@@ -161,9 +178,7 @@ public class SkeletonJson {
 			if (color != null) slotData.getColor().set(Color.valueOf(color));
 
 			slotData.attachmentName = slotMap.getString("attachment", null);
-
-			slotData.additiveBlending = slotMap.getBoolean("additive", false);
-
+			slotData.blendMode = BlendMode.valueOf(slotMap.getString("blend", BlendMode.normal.name()));
 			skeletonData.slots.add(slotData);
 		}
 
@@ -174,13 +189,31 @@ public class SkeletonJson {
 				int slotIndex = skeletonData.findSlotIndex(slotEntry.name);
 				if (slotIndex == -1) throw new SerializationException("Slot not found: " + slotEntry.name);
 				for (JsonValue entry = slotEntry.child; entry != null; entry = entry.next) {
-					Attachment attachment = readAttachment(skin, entry.name, entry);
+					Attachment attachment = readAttachment(skin, slotIndex, entry.name, entry);
 					if (attachment != null) skin.addAttachment(slotIndex, entry.name, attachment);
 				}
 			}
 			skeletonData.skins.add(skin);
 			if (skin.name.equals("default")) skeletonData.defaultSkin = skin;
 		}
+
+		// Linked meshes.
+		for (int i = 0, n = linkedMeshes.size; i < n; i++) {
+			LinkedMesh linkedMesh = linkedMeshes.get(i);
+			Skin skin = linkedMesh.skin == null ? skeletonData.getDefaultSkin() : skeletonData.findSkin(linkedMesh.skin);
+			if (skin == null) throw new SerializationException("Skin not found: " + linkedMesh.skin);
+			Attachment parent = skin.getAttachment(linkedMesh.slotIndex, linkedMesh.parent);
+			if (linkedMesh.mesh instanceof MeshAttachment) {
+				MeshAttachment mesh = (MeshAttachment)linkedMesh.mesh;
+				mesh.setParentMesh((MeshAttachment)parent);
+				mesh.updateUVs();
+			} else {
+				WeightedMeshAttachment mesh = (WeightedMeshAttachment)linkedMesh.mesh;
+				mesh.setParentMesh((WeightedMeshAttachment)parent);
+				mesh.updateUVs();
+			}
+		}
+		linkedMeshes.clear();
 
 		// Events.
 		for (JsonValue eventMap = root.getChild("events"); eventMap != null; eventMap = eventMap.next) {
@@ -198,16 +231,20 @@ public class SkeletonJson {
 		skeletonData.bones.shrink();
 		skeletonData.slots.shrink();
 		skeletonData.skins.shrink();
+		skeletonData.events.shrink();
 		skeletonData.animations.shrink();
+		skeletonData.ikConstraints.shrink();
 		return skeletonData;
 	}
 
-	private Attachment readAttachment (Skin skin, String name, JsonValue map) {
+	private Attachment readAttachment (Skin skin, int slotIndex, String name, JsonValue map) {
 		float scale = this.scale;
 		name = map.getString("name", name);
 		String path = map.getString("path", name);
 
-		switch (AttachmentType.valueOf(map.getString("type", AttachmentType.region.name()))) {
+		String type = map.getString("type", AttachmentType.region.name());
+		if (type.equals("skinnedmesh")) type = "weightedmesh";
+		switch (AttachmentType.valueOf(type)) {
 		case region: {
 			RegionAttachment region = attachmentLoader.newRegionAttachment(skin, name, path);
 			if (region == null) return null;
@@ -237,61 +274,79 @@ public class SkeletonJson {
 			box.setVertices(vertices);
 			return box;
 		}
-		case mesh: {
+		case mesh:
+		case linkedmesh: {
 			MeshAttachment mesh = attachmentLoader.newMeshAttachment(skin, name, path);
 			if (mesh == null) return null;
 			mesh.setPath(path);
-			float[] vertices = map.require("vertices").asFloatArray();
-			if (scale != 1) {
-				for (int i = 0, n = vertices.length; i < n; i++)
-					vertices[i] *= scale;
-			}
-			mesh.setVertices(vertices);
-			mesh.setTriangles(map.require("triangles").asShortArray());
-			mesh.setRegionUVs(map.require("uvs").asFloatArray());
-			mesh.updateUVs();
 
 			String color = map.getString("color", null);
 			if (color != null) mesh.getColor().set(Color.valueOf(color));
 
-			if (map.has("hull")) mesh.setHullLength(map.require("hull").asInt() * 2);
-			if (map.has("edges")) mesh.setEdges(map.require("edges").asIntArray());
 			mesh.setWidth(map.getFloat("width", 0) * scale);
 			mesh.setHeight(map.getFloat("height", 0) * scale);
+
+			String parent = map.getString("parent", null);
+			if (parent == null) {
+				float[] vertices = map.require("vertices").asFloatArray();
+				if (scale != 1) {
+					for (int i = 0, n = vertices.length; i < n; i++)
+						vertices[i] *= scale;
+				}
+				mesh.setVertices(vertices);
+				mesh.setTriangles(map.require("triangles").asShortArray());
+				mesh.setRegionUVs(map.require("uvs").asFloatArray());
+				mesh.updateUVs();
+
+				if (map.has("hull")) mesh.setHullLength(map.require("hull").asInt() * 2);
+				if (map.has("edges")) mesh.setEdges(map.require("edges").asIntArray());
+			} else {
+				mesh.setInheritFFD(map.getBoolean("ffd", true));
+				linkedMeshes.add(new LinkedMesh(mesh, map.getString("skin", null), slotIndex, parent));
+			}
 			return mesh;
 		}
-		case skinnedmesh: {
-			SkinnedMeshAttachment mesh = attachmentLoader.newSkinnedMeshAttachment(skin, name, path);
+		case weightedmesh:
+		case weightedlinkedmesh: {
+			WeightedMeshAttachment mesh = attachmentLoader.newWeightedMeshAttachment(skin, name, path);
 			if (mesh == null) return null;
 			mesh.setPath(path);
-			float[] uvs = map.require("uvs").asFloatArray();
-			float[] vertices = map.require("vertices").asFloatArray();
-			FloatArray weights = new FloatArray(uvs.length * 3 * 3);
-			IntArray bones = new IntArray(uvs.length * 3);
-			for (int i = 0, n = vertices.length; i < n;) {
-				int boneCount = (int)vertices[i++];
-				bones.add(boneCount);
-				for (int nn = i + boneCount * 4; i < nn;) {
-					bones.add((int)vertices[i]);
-					weights.add(vertices[i + 1] * scale);
-					weights.add(vertices[i + 2] * scale);
-					weights.add(vertices[i + 3]);
-					i += 4;
-				}
-			}
-			mesh.setBones(bones.toArray());
-			mesh.setWeights(weights.toArray());
-			mesh.setTriangles(map.require("triangles").asShortArray());
-			mesh.setRegionUVs(uvs);
-			mesh.updateUVs();
 
 			String color = map.getString("color", null);
 			if (color != null) mesh.getColor().set(Color.valueOf(color));
 
-			if (map.has("hull")) mesh.setHullLength(map.require("hull").asInt() * 2);
-			if (map.has("edges")) mesh.setEdges(map.require("edges").asIntArray());
 			mesh.setWidth(map.getFloat("width", 0) * scale);
 			mesh.setHeight(map.getFloat("height", 0) * scale);
+
+			String parent = map.getString("parent", null);
+			if (parent == null) {
+				float[] uvs = map.require("uvs").asFloatArray();
+				float[] vertices = map.require("vertices").asFloatArray();
+				FloatArray weights = new FloatArray(uvs.length * 3 * 3);
+				IntArray bones = new IntArray(uvs.length * 3);
+				for (int i = 0, n = vertices.length; i < n;) {
+					int boneCount = (int)vertices[i++];
+					bones.add(boneCount);
+					for (int nn = i + boneCount * 4; i < nn;) {
+						bones.add((int)vertices[i]);
+						weights.add(vertices[i + 1] * scale);
+						weights.add(vertices[i + 2] * scale);
+						weights.add(vertices[i + 3]);
+						i += 4;
+					}
+				}
+				mesh.setBones(bones.toArray());
+				mesh.setWeights(weights.toArray());
+				mesh.setTriangles(map.require("triangles").asShortArray());
+				mesh.setRegionUVs(uvs);
+				mesh.updateUVs();
+
+				if (map.has("hull")) mesh.setHullLength(map.require("hull").asInt() * 2);
+				if (map.has("edges")) mesh.setEdges(map.require("edges").asIntArray());
+			} else {
+				mesh.setInheritFFD(map.getBoolean("ffd", true));
+				linkedMeshes.add(new LinkedMesh(mesh, map.getString("skin", null), slotIndex, parent));
+			}
 			return mesh;
 		}
 		}
@@ -388,20 +443,6 @@ public class SkeletonJson {
 					timelines.add(timeline);
 					duration = Math.max(duration, timeline.getFrames()[timeline.getFrameCount() * 3 - 3]);
 
-				} else if (timelineName.equals("flipX") || timelineName.equals("flipY")) {
-					boolean x = timelineName.equals("flipX");
-					FlipXTimeline timeline = x ? new FlipXTimeline(timelineMap.size) : new FlipYTimeline(timelineMap.size);
-					timeline.boneIndex = boneIndex;
-
-					String field = x ? "x" : "y";
-					int frameIndex = 0;
-					for (JsonValue valueMap = timelineMap.child; valueMap != null; valueMap = valueMap.next) {
-						timeline.setFrame(frameIndex, valueMap.getFloat("time"), valueMap.getBoolean(field, false));
-						frameIndex++;
-					}
-					timelines.add(timeline);
-					duration = Math.max(duration, timeline.getFrames()[timeline.getFrameCount() * 2 - 2]);
-
 				} else
 					throw new RuntimeException("Invalid timeline type for a bone: " + timelineName + " (" + boneMap.name + ")");
 			}
@@ -441,7 +482,7 @@ public class SkeletonJson {
 					if (attachment instanceof MeshAttachment)
 						vertexCount = ((MeshAttachment)attachment).getVertices().length;
 					else
-						vertexCount = ((SkinnedMeshAttachment)attachment).getWeights().length / 3 * 2;
+						vertexCount = ((WeightedMeshAttachment)attachment).getWeights().length / 3 * 2;
 
 					int frameIndex = 0;
 					for (JsonValue valueMap = meshMap.child; valueMap != null; valueMap = valueMap.next) {
@@ -523,11 +564,11 @@ public class SkeletonJson {
 			for (JsonValue eventMap = eventsMap.child; eventMap != null; eventMap = eventMap.next) {
 				EventData eventData = skeletonData.findEvent(eventMap.getString("name"));
 				if (eventData == null) throw new SerializationException("Event not found: " + eventMap.getString("name"));
-				Event event = new Event(eventData);
+				Event event = new Event(eventMap.getFloat("time"), eventData);
 				event.intValue = eventMap.getInt("int", eventData.getInt());
 				event.floatValue = eventMap.getFloat("float", eventData.getFloat());
 				event.stringValue = eventMap.getString("string", eventData.getString());
-				timeline.setFrame(frameIndex++, eventMap.getFloat("time"), event);
+				timeline.setFrame(frameIndex++, event);
 			}
 			timelines.add(timeline);
 			duration = Math.max(duration, timeline.getFrames()[timeline.getFrameCount() - 1]);
@@ -544,6 +585,20 @@ public class SkeletonJson {
 			timeline.setStepped(frameIndex);
 		else if (curve.isArray()) {
 			timeline.setCurve(frameIndex, curve.getFloat(0), curve.getFloat(1), curve.getFloat(2), curve.getFloat(3));
+		}
+	}
+
+	static class LinkedMesh {
+		String parent, skin;
+		int slotIndex;
+		Attachment mesh;
+
+		public LinkedMesh (Attachment mesh, String skin, int slotIndex, String parent) {
+			super();
+			this.mesh = mesh;
+			this.skin = skin;
+			this.slotIndex = slotIndex;
+			this.parent = parent;
 		}
 	}
 }

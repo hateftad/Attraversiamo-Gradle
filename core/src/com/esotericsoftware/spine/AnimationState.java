@@ -1,25 +1,26 @@
 /******************************************************************************
  * Spine Runtimes Software License
- * Version 2.1
+ * Version 2.3
  * 
- * Copyright (c) 2013, Esoteric Software
+ * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
  * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * non-transferable license to use, install, execute and perform the Spine
+ * Runtimes Software (the "Software") and derivative works solely for personal
+ * or internal use. Without the written permission of Esoteric Software (see
+ * Section 2 of the Spine Software License Agreement), you may not (a) modify,
+ * translate, adapt or otherwise create derivative works, improvements of the
+ * Software or develop new applications using the Software or (b) remove,
+ * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
  * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -36,7 +37,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 
 /** Stores state for an animation and automatically mixes between animations. */
 public class AnimationState {
-	private final AnimationStateData data;
+	private AnimationStateData data;
 	private Array<TrackEntry> tracks = new Array();
 	private final Array<Event> events = new Array();
 	private final Array<AnimationStateListener> listeners = new Array();
@@ -47,6 +48,10 @@ public class AnimationState {
 			return new TrackEntry();
 		}
 	};
+
+	/** Creates an uninitialized AnimationState. The animation state data must be set. */
+	public AnimationState () {
+	}
 
 	public AnimationState (AnimationStateData data) {
 		if (data == null) throw new IllegalArgumentException("data cannot be null.");
@@ -59,20 +64,28 @@ public class AnimationState {
 			TrackEntry current = tracks.get(i);
 			if (current == null) continue;
 
+			TrackEntry next = current.next;
+			if (next != null) {
+				float nextTime = current.lastTime - next.delay;
+				if (nextTime >= 0) {
+					float nextDelta = delta * next.timeScale;
+					next.time = nextTime + nextDelta; // For start event to see correct time.
+					current.time += delta * current.timeScale; // For end event to see correct time.
+					setCurrent(i, next);
+					next.time -= nextDelta; // Prevent increasing time twice, below.
+					current = next;
+				}
+			} else if (!current.loop && current.lastTime >= current.endTime) {
+				// End non-looping animation when it reaches its end time and there is no next entry.
+				clearTrack(i);
+				continue;
+			}
+
 			current.time += delta * current.timeScale;
 			if (current.previous != null) {
 				float previousDelta = delta * current.previous.timeScale;
 				current.previous.time += previousDelta;
 				current.mixTime += previousDelta;
-			}
-
-			TrackEntry next = current.next;
-			if (next != null) {
-				next.time = current.lastTime - next.delay;
-				if (next.time >= 0) setCurrent(i, next);
-			} else {
-				// End non-looping animation when it reaches its end time and there is no next entry.
-				if (!current.loop && current.lastTime >= current.endTime) clearTrack(i);
 			}
 		}
 	}
@@ -268,6 +281,10 @@ public class AnimationState {
 		listeners.removeValue(listener, true);
 	}
 
+	public void clearListeners () {
+		listeners.clear();
+	}
+
 	public float getTimeScale () {
 		return timeScale;
 	}
@@ -278,6 +295,10 @@ public class AnimationState {
 
 	public AnimationStateData getData () {
 		return data;
+	}
+
+	public void setData (AnimationStateData data) {
+		this.data = data;
 	}
 
 	/** Returns the list of tracks that have animations, which may contain nulls. */
@@ -301,7 +322,7 @@ public class AnimationState {
 		TrackEntry next, previous;
 		Animation animation;
 		boolean loop;
-		float delay, time, lastTime = 0, endTime, timeScale = 1;
+		float delay, time, lastTime = -1, endTime, timeScale = 1;
 		float mixTime, mixDuration;
 		AnimationStateListener listener;
 		float mix = 1;
@@ -312,7 +333,7 @@ public class AnimationState {
 			animation = null;
 			listener = null;
 			timeScale = 1;
-			lastTime = 0;
+			lastTime = -1; // Trigger events on frame zero.
 			time = 0;
 		}
 
