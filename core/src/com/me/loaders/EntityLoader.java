@@ -9,7 +9,6 @@ import com.artemis.Entity;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -137,19 +136,21 @@ public class EntityLoader {
                 entity.addComponent(pComp);
             }
 
-
-            if (m_scene.getCustom(body, "bodyType", "").equalsIgnoreCase("skyLight")) {
-                CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
-                entity.addComponent(camComp);
-                PointLight light = new PointLight(rh, 50, level.getLevelConfig().getLightColor(), 5000, camComp.getCamera().position.x, camComp.getCamera().position.y);
-                entity.addComponent(new LightComponent(light, "cameraLight"));
-                entityWorld.getManager(GroupManager.class).add(entity, "lights");
-            }
-
-
             loadFixtures(pComp, body);
 
             BodyUserData ud = (BodyUserData) body.getUserData();
+
+            if (ud.mName.equalsIgnoreCase("sky_light")) {
+                CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
+                entity.addComponent(camComp);
+                String color = m_scene.getCustom(body, "lightColor", "");
+                if(!color.equalsIgnoreCase("none") && !color.isEmpty()) {
+                    PointLight light = new PointLight(rh, 50, GameUtils.getColor(color), 5000, camComp.getCamera().position.x, camComp.getCamera().position.y);
+                    entity.addComponent(new LightComponent(light, "cameraLight"));
+                    entityWorld.getManager(GroupManager.class).add(entity, "lights");
+                }
+            }
+
             if (ud.mName.equalsIgnoreCase("light")) {
                 String color = m_scene.getCustom(body, "light", "");
                 ConeLight light = new ConeLight(rh, 50, GameUtils.getColor(color), 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
@@ -223,7 +224,7 @@ public class EntityLoader {
 
             if (ud.mName.equalsIgnoreCase("particleEmitter")) {
                 String particleName = m_scene.getCustom(body, "particlename", "");
-                ContinuousParticles particleComponent = new ContinuousParticles(particleName, body.getPosition());
+                ContinuousParticles particleComponent = new ContinuousParticles(particleName, pComp.getPosition());
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
             }
@@ -409,9 +410,6 @@ public class EntityLoader {
                 entity.addComponent(handHoldComponent);
                 entityWorld.addObserver(handHoldComponent);
 
-                SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 1);
-                entity.addComponent(particleComponent);
-                entityWorld.addObserver(particleComponent);
 
                 pComp.setName(((BodyUserData) body.getUserData()).mName);
                 pComp.setIsPlayer(true);
@@ -483,11 +481,9 @@ public class EntityLoader {
                 entity.addComponent(handHoldComponent);
                 entityWorld.addObserver(handHoldComponent);
 
-                SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", 2);
-                entity.addComponent(particleComponent);
-                entityWorld.addObserver(particleComponent);
-
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
+
+
             }
 
             BodyUserData ud = (BodyUserData) body.getUserData();
@@ -498,6 +494,9 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("feet")) {
                 GameEventFactory factory = new GameEventFactory();
                 pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
+                SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", playerConfig.getPlayerNumber(), pComp.getBody("feet").getPosition());
+                entity.addComponent(particleComponent);
+                entityWorld.addObserver(particleComponent);
             }
 
             if (ud.mName.equalsIgnoreCase("right_hand_hold")) {

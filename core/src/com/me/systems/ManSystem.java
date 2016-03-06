@@ -24,6 +24,8 @@ public class ManSystem extends PlayerSystem {
     private float VELOCITY = 11.0f;
     private float VELOCITYINR = 3.0f;
     @Mapper
+    ComponentMapper<SingleParticleComponent> m_particleComps;
+    @Mapper
     ComponentMapper<JointComponent> m_jointComp;
     @Mapper
     ComponentMapper<PlayerComponent> m_playerComps;
@@ -90,7 +92,6 @@ public class ManSystem extends PlayerSystem {
             }
 
             if (m_inputMgr.isDown(action)) {
-                notifyObservers(new ParticleEvent(GameEventType.Particle, 1));
                 if (touch.m_footEdge) {
                     if (touch.m_footEdgeL) {
                         player.setFacingLeft(true);
@@ -103,7 +104,6 @@ public class ManSystem extends PlayerSystem {
                     movementComponent.standStill();
                 }
                 if (touch.m_pushArea) {
-                    EventComponent component = m_eventComps.get(entity);
                     if (touch.m_leftPushArea) {
                         player.setFacingLeft(false);
                         setPlayerState(entity, PlayerState.PressButton);
@@ -121,6 +121,8 @@ public class ManSystem extends PlayerSystem {
                     if(touch.m_pullEdgeTouch){
                         setPlayerState(entity, PlayerState.PullingLedge);
                     } else {
+                        //temp fix for ground dust when climbing up
+                        m_particleComps.get(entity).setEnabled(false);
                         setPlayerState(entity, PlayerState.ClimbingLedge);
                     }
                 }

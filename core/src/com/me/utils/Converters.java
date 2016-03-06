@@ -28,10 +28,10 @@ public class Converters {
 	
 	public static Vector2 ToWorld(Vector2 in)
 	{
-		float x = in.x * BOX_TO_WORLD;
-		float y = in.y * BOX_TO_WORLD;
+		in.x = in.x * BOX_TO_WORLD;
+		in.y = in.y * BOX_TO_WORLD;
 		
-		return new Vector2(x,y);
+		return in;
 	}
 	
 	public static Vector2 ToBox(float x, float y)

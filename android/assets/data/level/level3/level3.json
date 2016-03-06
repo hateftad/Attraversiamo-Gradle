@@ -169,6 +169,11 @@
 				{
 					"int" : 1,
 					"name" : "collisionGroup"
+				},
+				
+				{
+					"name" : "hitAnimation",
+					"string" : "swing"
 				}
 			],
 			"fixture" : 
@@ -196,8 +201,8 @@
 			"name" : "ledgeSensor",
 			"position" : 
 			{
-				"x" : 77.27395629882812,
-				"y" : -3.341346740722656
+				"x" : 77.05507659912109,
+				"y" : -3.858708381652832
 			},
 			"type" : 0
 		},
@@ -401,6 +406,11 @@
 				{
 					"name" : "bodyType",
 					"string" : "skyLight"
+				},
+				
+				{
+					"name" : "lightColor",
+					"string" : "yellow"
 				}
 			],
 			"fixture" : 
@@ -419,7 +429,7 @@
 				}
 			],
 			"linearVelocity" : 0,
-			"name" : "skyLight",
+			"name" : "sky_light",
 			"position" : 
 			{
 				"x" : 69.18176269531250,

@@ -133,7 +133,6 @@ public class RenderSystem extends EntitySystem {
 
 			if (m_particles.has(e)) {
 				ParticleComponent particles = m_particles.get(e);
-                particles.setPosition(physics.getWorldPosition());
 				if(particles.needsDrawAndUpdate()) {
 					particles.draw(m_batch, world.delta);
 				}

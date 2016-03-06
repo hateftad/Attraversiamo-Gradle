@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.spine.Bone;
+import com.esotericsoftware.spine.IkConstraint;
 import com.esotericsoftware.spine.Slot;
 import com.me.component.interfaces.TelegramEventObserverComponent;
 import com.me.events.AnimationEvent;
@@ -69,6 +70,7 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     break;
                 case Hanging:
                     playAnimation("hang", true);
+                    setIK(null);
                     break;
                 case ClimbingLedge:
                     playAnimation("climbUp", false);
@@ -133,6 +135,16 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
             m_skeleton.setToSetupPose();
         }
         m_previousState = state;
+    }
+
+    public void setIK(Vector2 position){
+        for(IkConstraint constraint : m_skeleton.getIkConstraints()){
+            constraint.setMix(100);
+            constraint.setBendDirection(10);
+            constraint.apply();
+        }
+        m_skeleton.updateCache();
+        m_skeleton.updateWorldTransform();
     }
 
     public void rotateBoneTo(String name, Vector2 myPos, Vector2 target, boolean left) {

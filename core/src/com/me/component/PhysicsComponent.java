@@ -57,7 +57,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = b.getType();
-		bodyDef.position.set(b.getPosition().x, b.getPosition().y);
+		bodyDef.position.set(b.getPosition());
 		bodyDef.angle = b.getAngle();
 		return world.createBody(bodyDef);
 	}
@@ -367,9 +367,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 	}
 
 	public void updateWorldPosition() {
-		m_worldPosition.set(
-				Converters.ToWorld(m_body.get(m_name).getPosition().x),
-				Converters.ToWorld(m_body.get(m_name).getPosition().y));
+		m_worldPosition.set(Converters.ToWorld(m_body.get(m_name).getPosition()));
 	}
 
 	public void setPhysicsListener(ImmediateModePhysicsListener listener) {

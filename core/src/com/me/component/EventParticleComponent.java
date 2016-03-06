@@ -15,7 +15,7 @@ public class EventParticleComponent extends ParticleComponent implements Particl
     public EventParticleComponent(String effect, int id, Vector2 position) {
         super(effect, ParticleType.SINGLE, 10);
         m_id = id;
-        setPosition(Converters.ToWorld(position));
+        setPosition(position);
     }
 
     @Override

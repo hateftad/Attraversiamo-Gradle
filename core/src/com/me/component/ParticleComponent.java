@@ -53,7 +53,8 @@ public abstract class ParticleComponent extends BaseComponent {
 
 	public void start(){
 		ParticleEffectPool.PooledEffect effect = m_pool.obtain();
-		effect.setPosition(m_position.x, m_position.y);
+
+		effect.setPosition(Converters.ToWorld(m_position.x), Converters.ToWorld(m_position.y));
 		m_effects.add(effect);
 	}
 
@@ -62,7 +63,7 @@ public abstract class ParticleComponent extends BaseComponent {
 	}
 
 	public void setPosition(Vector2 position){
-		m_position = position.cpy();
+		m_position = position;
 	}
 
     public boolean needsDrawAndUpdate(){

@@ -239,9 +239,9 @@ public class PhysicsListenerSetup {
 
                         if (e.getComponent(PlayerComponent.class) != null) {
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Ground) {
-                                e.getComponent(SingleParticleComponent.class).setPosition(Converters.ToWorld(e.getComponent(PhysicsComponent.class).getBody("feet").getPosition()));
                                 GameEvent event = e.getComponent(PhysicsComponent.class).getEventInfo();
                                 event.notify(m_gameEntityWorld);
+                                e.getComponent(SingleParticleComponent.class).setEnabled(true);
                             }
 
                             if (playerUd.getType() == Type.Torso && otherUd.getType() == Type.Box) {
