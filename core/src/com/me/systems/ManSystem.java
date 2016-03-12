@@ -9,8 +9,6 @@ import com.me.component.*;
 import com.me.config.GameConfig;
 import com.me.config.GlobalConfig;
 import com.me.events.GameEventType;
-import com.me.events.ParticleEvent;
-import com.me.events.TaskEvent;
 import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
 import com.me.listeners.LevelEventListener;
@@ -88,7 +86,11 @@ public class ManSystem extends PlayerSystem {
             }
 
             if (keyInputComponent.m_jump) {
-                jump(entity);
+                if(touch.m_boxTouch){
+                    setPlayerState(entity, PlayerState.ClimbBox);
+                } else {
+                    jump(entity);
+                }
             }
 
             if (m_inputMgr.isDown(action)) {
@@ -332,7 +334,7 @@ public class ManSystem extends PlayerSystem {
 
     private boolean canBeControlled(PlayerComponent player) {
         return player.isActive() && !player.isFinishing() &&
-                !player.isClimbingLedge() && !player.isPullingLedge() &&
+                !player.isClimbing() && !player.isPullingLedge() &&
                 !player.isPullingUp();
     }
 

@@ -51,7 +51,7 @@ public class ManInteractionSystem extends PlayerSystem {
             }
         }
 
-        if (jointComponent.isHanging() && !playerComponent.isClimbingLedge()) {
+        if (jointComponent.isHanging() && !playerComponent.isClimbing()) {
             if(!playerComponent.isPullingLedge()) {
                 setPlayerState(entity, PlayerState.Hanging);
             }
@@ -62,12 +62,16 @@ public class ManInteractionSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
-        if (playerComponent.isClimbingLedge()) {
+        if (playerComponent.isClimbing()) {
             if (animation.isCompleted(PlayerState.ClimbingLedge)) {
                 jointComponent.destroyHangJoint();
                 physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
                 physicsComponent.setBodyActive(true);
                 hangComponent.notHanging();
+                setPlayerState(entity, PlayerState.Idle);
+            }
+            if(animation.isCompleted(PlayerState.ClimbBox)){
+                physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
                 setPlayerState(entity, PlayerState.Idle);
             }
         }

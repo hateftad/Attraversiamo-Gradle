@@ -70,7 +70,6 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     break;
                 case Hanging:
                     playAnimation("hang", true);
-                    setIK(null);
                     break;
                 case ClimbingLedge:
                     playAnimation("climbUp", false);
@@ -122,12 +121,17 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     break;
                 case Swinging:
                     playAnimation("swinging", false);
+                    setIK(new Vector2(0, 0));
                     break;
                 case HoldingCage:
                     playAnimation("holdingCage", false);
+                    setIK(new Vector2(0, 0));
                     break;
                 case Drowning:
                     playAnimation("drowning", false);
+                    break;
+                case ClimbBox:
+                    playAnimation("boxClimb", false);
                     break;
                 default:
                     break;
@@ -138,9 +142,15 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     }
 
     public void setIK(Vector2 position){
+
         for(IkConstraint constraint : m_skeleton.getIkConstraints()){
             constraint.setMix(100);
-            constraint.setBendDirection(10);
+            Bone target = constraint.getTarget();
+            target.setX(position.x);
+            target.setY(position.y);
+            target.getData().setX(position.x);
+            target.getData().setY(position.y);
+            target.updateWorldTransform();
             constraint.apply();
         }
         m_skeleton.updateCache();

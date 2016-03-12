@@ -25,7 +25,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         GameConfig cfg = new GameConfig();
         cfg.platform = GameConfig.Platform.IPHONE;
         cfg.showUI = true;
-        cfg.timeStep = 1/45f;
+        cfg.timeStep = 1/65f;
         cfg.zoom = 5f;
         iosApplication = new IOSApplication(new Attraversiamo(cfg, this), config);
         return iosApplication;

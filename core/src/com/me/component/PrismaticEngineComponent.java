@@ -47,7 +47,7 @@ public class PrismaticEngineComponent extends BaseComponent implements ButtonSta
 
     @Override
     public void restart() {
-
+        m_wheelJoint.setMotorSpeed(0);
     }
 
     @Override

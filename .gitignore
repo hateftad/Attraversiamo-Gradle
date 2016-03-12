@@ -64,5 +64,6 @@ build/
 .DS_Store
 
 ##Assets
-*.rube
+*.rube-backups
+*.json-backups
 *.rs

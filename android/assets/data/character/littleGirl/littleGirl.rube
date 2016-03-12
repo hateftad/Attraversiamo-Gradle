@@ -1,0 +1,632 @@
+
+{
+  "collisionbitplanes" : 
+  {
+    "names" : 
+    [
+      "bitplane1",
+      "bitplane2",
+      "bitplane3",
+      "bitplane4",
+      "bitplane5",
+      "bitplane6",
+      "bitplane7",
+      "bitplane8",
+      "bitplane9",
+      "bitplane10",
+      "bitplane11",
+      "bitplane12",
+      "bitplane13",
+      "bitplane14",
+      "bitplane15",
+      "bitplane16",
+      "bitplane17",
+      "bitplane18",
+      "bitplane19",
+      "bitplane20",
+      "bitplane21",
+      "bitplane22",
+      "bitplane23",
+      "bitplane24",
+      "bitplane25",
+      "bitplane26",
+      "bitplane27",
+      "bitplane28",
+      "bitplane29",
+      "bitplane30",
+      "bitplane31",
+      "bitplane32"
+    ]
+  },
+  "customPropertyDefs" : 
+  [
+    
+    {
+      "class" : "body",
+      "displayName" : "skeleton",
+      "name" : "skeleton",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "characterType",
+      "name" : "characterType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "eventType",
+      "name" : "eventType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "atlas",
+      "name" : "atlas",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
+    }
+  ],
+  "metaworld" : 
+  {
+    "allowSleep" : true,
+    "autoClearForces" : true,
+    "continuousPhysics" : true,
+    "exportOptions" : 
+    {
+      "compactCommonFloats" : true,
+      "compactZeroVecs" : true,
+      "saveFullPathForImages" : false,
+      "saveImagePathsRelativeToRUBEFile" : false,
+      "useHumanReadableFloats" : true,
+      "usePrettyPrint" : true
+    },
+    "gravity" : 
+    {
+      "x" : 0,
+      "y" : -10
+    },
+    "metabody" : 
+    [
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 7,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 9.000000136438757e-05,
+            "filter-categoryBits" : 256,
+            "friction" : 0.2,
+            "id" : 1,
+            "name" : "pelvik_sensor",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.1719390004873276,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 1,
+        "linearVelocity" : 0,
+        "massData-I" : 1.235549120792712e-07,
+        "massData-mass" : 8.358748345926870e-06,
+        "name" : "body0",
+        "position" : 
+        {
+          "x" : 4.399077892303467,
+          "y" : 3.333109378814697
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 28,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "friction" : 0.2,
+            "id" : 2,
+            "name" : "left_hand",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "gravityScale" : 0,
+        "id" : 2,
+        "linearVelocity" : 0,
+        "massData-mass" : 1,
+        "name" : "left_hand_hold",
+        "position" : 
+        {
+          "x" : 2.423622608184814,
+          "y" : 5.381001949310303
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 29,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "friction" : 0.2,
+            "id" : 3,
+            "name" : "right_hand",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "gravityScale" : 0,
+        "id" : 3,
+        "linearVelocity" : 0,
+        "massData-mass" : 1,
+        "name" : "right_hand_hold",
+        "position" : 
+        {
+          "x" : 6.558051586151123,
+          "y" : 5.364262580871582
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 3,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          },
+          
+          {
+            "name" : "atlas",
+            "string" : "littleGirl"
+          },
+          
+          {
+            "name" : "characterType",
+            "string" : "player_two"
+          },
+          
+          {
+            "name" : "skeleton",
+            "string" : "littleGirlSkeleton"
+          }
+        ],
+        "fixedRotation" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1.123346090316772,
+            "filter-categoryBits" : 2,
+            "filter-maskBits" : 12,
+            "friction" : 0.2,
+            "id" : 9,
+            "name" : "center",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                0.8945620059967041,
+                0.4193917512893677,
+                -0.07946592569351196,
+                -0.6659045815467834,
+                -0.9019424915313721,
+                -0.7420995831489563,
+                -0.6287580132484436,
+                0.6318337321281433,
+                0.7518411874771118
+              ],
+              "y" : 
+              [
+                -0.5171782970428467,
+                2.157700777053833,
+                2.782151937484741,
+                2.168565988540649,
+                -0.5171782970428467,
+                -2.507259845733643,
+                -2.695407629013062,
+                -2.701678514480591,
+                -2.507258892059326
+              ]
+            }
+          }
+        ],
+        "id" : 9,
+        "linearVelocity" : 0,
+        "massData-I" : 0.5839468240737915,
+        "massData-center" : 
+        {
+          "x" : -0.03380992636084557,
+          "y" : -0.2570219635963440
+        },
+        "massData-mass" : 8.689245223999023,
+        "name" : "center",
+        "position" : 
+        {
+          "x" : 4.445163726806641,
+          "y" : 3.868158340454102
+        },
+        "sleepingAllowed" : false,
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 4,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          },
+          
+          {
+            "int" : 2,
+            "name" : "taskId"
+          },
+          
+          {
+            "name" : "characterType",
+            "string" : "leg"
+          },
+          
+          {
+            "name" : "eventType",
+            "string" : "groundTouch"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 0.2,
+            "filter-categoryBits" : 4,
+            "filter-maskBits" : 68,
+            "friction" : 100.0,
+            "id" : 10,
+            "name" : "feet",
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.6605488657951355,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -4.768369876728684e-07 ],
+              "y" : [ -1.192089982282596e-07 ]
+            }
+          }
+        ],
+        "id" : 10,
+        "linearVelocity" : 0,
+        "massData-I" : 0.05980943515896797,
+        "massData-center" : 
+        {
+          "x" : -4.768369876728684e-07,
+          "y" : -1.192090053336869e-07
+        },
+        "massData-mass" : 0.2741509675979614,
+        "name" : "feet",
+        "position" : 
+        {
+          "x" : 4.435956001281738,
+          "y" : 1.366467833518982
+        },
+        "sleepingAllowed" : false,
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 14,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 5,
+            "name" : "collisionGroup"
+          },
+          
+          {
+            "name" : "characterType",
+            "string" : "LHand"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "filter-categoryBits" : 2,
+            "filter-maskBits" : 2,
+            "friction" : 0.2,
+            "id" : 12,
+            "name" : "hand",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.4565761387348175,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -4.768371582031250e-07 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 12,
+        "linearVelocity" : 0,
+        "massData-mass" : 1,
+        "name" : "rightHand",
+        "position" : 
+        {
+          "x" : 4.428431987762451,
+          "y" : 2.513001680374146
+        },
+        "sleepingAllowed" : false,
+        "type" : "dynamic"
+      }
+    ],
+    "metaimage" : 
+    [
+      
+      {
+        "aspectScale" : 1,
+        "body" : 9,
+        "center" : 
+        {
+          "x" : -0.1519862115383148,
+          "y" : 1.564435243606567
+        },
+        "file" : "smallCharIdle.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 9,
+        "name" : "image8",
+        "opacity" : 1,
+        "renderOrder" : 5,
+        "scale" : 9.374984741210938
+      }
+    ],
+    "metajoint" : 
+    [
+      
+      {
+        "anchorA" : 
+        {
+          "x" : 0.002965450752526522,
+          "y" : -0.004408836364746094
+        },
+        "anchorB" : 
+        {
+          "x" : -0.05541800707578659,
+          "y" : -0.5277600288391113
+        },
+        "bodyA" : 1,
+        "bodyB" : 9,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 2,
+        "name" : "joint1",
+        "referenceAngle" : 0,
+        "type" : "weld"
+      },
+      
+      {
+        "anchorA" : 
+        {
+          "x" : 0.009505745023488998,
+          "y" : -0.02863251790404320
+        },
+        "anchorB" : 
+        {
+          "x" : 0.007041885517537594,
+          "y" : -2.537665367126465
+        },
+        "bodyA" : 10,
+        "bodyB" : 9,
+        "collideConnected" : false,
+        "enableLimit" : false,
+        "enableMotor" : true,
+        "id" : 3,
+        "lowerLimit" : 0,
+        "maxMotorTorque" : 50.0,
+        "motorSpeed" : 0,
+        "name" : "footMotor",
+        "referenceAngle" : 0,
+        "type" : "revolute",
+        "upperLimit" : 0
+      },
+      
+      {
+        "anchorA" : 
+        {
+          "x" : -0.9288051724433899,
+          "y" : -0.6163873672485352
+        },
+        "anchorB" : 
+        {
+          "x" : 1.171781182289124,
+          "y" : 0.8810020685195923
+        },
+        "bodyA" : 3,
+        "bodyB" : 9,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 5,
+        "name" : "joint0",
+        "referenceAngle" : 0,
+        "type" : "weld"
+      },
+      
+      {
+        "anchorA" : 
+        {
+          "x" : -1.215389966964722,
+          "y" : 1.012496948242188
+        },
+        "anchorB" : 
+        {
+          "x" : 0.8479024171829224,
+          "y" : -0.4921050071716309
+        },
+        "bodyA" : 9,
+        "bodyB" : 2,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 6,
+        "name" : "joint2",
+        "referenceAngle" : 0,
+        "type" : "weld"
+      }
+    ],
+    "positionIterations" : 3,
+    "stepsPerSecond" : 60.0,
+    "subStepping" : false,
+    "velocityIterations" : 8,
+    "warmStarting" : true
+  }
+}
