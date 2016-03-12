@@ -68,7 +68,6 @@ public class TouchComponent extends BaseComponent {
         m_canCrawl = false;
         m_cageTouch = false;
         m_waterTouch = false;
-
 	}
 
 }

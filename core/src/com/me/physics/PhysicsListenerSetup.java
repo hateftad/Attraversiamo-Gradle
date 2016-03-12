@@ -1,6 +1,7 @@
 package com.me.physics;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -89,6 +90,7 @@ public class PhysicsListenerSetup {
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
                                     e.getComponent(TouchComponent.class).m_edgeTouch = true;
                                     e.getComponent(HangComponent.class).m_hangingLeft = true;
+                                    e.getComponent(PlayerAnimationComponent.class).setIK(other.getPosition());
                                 }
                             }
                             if (!pl.isFacingLeft() && otherUd.getType() == Type.RightEdge && playerUd.getType() == Type.HangHands) {
@@ -98,6 +100,7 @@ public class PhysicsListenerSetup {
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
                                     e.getComponent(TouchComponent.class).m_edgeTouch = true;
                                     e.getComponent(HangComponent.class).m_hangingRight = true;
+                                    e.getComponent(PlayerAnimationComponent.class).setIK(other.getPosition());
                                 }
                             }
 
@@ -242,6 +245,7 @@ public class PhysicsListenerSetup {
                                 GameEvent event = e.getComponent(PhysicsComponent.class).getEventInfo();
                                 event.notify(m_gameEntityWorld);
                                 e.getComponent(SingleParticleComponent.class).setEnabled(true);
+                                e.getComponent(TouchComponent.class).m_waterTouch = false;
                             }
 
                             if (playerUd.getType() == Type.Torso && otherUd.getType() == Type.Box) {
