@@ -9,31 +9,23 @@ import com.badlogic.gdx.utils.Array;
 import com.me.utils.Converters;
 
 public abstract class ParticleComponent extends BaseComponent {
-    public enum ParticleType{
-        SINGLE,
-        PORTAL,
-        CONTINUOUS
-    }
 
 	protected ParticleEffect m_particle;
     private Vector2 m_position = Vector2.Zero;
-    protected ParticleType m_type;
     protected ParticleEffectPool m_pool;
     protected Array<ParticleEffectPool.PooledEffect> m_effects;
     protected String m_effect;
 
-	public ParticleComponent(String effect, ParticleType type, int max){
+	public ParticleComponent(String effect, int max){
 		m_particle = loadParticle(effect);
 		m_pool = new ParticleEffectPool(m_particle, 0, max);
 		m_effects = new Array<>();
-		m_type = type;
 	}
 
-	public ParticleComponent(String effect, ParticleType type, Vector2 position){
+	public ParticleComponent(String effect, Vector2 position){
 		m_particle = loadParticle(effect);
 		m_pool = new ParticleEffectPool(m_particle, 10, 10);
 		m_effects = new Array<>();
-		m_type = type;
 		setPosition(Converters.ToWorld(position));
 	}
 
@@ -45,10 +37,6 @@ public abstract class ParticleComponent extends BaseComponent {
 		particle.load(Gdx.files.internal("data/particles/" + m_effect + ".p"), Gdx.files.internal("data"));
 		particle.start();
 		return particle;
-	}
-
-	public ParticleType getType(){
-		return m_type;
 	}
 
 	public void start(){

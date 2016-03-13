@@ -44,7 +44,8 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         m_renderSystem = m_entityWorld.setSystem(new RenderSystem(m_camera));
         m_entityWorld.setSystem(m_physicsSystem);
         m_entityWorld.setSystem(new LevelSystem(this));
-        m_entityWorld.setSystem(new ParticlesSystem(2));
+        m_entityWorld.setSystem(new ContinousParticlesSystem(2));
+        m_entityWorld.setSystem(new EventParticlesSystem());
         m_entityWorld.setSystem(new ManInteractionSystem());
         m_entityWorld.setSystem(new GirlInteractionSystem());
         m_playerOneSystem = new ManSystem(m_physicsSystem);
@@ -52,7 +53,6 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         m_playerTwoSystem = m_entityWorld.setSystem(new GirlSystem());
         m_entityWorld.initialize();
         game.m_processors.add(m_cameraSystem);
-//        game.m_processors.add(m_physicsSystem);
         game.m_processors.add(m_playerOneSystem);
 
         if (Gdx.app.getType() != Application.ApplicationType.Desktop) {

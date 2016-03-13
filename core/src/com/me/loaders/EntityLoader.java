@@ -23,7 +23,6 @@ import com.esotericsoftware.spine.AnimationStateData;
 import com.me.events.states.PlayerState;
 import com.me.level.Player;
 import com.me.component.*;
-import com.me.component.ParticleComponent.ParticleType;
 import com.me.factory.GameEventFactory;
 import com.me.level.Level;
 import com.me.loaders.BodySerializer.BodyUserData;
@@ -77,6 +76,7 @@ public class EntityLoader {
         m_scene = m_loader.loadScene(fileHandle);
         Array<Body> bodies = m_scene.getBodies();
 
+        GameEventFactory factory = new GameEventFactory();
         Vector2 bodyPos = new Vector2();
         Vector2 tmp = new Vector2();
         PhysicsComponent pComp = null;
@@ -155,55 +155,25 @@ public class EntityLoader {
                 String color = m_scene.getCustom(body, "light", "");
                 ConeLight light = new ConeLight(rh, 50, GameUtils.getColor(color), 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
                 entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
-                entity.addComponent(new TriggerComponent());
                 entityWorld.getManager(GroupManager.class).add(entity, "lights");
             }
             if (ud.mName.equalsIgnoreCase("box")) {
                 pComp.setMass(20f, ud.mName);
-                //pComp.setFriction(20.0f);
                 entity.addComponent(new RestartComponent())
                         .addComponent(new QueueComponent());
             }
-            if (ud.mName.equalsIgnoreCase("portal")) {
-                SingleParticleComponent particleComponent = new SingleParticleComponent("fire", ParticleType.PORTAL);
-                entityWorld.addObserver(particleComponent);
-                entity.addComponent(particleComponent);
-                entity.addComponent(new TriggerComponent());
-                ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
-                LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers());
-                entityWorld.addObserver(reachEndComponent);
-                entityWorld.addObserver(levelComponent);
-                entity.addComponent(levelComponent);
-                entity.addComponent(reachEndComponent);
-            }
-            if (ud.mName.equalsIgnoreCase("finish")) {
-                entity.addComponent(new TriggerComponent());
-                ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
-                LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers());
-                entityWorld.addObserver(reachEndComponent);
-                entityWorld.addObserver(levelComponent);
-                entity.addComponent(levelComponent);
-                entity.addComponent(reachEndComponent);
-            }
-            if (ud.mName.equalsIgnoreCase("point")) {
-                //entity.addComponent(new ParticleComponent("point", ParticleType.PICKUP, 1));
-                //entity.addComponent(new TriggerComponent());
-            }
+
             if (ud.mName.equalsIgnoreCase("minX")) {
                 level.getLevelBoundaries().minX = Converters.ToWorld(body.getPosition().x);
-                //System.out.println("Minx "+ Converters.ToWorld(body.getPosition().x));
             }
             if (ud.mName.equalsIgnoreCase("maxX")) {
                 level.getLevelBoundaries().maxX = Converters.ToWorld(body.getPosition().x);
-                //System.out.println("MaxX "+ Converters.ToWorld(body.getPosition().x));
             }
             if (ud.mName.equalsIgnoreCase("minY")) {
                 level.getLevelBoundaries().minY = Converters.ToWorld(body.getPosition().y);
-                //System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
             }
             if (ud.mName.equalsIgnoreCase("maxY")) {
                 level.getLevelBoundaries().maxY = Converters.ToWorld(body.getPosition().y);
-                //System.out.println("MinY " + Converters.ToWorld(body.getPosition().y));
             }
             if (ud.mName.equalsIgnoreCase("cage")) {
                 entityWorld.addObserver(pComp);
@@ -218,8 +188,24 @@ public class EntityLoader {
                 buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(-1, 4), 5, 2);
                 entityWorld.addObserver(buoyancyComponent);
                 entity.addComponent(buoyancyComponent);
-                //entity.addComponent(new ShaderComponent("",body));
-                entity.addComponent(new TriggerComponent());
+            }
+
+            if (ud.mName.equalsIgnoreCase("portal") || ud.mName.equalsIgnoreCase("finish")) {
+                ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
+                reachEndComponent.setEndEvent(factory.createFromBodyInfo(m_scene, body));
+                entity.addComponent(reachEndComponent);
+                entityWorld.addObserver(reachEndComponent);
+                int taskId = m_scene.getCustom(body, "taskId", 0);
+                if(ud.mName.equalsIgnoreCase("finish")) {
+                    LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers(), LevelComponent.RUNOUT, taskId);
+                    entityWorld.addObserver(levelComponent);
+                    entity.addComponent(levelComponent);
+                } else if (ud.mName.equalsIgnoreCase("portal")){
+                    LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers(), LevelComponent.PORTAL, taskId);
+                    entityWorld.addObserver(levelComponent);
+                    entity.addComponent(levelComponent);
+                }
+
             }
 
             if (ud.mName.equalsIgnoreCase("particleEmitter")) {
@@ -232,13 +218,13 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("singleParticleEmitter")) {
                 String particleName = m_scene.getCustom(body, "particlename", "");
                 int particleId = m_scene.getCustom(body, "taskId", 0);
-                EventParticleComponent particleComponent = new EventParticleComponent(particleName, particleId, pComp.getPosition());
+                EventParticleComponent particleComponent = new EventParticleComponent(particleName, particleId, body.getPosition());
+                particleComponent.setEvent(factory.createParticleEventFromBodyInfo(m_scene, body));
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
             }
 
             if (ud.mName.equalsIgnoreCase("bodyInfo")) {
-                GameEventFactory factory = new GameEventFactory();
                 pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
             }
 
@@ -651,7 +637,6 @@ public class EntityLoader {
                 comp.setPrismJoint(JointFactory.getInstance().createJoint(
                         tempList.get(ind.first), tempList.get(ind.second),
                         jDef, physicsWorld));
-                entity.addComponent(new TriggerComponent());
                 entity.addComponent(comp);
                 entity.addToWorld();
                 gameEntityWorld.addObserver(comp);

@@ -37,6 +37,7 @@ public class GameEntityWorld extends World {
     }
 
     public void addObserver(ParticleEventObserverComponent observerComponent){
+        m_taskEventObservers.add(observerComponent);
         m_particleEventObservers.add(observerComponent);
     }
 

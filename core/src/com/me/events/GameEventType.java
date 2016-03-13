@@ -12,7 +12,7 @@ public enum GameEventType {
     OutsideFinishArea,
     AllReachedEnd,
     GroundTouch,
-    LevelFinished,
+    FinishAnimationDone,
     HoldingHandsFollowing,
     HoldingHandsLeading,
     HandHoldingEnded,
@@ -22,5 +22,8 @@ public enum GameEventType {
     BlackSkin,
     VerticalButton,
     PullingLedge,
+    PortalParticleFinish,
+    PortalParticle,
     Particle
+
 }

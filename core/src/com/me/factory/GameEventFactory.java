@@ -24,9 +24,16 @@ public class GameEventFactory {
                 return new TaskEvent(bodyInfo);
             case Particle:
                 return new ParticleEvent(bodyInfo);
+            case PortalParticle:
+                return new ParticleEvent(bodyInfo);
             default:
                 return new GameEvent(bodyInfo.getEventType());
         }
 
+    }
+
+    public ParticleEvent createParticleEventFromBodyInfo(RubeScene scene, Body body) {
+        BodyInfo bodyInfo = new BodyInfo(scene.getCustom(body, "taskFinishers", 0), scene.getCustom(body, "taskId", 0), scene.getCustom(body, "eventType", ""));
+        return new ParticleEvent(bodyInfo);
     }
 }

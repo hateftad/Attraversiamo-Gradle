@@ -9,6 +9,8 @@ import com.me.systems.GameEntityWorld;
 public class ParticleEvent extends GameEvent {
 
     private int m_eventId;
+    private boolean m_started;
+
     public ParticleEvent(BodyInfo bodyInfo) {
         super(bodyInfo.getEventType());
         m_eventId = bodyInfo.getEventId();
@@ -26,5 +28,13 @@ public class ParticleEvent extends GameEvent {
 
     public int getEventId() {
         return m_eventId;
+    }
+
+    public boolean isStarted() {
+        return m_started;
+    }
+
+    public void setStarted(boolean m_started) {
+        this.m_started = m_started;
     }
 }

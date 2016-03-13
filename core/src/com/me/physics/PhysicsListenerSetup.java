@@ -90,7 +90,7 @@ public class PhysicsListenerSetup {
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
                                     e.getComponent(TouchComponent.class).m_edgeTouch = true;
                                     e.getComponent(HangComponent.class).m_hangingLeft = true;
-                                    e.getComponent(PlayerAnimationComponent.class).setIK(other.getPosition());
+//                                    e.getComponent(PlayerAnimationComponent.class).setIK(other.getPosition());
                                 }
                             }
                             if (!pl.isFacingLeft() && otherUd.getType() == Type.RightEdge && playerUd.getType() == Type.HangHands) {
@@ -100,7 +100,7 @@ public class PhysicsListenerSetup {
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
                                     e.getComponent(TouchComponent.class).m_edgeTouch = true;
                                     e.getComponent(HangComponent.class).m_hangingRight = true;
-                                    e.getComponent(PlayerAnimationComponent.class).setIK(other.getPosition());
+//                                    e.getComponent(PlayerAnimationComponent.class).setIK(other.getPosition());
                                 }
                             }
 

@@ -4,8 +4,8 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.badlogic.gdx.graphics.Color;
 import com.me.component.*;
+import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
 import com.me.level.Level;
@@ -22,14 +22,12 @@ public class LevelSystem extends GameEntityProcessingSystem {
     @Mapper
     ComponentMapper<ReachEndComponent> m_reachEndComps;
     @Mapper
-    ComponentMapper<SingleParticleComponent> m_particleComps;
-    @Mapper
     ComponentMapper<LevelComponent> m_levelComps;
 
 
     @SuppressWarnings("unchecked")
     public LevelSystem(LevelEventListener listener) {
-        super(Aspect.getAspectForAll(TriggerComponent.class));
+        super(Aspect.getAspectForAll(LevelComponent.class));
         m_levelListener = listener;
     }
 
@@ -43,13 +41,9 @@ public class LevelSystem extends GameEntityProcessingSystem {
 
     @Override
     protected void process(Entity e) {
-
-        //m_scriptMgr.update();
-
         if (m_reachEndComps.has(e)) {
             checkFinished(e);
         }
-
     }
 
     @Override
@@ -64,18 +58,15 @@ public class LevelSystem extends GameEntityProcessingSystem {
         ReachEndComponent reachEndComponent = m_reachEndComps.get(entity);
         if (reachEndComponent.allFinished() && !m_currentLevel.isFinished()) {
             notifyObservers(new TaskEvent(GameEventType.AllReachedEnd));
+            GameEvent event = reachEndComponent.getEndEvent();
+            event.notify((GameEntityWorld) world);
             m_currentLevel.setFinished(true);
         }
+
         if (levelComponent.allFinished()) {
-            if (m_particleComps.has(entity)) {
-                SingleParticleComponent particleComponent = m_particleComps.get(entity);
-                if (particleComponent.isPortalComplete()) {
-                    levelFinished();
-                }
-            } else {
-                levelFinished();
-            }
+            levelFinished();
         }
+
     }
 
     private void levelFinished() {

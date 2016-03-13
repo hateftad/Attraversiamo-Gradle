@@ -104,8 +104,8 @@ public class ManInteractionSystem extends PlayerSystem {
         }
 
         if(playerComponent.isFinishing()){
-            if(animation.isCompleted(PlayerState.RunOut) || animation.isCompleted(PlayerState.SuckIn)){
-                notifyObservers(new TaskEvent(GameEventType.LevelFinished, playerComponent.getPlayerNr()));
+            if(animation.isCompleted(PlayerState.RunOut)){
+                notifyObservers(new TaskEvent(GameEventType.FinishAnimationDone, playerComponent.getPlayerNr()));
             }
         }
 

@@ -25,6 +25,7 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.6.0'
         aiVersion = '1.6.0'
+        robopodsVersion = "1.14.0"
     }
 
     repositories {
@@ -78,6 +79,7 @@ project(":android") {
 
         compile "com.google.android.gms:play-services-analytics:8.3.0"
         compile 'com.google.android.gms:play-services-ads:8.3.0'
+        compile 'com.google.android.gms:play-services-games:8.3.0'
     }
 }
 
@@ -95,6 +97,7 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
 
+        compile "org.robovm:robopods-google-play-games-ios:$robopodsVersion"
         compile "org.robovm:robopods-google-analytics-ios:1.9.0"
         compile "org.robovm:robopods-google-mobile-ads-ios:1.9.0"
     }

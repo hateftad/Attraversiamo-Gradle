@@ -38,6 +38,10 @@ public class BodyInfo {
             m_taskType = GameEventType.VerticalButton;
         } else if ("Particle".equalsIgnoreCase(taskType)){
             m_taskType = GameEventType.Particle;
+        } else if ("PortalReachEnd".equalsIgnoreCase(taskType)){
+            m_taskType = GameEventType.PortalParticle;
+        } else if ("PortalParticleFinish".equalsIgnoreCase(taskType)){
+            m_taskType = GameEventType.PortalParticleFinish;
         }
     }
 

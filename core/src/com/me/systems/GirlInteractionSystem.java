@@ -84,7 +84,7 @@ public class GirlInteractionSystem extends PlayerSystem {
                 physicsComponent.applyLinearImpulse(0, 3.5f);
             } else if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.JUMP) {
                 animation.getEvent().resetEvent();
-                physicsComponent.setLinearVelocity(physicsComponent.getLinearVelocity().x, 7f);
+                physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 0.4f);
             }
             if (animation.isCompleted(PlayerState.UpJump) || animation.isCompleted(PlayerState.Jumping)) {
                 setPlayerState(entity, PlayerState.Idle);
@@ -110,8 +110,8 @@ public class GirlInteractionSystem extends PlayerSystem {
         }
 
         if(playerComponent.isFinishing()){
-            if(animation.isCompleted(PlayerState.RunOut) || animation.isCompleted(PlayerState.SuckIn)){
-                notifyObservers(new TaskEvent(GameEventType.LevelFinished, playerComponent.getPlayerNr()));
+            if(animation.isCompleted(PlayerState.RunOut)){
+                notifyObservers(new TaskEvent(GameEventType.FinishAnimationDone, playerComponent.getPlayerNr()));
             }
         }
 

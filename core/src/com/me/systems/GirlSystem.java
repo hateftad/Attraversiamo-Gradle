@@ -81,11 +81,11 @@ public class GirlSystem extends PlayerSystem {
                     }
                     movementComponent.standStill();
                 }
-                if(touch.m_cageTouch){
-                    if(!player.isHoldingCage()){
+                if (touch.m_cageTouch) {
+                    if (!player.isHoldingCage()) {
                         setPlayerState(entity, PlayerState.HoldingCage);
                     }
-                    if(!player.isSwingingCage() && player.isHoldingCage()) {
+                    if (!player.isSwingingCage() && player.isHoldingCage()) {
                         setPlayerState(entity, PlayerState.Swinging);
                     }
                 }
@@ -108,9 +108,7 @@ public class GirlSystem extends PlayerSystem {
         KeyInputComponent keyInputComponent = m_movComps.get(entity);
 
         if (!player.isJumping()) {
-            if (keyInputComponent.isMoving()) {
-                setPlayerState(entity, PlayerState.Jumping);
-            } else {
+            if (!keyInputComponent.isMoving()) {
                 setPlayerState(entity, PlayerState.UpJump);
             }
         }
@@ -142,9 +140,9 @@ public class GirlSystem extends PlayerSystem {
             setPlayerState(entity, PlayerState.Falling);
         }
 
-        if(!playerComponent.isActive() &&
+        if (!playerComponent.isActive() &&
                 !physicsComponent.isFalling() &&
-                playerComponent.shouldBeIdle()){
+                playerComponent.shouldBeIdle()) {
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
         }

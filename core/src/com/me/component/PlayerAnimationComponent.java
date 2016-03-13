@@ -121,11 +121,9 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     break;
                 case Swinging:
                     playAnimation("swinging", false);
-                    setIK(new Vector2(0, 0));
                     break;
                 case HoldingCage:
                     playAnimation("holdingCage", false);
-                    setIK(new Vector2(0, 0));
                     break;
                 case Drowning:
                     playAnimation("drowning", false);
@@ -142,19 +140,19 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     }
 
     public void setIK(Vector2 position){
-//
-//        for(IkConstraint constraint : m_skeleton.getIkConstraints()){
-//            constraint.setMix(100);
-//            Bone target = constraint.getTarget();
-//            target.setX(position.x);
-//            target.setY(position.y);
-//            target.getData().setX(position.x);
-//            target.getData().setY(position.y);
-//            target.updateWorldTransform();
-//            constraint.apply();
-//        }
-//        m_skeleton.updateCache();
-//        m_skeleton.updateWorldTransform();
+
+        for(IkConstraint constraint : m_skeleton.getIkConstraints()){
+            constraint.setMix(100);
+            Bone target = constraint.getTarget();
+            target.setX(position.x);
+            target.setY(position.y);
+            target.getData().setX(position.x);
+            target.getData().setY(position.y);
+            target.updateWorldTransform();
+            constraint.apply();
+        }
+        m_skeleton.updateCache();
+        m_skeleton.updateWorldTransform();
     }
 
     public void rotateBoneTo(String name, Vector2 myPos, Vector2 target, boolean left) {
@@ -174,15 +172,12 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     }
 
     public Vector2 getPositionRelative(String attachmentName) {
-        Slot slot = null;
-
+        Slot slot;
         if (!m_skeleton.getSkin().getName().equals("color")) {
             attachmentName = "silhouette/" + attachmentName;
         }
-
         for (Slot s : m_skeleton.getSlots()) {
             if (s.getAttachment() != null) {
-                //System.out.println(s.getAttachment().getName());
                 if (s.getAttachment().getName().equals(attachmentName)) {
                     slot = s;
                     return new Vector2(Converters.ToBox(m_skeleton.getX() + slot.getBone().getWorldX()), Converters.ToBox(m_skeleton.getY() + slot.getBone().getWorldY()));

@@ -92,6 +92,15 @@ public class ManSystem extends PlayerSystem {
                 } else {
                     jump(entity);
                 }
+                if (player.isHanging()) {
+                    if(touch.m_pullEdgeTouch){
+                        setPlayerState(entity, PlayerState.PullingLedge);
+                    } else {
+                        //temp fix for ground dust when climbing up
+                        m_particleComps.get(entity).setEnabled(false);
+                        setPlayerState(entity, PlayerState.ClimbingLedge);
+                    }
+                }
             }
 
             if (m_inputMgr.isDown(action)) {

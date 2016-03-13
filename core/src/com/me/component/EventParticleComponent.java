@@ -3,7 +3,7 @@ package com.me.component;
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.interfaces.ParticleEventObserverComponent;
 import com.me.events.ParticleEvent;
-import com.me.utils.Converters;
+import com.me.events.TaskEvent;
 
 /**
  * Created by hateftadayon on 1/31/16.
@@ -11,17 +11,32 @@ import com.me.utils.Converters;
 public class EventParticleComponent extends ParticleComponent implements ParticleEventObserverComponent {
 
     private int m_id;
+    private ParticleEvent event;
 
     public EventParticleComponent(String effect, int id, Vector2 position) {
-        super(effect, ParticleType.SINGLE, 10);
+        super(effect, 10);
         m_id = id;
         setPosition(position);
     }
 
     @Override
     public void onNotify(ParticleEvent particleEvent) {
-        if(particleEvent.getEventId() == m_id){
+        if (particleEvent.getEventId() == m_id) {
             start();
+            event.setStarted(true);
         }
+    }
+
+    public ParticleEvent getEvent() {
+        return event;
+    }
+
+    public void setEvent(ParticleEvent event) {
+        this.event = event;
+    }
+
+    @Override
+    public void onNotify(TaskEvent event) {
+
     }
 }

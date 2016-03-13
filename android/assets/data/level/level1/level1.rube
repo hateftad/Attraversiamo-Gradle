@@ -43,6 +43,13 @@
     
     {
       "class" : "body",
+      "displayName" : "particlename",
+      "name" : "particlename",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "boxIndex",
       "name" : "boxIndex",
       "type" : "int"
@@ -209,14 +216,14 @@
               [
                 22.23673248291016,
                 22.21509933471680,
-                -33.63301086425781,
+                -33.67307281494141,
                 -33.61140060424805
               ],
               "y" : 
               [
                 -3.434156417846680,
                 3.497100114822388,
-                3.497097730636597,
+                3.416967153549194,
                 -3.434159994125366
               ]
             }
@@ -806,7 +813,7 @@
           
           {
             "name" : "lightColor",
-            "string" : "white"
+            "string" : "black"
           }
         ],
         "fixture" : 
@@ -1048,7 +1055,7 @@
           
           {
             "name" : "eventType",
-            "string" : "ReachEnd"
+            "string" : "PortalReachEnd"
           }
         ],
         "fixture" : 
@@ -1071,38 +1078,191 @@
             {
               "x" : 
               [
-                -0.08451223373413086,
-                -0.01189570035785437,
-                -12.58810043334961,
-                -12.66071701049805
+                6.258120059967041,
+                6.330739974975586,
+                -6.245460033416748,
+                -6.318079948425293
               ],
               "y" : 
               [
-                -6.613061904907227,
-                0.4881198406219482,
-                0.4881198406219482,
-                -6.613059997558594
+                -3.526309967041016,
+                3.574870109558105,
+                3.574870109558105,
+                -3.526309967041016
               ]
             }
           }
         ],
         "id" : 17,
         "linearVelocity" : 0,
-        "massData-I" : 5975.480468750,
-        "massData-center" : 
-        {
-          "x" : -6.336306095123291,
-          "y" : -3.062470436096191
-        },
-        "massData-mass" : 89.3059082031250,
         "name" : "portal",
         "position" : 
         {
-          "x" : 100.5820007324219,
-          "y" : 16.25620079040527
+          "x" : 92.22409057617188,
+          "y" : 13.46432971954346
         },
         "sleepingAllowed" : false,
-        "type" : "dynamic"
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "taskId"
+          },
+          
+          {
+            "name" : "eventType",
+            "string" : "PortalParticleFinish"
+          },
+          
+          {
+            "name" : "particlename",
+            "string" : "fire"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 20,
+            "name" : "fixture5",
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 19,
+        "linearVelocity" : 0,
+        "name" : "singleParticleEmitter",
+        "position" : 
+        {
+          "x" : 99.66909027099609,
+          "y" : 16.04616928100586
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "playerNr"
+          },
+          
+          {
+            "name" : "bodyType",
+            "string" : "player_one"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 21,
+            "name" : "fixture8",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 20,
+        "linearVelocity" : 0,
+        "name" : "player_position",
+        "position" : 
+        {
+          "x" : 69.7414550781250,
+          "y" : 21.25022888183594
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 2,
+            "name" : "playerNr"
+          },
+          
+          {
+            "name" : "bodyType",
+            "string" : "player_two"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 22,
+            "name" : "fixture9",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.4218782186508179,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -3.814697265625000e-06 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 21,
+        "linearVelocity" : 0,
+        "name" : "player_position",
+        "position" : 
+        {
+          "x" : 78.71678924560547,
+          "y" : 21.55612564086914
+        },
+        "type" : "static"
       }
     ],
     "metaimage" : 
@@ -1199,13 +1359,13 @@
       
       {
         "aspectScale" : 1,
-        "body" : 17,
+        "body" : 19,
         "center" : 
         {
-          "x" : 0.1952424645423889,
-          "y" : 0.02722357586026192
+          "x" : 0.01934051513671875,
+          "y" : 0.02535915374755859
         },
-        "file" : "../common/particle.png",
+        "file" : "../common/clear.png",
         "filter" : 1,
         "flip" : false,
         "id" : 6,

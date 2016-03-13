@@ -1,5 +1,6 @@
 package com.me.component;
 
+import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
 
@@ -7,6 +8,8 @@ import com.me.events.TaskEvent;
  * Created by hateftadayon on 7/11/15.
  */
 public class ReachEndComponent extends TaskComponent {
+
+    private GameEvent endEvent;
 
     public ReachEndComponent(int finishers) {
         super(finishers);
@@ -39,5 +42,13 @@ public class ReachEndComponent extends TaskComponent {
     @Override
     public void restart() {
 
+    }
+
+    public void setEndEvent(GameEvent endEvent) {
+        this.endEvent = endEvent;
+    }
+
+    public GameEvent getEndEvent() {
+        return endEvent;
     }
 }

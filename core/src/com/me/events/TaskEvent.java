@@ -15,6 +15,7 @@ public class TaskEvent extends GameEvent {
     public TaskEvent(BodyInfo bodyInfo){
         super(bodyInfo.getEventType());
         m_eventId = bodyInfo.getEventId();
+        m_playerNr = PlayerComponent.PlayerNumber.NONE;
     }
 
     public TaskEvent(GameEventType type, PlayerComponent.PlayerNumber playerNumber){

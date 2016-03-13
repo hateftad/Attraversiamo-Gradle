@@ -13,7 +13,7 @@ import com.me.utils.Direction;
  */
 public class ContinuousParticles extends ParticleComponent implements ButtonStateObserverComponent {
     public ContinuousParticles(String effect, Vector2 position) {
-        super(effect, ParticleType.CONTINUOUS, position);
+        super(effect, position);
     }
 
     @Override
