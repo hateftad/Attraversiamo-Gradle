@@ -142,19 +142,19 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     }
 
     public void setIK(Vector2 position){
-
-        for(IkConstraint constraint : m_skeleton.getIkConstraints()){
-            constraint.setMix(100);
-            Bone target = constraint.getTarget();
-            target.setX(position.x);
-            target.setY(position.y);
-            target.getData().setX(position.x);
-            target.getData().setY(position.y);
-            target.updateWorldTransform();
-            constraint.apply();
-        }
-        m_skeleton.updateCache();
-        m_skeleton.updateWorldTransform();
+//
+//        for(IkConstraint constraint : m_skeleton.getIkConstraints()){
+//            constraint.setMix(100);
+//            Bone target = constraint.getTarget();
+//            target.setX(position.x);
+//            target.setY(position.y);
+//            target.getData().setX(position.x);
+//            target.getData().setY(position.y);
+//            target.updateWorldTransform();
+//            constraint.apply();
+//        }
+//        m_skeleton.updateCache();
+//        m_skeleton.updateWorldTransform();
     }
 
     public void rotateBoneTo(String name, Vector2 myPos, Vector2 target, boolean left) {

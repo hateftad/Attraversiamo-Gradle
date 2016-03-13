@@ -43,29 +43,8 @@
     
     {
       "class" : "body",
-      "displayName" : "lightColor",
-      "name" : "lightColor",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
       "type" : "int"
     },
     
@@ -78,8 +57,29 @@
     
     {
       "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "lightColor",
+      "name" : "lightColor",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     }
   ],
@@ -806,7 +806,7 @@
           
           {
             "name" : "lightColor",
-            "string" : "yellow"
+            "string" : "white"
           }
         ],
         "fixture" : 
