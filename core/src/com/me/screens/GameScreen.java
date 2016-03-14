@@ -55,12 +55,12 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         game.m_processors.add(m_cameraSystem);
         game.m_processors.add(m_playerOneSystem);
 
-        if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
+//        if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
             m_userInterface = new UserInterface(currentLevel);
             m_userInterface.init();
-        } else {
-            Gdx.input.setInputProcessor(game.m_multiPlexer);
-        }
+//        } else {
+//            Gdx.input.setInputProcessor(game.m_multiPlexer);
+//        }
 
         InputManager.getInstance().reset();
     }
@@ -123,7 +123,8 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
 
     @Override
     public void resize(int width, int height) {
-        super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
+        super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
     }
 
 

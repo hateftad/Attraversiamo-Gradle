@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.me.config.PlayerConfig;
 import com.me.level.Level;
@@ -32,8 +33,8 @@ public class UserInterface {
     }
 
     private void loadSkin(){
-        TextureAtlas m_atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas"));
-        m_skin = new Skin(m_atlas);
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas"));
+        m_skin = new Skin(atlas);
     }
 	
 	public void init(){
@@ -97,6 +98,8 @@ public class UserInterface {
 		if(Gdx.app.getType() != ApplicationType.Desktop){
 			Gdx.input.setInputProcessor(m_stage);
 		}
+
+        createPauseMenu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
     private void setupBottomRightButtons(int size){
@@ -166,6 +169,16 @@ public class UserInterface {
 
 
         m_stage.addActor(bottomRightBtnsTable);
+    }
+
+    public void createPauseMenu(int width, int height){
+
+        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+
+        Window window = new Window("Hello", skin);
+        window.setSize(800 / 1.5f, 600 / 1.5f);
+        window.setPosition(width / 2 - window.getWidth() / 2, height / 2 - window.getHeight() / 2);
+        m_stage.addActor(window);
     }
 
     private UIButton createButton(String drawableName, InputListener inputListener){
