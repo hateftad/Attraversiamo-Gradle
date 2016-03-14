@@ -98,7 +98,6 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
 
         compile "org.robovm:robopods-google-play-games-ios:$robopodsVersion"
-        compile "org.robovm:robopods-google-signin-ios:$robopodsVersion"
         compile "org.robovm:robopods-google-analytics-ios:1.9.0"
         compile "org.robovm:robopods-google-mobile-ads-ios:1.9.0"
     }

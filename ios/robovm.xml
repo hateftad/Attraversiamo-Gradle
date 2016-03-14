@@ -50,8 +50,6 @@
         <framework>AudioToolbox</framework>
         <framework>AVFoundation</framework>
         <framework>gpg</framework>
-        <framework>GoogleOpenSource</framework>
-        <framework>GoogleSignIn</framework>
     </frameworks>
     <weakFrameworks>
         <framework>AdSupport</framework>
