@@ -10,9 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.me.config.PlayerConfig;
 import com.me.level.Level;
 
@@ -21,6 +23,7 @@ public class UserInterface {
     private Stage m_stage;
     private Skin m_skin;
     private int m_nrOfPlayers;
+    private Window pauseWindow;
 
 
     public UserInterface(Level level){
@@ -63,7 +66,7 @@ public class UserInterface {
 
         UIButton menuBtn = createButton("menu.up", new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                InputManager.getInstance().callRestart();
+                setPauseVisibility(true);
                 return true;
             }
 
@@ -94,12 +97,11 @@ public class UserInterface {
 		m_stage.addActor(bottomLeftBtnsTable);
 
 
-
 		if(Gdx.app.getType() != ApplicationType.Desktop){
 			Gdx.input.setInputProcessor(m_stage);
 		}
 
-        createPauseMenu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        createPauseMenu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), size);
 	}
 
     private void setupBottomRightButtons(int size){
@@ -171,14 +173,38 @@ public class UserInterface {
         m_stage.addActor(bottomRightBtnsTable);
     }
 
-    public void createPauseMenu(int width, int height){
+    public void createPauseMenu(int width, int height, int size){
 
-        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"), new TextureAtlas(Gdx.files.internal("data/uiskin.atlas")));
 
-        Window window = new Window("Hello", skin);
-        window.setSize(800 / 1.5f, 600 / 1.5f);
-        window.setPosition(width / 2 - window.getWidth() / 2, height / 2 - window.getHeight() / 2);
-        m_stage.addActor(window);
+        TextButton continueButton = new TextButton("CONTINUE", skin);
+		continueButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				setPauseVisibility(false);
+			}
+		});
+
+        TextButton restartButton = new TextButton("RESTART", skin);
+        restartButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setPauseVisibility(false);
+                InputManager.getInstance().callRestart();
+            }
+        });
+
+        pauseWindow = new Window("", skin);
+        pauseWindow.setSize(width, height);
+        pauseWindow.setPosition(width / 2 - pauseWindow.getWidth() / 2, height / 2 - pauseWindow.getHeight() / 2);
+        pauseWindow.add(continueButton).width(size * 1.5f).height(size * 1.5f).row();
+        pauseWindow.add(restartButton).width(size * 1.5f).height(size * 1.5f).row();
+        m_stage.addActor(pauseWindow);
+        pauseWindow.setVisible(false);
+    }
+
+    public void setPauseVisibility(boolean visibility){
+        pauseWindow.setVisible(visibility);
     }
 
     private UIButton createButton(String drawableName, InputListener inputListener){

@@ -34,13 +34,9 @@ public class BackgroundLoader {
     }
 
     public void run() {
-        try {
-            doRun();
-        } catch (Exception e) {
-            System.out.println("Exception while loading " + e.getMessage());
-        } finally {
-            m_listener.onComplete();
-        }
+        doRun();
+        m_listener.onComplete();
+
     }
 
     public void doRun() {
