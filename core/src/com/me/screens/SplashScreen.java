@@ -27,6 +27,7 @@ public class SplashScreen extends AbstractScreen {
         m_animation = new LevelAnimationComponent("data/intro", "data/intro", 1f);
         m_animation.setUp(new Vector2(0, 0), "intro");
         m_camera.zoom = 2f;
+        game.getPlayServices().signIn();
     }
 
     @Override

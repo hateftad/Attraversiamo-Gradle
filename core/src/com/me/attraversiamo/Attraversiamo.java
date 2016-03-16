@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.utils.Array;
 import com.me.ads.IActivityRequestHandler;
+import com.me.ads.PlayServices;
 import com.me.screens.GameScreen;
 import com.me.screens.LoadingScreen;
 import com.me.screens.SplashScreen;
@@ -20,6 +21,7 @@ public class Attraversiamo extends Game implements ApplicationListener {
     public LoadingScreen m_loadingScreen;
     private FPSLogger m_fpsLogger;
     private IActivityRequestHandler m_adRequestHandler;
+    private PlayServices m_playServices;
     public Array<InputProcessor> m_processors = new Array<>();
     public InputMultiplexer m_multiPlexer = new InputMultiplexer();
 
@@ -42,6 +44,11 @@ public class Attraversiamo extends Game implements ApplicationListener {
         setScreen(new SplashScreen(this));
         m_multiPlexer.setProcessors(m_processors);
     }
+
+    public void setPlayServices(PlayServices playSevices){
+        m_playServices = playSevices;
+    }
+
 
     public void showAd(boolean show) {
         m_adRequestHandler.showAds(show);
@@ -67,5 +74,9 @@ public class Attraversiamo extends Game implements ApplicationListener {
 
     @Override
     public void resume() {
+    }
+
+    public PlayServices getPlayServices() {
+        return m_playServices;
     }
 }

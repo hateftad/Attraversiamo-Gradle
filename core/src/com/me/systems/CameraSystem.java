@@ -44,7 +44,7 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	public CameraSystem(RayHandler rh, OrthographicCamera camera) {
 		super(Aspect.getAspectForOne(CameraComponent.class, PlayerComponent.class));
 		m_rayHandler = rh;
-        m_rayHandler.setAmbientLight(Color.CYAN);
+        m_rayHandler.setAmbientLight(Color.WHITE);
         //m_rayHandler.setBlurNum(3);
 		m_debugDrawer = new Box2DDebugRenderer();
 

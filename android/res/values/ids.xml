@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <string name="app_id">586763455616</string>
+    <string name="package_name">com.me.attraversiamo.android</string>
+    <string name="achievement_first">CgkIgJnP7okREAIQAQ</string>
+    <string name="achievement_second">CgkIgJnP7okREAIQAg</string>
+    <string name="achievement_third">CgkIgJnP7okREAIQAw</string>
+    <string name="achievement_fourth">CgkIgJnP7okREAIQBA</string>
+    <string name="achievement_fifth">CgkIgJnP7okREAIQBQ</string>
+    <string name="leaderboard_fastest">CgkIgJnP7okREAIQBg</string>
+</resources>
