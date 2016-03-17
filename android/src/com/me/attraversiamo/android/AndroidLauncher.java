@@ -18,16 +18,16 @@ import com.me.ads.PlayServices;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.attraversiamo.android.ads.AdManager;
 import com.me.attraversiamo.android.analytics.AnalyticsManager;
+import com.me.attraversiamo.android.gpg.PlayServicesManager;
 import com.me.config.GameConfig;
 import com.me.config.GameConfig.Platform;
 
-public class AndroidLauncher extends AndroidApplication implements IActivityRequestHandler, PlayServices {
+public class AndroidLauncher extends AndroidApplication implements IActivityRequestHandler{
 
     private AnalyticsManager analyticsHandler;
     private AdManager adManager;
     private RelativeLayout rootLayout;
-    private GameHelper gameHelper;
-    private final static int requestCode = 1;
+    private PlayServicesManager playServicesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,9 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        playServicesManager = new PlayServicesManager(this);
         Attraversiamo attraversiamo = new Attraversiamo(cfg, this);
-        attraversiamo.setPlayServices(this);
+        attraversiamo.setPlayServices(playServicesManager);
         View gameView = initializeForView(attraversiamo, config);
         rootLayout.addView(gameView);
 
@@ -58,43 +59,27 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 
         setContentView(rootLayout);
 
-        gameHelper = new GameHelper(this, GameHelper.CLIENT_GAMES);
-        gameHelper.enableDebugLog(false);
-
-        GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {
-            @Override
-            public void onSignInFailed() {
-            }
-
-            @Override
-            public void onSignInSucceeded() {
-
-            }
-        };
-
-        gameHelper.setup(gameHelperListener);
-
     }
 
     @Override
     public void onStart() {
         super.onStart();
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        gameHelper.onStart(this);
+        playServicesManager.onStart(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        gameHelper.onStop();
+        playServicesManager.onStop();
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        gameHelper.onActivityResult(requestCode, resultCode, data);
+        playServicesManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -110,75 +95,5 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         analyticsHandler.setScreenName(name);
     }
 
-    @Override
-    public void signIn() {
-        try {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    gameHelper.beginUserInitiatedSignIn();
-                }
-            });
-        } catch (Exception e) {
-            Gdx.app.log("MainActivity", "Log in failed: " + e.getMessage() + ".");
-        }
-    }
 
-    @Override
-    public void signOut() {
-        try {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    gameHelper.signOut();
-                }
-            });
-        } catch (Exception e) {
-            Gdx.app.log("MainActivity", "Log out failed: " + e.getMessage() + ".");
-        }
-    }
-
-    @Override
-    public void rateGame() {
-        String str = "Your PlayStore Link";
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(str)));
-    }
-
-    @Override
-    public void unlockAchievement() {
-        Games.Achievements.unlock(gameHelper.getApiClient(),
-                getString(R.string.achievement_first));
-    }
-
-    @Override
-    public void submitScore(int highScore) {
-        if (isSignedIn()) {
-            Games.Leaderboards.submitScore(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_fastest), highScore);
-        }
-    }
-
-    @Override
-    public void showAchievement() {
-        if (isSignedIn()) {
-            startActivityForResult(Games.Achievements.getAchievementsIntent(gameHelper.getApiClient()), requestCode);
-        } else {
-            signIn();
-        }
-    }
-
-    @Override
-    public void showScore() {
-        if (isSignedIn()) {
-            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(gameHelper.getApiClient(),
-                    getString(R.string.leaderboard_fastest)), requestCode);
-        } else {
-            signIn();
-        }
-    }
-
-    @Override
-    public boolean isSignedIn() {
-        return gameHelper.isSignedIn();
-    }
 }
