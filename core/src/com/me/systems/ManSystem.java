@@ -42,8 +42,6 @@ public class ManSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<PushComponent> m_pushComps;
     @Mapper
-    ComponentMapper<EventComponent> m_eventComps;
-    @Mapper
     ComponentMapper<CharacterMovementComponent> m_movementComps;
     @Mapper
     ComponentMapper<FeetComponent> m_rayCastComps;
@@ -70,6 +68,7 @@ public class ManSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = m_physComps.get(entity);
         CharacterMovementComponent movementComponent = m_movementComps.get(entity);
         KeyInputComponent keyInputComponent = m_movComps.get(entity);
+        VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
 
         animation.setFacing(player.isFacingLeft());
 
@@ -90,6 +89,7 @@ public class ManSystem extends PlayerSystem {
                     movementComponent.standStill();
                     setPlayerState(entity, PlayerState.ClimbBox);
                 } else {
+                    movementComponent.standStill();
                     jump(entity);
                 }
                 if (player.isHanging()) {
@@ -130,6 +130,7 @@ public class ManSystem extends PlayerSystem {
                     holdHands(entity);
                 }
                 if (player.isHanging()) {
+
                     if(touch.m_pullEdgeTouch){
                         setPlayerState(entity, PlayerState.PullingLedge);
                     } else {

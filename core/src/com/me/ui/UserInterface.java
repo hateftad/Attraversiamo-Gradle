@@ -169,7 +169,6 @@ public class UserInterface {
         bottomRightBtnsTable.add(actionBtn).bottom().right().space(20).width(size).height(size);
         bottomRightBtnsTable.add(jumpBtn).bottom().right().padRight(size).width(size).height(size);
 
-
         m_stage.addActor(bottomRightBtnsTable);
     }
 

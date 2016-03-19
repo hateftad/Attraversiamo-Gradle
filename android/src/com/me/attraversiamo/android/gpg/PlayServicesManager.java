@@ -21,7 +21,8 @@ public class PlayServicesManager implements PlayServices {
 
     public PlayServicesManager(Activity activity){
         this.activity = activity;
-        gameHelper = new GameHelper(activity, GameHelper.CLIENT_GAMES);
+
+        gameHelper = new GameHelper(activity, GameHelper.CLIENT_ALL);
         gameHelper.enableDebugLog(false);
 
         GameHelper.GameHelperListener gameHelperListener = new GameHelper.GameHelperListener() {

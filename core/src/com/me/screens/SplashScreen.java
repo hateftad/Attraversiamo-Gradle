@@ -20,7 +20,6 @@ public class SplashScreen extends AbstractScreen {
     private boolean timerIsOn = false;
 
     public SplashScreen(Attraversiamo game) {
-
         super(game);
         m_camera.viewportWidth = 800;
         m_camera.viewportHeight = 600;

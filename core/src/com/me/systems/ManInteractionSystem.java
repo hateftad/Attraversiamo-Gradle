@@ -31,6 +31,10 @@ public class ManInteractionSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<EventComponent> m_eventComps;
 
+    @Mapper
+    ComponentMapper<VelocityLimitComponent> m_velComps;
+    @Mapper
+    ComponentMapper<CharacterMovementComponent> m_movementComps;
     @SuppressWarnings("unchecked")
     public ManInteractionSystem() {
         super(Aspect.getAspectForAll(PlayerOneComponent.class));
@@ -44,6 +48,8 @@ public class ManInteractionSystem extends PlayerSystem {
         PlayerAnimationComponent animation = m_animComps.get(entity);
         PhysicsComponent physicsComponent = m_physComp.get(entity);
         HangComponent hangComponent = m_hangComp.get(entity);
+        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
+        VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
 
         if (touchComponent.m_edgeTouch) {
             if (!playerComponent.isHanging()) {
@@ -68,6 +74,9 @@ public class ManInteractionSystem extends PlayerSystem {
                 physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
                 physicsComponent.setBodyActive(true);
                 hangComponent.notHanging();
+
+                movementComponent.standStill();
+                velocityLimitComponent.standStill();
                 setPlayerState(entity, PlayerState.Idle);
             }
             if(animation.isCompleted(PlayerState.ClimbBox)){

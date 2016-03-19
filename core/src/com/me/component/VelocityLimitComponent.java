@@ -36,4 +36,7 @@ public class VelocityLimitComponent extends BaseComponent{
 		
 	}
 
+	public void standStill() {
+		m_velocity = 0;
+	}
 }
