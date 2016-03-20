@@ -76,8 +76,8 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
     public PhysicsSystem(World physicsWorld) {
         this(physicsWorld, 50, 30);
-        timeStep = GlobalConfig.getInstance().config.timeStep;
-        b2Controllers = new ObjectMap<>();
+        this.timeStep = GlobalConfig.getInstance().config.timeStep;
+        this.b2Controllers = new ObjectMap<>();
     }
 
     public void toggleProcessing(boolean process) {
@@ -92,9 +92,9 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
         this.physicsWorld.setAutoClearForces(true);
         this.physicsWorld.setContinuousPhysics(true);
         this.physicsWorld.setWarmStarting(true);
-        velocityItr = velocityIterations;
-        positionItr = positionIterations;
-        physicsContactListener = new PhysicsContactListener();
+        this.velocityItr = velocityIterations;
+        this.positionItr = positionIterations;
+        this.physicsContactListener = new PhysicsContactListener();
     }
 
     @Override

@@ -47,7 +47,7 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 
 
 	public AnimationComponent(String atlas, String skeleton, float scale){
-		renderer = new SkeletonRenderer();
+		this.renderer = new SkeletonRenderer();
 		this.atlas = new TextureAtlas(Gdx.files.internal(atlas+".atlas"));
 		AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(this.atlas);
 		SkeletonJson json = new SkeletonJson(atlasLoader);
@@ -57,15 +57,15 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 	}
 
 	public AnimationStateData setUp(RubeImage image){
-        state = PlayerState.Idle;
+		this.state = PlayerState.Idle;
 		AnimationStateData stateData = new AnimationStateData(skeletonData);
 		Vector2 size = new Vector2(image.width, image.height);
 		size = Converters.ToWorld(size);
-		center = new Vector2();
-		center.set(image.center.x - size.x/2, image.center.y - (size.y/2));
-		animationState = new AnimationState(stateData);
+		this.center = new Vector2();
+		this.center.set(image.center.x - size.x/2, image.center.y - (size.y/2));
+		this.animationState = new AnimationState(stateData);
 		//animationState.setAnimation(0, "running", true);
-		animationState.addListener(new AnimationStateListener() {
+		this.animationState.addListener(new AnimationStateListener() {
 
             @Override
             public void start(int trackIndex) {
@@ -88,15 +88,15 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
                 isCompleted = true;
             }
         });
-        event = new AnimationEvent();
+		this.event = new AnimationEvent();
 
-		skeleton = new Skeleton(skeletonData);
-		skeleton.setX(center.x);
-		skeleton.setY(center.y);
+		this.skeleton = new Skeleton(skeletonData);
+		this.skeleton.setX(center.x);
+		this.skeleton.setY(center.y);
 		Skin skin = skeletonData.findSkin("silhouette");
-		skeleton.setSkin(skin);
-		center = Converters.ToBox(center);
-		skeleton.updateWorldTransform();
+		this.skeleton.setSkin(skin);
+		this.center = Converters.ToBox(center);
+		this.skeleton.updateWorldTransform();
 		return stateData;
 	}
 
@@ -131,11 +131,11 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 			}
 		});
 
-		skeleton = new Skeleton(skeletonData);
-		skeleton.setX(center.x);
-		skeleton.setY(center.y);
-		center = Converters.ToBox(center);
-		skeleton.updateWorldTransform();
+		this.skeleton = new Skeleton(skeletonData);
+		this.skeleton.setX(center.x);
+		this.skeleton.setY(center.y);
+		this.center = Converters.ToBox(center);
+		this.skeleton.updateWorldTransform();
 	}
 
 	public TextureAtlas getAtlas(){

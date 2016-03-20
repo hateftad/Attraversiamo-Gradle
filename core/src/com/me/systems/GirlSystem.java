@@ -63,7 +63,7 @@ public class GirlSystem extends PlayerSystem {
                 moveRight(entity);
             }
             if (keyInputComponent.jump) {
-                movementComponent.standStill();
+
                 jump(entity);
             }
             if (inputMgr.isDown(action)) {
@@ -107,9 +107,11 @@ public class GirlSystem extends PlayerSystem {
 
         PlayerComponent player = playerComps.get(entity);
         KeyInputComponent keyInputComponent = movComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
 
         if (!player.isJumping()) {
             if (!keyInputComponent.isMoving()) {
+                movementComponent.standStill();
                 setPlayerState(entity, PlayerState.UpJump);
             }
         }

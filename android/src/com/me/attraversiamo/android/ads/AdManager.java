@@ -29,7 +29,7 @@ public class AdManager {
         adView.setAdUnitId(layout.getContext().getString(BuildConfig.DEBUG ? R.string.test_banner_ad_unit_id : R.string.ad_bottom_banner_menu));
         adView.setAdSize(AdSize.SMART_BANNER);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("BA5C2F7E987BAD8BD945FD845BDF5D2F")
+                .addTestDevice("9DA44459A535B273857088410DB94505")
                 .build();
         adView.loadAd(adRequest);
         adView.setVisibility(View.GONE);
@@ -47,7 +47,7 @@ public class AdManager {
 
     private void setUpInterstitital(Context context){
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("BA5C2F7E987BAD8BD945FD845BDF5D2F")
+                .addTestDevice("9DA44459A535B273857088410DB94505")
                 .build();
 
         interstitialAd = new InterstitialAd(context);

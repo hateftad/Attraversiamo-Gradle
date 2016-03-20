@@ -72,9 +72,9 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
 		private Vector2 fluidVelocity;
 
 		public BuoyancyControllerConfig(Vector2 fluidVelocity, float linearDrag, float angularDrag){
-			angularDrag = angularDrag;
-			linearDrag = linearDrag;
-			fluidVelocity = fluidVelocity;
+			this.angularDrag = angularDrag;
+			this.linearDrag = linearDrag;
+			this.fluidVelocity = fluidVelocity;
 		}
 
 		public float getAngularDrag() {

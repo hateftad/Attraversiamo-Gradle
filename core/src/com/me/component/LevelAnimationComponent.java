@@ -22,7 +22,7 @@ public class LevelAnimationComponent extends AnimationComponent implements Butto
 
     public LevelAnimationComponent(String atlas, String skeleton, float scale, int taskId) {
         super(atlas, skeleton, scale);
-        eventId = taskId;
+        this.eventId = taskId;
     }
 
     @Override
@@ -68,11 +68,11 @@ public class LevelAnimationComponent extends AnimationComponent implements Butto
 
     @Override
     public void update(SpriteBatch sb, float dt) {
-        animationState.update(dt);
-        animationState.apply(skeleton);
-        skeleton.update(dt);
-        skeleton.updateWorldTransform();
-        renderer.draw(sb, skeleton);
+        this.animationState.update(dt);
+        this.animationState.apply(skeleton);
+        this.skeleton.update(dt);
+        this.skeleton.updateWorldTransform();
+        this.renderer.draw(sb, skeleton);
     }
 
     @Override

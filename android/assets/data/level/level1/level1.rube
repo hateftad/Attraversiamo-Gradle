@@ -43,36 +43,8 @@
     
     {
       "class" : "body",
-      "displayName" : "particlename",
-      "name" : "particlename",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "lightColor",
-      "name" : "lightColor",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "taskId",
       "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
       "type" : "int"
     },
     
@@ -85,9 +57,37 @@
     
     {
       "class" : "body",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "collisionGroup",
       "name" : "collisionGroup",
       "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "particlename",
+      "name" : "particlename",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "lightColor",
+      "name" : "lightColor",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "eventType",
+      "name" : "eventType",
+      "type" : "string"
     }
   ],
   "metaworld" : 
@@ -1210,8 +1210,8 @@
         "name" : "player_position",
         "position" : 
         {
-          "x" : 69.7414550781250,
-          "y" : 21.25022888183594
+          "x" : 3.249118804931641,
+          "y" : 30.70055580139160
         },
         "type" : "static"
       },
@@ -1262,8 +1262,8 @@
         "name" : "player_position",
         "position" : 
         {
-          "x" : 78.71678924560547,
-          "y" : 21.55612564086914
+          "x" : 0.2871208190917969,
+          "y" : 30.966308593750
         },
         "type" : "static"
       }

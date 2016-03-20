@@ -49,8 +49,8 @@ public class RenderSystem extends EntitySystem {
 
     @Override
     protected void initialize() {
-        batch = new SpriteBatch();
-        sortedEntities = new ArrayList<>();
+        this.batch = new SpriteBatch();
+        this.sortedEntities = new ArrayList<>();
     }
 
     @Override
@@ -60,13 +60,13 @@ public class RenderSystem extends EntitySystem {
 
     @Override
     protected void begin() {
-        batch.begin();
-        batch.setProjectionMatrix(camera.combined);
+        this.batch.begin();
+        this.batch.setProjectionMatrix(camera.combined);
     }
 
     @Override
     protected void end() {
-         batch.end();
+        this.batch.end();
     }
 
     @Override
@@ -77,7 +77,6 @@ public class RenderSystem extends EntitySystem {
     }
 
     protected void process(Entity entity) {
-
 
         if (physicsComponents.has(entity)) {
 
