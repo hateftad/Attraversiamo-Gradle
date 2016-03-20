@@ -37,34 +37,34 @@ import com.me.utils.GameUtils;
 
 public class EntityLoader {
 
-    private RubeScene m_scene;
-    private RubeSceneLoader m_loader;
-    private WeakHashMap<String, Texture> m_textureMap;
+    private RubeScene scene;
+    private RubeSceneLoader loader;
+    private WeakHashMap<String, Texture> textureMap;
     private static final String LVLPATH = "data/level/";
     private static final String CHARPATH = "data/character/";
 
     public EntityLoader() {
-        m_textureMap = new WeakHashMap<>();
-        m_loader = new RubeSceneLoader();
+        textureMap = new WeakHashMap<>();
+        loader = new RubeSceneLoader();
     }
 
     private void clearLoader() {
 
-        if (m_scene != null) {
-            m_scene.clear();
+        if (scene != null) {
+            scene.clear();
         }
-        if (m_textureMap.size() > 0) {
-            m_textureMap.clear();
+        if (textureMap.size() > 0) {
+            textureMap.clear();
         }
     }
 
     public void dispose() {
-        m_scene.dispose();
-        m_scene.clear();
-        for (Texture t : m_textureMap.values()) {
+        scene.dispose();
+        scene.clear();
+        for (Texture t : textureMap.values()) {
             t.dispose();
         }
-        m_textureMap.clear();
+        textureMap.clear();
 
     }
 
@@ -73,8 +73,8 @@ public class EntityLoader {
         String levelDirectory = level.getLevelName();
         clearLoader();
         FileHandle fileHandle = Gdx.files.internal("data/level/" + levelDirectory + "/" + levelDirectory + ".json");
-        m_scene = m_loader.loadScene(fileHandle);
-        Array<Body> bodies = m_scene.getBodies();
+        scene = loader.loadScene(fileHandle);
+        Array<Body> bodies = scene.getBodies();
 
         GameEventFactory factory = new GameEventFactory();
         Vector2 bodyPos = new Vector2();
@@ -89,7 +89,7 @@ public class EntityLoader {
 
             Body body = bodies.get(i);
 
-            Array<RubeImage> images = m_scene.getMappedImage(body);
+            Array<RubeImage> images = scene.getMappedImage(body);
             if (images != null) {
 
                 bodyPos.set(body.getPosition());
@@ -107,12 +107,12 @@ public class EntityLoader {
                         textureFileName = LVLPATH + tName;
                     }
                     System.out.println(textureFileName);
-                    Texture texture = m_textureMap.get(textureFileName);
+                    Texture texture = textureMap.get(textureFileName);
                     if (texture == null) {
                         texture = new Texture(textureFileName);
                         texture.setFilter(Texture.TextureFilter.Linear,
                                 Texture.TextureFilter.Nearest);
-                        m_textureMap.put(textureFileName, texture);
+                        textureMap.put(textureFileName, texture);
                     }
                     if (image.body != null) {
                         sComp = new SpriteComponent(texture, image.flip,
@@ -124,7 +124,7 @@ public class EntityLoader {
                                 ((BodyUserData) body.getUserData()).mName);
                         entity = entityWorld.createEntity();
                         entity.addComponent(pComp);
-                        sComp.m_shouldDraw = m_scene.getCustom(image, "shouldDraw", true);
+                        sComp.shouldDraw = scene.getCustom(image, "shouldDraw", true);
                         entity.addComponent(sComp);
                     }
                 }
@@ -143,7 +143,7 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("sky_light")) {
                 CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
                 entity.addComponent(camComp);
-                String color = m_scene.getCustom(body, "lightColor", "");
+                String color = scene.getCustom(body, "lightColor", "");
                 if(!color.equalsIgnoreCase("none") && !color.isEmpty()) {
                     PointLight light = new PointLight(rh, 50, GameUtils.getColor(color), 5000, camComp.getCamera().position.x, camComp.getCamera().position.y);
                     entity.addComponent(new LightComponent(light, "cameraLight"));
@@ -152,7 +152,7 @@ public class EntityLoader {
             }
 
             if (ud.mName.equalsIgnoreCase("light")) {
-                String color = m_scene.getCustom(body, "light", "");
+                String color = scene.getCustom(body, "light", "");
                 ConeLight light = new ConeLight(rh, 50, GameUtils.getColor(color), 500, Converters.ToWorld(body.getPosition().x), Converters.ToWorld(body.getPosition().y), 180, 180);
                 entity.addComponent(new LightComponent(light, ((BodyUserData) body.getUserData()).mName));
                 entityWorld.getManager(GroupManager.class).add(entity, "lights");
@@ -180,7 +180,7 @@ public class EntityLoader {
             }
 
             if (ud.mName.equalsIgnoreCase("water")) {
-                int eventId = m_scene.getCustom(body, "taskId", 0);
+                int eventId = scene.getCustom(body, "taskId", 0);
                 //pass in fluid velocity
                 BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
                 buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 1), 4, 4);
@@ -192,10 +192,10 @@ public class EntityLoader {
 
             if (ud.mName.equalsIgnoreCase("portal") || ud.mName.equalsIgnoreCase("finish")) {
                 ReachEndComponent reachEndComponent = new ReachEndComponent(level.getNumberOfFinishers());
-                reachEndComponent.setEndEvent(factory.createFromBodyInfo(m_scene, body));
+                reachEndComponent.setEndEvent(factory.createFromBodyInfo(scene, body));
                 entity.addComponent(reachEndComponent);
                 entityWorld.addObserver(reachEndComponent);
-                int taskId = m_scene.getCustom(body, "taskId", 0);
+                int taskId = scene.getCustom(body, "taskId", 0);
                 if(ud.mName.equalsIgnoreCase("finish")) {
                     LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers(), LevelComponent.RUNOUT, taskId);
                     entityWorld.addObserver(levelComponent);
@@ -209,35 +209,35 @@ public class EntityLoader {
             }
 
             if (ud.mName.equalsIgnoreCase("particleEmitter")) {
-                String particleName = m_scene.getCustom(body, "particlename", "");
+                String particleName = scene.getCustom(body, "particlename", "");
                 ContinuousParticles particleComponent = new ContinuousParticles(particleName, pComp.getPosition());
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
             }
 
             if (ud.mName.equalsIgnoreCase("singleParticleEmitter")) {
-                String particleName = m_scene.getCustom(body, "particlename", "");
-                int particleId = m_scene.getCustom(body, "taskId", 0);
+                String particleName = scene.getCustom(body, "particlename", "");
+                int particleId = scene.getCustom(body, "taskId", 0);
                 EventParticleComponent particleComponent = new EventParticleComponent(particleName, particleId, body.getPosition());
-                particleComponent.setEvent(factory.createParticleEventFromBodyInfo(m_scene, body));
+                particleComponent.setEvent(factory.createParticleEventFromBodyInfo(scene, body));
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
             }
 
             if (ud.mName.equalsIgnoreCase("bodyInfo")) {
-                pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
+                pComp.setTaskInfo(factory.createFromBodyInfo(scene, body));
             }
 
             if (ud.mName.equalsIgnoreCase("player_position")) {
-                int player = m_scene.getCustom(body, "playerNr", -1);
+                int player = scene.getCustom(body, "playerNr", -1);
                 level.addPlayerPosition(player, body.getPosition());
             }
 
             if (ud.mName.equalsIgnoreCase("animating_body")) {
-                String atlas = m_scene.getCustom(body, "atlas", "");
-                String skeleton = m_scene.getCustom(body, "skeleton", "");
-                boolean flip = m_scene.getCustom(body, "flip_animation", false);
-                int eventId = m_scene.getCustom(body, "taskId", 0);
+                String atlas = scene.getCustom(body, "atlas", "");
+                String skeleton = scene.getCustom(body, "skeleton", "");
+                boolean flip = scene.getCustom(body, "flip_animation", false);
+                int eventId = scene.getCustom(body, "taskId", 0);
                 atlas = LVLPATH + "animation/" + atlas;
                 skeleton = LVLPATH + "animation/" + skeleton;
                 LevelAnimationComponent levelAnimationComponent = new LevelAnimationComponent(atlas, skeleton, 5f, eventId);
@@ -265,9 +265,9 @@ public class EntityLoader {
 
         clearLoader();
 
-        m_scene = m_loader.loadScene(Gdx.files.internal(CHARPATH
+        scene = loader.loadScene(Gdx.files.internal(CHARPATH
                 + characterPath + "/" + characterName + ".json"));
-        Array<Body> bodies = m_scene.getBodies();
+        Array<Body> bodies = scene.getBodies();
 
         Vector2 bodyPos = new Vector2();
         Vector2 tmp = new Vector2();
@@ -281,7 +281,7 @@ public class EntityLoader {
 
             Body body = bodies.get(i);
 
-            Array<RubeImage> images = m_scene.getMappedImage(body);
+            Array<RubeImage> images = scene.getMappedImage(body);
             if (images != null) {
 
                 bodyPos.set(body.getPosition());
@@ -290,12 +290,12 @@ public class EntityLoader {
                 if (tName != null) {
                     tmp.set(image.width, image.height);
                     String textureFileName = CHARPATH + characterPath + tName;
-                    Texture texture = m_textureMap.get(textureFileName);
+                    Texture texture = textureMap.get(textureFileName);
                     if (texture == null) {
                         texture = new Texture(textureFileName);
                         texture.setFilter(Texture.TextureFilter.Linear,
                                 Texture.TextureFilter.Nearest);
-                        m_textureMap.put(textureFileName, texture);
+                        textureMap.put(textureFileName, texture);
                     }
                     if (image.body != null) {
                         sComp = new SpriteComponent(texture, image.flip,
@@ -314,7 +314,7 @@ public class EntityLoader {
                     }
                 }
             } else {
-                if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("leg")) {
+                if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("leg")) {
                     String name = ((BodyUserData) body.getUserData()).mName;
                     if (pComp != null) {
                         pComp.addBody(physicsWorld, body, name);
@@ -328,7 +328,7 @@ public class EntityLoader {
                     FeetComponent feetComponent = new FeetComponent(name);
                     entity.addComponent(feetComponent);
 
-                } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase(
+                } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase(
                         "hand")) {
                     if (pComp != null) {
                         pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
@@ -337,7 +337,7 @@ public class EntityLoader {
                         entity.addComponent(pComp);
                     }
                     pComp.setMass(1f, ((BodyUserData) body.getUserData()).mName);
-                } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("LHand")) {
+                } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("LHand")) {
                     if (pComp != null) {
                         pComp.addBody(physicsWorld, body, ((BodyUserData) body.getUserData()).mName);
                         pComp.setMass(0.01f, ((BodyUserData) body.getUserData()).mName);
@@ -357,8 +357,8 @@ public class EntityLoader {
 
             loadFixtures(pComp, body);
 
-            String skelName = m_scene.getCustom(body, "skeleton", "failed");
-            String atlasName = m_scene.getCustom(body, "atlas", "failed");
+            String skelName = scene.getCustom(body, "skeleton", "failed");
+            String atlasName = scene.getCustom(body, "atlas", "failed");
             PlayerAnimationComponent animationComponent = null;
             AnimationStateData stateData;
             if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
@@ -367,7 +367,7 @@ public class EntityLoader {
                 entity.addComponent(animationComponent);
                 entityWorld.addObserver(animationComponent);
             }
-            if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_one")) {
+            if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_one")) {
 
                 PlayerComponent playerComponent = new PlayerComponent(getPlayerNumber(playerConfig.getPlayerNumber()), playerConfig.isFinishFacingLeft());
                 playerComponent.setActive(playerConfig.isActive());
@@ -419,7 +419,7 @@ public class EntityLoader {
                 animationComponent.setSkin(playerConfig.getSkinName());
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
 
-            } else if (m_scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_two")) {
+            } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_two")) {
                 PlayerComponent playerComponent = new PlayerComponent(getPlayerNumber(playerConfig.getPlayerNumber()), playerConfig.isFinishFacingLeft());
                 playerComponent.setActive(playerConfig.isActive());
                 playerComponent.setFacingLeft(playerConfig.isFacingLeft());
@@ -479,7 +479,7 @@ public class EntityLoader {
 
             if (ud.mName.equalsIgnoreCase("feet")) {
                 GameEventFactory factory = new GameEventFactory();
-                pComp.setTaskInfo(factory.createFromBodyInfo(m_scene, body));
+                pComp.setTaskInfo(factory.createFromBodyInfo(scene, body));
                 SingleParticleComponent particleComponent = new SingleParticleComponent("smoke", playerConfig.getPlayerNumber(), pComp.getBody("feet").getPosition());
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
@@ -493,11 +493,11 @@ public class EntityLoader {
             }
 
         }
-        Array<Joint> joints = m_scene.getJoints();
+        Array<Joint> joints = scene.getJoints();
         if (joints != null && joints.size > 0) {
             for (int i = 0; i < joints.size; i++) {
                 Joint joint = joints.get(i);
-                Indexes ind = m_scene.getJointBodyIndex(i);
+                Indexes ind = scene.getJointBodyIndex(i);
                 attachToEntity(joint, ind, tempList, entity, physicsWorld, entityWorld);
             }
         }
@@ -513,13 +513,13 @@ public class EntityLoader {
     private void loadBodyJoints(
             World physicsWorld,
             Array<Body> tempList, GameEntityWorld entityWorld) {
-        Array<Joint> joints = m_scene.getJoints();
+        Array<Joint> joints = scene.getJoints();
         if (joints == null)
             return;
         for (int j = 0; j < joints.size; j++) {
 
             Joint joint = joints.get(j);
-            Indexes ind = m_scene.getJointBodyIndex(j);
+            Indexes ind = scene.getJointBodyIndex(j);
             attachToEntity(joint, ind, tempList, entityWorld.createEntity(), physicsWorld, entityWorld);
         }
     }
@@ -563,16 +563,16 @@ public class EntityLoader {
                     entity.addComponent(comp);
                     gameEntityWorld.addObserver(comp);
                 } else if (name.equals("waterEngine")) {
-                    int taskId = m_scene.getCustom(joint, "taskId", 0);
-                    int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                    int taskId = scene.getCustom(joint, "taskId", 0);
+                    int taskFinishers = scene.getCustom(joint, "taskFinishers", 0);
                     RevoluteEngineComponent engineComponent = new RevoluteEngineComponent(taskId, JointFactory.getInstance().createJoint(
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
                     entity.addComponent(engineComponent);
                     gameEntityWorld.addObserver(engineComponent);
                 } else if (name.equals("hinge")) {
-                    int taskId = m_scene.getCustom(joint, "taskId", 0);
-                    int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                    int taskId = scene.getCustom(joint, "taskId", 0);
+                    int taskFinishers = scene.getCustom(joint, "taskFinishers", 0);
                     HingeComponent engineComponent = new HingeComponent(taskId, JointFactory.getInstance().createJoint(
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
@@ -599,8 +599,8 @@ public class EntityLoader {
                     entity.addComponent(comp);
                     gameEntityWorld.addObserver(comp);
                 } else if (name.equals("waterEngine")) {
-                    int taskId = m_scene.getCustom(joint, "taskId", 0);
-                    int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                    int taskId = scene.getCustom(joint, "taskId", 0);
+                    int taskFinishers = scene.getCustom(joint, "taskFinishers", 0);
                     RevoluteEngineComponent engineComponent = new RevoluteEngineComponent(taskId, JointFactory.getInstance().createJoint(
                             tempList.get(ind.first),
                             tempList.get(ind.second), jDef, physicsWorld));
@@ -612,7 +612,7 @@ public class EntityLoader {
                             tempList.get(ind.second), jDef, physicsWorld);
                 }
             }
-            // m_wheels.add((WheelJoint)jD);
+            // wheels.add((WheelJoint)jD);
         }
 
         if (joint.getType() == JointType.WeldJoint) {
@@ -631,8 +631,8 @@ public class EntityLoader {
             String name = (String) joint.getUserData();
             PrismaticJointDef jDef = (PrismaticJointDef) ind.jointDef;
             if (name.equals("doorMotor")) {
-                int taskId = m_scene.getCustom(joint, "taskId", 0);
-                int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                int taskId = scene.getCustom(joint, "taskId", 0);
+                int taskFinishers = scene.getCustom(joint, "taskFinishers", 0);
                 DoorComponent comp = new DoorComponent(taskFinishers, taskId);
                 comp.setPrismJoint(JointFactory.getInstance().createJoint(
                         tempList.get(ind.first), tempList.get(ind.second),
@@ -641,8 +641,8 @@ public class EntityLoader {
                 entity.addToWorld();
                 gameEntityWorld.addObserver(comp);
             } else if (name.equals("elevatorMotor")) {
-                int taskId = m_scene.getCustom(joint, "taskId", 0);
-                int taskFinishers = m_scene.getCustom(joint, "taskFinishers", 0);
+                int taskId = scene.getCustom(joint, "taskId", 0);
+                int taskFinishers = scene.getCustom(joint, "taskFinishers", 0);
                 PrismaticEngineComponent engineComponent = new PrismaticEngineComponent(taskId, JointFactory.getInstance().createJoint(
                         tempList.get(ind.first),
                         tempList.get(ind.second), jDef, physicsWorld));
@@ -693,7 +693,7 @@ public class EntityLoader {
      * attachment.getRotation() * MathUtils.degRad);
      * System.out.println(attachment.getName()); BodyDef boxBodyDef = new
      * BodyDef(); boxBodyDef.type = BodyType.StaticBody;
-     * ps.createBody(pSystem.getWorld(),boxBodyDef, attachment.getName());
+     * ps.createBody(pSystem.getPhysicsWorld(),boxBodyDef, attachment.getName());
      * ps.createFixture(boxPoly, attachment.getName());
      *
      * boxPoly.dispose(); } }

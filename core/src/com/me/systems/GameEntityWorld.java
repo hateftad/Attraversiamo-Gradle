@@ -14,58 +14,58 @@ import com.me.events.*;
  */
 public class GameEntityWorld extends World {
 
-    private Array<TaskEventObserverComponent> m_taskEventObservers;
-    private Array<ButtonStateObserverComponent> m_buttonStateEventObservers;
-    private Array<TelegramEventObserverComponent> m_binaryEventObservers;
-    private Array<ParticleEventObserverComponent> m_particleEventObservers;
+    private Array<TaskEventObserverComponent> taskEventObservers;
+    private Array<ButtonStateObserverComponent> buttonStateEventObservers;
+    private Array<TelegramEventObserverComponent> binaryEventObservers;
+    private Array<ParticleEventObserverComponent> particleEventObservers;
 
     public GameEntityWorld(){
         super();
-        m_taskEventObservers = new Array<>();
-        m_buttonStateEventObservers = new Array<>();
-        m_binaryEventObservers = new Array<>();
-        m_particleEventObservers = new Array<>();
+        taskEventObservers = new Array<>();
+        buttonStateEventObservers = new Array<>();
+        binaryEventObservers = new Array<>();
+        particleEventObservers = new Array<>();
     }
 
     public void addObserver(TaskEventObserverComponent observerComponent){
-        m_taskEventObservers.add(observerComponent);
+        taskEventObservers.add(observerComponent);
     }
 
     public void addObserver(ButtonStateObserverComponent observerComponent){
-        m_buttonStateEventObservers.add(observerComponent);
-        m_taskEventObservers.add(observerComponent);
+        buttonStateEventObservers.add(observerComponent);
+        taskEventObservers.add(observerComponent);
     }
 
     public void addObserver(ParticleEventObserverComponent observerComponent){
-        m_taskEventObservers.add(observerComponent);
-        m_particleEventObservers.add(observerComponent);
+        taskEventObservers.add(observerComponent);
+        particleEventObservers.add(observerComponent);
     }
 
     public void addObserver(TelegramEventObserverComponent observerComponent){
-        m_taskEventObservers.add(observerComponent);
-        m_binaryEventObservers.add(observerComponent);
+        taskEventObservers.add(observerComponent);
+        binaryEventObservers.add(observerComponent);
     }
 
     public void onNotify(TaskEvent event){
-        for(TaskEventObserverComponent observerComponent : m_taskEventObservers){
+        for(TaskEventObserverComponent observerComponent : taskEventObservers){
             observerComponent.onNotify(event);
         }
     }
 
     public void onNotify(ButtonEvent event){
-        for(ButtonStateObserverComponent observerComponent : m_buttonStateEventObservers){
+        for(ButtonStateObserverComponent observerComponent : buttonStateEventObservers){
             observerComponent.onNotify(event);
         }
     }
 
     public void onNotify(TelegramEvent event) {
-        for(TelegramEventObserverComponent observerComponent : m_binaryEventObservers){
+        for(TelegramEventObserverComponent observerComponent : binaryEventObservers){
             observerComponent.onNotify(event);
         }
     }
 
     public void onNotify(ParticleEvent particleEvent) {
-        for (ParticleEventObserverComponent particleEventObserver : m_particleEventObservers) {
+        for (ParticleEventObserverComponent particleEventObserver : particleEventObservers) {
             particleEventObserver.onNotify(particleEvent);
         }
     }

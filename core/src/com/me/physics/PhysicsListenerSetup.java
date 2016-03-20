@@ -20,10 +20,10 @@ import com.me.utils.Converters;
 
 public class PhysicsListenerSetup {
 
-    private GameEntityWorld m_gameEntityWorld;
+    private GameEntityWorld gameEntityWorld;
 
     public PhysicsListenerSetup(GameEntityWorld world) {
-        m_gameEntityWorld = world;
+        gameEntityWorld = world;
     }
 
     public void setPlayerPhysics(PhysicsComponent ps) {
@@ -88,8 +88,8 @@ public class PhysicsListenerSetup {
                                     JointComponent j = e.getComponent(JointComponent.class);
                                     j.createEdgeHang(other.getBody(), player.getBody("leftH"));
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
-                                    e.getComponent(TouchComponent.class).m_edgeTouch = true;
-                                    e.getComponent(HangComponent.class).m_hangingLeft = true;
+                                    e.getComponent(TouchComponent.class).edgeTouch = true;
+                                    e.getComponent(HangComponent.class).hangingLeft = true;
 //                                    e.getComponent(PlayerAnimationComponent.class).setIK(other.getPosition());
                                 }
                             }
@@ -98,8 +98,8 @@ public class PhysicsListenerSetup {
                                     JointComponent j = e.getComponent(JointComponent.class);
                                     j.createEdgeHang(other.getBody(), player.getBody("rightH"));
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
-                                    e.getComponent(TouchComponent.class).m_edgeTouch = true;
-                                    e.getComponent(HangComponent.class).m_hangingRight = true;
+                                    e.getComponent(TouchComponent.class).edgeTouch = true;
+                                    e.getComponent(HangComponent.class).hangingRight = true;
 //                                    e.getComponent(PlayerAnimationComponent.class).setIK(other.getPosition());
                                 }
                             }
@@ -109,9 +109,9 @@ public class PhysicsListenerSetup {
                                     JointComponent j = e.getComponent(JointComponent.class);
                                     j.createEdgeHang(other.getBody(), player.getBody("leftH"));
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
-                                    e.getComponent(TouchComponent.class).m_edgeTouch = true;
-                                    e.getComponent(TouchComponent.class).m_pullEdgeTouch = true;
-                                    e.getComponent(HangComponent.class).m_hangingLeft = true;
+                                    e.getComponent(TouchComponent.class).edgeTouch = true;
+                                    e.getComponent(TouchComponent.class).pullEdgeTouch = true;
+                                    e.getComponent(HangComponent.class).hangingLeft = true;
                                 }
                             }
                             if (!pl.isFacingLeft() && otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
@@ -119,54 +119,54 @@ public class PhysicsListenerSetup {
                                     JointComponent j = e.getComponent(JointComponent.class);
                                     j.createEdgeHang(other.getBody(), player.getBody("rightH"));
                                     player.setLinearVelocity(player.getLinearVelocity().x, 0);
-                                    e.getComponent(TouchComponent.class).m_edgeTouch = true;
-                                    e.getComponent(TouchComponent.class).m_pullEdgeTouch = true;
-                                    e.getComponent(HangComponent.class).m_hangingRight = true;
+                                    e.getComponent(TouchComponent.class).edgeTouch = true;
+                                    e.getComponent(TouchComponent.class).pullEdgeTouch = true;
+                                    e.getComponent(HangComponent.class).hangingRight = true;
                                 }
                             }
                             if (otherUd.getType() == Type.RightLadder) {
                                 if (!pl.isFacingLeft()) {
-                                    e.getComponent(TouchComponent.class).m_ladderTouch = true;
-                                    e.getComponent(LadderClimbComponent.class).m_rightClimb = true;
+                                    e.getComponent(TouchComponent.class).ladderTouch = true;
+                                    e.getComponent(LadderClimbComponent.class).rightClimb = true;
                                 }
                             }
                             if (otherUd.getType() == Type.LeftLadder) {
                                 if (pl.isFacingLeft()) {
-                                    e.getComponent(TouchComponent.class).m_ladderTouch = true;
-                                    e.getComponent(LadderClimbComponent.class).m_leftClimb = true;
+                                    e.getComponent(TouchComponent.class).ladderTouch = true;
+                                    e.getComponent(LadderClimbComponent.class).leftClimb = true;
                                 }
                             }
                             if (otherUd.getType() == Type.BottomLadder) {
-                                e.getComponent(LadderClimbComponent.class).m_bottomLadder = true;
+                                e.getComponent(LadderClimbComponent.class).bottomLadder = true;
                             }
                             if(otherUd.getType() == Type.ColorChangeSensor){
-                                m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.ColorSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                                gameEntityWorld.onNotify(new TaskEvent(GameEventType.ColorSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
                             }
                             if (otherUd.getType() == Type.TopLadder) {
-                                e.getComponent(LadderClimbComponent.class).m_topLadder = true;
-                                e.getComponent(VelocityLimitComponent.class).m_ladderClimbVelocity = 0;
+                                e.getComponent(LadderClimbComponent.class).topLadder = true;
+                                e.getComponent(VelocityLimitComponent.class).ladderClimbVelocity = 0;
                             }
 
                             if (otherUd.getType() == Type.LeftPullup && fB.isSensor()) {
-                                e.getComponent(TouchComponent.class).m_footEdgeL = true;
-                                e.getComponent(TouchComponent.class).m_footEdge = true;
-                                e.getComponent(TouchComponent.class).m_touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
+                                e.getComponent(TouchComponent.class).footEdgeL = true;
+                                e.getComponent(TouchComponent.class).footEdge = true;
+                                e.getComponent(TouchComponent.class).touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
                             }
                             if (otherUd.getType() == Type.RightPullup && fB.isSensor()) {
-                                e.getComponent(TouchComponent.class).m_footEdgeR = true;
-                                e.getComponent(TouchComponent.class).m_footEdge = true;
-                                e.getComponent(TouchComponent.class).m_touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
+                                e.getComponent(TouchComponent.class).footEdgeR = true;
+                                e.getComponent(TouchComponent.class).footEdge = true;
+                                e.getComponent(TouchComponent.class).touchCenter = fA.getBody().getPosition().sub(0, 0.5f);
                             }
 
                             if (otherUd.getType() == Type.LeftPushButton) {
-                                e.getComponent(TouchComponent.class).m_pushArea = true;
-                                e.getComponent(TouchComponent.class).m_leftPushArea = true;
+                                e.getComponent(TouchComponent.class).pushArea = true;
+                                e.getComponent(TouchComponent.class).leftPushArea = true;
                                 e.getComponent(EventComponent.class).setEventInfo(other.getEventInfo());
 
                             }
                             if (otherUd.getType() == Type.RightPushButton) {
-                                e.getComponent(TouchComponent.class).m_pushArea = true;
-                                e.getComponent(TouchComponent.class).m_rightPushArea = true;
+                                e.getComponent(TouchComponent.class).pushArea = true;
+                                e.getComponent(TouchComponent.class).rightPushArea = true;
                                 e.getComponent(EventComponent.class).setEventInfo(other.getEventInfo());
                             }
 
@@ -179,12 +179,12 @@ public class PhysicsListenerSetup {
                                 } else {
                                     if (e.getComponent(PlayerTwoComponent.class) != null) {
                                         if (girl.isJumping() && man.lyingDown()) {
-                                            e.getComponent(TouchComponent.class).m_handTouch = true;
+                                            e.getComponent(TouchComponent.class).handTouch = true;
                                         }
                                     }
                                     if (e2.getComponent(PlayerOneComponent.class) != null) {
                                         if (man.lyingDown() && girl.isJumping()) {
-                                            e2.getComponent(TouchComponent.class).m_handTouch = true;
+                                            e2.getComponent(TouchComponent.class).handTouch = true;
                                         }
                                     }
                                     e.getComponent(GrabComponent.class).handPositionX = fA.getBody().getPosition().x;
@@ -192,20 +192,20 @@ public class PhysicsListenerSetup {
                             }
 
                             if (otherUd.getType() == Type.RightHandHold) {
-                                e2.getComponent(TouchComponent.class).m_handHoldArea = true;
-                                e2.getComponent(TouchComponent.class).m_rightHoldArea = true;
+                                e2.getComponent(TouchComponent.class).handHoldArea = true;
+                                e2.getComponent(TouchComponent.class).rightHoldArea = true;
                             }
                             if (playerUd.getType() == Type.RightHandHold) {
-                                e.getComponent(TouchComponent.class).m_handHoldArea = true;
-                                e.getComponent(TouchComponent.class).m_rightHoldArea = true;
+                                e.getComponent(TouchComponent.class).handHoldArea = true;
+                                e.getComponent(TouchComponent.class).rightHoldArea = true;
                             }
                             if (otherUd.getType() == Type.LeftHandHold) {
-                                e2.getComponent(TouchComponent.class).m_handHoldArea = true;
-                                e2.getComponent(TouchComponent.class).m_leftHoldArea = true;
+                                e2.getComponent(TouchComponent.class).handHoldArea = true;
+                                e2.getComponent(TouchComponent.class).leftHoldArea = true;
                             }
                             if (playerUd.getType() == Type.LeftHandHold) {
-                                e.getComponent(TouchComponent.class).m_handHoldArea = true;
-                                e.getComponent(TouchComponent.class).m_leftHoldArea = true;
+                                e.getComponent(TouchComponent.class).handHoldArea = true;
+                                e.getComponent(TouchComponent.class).leftHoldArea = true;
                             }
 
                             if(otherUd.getType() == Type.InsideCage){
@@ -213,23 +213,23 @@ public class PhysicsListenerSetup {
                             }
 
                             if (otherUd.getType() == Type.LeftCrawl) {
-                                e.getComponent(TouchComponent.class).m_canCrawl = true;
+                                e.getComponent(TouchComponent.class).canCrawl = true;
                             }
                             if (otherUd.getType() == Type.Portal) {
                                 if(e.getComponent(FeetComponent.class).hasCollided()) {
-                                    m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                                    gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
                                 }
                             }
                             if (otherUd.getType() == Type.Finish) {
                                 if(e.getComponent(FeetComponent.class).hasCollided()) {
-                                    m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                                    gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
                                 }
                             }
                             if(otherUd.getType() == Type.InsideCage){
                                 e.getComponent(PhysicsComponent.class).setFixedRotation("center", true);
                             }
                             if(otherUd.getType() == Type.InsideCage){
-                                e.getComponent(TouchComponent.class).m_cageTouch = true;
+                                e.getComponent(TouchComponent.class).cageTouch = true;
                             }
                         }
                     }
@@ -243,9 +243,9 @@ public class PhysicsListenerSetup {
                         if (e.getComponent(PlayerComponent.class) != null) {
                             if (playerUd.getType() == Type.Feet && otherUd.getType() == Type.Ground) {
                                 GameEvent event = e.getComponent(PhysicsComponent.class).getEventInfo();
-                                event.notify(m_gameEntityWorld);
+                                event.notify(gameEntityWorld);
                                 e.getComponent(SingleParticleComponent.class).setEnabled(true);
-                                e.getComponent(TouchComponent.class).m_waterTouch = false;
+                                e.getComponent(TouchComponent.class).waterTouch = false;
                             }
 
                             if (playerUd.getType() == Type.Torso && otherUd.getType() == Type.Box) {
@@ -254,14 +254,14 @@ public class PhysicsListenerSetup {
                                     queueComp.mass = 5f;
                                     queueComp.type = QueueType.Mass;
                                     queueComp.bodyName = "box";
-                                    e.getComponent(TouchComponent.class).m_boxTouch = true;
+                                    e.getComponent(TouchComponent.class).boxTouch = true;
                                     if (e.getComponent(PushComponent.class) != null) {
                                         if (e.getComponent(PlayerComponent.class).isFacingLeft()) {
-                                            e.getComponent(PushComponent.class).m_pushLeft = true;
-                                            e.getComponent(PushComponent.class).m_pushRight = false;
+                                            e.getComponent(PushComponent.class).pushLeft = true;
+                                            e.getComponent(PushComponent.class).pushRight = false;
                                         } else {
-                                            e.getComponent(PushComponent.class).m_pushLeft = false;
-                                            e.getComponent(PushComponent.class).m_pushRight = true;
+                                            e.getComponent(PushComponent.class).pushLeft = false;
+                                            e.getComponent(PushComponent.class).pushRight = true;
                                         }
                                     }
                                 }
@@ -287,96 +287,96 @@ public class PhysicsListenerSetup {
                     RBUserData playerUd = player.getRBUserData(fB.getBody());
                     if (playerUd.getCollisionGroup() == otherUd.getCollisionGroup()) {
                         if (otherUd.getType() == Type.RightLadder) {
-                            e.getComponent(TouchComponent.class).m_ladderTouch = false;
-                            e.getComponent(LadderClimbComponent.class).m_rightClimb = false;
+                            e.getComponent(TouchComponent.class).ladderTouch = false;
+                            e.getComponent(LadderClimbComponent.class).rightClimb = false;
                         }
                         if (otherUd.getType() == Type.LeftLadder) {
-                            e.getComponent(TouchComponent.class).m_ladderTouch = false;
-                            e.getComponent(LadderClimbComponent.class).m_leftClimb = false;
+                            e.getComponent(TouchComponent.class).ladderTouch = false;
+                            e.getComponent(LadderClimbComponent.class).leftClimb = false;
                         }
                         if (otherUd.getType() == Type.BottomLadder) {
-                            e.getComponent(LadderClimbComponent.class).m_bottomLadder = false;
+                            e.getComponent(LadderClimbComponent.class).bottomLadder = false;
                         }
                         if (otherUd.getType() == Type.TopLadder) {
-                            e.getComponent(LadderClimbComponent.class).m_topLadder = false;
+                            e.getComponent(LadderClimbComponent.class).topLadder = false;
                         }
                         if (otherUd.getType() == Type.LeftPullup && fB.isSensor()) {
-                            e.getComponent(TouchComponent.class).m_footEdgeL = false;
-                            e.getComponent(TouchComponent.class).m_footEdge = false;
+                            e.getComponent(TouchComponent.class).footEdgeL = false;
+                            e.getComponent(TouchComponent.class).footEdge = false;
                         }
                         if (otherUd.getType() == Type.RightPullup && fB.isSensor()) {
-                            e.getComponent(TouchComponent.class).m_footEdgeR = false;
-                            e.getComponent(TouchComponent.class).m_footEdge = false;
+                            e.getComponent(TouchComponent.class).footEdgeR = false;
+                            e.getComponent(TouchComponent.class).footEdge = false;
                         }
                         if (otherUd.getType() == Type.Hand && playerUd.getType() == Type.Hand) {
 
                         }
                         if(otherUd.getType() == Type.ColorChangeSensor){
-                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.BlackSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.BlackSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
                         }
                         if (otherUd.getType() == Type.LeftCrawl) {
                             e.getComponent(PhysicsComponent.class).enableBody("center");
-                            e.getComponent(TouchComponent.class).m_canCrawl = false;
+                            e.getComponent(TouchComponent.class).canCrawl = false;
                         }
                         if (otherUd.getType() == Type.Portal) {
-                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.OutsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.OutsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
                         }
                         if (otherUd.getType() == Type.Finish) {
-                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.OutsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
+                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.OutsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
                         }
                         if (otherUd.getType() == Type.LeftPushButton) {
-                            e.getComponent(TouchComponent.class).m_pushArea = false;
-                            e.getComponent(TouchComponent.class).m_leftPushArea = false;
+                            e.getComponent(TouchComponent.class).pushArea = false;
+                            e.getComponent(TouchComponent.class).leftPushArea = false;
                         }
                         if (otherUd.getType() == Type.RightPushButton) {
-                            e.getComponent(TouchComponent.class).m_pushArea = false;
-                            e.getComponent(TouchComponent.class).m_rightPushArea = false;
+                            e.getComponent(TouchComponent.class).pushArea = false;
+                            e.getComponent(TouchComponent.class).rightPushArea = false;
                         }
 
                         if (playerUd.getType() == Type.LeftHandHold) {
-                            e.getComponent(TouchComponent.class).m_handHoldArea = false;
-                            e.getComponent(TouchComponent.class).m_leftHoldArea = false;
+                            e.getComponent(TouchComponent.class).handHoldArea = false;
+                            e.getComponent(TouchComponent.class).leftHoldArea = false;
                             e.getComponent(HandHoldComponent.class).setHoldingHands(false);
-                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
+                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
                         if (playerUd.getType() == Type.RightHandHold) {
-                            e.getComponent(TouchComponent.class).m_handHoldArea = false;
-                            e.getComponent(TouchComponent.class).m_rightHoldArea = false;
+                            e.getComponent(TouchComponent.class).handHoldArea = false;
+                            e.getComponent(TouchComponent.class).rightHoldArea = false;
                             e.getComponent(HandHoldComponent.class).setHoldingHands(false);
-                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
+                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
 
                         if (otherUd.getType() == Type.LeftHandHold) {
-                            e2.getComponent(TouchComponent.class).m_handHoldArea = false;
-                            e2.getComponent(TouchComponent.class).m_leftHoldArea = false;
+                            e2.getComponent(TouchComponent.class).handHoldArea = false;
+                            e2.getComponent(TouchComponent.class).leftHoldArea = false;
                             e2.getComponent(HandHoldComponent.class).setHoldingHands(false);
-                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
+                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
                         if (otherUd.getType() == Type.RightHandHold) {
-                            e2.getComponent(TouchComponent.class).m_handHoldArea = false;
-                            e2.getComponent(TouchComponent.class).m_rightHoldArea = false;
+                            e2.getComponent(TouchComponent.class).handHoldArea = false;
+                            e2.getComponent(TouchComponent.class).rightHoldArea = false;
                             e2.getComponent(HandHoldComponent.class).setHoldingHands(false);
-                            m_gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
+                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
                         if (otherUd.getType() == Type.RightEdge && playerUd.getType() == Type.HangHands) {
-                            e.getComponent(TouchComponent.class).m_edgeTouch = false;
+                            e.getComponent(TouchComponent.class).edgeTouch = false;
                         }
                         if (otherUd.getType() == Type.LeftEdge && playerUd.getType() == Type.HangHands) {
-                            e.getComponent(TouchComponent.class).m_edgeTouch = false;
+                            e.getComponent(TouchComponent.class).edgeTouch = false;
                         }
                         if (otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
-                            e.getComponent(TouchComponent.class).m_edgeTouch = false;
-                            e.getComponent(TouchComponent.class).m_pullEdgeTouch = false;
+                            e.getComponent(TouchComponent.class).edgeTouch = false;
+                            e.getComponent(TouchComponent.class).pullEdgeTouch = false;
                         }
                         if (otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
-                            e.getComponent(TouchComponent.class).m_edgeTouch = false;
-                            e.getComponent(TouchComponent.class).m_pullEdgeTouch = false;
+                            e.getComponent(TouchComponent.class).edgeTouch = false;
+                            e.getComponent(TouchComponent.class).pullEdgeTouch = false;
                         }
                         if(otherUd.getType() == Type.InsideCage){
                             e.getComponent(PhysicsComponent.class).setFixedRotation("center", false);
                         }
                         if(otherUd.getType() == Type.InsideCage){
-                            e.getComponent(TouchComponent.class).m_cageTouch = false;
+                            e.getComponent(TouchComponent.class).cageTouch = false;
                         }
                     }
                 }
@@ -395,10 +395,10 @@ public class PhysicsListenerSetup {
                             Body b = other.getBody("box");
                             b.getFixtureList().get(0).setFriction(PhysicsComponent.HIGH_FRICTION);
                             e1.getComponent(QueueComponent.class).mass = 20f;
-                            e.getComponent(TouchComponent.class).m_boxTouch = false;
+                            e.getComponent(TouchComponent.class).boxTouch = false;
                             if (e.getComponent(PushComponent.class) != null) {
-                                e.getComponent(PushComponent.class).m_pushLeft = false;
-                                e.getComponent(PushComponent.class).m_pushRight = false;
+                                e.getComponent(PushComponent.class).pushLeft = false;
+                                e.getComponent(PushComponent.class).pushRight = false;
                             }
                         }
                     }
@@ -489,7 +489,7 @@ public class PhysicsListenerSetup {
 
                 if (otherUd.getType() == Type.Pelvis) {
                     if (entity.getComponent(PlayerComponent.class) != null) {
-                        entity.getComponent(TouchComponent.class).m_waterTouch = true;
+                        entity.getComponent(TouchComponent.class).waterTouch = true;
                     }
                     System.out.println("Under Water");
                 }

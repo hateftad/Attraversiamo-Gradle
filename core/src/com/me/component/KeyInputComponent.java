@@ -5,33 +5,33 @@ import com.me.ui.InputManager;
 
 public class KeyInputComponent extends BaseComponent {
 
-    public boolean m_left;
-    public boolean m_right;
-    public boolean m_down;
-    public boolean m_up;
-    public boolean m_jump;
+    public boolean left;
+    public boolean right;
+    public boolean down;
+    public boolean up;
+    public boolean jump;
 
     public void set(boolean left, boolean right, boolean up, boolean down, boolean jump) {
-        m_left = left;
-        m_right = right;
-        m_up = up;
-        m_down = down;
-        m_jump = jump;
+        this.left = left;
+        this.right = right;
+        this.up = up;
+        this.down = down;
+        this.jump = jump;
 
     }
 
     public void update(InputManager manager) {
-        m_left = manager.isDown(InputManager.left);
-        m_right = manager.isDown(InputManager.right);
-        m_jump = manager.isDown(InputManager.jump);
+        left = manager.isDown(InputManager.left);
+        right = manager.isDown(InputManager.right);
+        jump = manager.isDown(InputManager.jump);
     }
 
     public boolean moved() {
-        return (m_left) || (m_right) || (m_jump);
+        return (left) || (right) || (jump);
     }
 
     public boolean isMoving() {
-        return (m_left || m_right);
+        return (left || right);
     }
 
     @Override
@@ -45,11 +45,11 @@ public class KeyInputComponent extends BaseComponent {
     }
 
     public void reset() {
-        m_left = false;
-        m_right = false;
-        m_down = false;
-        m_up = false;
-        m_jump = false;
+        left = false;
+        right = false;
+        down = false;
+        up = false;
+        jump = false;
     }
 
 }

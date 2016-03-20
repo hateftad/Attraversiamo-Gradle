@@ -10,10 +10,10 @@ import com.me.utils.Direction;
  */
 public class VerticalButtonEvent extends ButtonEvent {
 
-    private Direction m_direction;
+    private Direction direction;
     public VerticalButtonEvent(BodyInfo bodyInfo) {
         super(bodyInfo);
-        m_direction = new Direction(Direction.Up);
+        direction = new Direction(Direction.Up);
     }
 
     public void notify(GameEntityProcessingSystem entityProcessingSystem, PlayerComponent.PlayerNumber playerNumber) {
@@ -21,10 +21,10 @@ public class VerticalButtonEvent extends ButtonEvent {
     }
 
     public void update(){
-        m_direction.upToDown();
+        direction.upToDown();
     }
 
     public int getDirection(){
-        return m_direction.m_currentDirection;
+        return direction.currentDirection;
     }
 }

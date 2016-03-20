@@ -25,7 +25,7 @@ public class MenuScreen extends AbstractScreen {
     private static final String SCENEPATH = "data/ui/menu";
     private static final float SCALE = 0.5f;
 
-    private Array<AnimationComponent> m_animation;
+    private Array<AnimationComponent> animation;
 
     public MenuScreen(Attraversiamo game) {
         super(game);
@@ -38,15 +38,15 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private void init() {
-        m_camera.viewportWidth = 800;
-        m_camera.viewportHeight = 600;
-        m_camera.zoom = 2f;
-        m_animation = new Array<>();
+        this.camera.viewportWidth = 800;
+        this.camera.viewportHeight = 600;
+        this.camera.zoom = 2f;
+        this.animation = new Array<>();
 
         Vector2 middlePoint = new Vector2(0, 0);
         AnimationComponent scene = new LevelAnimationComponent(SCENEPATH, SCENEPATH, SCALE);
         scene.setUp(middlePoint, "running");
-        m_animation.add(scene);
+        animation.add(scene);
     }
 
     @Override
@@ -57,28 +57,28 @@ public class MenuScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        m_camera.update();
-        m_spriteBatch.setProjectionMatrix(m_camera.combined);
-        m_spriteBatch.begin();
-        for (AnimationComponent comp : m_animation) {
-            comp.update(m_spriteBatch, delta);
+        camera.update();
+        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.begin();
+        for (AnimationComponent comp : animation) {
+            comp.update(spriteBatch, delta);
         }
-        m_spriteBatch.end();
+        spriteBatch.end();
         if (Gdx.input.justTouched()) {
             changeScreen();
         }
     }
 
     private void changeScreen() {
-        Screen current = m_game.getScreen();
-        m_game.m_loadingScreen = new LoadingScreen(m_game);
-        m_game.m_loadingScreen.load(1);
+        Screen current = game.getScreen();
+        game.loadingScreen = new LoadingScreen(game);
+        game.loadingScreen.load(1);
 
 //        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
 //        effects.add(new FadeOutTransitionEffect(1f));
-//        Screen transitionScreen = new TransitionScreen(m_game, current, m_game.m_loadingScreen, effects);
+//        Screen transitionScreen = new TransitionScreen(game, current, game.loadingScreen, effects);
 
-        m_game.setScreen(m_game.m_loadingScreen);
+        game.setScreen(game.loadingScreen);
     }
 
     @Override
@@ -88,8 +88,8 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        m_spriteBatch.dispose();
-        for (AnimationComponent animationComponent : m_animation) {
+        spriteBatch.dispose();
+        for (AnimationComponent animationComponent : animation) {
             animationComponent.dispose();
         }
     }

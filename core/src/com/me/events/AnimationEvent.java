@@ -9,18 +9,18 @@ import com.esotericsoftware.spine.EventData;
  */
 public class AnimationEvent {
 
-    private Event m_event;
+    private Event event;
 
     public AnimationEvent(){
-        m_event = new Event(0, new EventData(AnimationEventType.NONE.name()));
+        event = new Event(0, new EventData(AnimationEventType.NONE.name()));
     }
 
     public void setEvent(Event event) {
-        this.m_event = event;
+        this.event = event;
     }
 
     public AnimationEventType getEventType(){
-        return determineEvent(m_event.getData().getName());
+        return determineEvent(event.getData().getName());
     }
 
     private AnimationEventType determineEvent(String eventName){
@@ -39,7 +39,7 @@ public class AnimationEvent {
     }
 
     public void resetEvent() {
-        m_event = new Event(0, new EventData(AnimationEventType.NONE.name()));
+        event = new Event(0, new EventData(AnimationEventType.NONE.name()));
     }
 
     public enum AnimationEventType {

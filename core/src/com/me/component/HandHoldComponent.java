@@ -10,23 +10,23 @@ import com.me.events.TelegramEvent;
  */
 public class HandHoldComponent extends BaseComponent implements TelegramEventObserverComponent{
 
-    private boolean m_holdingHands;
-    private boolean m_isLeading;
+    private boolean holdingHands;
+    private boolean isLeading;
     public HandHoldComponent(){
 
     }
 
     public boolean isHoldingHands(){
-        return m_holdingHands;
+        return holdingHands;
     }
     public void setHoldingHands(boolean holding){
-        m_holdingHands = holding;
+        holdingHands = holding;
     }
     public void setIsLeading(boolean isLeading){
-        m_isLeading = isLeading;
+        this.isLeading = isLeading;
     }
     public boolean isLeading(){
-        return m_isLeading;
+        return isLeading;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class HandHoldComponent extends BaseComponent implements TelegramEventObs
 
     @Override
     public void onNotify(TelegramEvent event) {
-        m_holdingHands = true;
+        holdingHands = true;
     }
 
     @Override

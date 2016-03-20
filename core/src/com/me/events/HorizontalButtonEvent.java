@@ -10,10 +10,10 @@ import com.me.utils.Direction;
  */
 public class HorizontalButtonEvent extends ButtonEvent {
 
-    private Direction m_direction;
+    private Direction direction;
     public HorizontalButtonEvent(BodyInfo bodyInfo) {
         super(bodyInfo);
-        m_direction = new Direction(Direction.Left);
+        direction = new Direction(Direction.Left);
     }
 
     public void notify(GameEntityProcessingSystem entityProcessingSystem, PlayerComponent.PlayerNumber playerNumber) {
@@ -21,10 +21,10 @@ public class HorizontalButtonEvent extends ButtonEvent {
     }
 
     public void update(){
-        m_direction.LeftToRight();
+        direction.LeftToRight();
     }
 
     public int getDirection(){
-        return m_direction.m_currentDirection;
+        return direction.currentDirection;
     }
 }

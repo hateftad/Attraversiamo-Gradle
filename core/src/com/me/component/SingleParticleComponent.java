@@ -13,18 +13,18 @@ import com.me.utils.Converters;
  */
 public class SingleParticleComponent extends ParticleComponent implements TaskEventObserverComponent {
 
-    private int m_id = 0;
+    private int id = 0;
     private boolean enabled;
 
     public SingleParticleComponent(String effect, int id, Vector2 position) {
         super(effect, 10);
         setPosition(Converters.ToWorld(position));
-        m_id = id;
+        this.id = id;
     }
 
     @Override
     public void onNotify(TaskEvent event) {
-        if (event.getEventType() == GameEventType.GroundTouch && m_id == event.getEventId()) {
+        if (event.getEventType() == GameEventType.GroundTouch && id == event.getEventId()) {
             if (enabled) {
                 start();
             }

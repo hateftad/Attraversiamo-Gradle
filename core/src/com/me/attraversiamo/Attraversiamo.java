@@ -17,13 +17,13 @@ import com.me.config.GlobalConfig;
 
 public class Attraversiamo extends Game implements ApplicationListener {
 
-    public GameScreen m_gameScreen;
-    public LoadingScreen m_loadingScreen;
-    private FPSLogger m_fpsLogger;
-    private IActivityRequestHandler m_adRequestHandler;
-    private PlayServices m_playServices;
-    public Array<InputProcessor> m_processors = new Array<>();
-    public InputMultiplexer m_multiPlexer = new InputMultiplexer();
+    public GameScreen gameScreen;
+    public LoadingScreen loadingScreen;
+    private FPSLogger fpsLogger;
+    private IActivityRequestHandler adRequestHandler;
+    private PlayServices playServices;
+    public Array<InputProcessor> processors = new Array<>();
+    public InputMultiplexer multiPlexer = new InputMultiplexer();
 
     public Attraversiamo(GameConfig config, IActivityRequestHandler requestHandler) {
         if (config != null) {
@@ -34,28 +34,27 @@ public class Attraversiamo extends Game implements ApplicationListener {
             conf.showUI = false;
             conf.timeStep = 1 / 60f;
         }
-        m_adRequestHandler = requestHandler;
+        adRequestHandler = requestHandler;
     }
 
     @Override
     public void create() {
-
-        m_fpsLogger = new FPSLogger();
+        fpsLogger = new FPSLogger();
         setScreen(new SplashScreen(this));
-        m_multiPlexer.setProcessors(m_processors);
+        multiPlexer.setProcessors(processors);
     }
 
     public void setPlayServices(PlayServices playSevices){
-        m_playServices = playSevices;
+        playServices = playSevices;
     }
 
 
     public void showAd(boolean show) {
-        m_adRequestHandler.showAds(show);
+        adRequestHandler.showAds(show);
     }
 
     public void setScreenName(String name) {
-        m_adRequestHandler.setScreenName(name);
+        adRequestHandler.setScreenName(name);
     }
 
     @Override
@@ -77,6 +76,6 @@ public class Attraversiamo extends Game implements ApplicationListener {
     }
 
     public PlayServices getPlayServices() {
-        return m_playServices;
+        return playServices;
     }
 }

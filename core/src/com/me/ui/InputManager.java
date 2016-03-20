@@ -14,13 +14,12 @@ public class InputManager {
 		TWO
 	}
 	
-	public PlayerSelection m_playerSelected;
+	public PlayerSelection playerSelected;
 	public boolean playerOneActive;
-	private ArrayList<LevelEventListener> m_levelListeners;
+	private ArrayList<LevelEventListener> levelListeners;
 
-	private boolean[] m_button  = new boolean[10];
-	
-	
+	private boolean[] button  = new boolean[10];
+
 	private static InputManager instance = null;
 	
 	public static InputManager getInstance() {
@@ -31,56 +30,56 @@ public class InputManager {
 	   }
 	
 	public void addEventListener(LevelEventListener listener){
-		m_levelListeners.add(listener);
+		levelListeners.add(listener);
 	}
 	
 	public void setSelectedPlayer(int nr, boolean active){
 		
 		if(nr == 1 && active){
 			playerOneActive = true;
-			m_playerSelected = PlayerSelection.ONE;
+			playerSelected = PlayerSelection.ONE;
 		} else if(nr == 2 && active){
 			playerOneActive = false;
-			m_playerSelected = PlayerSelection.TWO;
+			playerSelected = PlayerSelection.TWO;
 		}
 	}
 	
 	private InputManager(){
 		
-		m_levelListeners = new ArrayList<>();
+		levelListeners = new ArrayList<>();
 
-		for (@SuppressWarnings("unused") boolean b : m_button) {
+		for (@SuppressWarnings("unused") boolean b : button) {
 			b = false;
 		}
 		
 	}
 	
 	public void characterSwitch(){
-		m_button[first] = true;
+		button[first] = true;
 		playerOneActive = !playerOneActive;
-		m_playerSelected = (playerOneActive ? PlayerSelection.ONE : PlayerSelection.TWO);
+		playerSelected = (playerOneActive ? PlayerSelection.ONE : PlayerSelection.TWO);
 	}
 	
 	public void reset(){
 		
-		for (@SuppressWarnings("unused") boolean b : m_button) {
+		for (@SuppressWarnings("unused") boolean b : button) {
 			b = false;
 		}
 	}
 	
 	public void update(){
-		m_playerSelected = (playerOneActive ? PlayerSelection.ONE : PlayerSelection.TWO);
+		playerSelected = (playerOneActive ? PlayerSelection.ONE : PlayerSelection.TWO);
 	}
 	
 	public void callRestart(){
-		for(LevelEventListener listener: m_levelListeners){
+		for(LevelEventListener listener: levelListeners){
 			listener.onRestartLevel();
 		}
         reset();
 	}
 	
 	public boolean isDown(int nr){
-		return m_button[nr];
+		return button[nr];
 	}
 	private String skinName = "color";
 	public String toggleSkins(){
@@ -102,37 +101,37 @@ public class InputManager {
 	public void keyDown(int keycode){
 	
 		if (keycode == Input.Keys.A) {
-			m_button[left] = true;
+			button[left] = true;
 		}
 		if(keycode == Input.Keys.D) {
-			m_button[right] = true;
+			button[right] = true;
 		}
 
 		if(keycode == Input.Keys.W) {
-			m_button[restart] = true;
+			button[restart] = true;
 		}
 		if(keycode == Input.Keys.S) {
-			m_button[down] = true;
+			button[down] = true;
 		}
 		if(keycode == Input.Keys.SPACE){
-			m_button[jump] = true;
+			button[jump] = true;
 		}
 		if(keycode == Input.Keys.F){
-			m_button[rag] = true;
+			button[rag] = true;
 		}
 		if(keycode == Input.Keys.C){
-			m_button[first] = true;
+			button[first] = true;
 			playerOneActive = !playerOneActive;			
 		}
 		if(keycode == Input.Keys.F){
-			m_button[action] = true;
+			button[action] = true;
 		}
 		
 		if(keycode == Input.Keys.R){
 			callRestart();
 		}
 		if(keycode == Input.Keys.Q){
-			m_button[skinChange] = true;
+			button[skinChange] = true;
 			toggleSkins();
 		}
 		
@@ -142,36 +141,36 @@ public class InputManager {
 	public void keyUp(int keycode){
 		
 		if(keycode == Input.Keys.A) {
-			m_button[left] = false;
+			button[left] = false;
 		}
 		if(keycode == Input.Keys.D) {
 
-			m_button[right] = false;
+			button[right] = false;
 		}
 
 		if(keycode == Input.Keys.W) {
-			m_button[restart] = false;
+			button[restart] = false;
 		}
 		if(keycode == Input.Keys.S) {
-			m_button[down] = false;
+			button[down] = false;
 		}
 		if(keycode == Input.Keys.SPACE){
-			m_button[jump] = false;
+			button[jump] = false;
 		}
 
 		if(keycode == Input.Keys.G){
-			m_button[rag] = false;
+			button[rag] = false;
 		}
 		
 		if(keycode == Input.Keys.C){
-			m_button[first] = false;
+			button[first] = false;
 		}
 		
 		if(keycode == Input.Keys.F){
-			m_button[action] = false;
+			button[action] = false;
 		}
 		if(keycode == Input.Keys.Q){
-			m_button[skinChange] = false;
+			button[skinChange] = false;
 		}
 		
 	}

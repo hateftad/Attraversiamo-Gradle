@@ -37,10 +37,10 @@ public class RBUserData {
             ALL = 0xFFF;
 
 
-    private int m_collisionGroup;
-    private int m_boxId;
-    private int m_extraInfo;
-    private Type m_type;
+    private int collisionGroup;
+    private int boxId;
+    private int extraInfo;
+    private Type type;
 
     public RBUserData(int boxId, int collisionGroup, int extra, Body body) {
         set(boxId, collisionGroup, body);
@@ -48,7 +48,7 @@ public class RBUserData {
     }
 
     public void setExtraInfo(int extraInfo) {
-        m_extraInfo = extraInfo;
+        this.extraInfo = extraInfo;
     }
 
     private void setFilterData(Body body, Filter filter) {
@@ -59,8 +59,8 @@ public class RBUserData {
     }
 
     public void set(int boxid, int collisiongroup, Body body) {
-        this.m_boxId = boxid;
-        this.m_collisionGroup = collisiongroup;
+        this.boxId = boxid;
+        this.collisionGroup = collisiongroup;
         Filter filter = new Filter();
         switch (boxid) {
             case 1:
@@ -235,22 +235,22 @@ public class RBUserData {
     }
 
     public int getBoxId() {
-        return this.m_boxId;
+        return this.boxId;
     }
 
     public int getCollisionGroup() {
-        return this.m_collisionGroup;
+        return this.collisionGroup;
     }
 
     public Type getType() {
-        return m_type;
+        return type;
     }
 
-    public void setType(Type m_type) {
-        this.m_type = m_type;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public int getExtraInfo() {
-        return m_extraInfo;
+        return extraInfo;
     }
 }

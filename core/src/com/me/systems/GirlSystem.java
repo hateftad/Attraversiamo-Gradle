@@ -14,75 +14,75 @@ import com.me.ui.InputManager;
 public class GirlSystem extends PlayerSystem {
 
     @Mapper
-    ComponentMapper<PlayerComponent> m_playerComps;
+    ComponentMapper<PlayerComponent> playerComps;
     @Mapper
-    ComponentMapper<PlayerAnimationComponent> m_animComps;
+    ComponentMapper<PlayerAnimationComponent> animComps;
     @Mapper
-    ComponentMapper<KeyInputComponent> m_movComps;
+    ComponentMapper<KeyInputComponent> movComps;
     @Mapper
-    ComponentMapper<TouchComponent> m_touchComps;
+    ComponentMapper<TouchComponent> touchComps;
     @Mapper
-    ComponentMapper<PhysicsComponent> m_physComps;
+    ComponentMapper<PhysicsComponent> physComps;
     @Mapper
-    ComponentMapper<VelocityLimitComponent> m_velComps;
+    ComponentMapper<VelocityLimitComponent> velComps;
     @Mapper
-    ComponentMapper<PushComponent> m_pushComps;
+    ComponentMapper<PushComponent> pushComps;
     @Mapper
-    ComponentMapper<CharacterMovementComponent> m_movementComps;
+    ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
-    ComponentMapper<FeetComponent> m_feetComps;
+    ComponentMapper<FeetComponent> feetComps;
 
     private float VELOCITY = 5.5f;
 
     @SuppressWarnings("unchecked")
     public GirlSystem() {
         super(Aspect.getAspectForOne(PlayerTwoComponent.class));
-        m_inputMgr = InputManager.getInstance();
+        inputMgr = InputManager.getInstance();
     }
 
     @Override
     protected void process(Entity entity) {
 
-        PhysicsComponent physicsComponent = m_physComps.get(entity);
-        PlayerComponent player = m_playerComps.get(entity);
-        PlayerAnimationComponent animation = m_animComps.get(entity);
-        TouchComponent touch = m_touchComps.get(entity);
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        KeyInputComponent keyInputComponent = m_movComps.get(entity);
+        PhysicsComponent physicsComponent = physComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
+        PlayerAnimationComponent animation = animComps.get(entity);
+        TouchComponent touch = touchComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        KeyInputComponent keyInputComponent = movComps.get(entity);
 
         animation.setFacing(player.isFacingLeft());
 
         choose(entity);
 
-        keyInputComponent.update(m_inputMgr);
+        keyInputComponent.update(inputMgr);
 
         if (canBeControlled(player)) {
-            if (keyInputComponent.m_left) {
+            if (keyInputComponent.left) {
                 moveLeft(entity);
-            } else if (keyInputComponent.m_right) {
+            } else if (keyInputComponent.right) {
                 moveRight(entity);
             }
-            if (keyInputComponent.m_jump) {
+            if (keyInputComponent.jump) {
                 movementComponent.standStill();
                 jump(entity);
             }
-            if (m_inputMgr.isDown(action)) {
-                if (touch.m_canCrawl && !player.isCrawling()) {
+            if (inputMgr.isDown(action)) {
+                if (touch.canCrawl && !player.isCrawling()) {
                     setPlayerState(entity, PlayerState.LieDown);
                     movementComponent.standStill();
                 }
-                if (touch.m_pushArea) {
-                    if (touch.m_leftPushArea) {
+                if (touch.pushArea) {
+                    if (touch.leftPushArea) {
                         player.setFacingLeft(false);
                         setPlayerState(entity, PlayerState.PressButton);
                     }
-                    if (touch.m_rightPushArea) {
+                    if (touch.rightPushArea) {
                         player.setFacingLeft(true);
                         setPlayerState(entity, PlayerState.PressButton);
                     }
                     movementComponent.standStill();
                 }
-                if (touch.m_cageTouch) {
+                if (touch.cageTouch) {
                     if (!player.isHoldingCage()) {
                         setPlayerState(entity, PlayerState.HoldingCage);
                     }
@@ -94,7 +94,7 @@ public class GirlSystem extends PlayerSystem {
         }
 
         if (isDead(physicsComponent) || animation.isCompleted(PlayerState.Drowning)) {
-            m_inputMgr.callRestart();
+            inputMgr.callRestart();
         }
 
         setPlayerState(entity);
@@ -105,8 +105,8 @@ public class GirlSystem extends PlayerSystem {
 
     private void jump(Entity entity) {
 
-        PlayerComponent player = m_playerComps.get(entity);
-        KeyInputComponent keyInputComponent = m_movComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
+        KeyInputComponent keyInputComponent = movComps.get(entity);
 
         if (!player.isJumping()) {
             if (!keyInputComponent.isMoving()) {
@@ -116,16 +116,16 @@ public class GirlSystem extends PlayerSystem {
     }
 
     private void setPlayerState(Entity entity) {
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        KeyInputComponent keyInput = m_movComps.get(entity);
-        PhysicsComponent physicsComponent = m_physComps.get(entity);
-        VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
-        PlayerComponent playerComponent = m_playerComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        KeyInputComponent keyInput = movComps.get(entity);
+        PhysicsComponent physicsComponent = physComps.get(entity);
+        VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
+        PlayerComponent playerComponent = playerComps.get(entity);
 
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
-            velocityLimitComponent.m_velocity = 0;
+            velocityLimitComponent.velocity = 0;
             if (playerComponent.shouldBeIdle() &&
                     !physicsComponent.isFalling()) {
                 setPlayerState(entity, PlayerState.Idle);
@@ -152,40 +152,40 @@ public class GirlSystem extends PlayerSystem {
 
     private void moveLeft(Entity entity) {
 
-        PlayerComponent player = m_playerComps.get(entity);
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        VelocityLimitComponent vel = m_velComps.get(entity);
-        TouchComponent touch = m_touchComps.get(entity);
-        FeetComponent feetComponent = m_feetComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        VelocityLimitComponent vel = velComps.get(entity);
+        TouchComponent touch = touchComps.get(entity);
+        FeetComponent feetComponent = feetComps.get(entity);
 
 
         if (feetComponent.hasCollided() && !player.isCrawling()) {
-            if (!touch.m_boxTouch) {
-                if (vel.m_velocity > 0) {
-                    vel.m_velocity = 0;
+            if (!touch.boxTouch) {
+                if (vel.velocity > 0) {
+                    vel.velocity = 0;
                 }
-                vel.m_velocity -= VELOCITY * world.delta;
-                movementComponent.setVelocity(vel.m_velocity);
-                if (movementComponent.getSpeed() < -vel.m_walkLimit) {
-                    movementComponent.setVelocity(-vel.m_walkLimit);
+                vel.velocity -= VELOCITY * world.delta;
+                movementComponent.setVelocity(vel.velocity);
+                if (movementComponent.getSpeed() < -vel.walkLimit) {
+                    movementComponent.setVelocity(-vel.walkLimit);
                     setPlayerState(entity, PlayerState.Running);
-                    vel.m_velocity = -vel.m_walkLimit;
+                    vel.velocity = -vel.walkLimit;
                 } else {
                     setPlayerState(entity, PlayerState.Walking);
                 }
             } else {
-                PushComponent push = m_pushComps.get(entity);
-                if (touch.m_boxTouch && push.m_pushLeft) {
+                PushComponent push = pushComps.get(entity);
+                if (touch.boxTouch && push.pushLeft) {
                     setPlayerState(entity, PlayerState.Pushing);
                 }
-                if (touch.m_boxTouch && !push.m_pushLeft) {
-                    movementComponent.setVelocity(-vel.m_walkLimit);
+                if (touch.boxTouch && !push.pushLeft) {
+                    movementComponent.setVelocity(-vel.walkLimit);
                 }
             }
         }
         if (player.isLyingDown() || player.isCrawling()) {
-            vel.m_velocity = -vel.m_crawlLimit * 2;
-            movementComponent.setVelocity(vel.m_velocity);
+            vel.velocity = -vel.crawlLimit * 2;
+            movementComponent.setVelocity(vel.velocity);
             setPlayerState(entity, PlayerState.Crawl);
         }
 
@@ -194,52 +194,52 @@ public class GirlSystem extends PlayerSystem {
 
     private void moveRight(Entity entity) {
 
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        PlayerComponent player = m_playerComps.get(entity);
-        VelocityLimitComponent vel = m_velComps.get(entity);
-        TouchComponent touch = m_touchComps.get(entity);
-        FeetComponent feetComponent = m_feetComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
+        VelocityLimitComponent vel = velComps.get(entity);
+        TouchComponent touch = touchComps.get(entity);
+        FeetComponent feetComponent = feetComps.get(entity);
 
         if (feetComponent.hasCollided() && !player.isCrawling()) {
-            if (!touch.m_boxTouch) {
-                if (vel.m_velocity < 0) {
-                    vel.m_velocity = 0;
+            if (!touch.boxTouch) {
+                if (vel.velocity < 0) {
+                    vel.velocity = 0;
                 }
-                vel.m_velocity += VELOCITY * world.delta;
-                movementComponent.setVelocity(vel.m_velocity);
-                if (movementComponent.getSpeed() > vel.m_walkLimit) {
-                    movementComponent.setVelocity(vel.m_walkLimit);
+                vel.velocity += VELOCITY * world.delta;
+                movementComponent.setVelocity(vel.velocity);
+                if (movementComponent.getSpeed() > vel.walkLimit) {
+                    movementComponent.setVelocity(vel.walkLimit);
                     setPlayerState(entity, PlayerState.Running);
-                    vel.m_velocity = vel.m_walkLimit;
+                    vel.velocity = vel.walkLimit;
                 } else {
                     setPlayerState(entity, PlayerState.Walking);
                 }
             } else {
-                PushComponent push = m_pushComps.get(entity);
-                if (touch.m_boxTouch && !push.m_pushLeft) {
+                PushComponent push = pushComps.get(entity);
+                if (touch.boxTouch && !push.pushLeft) {
                     setPlayerState(entity, PlayerState.Pushing);
                 }
-                if (touch.m_boxTouch && push.m_pushLeft) {
-                    movementComponent.setVelocity(vel.m_walkLimit);
+                if (touch.boxTouch && push.pushLeft) {
+                    movementComponent.setVelocity(vel.walkLimit);
                 }
             }
         }
         if (player.isLyingDown() || player.isCrawling()) {
-            vel.m_velocity = vel.m_crawlLimit * 2;
-            movementComponent.setVelocity(vel.m_velocity);
+            vel.velocity = vel.crawlLimit * 2;
+            movementComponent.setVelocity(vel.velocity);
             setPlayerState(entity, PlayerState.Crawl);
         }
         player.setFacingLeft(false);
     }
 
     private void choose(Entity entity) {
-        if (m_inputMgr.m_playerSelected == InputManager.PlayerSelection.TWO) {
-            m_playerComps.get(entity).setActive(true);
-        } else if (m_playerComps.get(entity).canDeActivate()) {
-            m_playerComps.get(entity).setActive(false);
-            m_velComps.get(entity).m_velocity = 0;
+        if (inputMgr.playerSelected == InputManager.PlayerSelection.TWO) {
+            playerComps.get(entity).setActive(true);
+        } else if (playerComps.get(entity).canDeActivate()) {
+            playerComps.get(entity).setActive(false);
+            velComps.get(entity).velocity = 0;
         }
-        m_inputMgr.reset();
+        inputMgr.reset();
     }
 
     private boolean canBeControlled(PlayerComponent player) {
@@ -247,19 +247,19 @@ public class GirlSystem extends PlayerSystem {
     }
 
     protected void setPlayerState(Entity entity, PlayerState state) {
-        m_animComps.get(entity).setAnimationState(state);
-        m_playerComps.get(entity).setState(state);
+        animComps.get(entity).setAnimationState(state);
+        playerComps.get(entity).setState(state);
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        m_inputMgr.keyDown(keycode);
+        inputMgr.keyDown(keycode);
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        m_inputMgr.keyUp(keycode);
+        inputMgr.keyUp(keycode);
         return true;
 
     }

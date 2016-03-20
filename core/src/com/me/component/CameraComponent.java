@@ -8,81 +8,81 @@ import com.me.level.Level;
 
 public class CameraComponent extends BaseComponent {
 
-	private OrthographicCamera m_camera;
+	private OrthographicCamera camera;
 	
-	private Vector3 m_target = new Vector3();
+	private Vector3 target = new Vector3();
 	
-	private float m_maxX, m_minX, m_minY, m_maxY;
-	private float m_lerp;
+	private float maxX, minX, minY, maxY;
+	private float lerp;
 
 
     public CameraComponent(OrthographicCamera camera){
-		m_camera = camera;
-		m_lerp = 0.07f;
+		this.camera = camera;
+		this.lerp = 0.07f;
 	}
 	
 	public OrthographicCamera getCamera(){
-		return m_camera;
+		return camera;
 	}
 	
 	public void setLimit(Level.LevelBoundaries boundaries){
-		m_maxX = boundaries.maxX;
-		m_minX = boundaries.minX;
-		m_minY = boundaries.minY;
-		m_maxY = boundaries.maxY;
+		maxX = boundaries.maxX;
+		minX = boundaries.minX;
+		minY = boundaries.minY;
+		maxY = boundaries.maxY;
 	}
 	
 	public void moveTo(Vector2 target){
-		m_target.set(target.x, target.y, 0);
+		this.target.set(target.x, target.y, 0);
 	}
 	
 	public void update(float delta){
 		
 		Vector3 position = getCamera().position;
 		
-		position.x += (m_target.x - position.x) * m_lerp;
-		position.y += (m_target.y - position.y) * m_lerp;
-		if(position.y < m_minY){
-			position.y = m_minY;
+		position.x += (target.x - position.x) * lerp;
+		position.y += (target.y - position.y) * lerp;
+		if(position.y < minY){
+			position.y = minY;
 		}
-        if(position.y > m_maxY){
-            position.y = m_maxY;
+        if(position.y > maxY){
+            position.y = maxY;
         }
-        if(position.x > m_maxX){
-            position.x = m_maxX;
+        if(position.x > maxX){
+            position.x = maxX;
         }
-        if(position.x < m_minX){
-            position.x = m_minX;
+        if(position.x < minX){
+            position.x = minX;
         }
 
-        m_camera.update();
+        camera.update();
     }
 	
 	public void unproject(Vector3 vec){
-		m_camera.unproject(vec);
+		camera.unproject(vec);
 	}
 	
 	public void sub(Vector3 vec){
-		m_camera.position.sub(vec);
+		camera.position.sub(vec);
 	}
 	
 	public void setPosition(float x, float y){
-		m_camera.position.set(x, y, 0);
+		camera.position.set(x, y, 0);
 	}
 	
 	public Vector3 getPosition(){
-		return m_camera.position;
+		return camera.position;
 	}
 	
 	public float getZoom(){
-		return m_camera.zoom;
+		return camera.zoom;
 	}
 	public void setZoom(float z){
-		m_camera.zoom = z;
+		camera.zoom = z;
 	}
 	
 	public Matrix4 getCombined(){
-		return new Matrix4(m_camera.combined);
+		return new Matrix4(camera.combined);
 	}
 
 	@Override

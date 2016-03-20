@@ -7,35 +7,35 @@ import com.badlogic.gdx.physics.box2d.Filter;
  */
 public class FixtureData {
 
-    private Filter m_currentFilter;
-    private Filter m_restoredFilter;
-    private float m_currentFriction;
+    private Filter currentFilter;
+    private Filter restoredFilter;
+    private float currentFriction;
 
     public FixtureData(Filter filter, float friction){
-        m_currentFilter = filter;
-        m_currentFriction = friction;
-        m_restoredFilter = new Filter();
-        m_restoredFilter.maskBits = filter.maskBits;
-        m_restoredFilter.categoryBits = filter.categoryBits;
-        m_restoredFilter.groupIndex = filter.groupIndex;
+        currentFilter = filter;
+        currentFriction = friction;
+        restoredFilter = new Filter();
+        restoredFilter.maskBits = filter.maskBits;
+        restoredFilter.categoryBits = filter.categoryBits;
+        restoredFilter.groupIndex = filter.groupIndex;
     }
 
     public void restoreCategoryBits(){
-        m_currentFilter.categoryBits = m_restoredFilter.categoryBits;
-        m_currentFilter.groupIndex = m_restoredFilter.groupIndex;
-        m_currentFilter.maskBits = m_restoredFilter.maskBits;
+        currentFilter.categoryBits = restoredFilter.categoryBits;
+        currentFilter.groupIndex = restoredFilter.groupIndex;
+        currentFilter.maskBits = restoredFilter.maskBits;
     }
 
     public float getCurrentFriction() {
-        return m_currentFriction;
+        return currentFriction;
     }
 
 
     public Filter getCurrentFilter(){
         Filter filter = new Filter();
-        filter.maskBits = m_currentFilter.maskBits;
-        filter.categoryBits = m_currentFilter.categoryBits;
-        filter.groupIndex = m_currentFilter.groupIndex;
+        filter.maskBits = currentFilter.maskBits;
+        filter.categoryBits = currentFilter.categoryBits;
+        filter.groupIndex = currentFilter.groupIndex;
         return filter;
     }
 }

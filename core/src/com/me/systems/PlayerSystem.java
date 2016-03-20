@@ -20,8 +20,8 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
     protected final static int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5,
             changePlayer = 6, action = 7, skinChange = 8;
 
-    protected boolean m_process = true;
-    protected InputManager m_inputMgr;
+    protected boolean process = true;
+    protected InputManager inputMgr;
 
     public PlayerSystem(Aspect aspect) {
         super(aspect);
@@ -52,17 +52,17 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
     }
 
     public void restartSystem() {
-        m_inputMgr.reset();
+        inputMgr.reset();
     }
 
     public void toggleProcessing(boolean process) {
-        m_process = process;
+        this.process = process;
     }
 
     @Override
     protected boolean checkProcessing() {
         // TODO Auto-generated method stub
-        return m_process;
+        return process;
     }
 
     @Override

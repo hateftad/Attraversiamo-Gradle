@@ -11,25 +11,25 @@ public class Direction {
     public static final int Up = 2;
     public static final int Down = 3;
 
-    public int m_currentDirection = Undefined;
+    public int currentDirection = Undefined;
 
     public Direction(int startDirection){
-        m_currentDirection = startDirection;
+        currentDirection = startDirection;
     }
 
     public void LeftToRight(){
-        if(m_currentDirection == Left){
-            m_currentDirection = Right;
+        if(currentDirection == Left){
+            currentDirection = Right;
         } else {
-            m_currentDirection = Left;
+            currentDirection = Left;
         }
     }
 
     public void upToDown(){
-        if(m_currentDirection == Up){
-            m_currentDirection = Down;
+        if(currentDirection == Up){
+            currentDirection = Down;
         } else {
-            m_currentDirection = Up;
+            currentDirection = Up;
         }
     }
 }

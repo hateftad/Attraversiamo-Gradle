@@ -9,7 +9,7 @@ import com.me.systems.GameEntityWorld;
  * Created by hateftadayon on 12/30/15.
  */
 public class TelegramEvent extends GameEvent {
-    private Entity m_entity;
+    private Entity entity;
 
     public TelegramEvent(GameEventType type) {
         super(type);
@@ -20,11 +20,11 @@ public class TelegramEvent extends GameEvent {
     }
 
     public void notify(GameEntityProcessingSystem entityProcessingSystem, Entity entity){
-        m_entity = entity;
+        this.entity = entity;
         entityProcessingSystem.notifyObservers(this);
     }
 
     public Entity getEntity() {
-        return m_entity;
+        return entity;
     }
 }

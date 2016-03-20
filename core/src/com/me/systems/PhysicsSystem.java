@@ -30,100 +30,100 @@ import com.me.config.GlobalConfig;
 public class PhysicsSystem extends EntitySystem implements Disposable, LevelEventListener {
 
     @Mapper
-    ComponentMapper<PhysicsComponent> m_physicsComponents;
+    ComponentMapper<PhysicsComponent> physicsComponents;
 
     @Mapper
-    ComponentMapper<PlayerAnimationComponent> m_animComponents;
+    ComponentMapper<PlayerAnimationComponent> animComponents;
 
     @Mapper
-    ComponentMapper<QueueComponent> m_queueComps;
+    ComponentMapper<QueueComponent> queueComps;
 
     @Mapper
-    ComponentMapper<RestartComponent> m_restartComps;
+    ComponentMapper<RestartComponent> restartComps;
 
     @Mapper
-    ComponentMapper<JointComponent> m_jointComps;
+    ComponentMapper<JointComponent> jointComps;
 
     @Mapper
-    ComponentMapper<BuoyancyComponent> m_bouyComps;
+    ComponentMapper<BuoyancyComponent> bouyComps;
 
     @Mapper
-    ComponentMapper<FeetComponent> m_feetComponents;
+    ComponentMapper<FeetComponent> feetComponents;
 
-    private World m_world;
+    private World physicsWorld;
 
-    private int m_velocityItr;
+    private int velocityItr;
 
-    private int m_positionItr;
+    private int positionItr;
 
-    private float m_timeStep;
+    private float timeStep;
 
-    private PhysicsContactListener m_physicsContactListener;
+    private PhysicsContactListener physicsContactListener;
 
-    private boolean m_restart;
+    private boolean restart;
 
-    private boolean m_processPhysics = true;
+    private boolean processPhysics = true;
 
-    private double m_currentTime = System.currentTimeMillis();
+    private double currentTime = System.currentTimeMillis();
 
-    private float m_fixedAccumulator = 0;
+    private float fixedAccumulator = 0;
 
-    private float m_fixedAccumulatorRatio = 0;
+    private float fixedAccumulatorRatio = 0;
 
     private static final int MAXSTEPS = 2;
 
-    private ObjectMap<String, B2Controller> m_b2Controllers;
+    private ObjectMap<String, B2Controller> b2Controllers;
 
     public PhysicsSystem(World physicsWorld) {
         this(physicsWorld, 50, 30);
-        m_timeStep = GlobalConfig.getInstance().config.timeStep;
-        m_b2Controllers = new ObjectMap<>();
+        timeStep = GlobalConfig.getInstance().config.timeStep;
+        b2Controllers = new ObjectMap<>();
     }
 
     public void toggleProcessing(boolean process) {
-        m_processPhysics = process;
+        processPhysics = process;
     }
 
     @SuppressWarnings("unchecked")
     public PhysicsSystem(World physicsWorld, int velocityIterations,
                          int positionIterations) {
         super(Aspect.getAspectForAll(PhysicsComponent.class));
-        m_world = physicsWorld;
-        m_world.setAutoClearForces(true);
-        m_world.setContinuousPhysics(true);
-        m_world.setWarmStarting(true);
-        m_velocityItr = velocityIterations;
-        m_positionItr = positionIterations;
-        m_physicsContactListener = new PhysicsContactListener();
+        this.physicsWorld = physicsWorld;
+        this.physicsWorld.setAutoClearForces(true);
+        this.physicsWorld.setContinuousPhysics(true);
+        this.physicsWorld.setWarmStarting(true);
+        velocityItr = velocityIterations;
+        positionItr = positionIterations;
+        physicsContactListener = new PhysicsContactListener();
     }
 
     @Override
     protected void begin() {
 
         double now = System.currentTimeMillis();
-        double dt = now - m_currentTime;
-        m_currentTime = now;
+        double dt = now - currentTime;
+        currentTime = now;
 
-        m_fixedAccumulator += dt;
+        fixedAccumulator += dt;
 
-        final int nSteps = (int) Math.floor(m_fixedAccumulator / m_timeStep);
+        final int nSteps = (int) Math.floor(fixedAccumulator / timeStep);
 
         if (nSteps > 0) {
-            m_fixedAccumulator -= nSteps * m_timeStep;
+            fixedAccumulator -= nSteps * timeStep;
         }
-        m_fixedAccumulatorRatio = m_fixedAccumulator / m_timeStep;
+        fixedAccumulatorRatio = fixedAccumulator / timeStep;
 
         int nStepsClamped = Math.min(nSteps, MAXSTEPS);
 
         for (int i = 0; i < nStepsClamped; i++) {
             resetSmoothStates();
-            for (B2Controller controller : m_b2Controllers.values()) {
-                controller.step(m_timeStep);
+            for (B2Controller controller : b2Controllers.values()) {
+                controller.step(timeStep);
             }
             singleStep();
         }
 
-        m_world.clearForces();
+        physicsWorld.clearForces();
         smoothStates();
 
 
@@ -131,15 +131,15 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
     private void smoothStates() {
 
-        final double oneMinusRatio = 1.0 - m_fixedAccumulatorRatio;
+        final double oneMinusRatio = 1.0 - fixedAccumulatorRatio;
         Array<Body> bodies = new Array<>();
-        m_world.getBodies(bodies);
+        physicsWorld.getBodies(bodies);
 
         for (Body b : bodies) {
             Entity e = (Entity) b.getUserData();
             if (e != null) {
-                if (m_physicsComponents.has(e)) {
-                    m_physicsComponents.get(e).updateSmoothStates(m_fixedAccumulatorRatio, oneMinusRatio);
+                if (physicsComponents.has(e)) {
+                    physicsComponents.get(e).updateSmoothStates(fixedAccumulatorRatio, oneMinusRatio);
                 }
             }
         }
@@ -148,19 +148,19 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     private void resetSmoothStates() {
 
         Array<Body> bodies = new Array<>();
-        m_world.getBodies(bodies);
+        physicsWorld.getBodies(bodies);
         for (Body b : bodies) {
             Entity e = (Entity) b.getUserData();
             if (e != null) {
-                if (m_physicsComponents.has(e)) {
-                    PhysicsComponent physicsComponent = m_physicsComponents.get(e);
+                if (physicsComponents.has(e)) {
+                    PhysicsComponent physicsComponent = physicsComponents.get(e);
                     physicsComponent.updatePreviousPosition();
-                    if (m_feetComponents.has(e)) {
-                        FeetComponent feetComponent = m_feetComponents.get(e);
+                    if (feetComponents.has(e)) {
+                        FeetComponent feetComponent = feetComponents.get(e);
                         feetComponent.reset();
                         feetComponent.update(physicsComponent.getBody(feetComponent.getBodyName()));
                         for (int i = 0; i < feetComponent.getStartPoints().size(); i++) {
-                            m_world.rayCast(feetComponent.getRaycastCallback(), feetComponent.getStartPoints().get(i), feetComponent.getEndPoints().get(i));
+                            physicsWorld.rayCast(feetComponent.getRaycastCallback(), feetComponent.getStartPoints().get(i), feetComponent.getEndPoints().get(i));
                         }
                     }
                 }
@@ -169,26 +169,26 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     }
 
     private void singleStep() {
-        if (m_processPhysics) {
-            m_world.step(world.delta, m_velocityItr, m_positionItr);
+        if (processPhysics) {
+            physicsWorld.step(world.delta, velocityItr, positionItr);
         }
     }
 
     @Override
     protected boolean checkProcessing() {
-        return m_processPhysics;
+        return processPhysics;
     }
 
     @Override
     protected void processEntities(ImmutableBag<Entity> entities) {
-        if (m_restart) {
+        if (restart) {
             for (int i = 0; i < entities.size(); i++) {
                 Entity e = entities.get(i);
-                if (m_restartComps.has(e)) {
-                    PhysicsComponent comp = m_physicsComponents.get(e);
+                if (restartComps.has(e)) {
+                    PhysicsComponent comp = physicsComponents.get(e);
                     comp.setToStart();
-                    if (m_animComponents.has(e)) {
-                        m_animComponents.get(e).setAnimationState(PlayerState.Idle);
+                    if (animComponents.has(e)) {
+                        animComponents.get(e).setAnimationState(PlayerState.Idle);
                         if (e.getComponent(PlayerTwoComponent.class) != null) {
                             comp.makeDynamic("center", 0.001f);
                         }
@@ -207,20 +207,20 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);
-            if (m_queueComps.has(e)) {
-                QueueComponent comp = m_queueComps.get(e);
+            if (queueComps.has(e)) {
+                QueueComponent comp = queueComps.get(e);
                 if (comp.type == QueueType.Mass) {
-                    m_physicsComponents.get(e).setMass(comp.mass, comp.bodyName);
+                    physicsComponents.get(e).setMass(comp.mass, comp.bodyName);
                 } else if (comp.type == QueueType.TempMass) {
-                    m_physicsComponents.get(e).setMass(comp.mass, comp.bodyName);
+                    physicsComponents.get(e).setMass(comp.mass, comp.bodyName);
                     e.removeComponent(comp);
                 } else if (comp.type == QueueType.Joint) {
-                    JointComponent joint = m_jointComps.get(e);
+                    JointComponent joint = jointComps.get(e);
                     JointFactory.getInstance().destroyJoint(joint.getJoint());
                     e.removeComponent(comp);
                 } else if (comp.type == QueueType.BodyState) {
                     System.out.println("removing component");
-                    m_physicsComponents.get(e).setActive(comp.active);
+                    physicsComponents.get(e).setActive(comp.active);
                     e.removeComponent(comp);
                 }
             }
@@ -229,7 +229,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
     @Override
     protected void removed(Entity e) {
-        PhysicsComponent physicsComponent = m_physicsComponents.get(e);
+        PhysicsComponent physicsComponent = physicsComponents.get(e);
 
         if (physicsComponent == null) {
             return;
@@ -239,23 +239,23 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
 
     public void clearSystem() {
         Array<Body> bodies = new Array<>();
-        m_world.getBodies(bodies);
+        physicsWorld.getBodies(bodies);
 
         for (Body b : bodies) {
-            m_world.destroyBody(b);
+            physicsWorld.destroyBody(b);
         }
-        m_world.setContactListener(null);
+        physicsWorld.setContactListener(null);
 
-        m_b2Controllers.clear();
+        b2Controllers.clear();
         dispose();
     }
 
     @Override
     protected void inserted(Entity e) {
 
-        if (m_bouyComps.has(e)) {
+        if (bouyComps.has(e)) {
 
-            PhysicsComponent pComp = m_physicsComponents.get(e);
+            PhysicsComponent pComp = physicsComponents.get(e);
             Fixture fixture = pComp.getBody().getFixtureList().first();
             final Vector2 mTmp = new Vector2();
             float bodyHeight = fixture.getBody().getPosition().y;
@@ -267,7 +267,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                 maxHeight = Math.max(maxHeight, mTmp.y + bodyHeight);
             }
 
-            BuoyancyComponent buoyancyComponent = m_bouyComps.get(e);
+            BuoyancyComponent buoyancyComponent = bouyComps.get(e);
             ObjectMap<String, B2Controller> controllers = new ObjectMap<>();
             for (Object o : buoyancyComponent.getControllerInfo().entries()) {
                 ObjectMap.Entry pairs = (ObjectMap.Entry) o;
@@ -283,41 +283,41 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                 System.out.println(" fixture density "+fixture.getDensity());
             }
             fixture.setUserData(controllers);
-            m_b2Controllers = controllers;
+            b2Controllers = controllers;
             PhysicsListenerSetup setup = new PhysicsListenerSetup((GameEntityWorld) world);
             setup.setLevelPhysics(pComp);
         }
     }
 
     public void printInfo() {
-        System.out.println(" Bodies in the world: " + m_world.getBodyCount());
-        System.out.println(" Fixtures in the world: " + m_world.getFixtureCount());
-        System.out.println(" Number of Contacts: " + m_world.getContactCount());
-        System.out.println(" Joints in the world: " + m_world.getJointCount());
+        System.out.println(" Bodies in the physicsWorld: " + physicsWorld.getBodyCount());
+        System.out.println(" Fixtures in the physicsWorld: " + physicsWorld.getFixtureCount());
+        System.out.println(" Number of Contacts: " + physicsWorld.getContactCount());
+        System.out.println(" Joints in the physicsWorld: " + physicsWorld.getJointCount());
     }
 
     @Override
     public void initialize() {
-        m_world.setContactListener(m_physicsContactListener);
+        physicsWorld.setContactListener(physicsContactListener);
     }
 
     @Override
     public void dispose() {
-        m_world.dispose();
+        physicsWorld.dispose();
     }
 
-    public World getWorld() {
-        return m_world;
+    public World getPhysicsWorld() {
+        return physicsWorld;
     }
 
     @Override
     public void onRestartLevel() {
-        m_restart = true;
+        restart = true;
     }
 
     @Override
     public void OnStartLevel() {
-        m_restart = false;
+        restart = false;
     }
 
     @Override

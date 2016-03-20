@@ -16,7 +16,7 @@ import com.me.events.TaskEvent;
 public class ContinousParticlesSystem extends IntervalEntityProcessingSystem {
 
     @Mapper
-    ComponentMapper<ContinuousParticles> m_continuousParticles;
+    ComponentMapper<ContinuousParticles> continuousParticles;
 
 
     @SuppressWarnings("unchecked")
@@ -26,8 +26,8 @@ public class ContinousParticlesSystem extends IntervalEntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        if(m_continuousParticles.has(entity)) {
-            ContinuousParticles particle = m_continuousParticles.get(entity);
+        if(continuousParticles.has(entity)) {
+            ContinuousParticles particle = continuousParticles.get(entity);
             particle.start();
         }
 

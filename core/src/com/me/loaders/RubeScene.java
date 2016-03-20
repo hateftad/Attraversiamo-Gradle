@@ -22,19 +22,19 @@ import com.me.loaders.RubeImage;
 public class RubeScene {
     public class CustomProperties {
 
-        Map<String, Integer> m_customPropertyMap_int;
-        Map<String, Float> m_customPropertyMap_float;
-        Map<String, String> m_customPropertyMap_string;
-        Map<String, Vector2> m_customPropertyMap_Vector2;
-        Map<String, Boolean> m_customPropertyMap_bool;
+        Map<String, Integer> customPropertyMap_int;
+        Map<String, Float> customPropertyMap_float;
+        Map<String, String> customPropertyMap_string;
+        Map<String, Vector2> customPropertyMap_Vector2;
+        Map<String, Boolean> customPropertyMap_bool;
 
 
         public CustomProperties() {
-            m_customPropertyMap_int = new HashMap<>();
-            m_customPropertyMap_float = new HashMap<>();
-            m_customPropertyMap_string = new HashMap<>();
-            m_customPropertyMap_Vector2 = new HashMap<>();
-            m_customPropertyMap_bool = new HashMap<>();
+            customPropertyMap_int = new HashMap<>();
+            customPropertyMap_float = new HashMap<>();
+            customPropertyMap_string = new HashMap<>();
+            customPropertyMap_Vector2 = new HashMap<>();
+            customPropertyMap_bool = new HashMap<>();
         }
     }
 
@@ -126,23 +126,23 @@ public class RubeScene {
     }
 
     public void setCustom(Object item, String propertyName, String val) {
-        getCustomPropertiesForItem(item, true).m_customPropertyMap_string.put(propertyName, val);
+        getCustomPropertiesForItem(item, true).customPropertyMap_string.put(propertyName, val);
     }
 
     public void setCustom(Object item, String propertyName, Integer val) {
-        getCustomPropertiesForItem(item, true).m_customPropertyMap_int.put(propertyName, val);
+        getCustomPropertiesForItem(item, true).customPropertyMap_int.put(propertyName, val);
     }
 
     public void setCustom(Object item, String propertyName, Float val) {
-        getCustomPropertiesForItem(item, true).m_customPropertyMap_float.put(propertyName, val);
+        getCustomPropertiesForItem(item, true).customPropertyMap_float.put(propertyName, val);
     }
 
     public void setCustom(Object item, String propertyName, Boolean val) {
-        getCustomPropertiesForItem(item, true).m_customPropertyMap_bool.put(propertyName, val);
+        getCustomPropertiesForItem(item, true).customPropertyMap_bool.put(propertyName, val);
     }
 
     public void setCustom(Object item, String propertyName, Vector2 val) {
-        getCustomPropertiesForItem(item, true).m_customPropertyMap_Vector2.put(propertyName, val);
+        getCustomPropertiesForItem(item, true).customPropertyMap_Vector2.put(propertyName, val);
     }
 
 
@@ -150,8 +150,8 @@ public class RubeScene {
         CustomProperties props = getCustomPropertiesForItem(item, false);
         if (null == props)
             return defaultVal;
-        if (props.m_customPropertyMap_string.containsKey(propertyName))
-            return props.m_customPropertyMap_string.get(propertyName);
+        if (props.customPropertyMap_string.containsKey(propertyName))
+            return props.customPropertyMap_string.get(propertyName);
         return defaultVal;
     }
 
@@ -159,8 +159,8 @@ public class RubeScene {
         CustomProperties props = getCustomPropertiesForItem(item, false);
         if (null == props)
             return defaultVal;
-        if (props.m_customPropertyMap_int.containsKey(propertyName))
-            return props.m_customPropertyMap_int.get(propertyName);
+        if (props.customPropertyMap_int.containsKey(propertyName))
+            return props.customPropertyMap_int.get(propertyName);
         return defaultVal;
     }
 
@@ -168,8 +168,8 @@ public class RubeScene {
         CustomProperties props = getCustomPropertiesForItem(item, false);
         if (null == props)
             return defaultVal;
-        if (props.m_customPropertyMap_bool.containsKey(propertyName))
-            return props.m_customPropertyMap_bool.get(propertyName);
+        if (props.customPropertyMap_bool.containsKey(propertyName))
+            return props.customPropertyMap_bool.get(propertyName);
         return defaultVal;
     }
 
@@ -178,8 +178,8 @@ public class RubeScene {
         CustomProperties props = getCustomPropertiesForItem(item, false);
         if (null == props)
             return defaultVal;
-        if (props.m_customPropertyMap_float.containsKey(propertyName))
-            return props.m_customPropertyMap_float.get(propertyName);
+        if (props.customPropertyMap_float.containsKey(propertyName))
+            return props.customPropertyMap_float.get(propertyName);
         return defaultVal;
     }
 
@@ -188,8 +188,8 @@ public class RubeScene {
         CustomProperties props = getCustomPropertiesForItem(item, false);
         if (null == props)
             return defaultVal;
-        if (props.m_customPropertyMap_Vector2.containsKey(propertyName))
-            return props.m_customPropertyMap_Vector2.get(propertyName);
+        if (props.customPropertyMap_Vector2.containsKey(propertyName))
+            return props.customPropertyMap_Vector2.get(propertyName);
         return defaultVal;
     }
 

@@ -20,16 +20,16 @@ import com.me.level.Level;
 
 public class UserInterface {
 
-    private Stage m_stage;
-    private Skin m_skin;
-    private int m_nrOfPlayers;
+    private Stage stage;
+    private Skin skin;
+    private int nrOfPlayers;
     private Window pauseWindow;
 
 
     public UserInterface(Level level){
-		m_stage = new Stage();
+		stage = new Stage();
         loadSkin();
-        m_nrOfPlayers = level.getNumberOfFinishers();
+        nrOfPlayers = level.getNumberOfFinishers();
         for (PlayerConfig playerConfig : level.getPlayerConfigs()) {
 
         }
@@ -37,7 +37,7 @@ public class UserInterface {
 
     private void loadSkin(){
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas"));
-        m_skin = new Skin(atlas);
+        skin = new Skin(atlas);
     }
 	
 	public void init(){
@@ -93,12 +93,12 @@ public class UserInterface {
 		topBtnsTable.top().left();
 		topBtnsTable.add(menuBtn).width(100).height(100).padLeft(10).padTop(10);
 		
-		m_stage.addActor(topBtnsTable);
-		m_stage.addActor(bottomLeftBtnsTable);
+		stage.addActor(topBtnsTable);
+		stage.addActor(bottomLeftBtnsTable);
 
 
 		if(Gdx.app.getType() != ApplicationType.Desktop){
-			Gdx.input.setInputProcessor(m_stage);
+			Gdx.input.setInputProcessor(stage);
 		}
 
         createPauseMenu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), size);
@@ -129,11 +129,11 @@ public class UserInterface {
         });
 
         Table bottomRightBtnsTable = new Table();
-        if(m_nrOfPlayers > 1) {
+        if(nrOfPlayers > 1) {
             final TextButtonStyle btnStyleFirst = new TextButtonStyle();
             final TextButtonStyle btnStyleSecond = new TextButtonStyle();
-            btnStyleFirst.up = m_skin.getDrawable("change1.up");
-            btnStyleSecond.up = m_skin.getDrawable("change2.up");
+            btnStyleFirst.up = skin.getDrawable("change1.up");
+            btnStyleSecond.up = skin.getDrawable("change2.up");
 
             final UIButton charSwitchBtn = createButton(btnStyleSecond);
             charSwitchBtn.addListener(new InputListener() {
@@ -159,7 +159,7 @@ public class UserInterface {
             });
 
             Table charSwitchTable = new Table();
-            m_stage.addActor(charSwitchTable);
+            stage.addActor(charSwitchTable);
             charSwitchTable.setFillParent(true);
             charSwitchTable.bottom().right().padBottom(size);
             charSwitchTable.add(charSwitchBtn).bottom().right().width(size * 1.5f).height(size * 1.5f);
@@ -169,7 +169,7 @@ public class UserInterface {
         bottomRightBtnsTable.add(actionBtn).bottom().right().space(20).width(size).height(size);
         bottomRightBtnsTable.add(jumpBtn).bottom().right().padRight(size).width(size).height(size);
 
-        m_stage.addActor(bottomRightBtnsTable);
+        stage.addActor(bottomRightBtnsTable);
     }
 
     public void createPauseMenu(int width, int height, int size){
@@ -198,7 +198,7 @@ public class UserInterface {
         pauseWindow.setPosition(width / 2 - pauseWindow.getWidth() / 2, height / 2 - pauseWindow.getHeight() / 2);
         pauseWindow.add(continueButton).width(size * 1.5f).height(size * 1.5f).row();
         pauseWindow.add(restartButton).width(size * 1.5f).height(size * 1.5f).row();
-        m_stage.addActor(pauseWindow);
+        stage.addActor(pauseWindow);
         pauseWindow.setVisible(false);
     }
 
@@ -208,7 +208,7 @@ public class UserInterface {
 
     private UIButton createButton(String drawableName, InputListener inputListener){
         TextButtonStyle btnStyle = new TextButtonStyle();
-        btnStyle.up = m_skin.getDrawable(drawableName);
+        btnStyle.up = skin.getDrawable(drawableName);
         UIButton button = createButton(btnStyle);
         button.addListener(inputListener);
         return button;
@@ -219,7 +219,7 @@ public class UserInterface {
     }
 	
 	public void update(float delta){
-        m_stage.act(delta);
-        m_stage.draw();
+        stage.act(delta);
+        stage.draw();
 	}
 }

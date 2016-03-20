@@ -10,17 +10,16 @@ import com.me.attraversiamo.Attraversiamo;
 
 public abstract class AbstractScreen implements Screen {
 
-    protected Attraversiamo m_game;
-    protected SpriteBatch m_spriteBatch;
-    protected OrthographicCamera m_camera;
+    protected Attraversiamo game;
+    protected SpriteBatch spriteBatch;
+    protected OrthographicCamera camera;
 
     public AbstractScreen(Attraversiamo game) {
-        this.m_game = game;
-        this.m_spriteBatch = new SpriteBatch();
-
-        m_camera = new OrthographicCamera();
-        m_camera.position.set(m_camera.viewportWidth * .5f, m_camera.viewportHeight * .5f, 0f);
-        m_camera.update();
+        this.game = game;
+        this.spriteBatch = new SpriteBatch();
+        this.camera = new OrthographicCamera();
+        this.camera.position.set(camera.viewportWidth * .5f, camera.viewportHeight * .5f, 0f);
+        camera.update();
 
     }
 
@@ -40,7 +39,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
-        m_game.setScreenName(getName());
+        game.setScreenName(getName());
     }
 
 
@@ -61,7 +60,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void dispose() {
-        m_spriteBatch.dispose();
+        spriteBatch.dispose();
     }
 
 }

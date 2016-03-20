@@ -19,48 +19,48 @@ import java.util.List;
 public class FeetComponent extends BaseComponent {
 
     private static final int RAY_LENGTH = 1;
-    private RaycastListener m_raycastCallback;
-    private boolean m_collided;
-    private RaySet m_rays;
-    private String m_name;
-    private Vector2 m_normal = new Vector2(0, 1);
+    private RaycastListener raycastCallback;
+    private boolean collided;
+    private RaySet rays;
+    private String name;
+    private Vector2 normal = new Vector2(0, 1);
 
     public FeetComponent(String name) {
-        m_raycastCallback = new RaycastListener();
-        m_name = name;
-        m_rays = new RaySet();
+        raycastCallback = new RaycastListener();
+        this.name = name;
+        rays = new RaySet();
     }
 
     public String getBodyName(){
-        return m_name;
+        return name;
     }
 
     public RaycastListener getRaycastCallback(){
-        return m_raycastCallback;
+        return raycastCallback;
     }
 
     public List<Vector2> getStartPoints(){
-        return m_rays.startPoints;
+        return rays.startPoints;
     }
 
     public List<Vector2> getEndPoints(){
-        return m_rays.endPoints;
+        return rays.endPoints;
     }
 
     public Vector2 getNormal(){
-        return m_normal;
+        return normal;
     }
 
     public void reset(){
-        m_collided = false;
+        collided = false;
     }
 
     public boolean hasCollided(){
-        return m_collided;
+        return collided;
     }
 
     public void update(Body body){
-        m_rays.updatePoints(body.getPosition());
+        rays.updatePoints(body.getPosition());
     }
 
     class RaycastListener implements RayCastCallback {
@@ -72,9 +72,9 @@ public class FeetComponent extends BaseComponent {
             PhysicsComponent component = entity.getComponent(PhysicsComponent.class);
             RBUserData other = component.getRBUserData(fixture.getBody());
             if(other.getType() == RBUserData.Type.Ground || other.getType() == RBUserData.Type.Box || other.getType() == RBUserData.Type.CageHatch){
-                m_collided = true;
+                collided = true;
             }
-            m_normal = normal;
+            normal = normal;
             return 1;
         }
     }

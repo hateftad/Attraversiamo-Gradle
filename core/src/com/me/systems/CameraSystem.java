@@ -22,93 +22,93 @@ import com.me.utils.Converters;
 
 public class CameraSystem extends EntityProcessingSystem implements InputProcessor, LevelEventListener{
 
-	@Mapper ComponentMapper<CameraComponent> m_cameraComp;
-	@Mapper ComponentMapper<PlayerComponent> m_playerComp;
-	@Mapper ComponentMapper<PhysicsComponent> m_physicsComp;
-	@Mapper ComponentMapper<LightComponent> m_lightComps;
-	@Mapper ComponentMapper<SpriteComponent> m_spriteComps;
-	@Mapper ComponentMapper<PlayerAnimationComponent> m_animComps;
+	@Mapper ComponentMapper<CameraComponent> cameraComp;
+	@Mapper ComponentMapper<PlayerComponent> playerComp;
+	@Mapper ComponentMapper<PhysicsComponent> physicsComp;
+	@Mapper ComponentMapper<LightComponent> lightComps;
+	@Mapper ComponentMapper<SpriteComponent> spriteComps;
+	@Mapper ComponentMapper<PlayerAnimationComponent> animComps;
 
-	private Vector3 m_camPos = new Vector3();
+	private Vector3 camPos = new Vector3();
 
-	private Vector3 m_currentCamPos = new Vector3();
-	private CameraComponent m_camera;
-	private RayHandler m_rayHandler;
+	private Vector3 currentCamPos = new Vector3();
+	private CameraComponent camera;
+	private RayHandler rayHandler;
 	private Vector2 activePosition = new Vector2();
-	private Box2DDebugRenderer m_debugDrawer;
+	private Box2DDebugRenderer debugDrawer;
 	private boolean debug;
-	private boolean m_process;
+	private boolean process;
 	float zoom;
 
 	@SuppressWarnings("unchecked")
 	public CameraSystem(RayHandler rh, OrthographicCamera camera) {
 		super(Aspect.getAspectForOne(CameraComponent.class, PlayerComponent.class));
-		m_rayHandler = rh;
-        m_rayHandler.setAmbientLight(Color.WHITE);
-        //m_rayHandler.setBlurNum(3);
-		m_debugDrawer = new Box2DDebugRenderer();
+		rayHandler = rh;
+        rayHandler.setAmbientLight(Color.WHITE);
+        //rayHandler.setBlurNum(3);
+		debugDrawer = new Box2DDebugRenderer();
 
-		m_camera = new CameraComponent(camera);
-        System.out.println("Zoom is "+m_camera.getZoom());
+		this.camera = new CameraComponent(camera);
+        System.out.println("Zoom is "+this.camera.getZoom());
     }
 
 	public void setLevelBoundariesForCamera(Level.LevelBoundaries boundaries){
-		m_camera.setLimit(boundaries);
+		camera.setLimit(boundaries);
 	}
 
 	public CameraComponent getCameraComponent(){
-		return m_camera;
+		return camera;
 	}
 
 	public RayHandler getRayHandler(){
-		return m_rayHandler;
+		return rayHandler;
 	}
 
 	public void toggleProcess(boolean process){
-		m_process = process;
+		this.process = process;
 	}
 
 	@Override
 	protected boolean checkProcessing() {
-		return m_process;
+		return process;
 	}
 	@Override
 	protected void process(Entity e) {
 		
-		if(m_cameraComp.has(e)){
-			m_camera = m_cameraComp.get(e);
-			m_camera.update(world.delta);
-			m_rayHandler.setCombinedMatrix(m_camera.getCamera());
-			m_rayHandler.updateAndRender();
+		if(cameraComp.has(e)){
+			camera = cameraComp.get(e);
+			camera.update(world.delta);
+			rayHandler.setCombinedMatrix(camera.getCamera());
+			rayHandler.updateAndRender();
 		}
 
-		if(m_playerComp.has(e)){
+		if(playerComp.has(e)){
 
-			if(m_playerComp.get(e).isActive()){
-				PhysicsComponent ps = m_physicsComp.get(e);
-				PlayerAnimationComponent anim = m_animComps.get(e);
+			if(playerComp.get(e).isActive()){
+				PhysicsComponent ps = physicsComp.get(e);
+				PlayerAnimationComponent anim = animComps.get(e);
 				//System.out.println(ps.getWorldPosition());
-				m_camera.moveTo(Converters.ToWorld(anim.getPositionRelative("torso")));
+				camera.moveTo(Converters.ToWorld(anim.getPositionRelative("torso")));
 				activePosition = ps.getPosition();
 			}
 			else{
-//                PhysicsComponent ps = m_physicsComp.get(e);
+//                PhysicsComponent ps = physicsComp.get(e);
 //                zoom = Math.abs((activePosition.x - ps.getPosition().x));
 //                if(zoom < 30){
 //                    zoom = 30;
 //				}
-//				m_camera.setZoom(zoom * 0.3f);
+//				camera.setZoom(zoom * 0.3f);
 			}
 		}
-		if(m_lightComps.has(e)){
-			m_lightComps.get(e).setPosition(m_camera.getPosition().x , m_camera.getPosition().y + 2000);
-			if(m_spriteComps.has(e)){
-				m_physicsComp.get(e).setPosition(Converters.ToBox(m_camera.getPosition().x , m_camera.getPosition().y + 2150));
+		if(lightComps.has(e)){
+			lightComps.get(e).setPosition(camera.getPosition().x , camera.getPosition().y + 2000);
+			if(spriteComps.has(e)){
+				physicsComp.get(e).setPosition(Converters.ToBox(camera.getPosition().x , camera.getPosition().y + 2150));
 			}
 		}
 		if(debug){
-			Matrix4 m = m_camera.getCombined();
-			m_debugDrawer.render(world.getSystem(PhysicsSystem.class).getWorld(), m.scale(100, 100, 0));
+			Matrix4 m = camera.getCombined();
+			debugDrawer.render(world.getSystem(PhysicsSystem.class).getPhysicsWorld(), m.scale(100, 100, 0));
 		}
 		
 	}
@@ -136,8 +136,8 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		m_camPos.set(screenX,screenY,0);
-		m_camera.unproject(m_camPos);
+		camPos.set(screenX,screenY,0);
+		camera.unproject(camPos);
 		return true;
 	}
 
@@ -149,10 +149,10 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		m_currentCamPos.set(screenX,screenY,0);
-		m_camera.unproject(m_currentCamPos);
-		m_camera.sub(m_currentCamPos.sub(m_camPos));
-		m_camera.update(world.delta);
+		currentCamPos.set(screenX,screenY,0);
+		camera.unproject(currentCamPos);
+		camera.sub(currentCamPos.sub(camPos));
+		camera.update(world.delta);
 		return false;
 	}
 
@@ -164,17 +164,17 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 
 	@Override
 	public boolean scrolled(int amount) {
-        System.out.println(m_camera.getZoom() + (amount * 1f));
-        m_camera.setZoom(m_camera.getZoom() + (amount * 1f));
-		if (m_camera.getZoom() < 0.1f){
-			m_camera.setZoom(0.1f);
+        System.out.println(camera.getZoom() + (amount * 1f));
+        camera.setZoom(camera.getZoom() + (amount * 1f));
+		if (camera.getZoom() < 0.1f){
+			camera.setZoom(0.1f);
 		}
-		m_camera.update(world.delta);
+		camera.update(world.delta);
 		return false;
 	}
 	
 	public void dispose(){
-		m_rayHandler.dispose();
+		rayHandler.dispose();
 	}
 
 	@Override

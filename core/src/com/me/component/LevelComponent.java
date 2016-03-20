@@ -12,32 +12,32 @@ public class LevelComponent extends TaskComponent implements ParticleEventObserv
 
     public static final int PORTAL = 1, RUNOUT = 2;
 
-    private int m_type;
-    private int m_taskId;
-    private boolean m_finished;
+    private int type;
+    private int taskId;
+    private boolean finished;
 
     public LevelComponent(int finishers, int type, int taskId){
         super(finishers);
-        m_type = type;
-        m_taskId = taskId;
+        this.type = type;
+        this.taskId = taskId;
     }
 
     @Override
     public void onNotify(TaskEvent event) {
         if(event.getEventType() == GameEventType.FinishAnimationDone){
-            if (!m_finishers.containsKey(event.getPlayerNr())) {
-                m_finishers.put(event.getPlayerNr(), true);
+            if (!finishers.containsKey(event.getPlayerNr())) {
+                finishers.put(event.getPlayerNr(), true);
             }
         }
     }
 
     public int getType() {
-        return m_type;
+        return type;
     }
 
     @Override
     public boolean allFinished() {
-        return m_type == RUNOUT ? super.allFinished() : m_finished;
+        return type == RUNOUT ? super.allFinished() : finished;
     }
 
     @Override
@@ -52,9 +52,9 @@ public class LevelComponent extends TaskComponent implements ParticleEventObserv
 
     @Override
     public void onNotify(ParticleEvent particleEvent) {
-        if(particleEvent.getEventId() == m_taskId) {
+        if(particleEvent.getEventId() == taskId) {
             if (particleEvent.getEventType() == GameEventType.PortalParticleFinish) {
-                m_finished = true;
+                finished = true;
             }
         }
     }

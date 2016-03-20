@@ -22,19 +22,19 @@ public class ContinuousParticles extends ParticleComponent implements ButtonStat
             HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
 
             if (buttonEvent.getDirection() == Direction.Left) {
-                m_effects.clear();
-                m_particle.getEmitters().get(0).getEmission().setHigh(100, 100);
-                m_particle.getEmitters().get(0).getAngle().setHigh(5, 20);
-                m_particle.getEmitters().get(0).getAngle().setLow(0, 0);
-                m_particle.getEmitters().get(0).getVelocity().setHigh(1000, 1000);
-                m_particle.getEmitters().get(0).getVelocity().setLow(0, 0);
+                effects.clear();
+                particle.getEmitters().get(0).getEmission().setHigh(100, 100);
+                particle.getEmitters().get(0).getAngle().setHigh(5, 20);
+                particle.getEmitters().get(0).getAngle().setLow(0, 0);
+                particle.getEmitters().get(0).getVelocity().setHigh(1000, 1000);
+                particle.getEmitters().get(0).getVelocity().setLow(0, 0);
             } else if (buttonEvent.getDirection() == Direction.Right) {
-                m_effects.clear();
-                m_particle.getEmitters().get(0).getEmission().setHigh(100, 100);
-                m_particle.getEmitters().get(0).getAngle().setHigh(-10, 0);
-                m_particle.getEmitters().get(0).getAngle().setLow(0, 0);
-                m_particle.getEmitters().get(0).getVelocity().setHigh(-1000, -1000);
-                m_particle.getEmitters().get(0).getVelocity().setLow(0, 0);
+                effects.clear();
+                particle.getEmitters().get(0).getEmission().setHigh(100, 100);
+                particle.getEmitters().get(0).getAngle().setHigh(-10, 0);
+                particle.getEmitters().get(0).getAngle().setLow(0, 0);
+                particle.getEmitters().get(0).getVelocity().setHigh(-1000, -1000);
+                particle.getEmitters().get(0).getVelocity().setLow(0, 0);
             }
 
         }

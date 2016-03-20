@@ -34,7 +34,7 @@ public class PhysicsContactListener implements ContactListener {
 		if (physicsComponent == null)
 			return;
 
-		ImmediateModePhysicsListener physicsListener = physicsComponent.m_physicsListener;
+		ImmediateModePhysicsListener physicsListener = physicsComponent.physicsListener;
 		if (physicsListener != null)
 			physicsListener.beginContact(e, contact, fixtureA);
 	}
@@ -60,7 +60,7 @@ public class PhysicsContactListener implements ContactListener {
 		if (physicsComponent == null)
 			return;
 
-		ImmediateModePhysicsListener physicsListener = physicsComponent.m_physicsListener;
+		ImmediateModePhysicsListener physicsListener = physicsComponent.physicsListener;
 		if (physicsListener != null)
 			physicsListener.endContact(e, contact, fixtureA);
 	}
@@ -87,7 +87,7 @@ public class PhysicsContactListener implements ContactListener {
 		if (physicsComponent == null)
 			return;
 
-		ImmediateModePhysicsListener physicsListener = physicsComponent.m_physicsListener;
+		ImmediateModePhysicsListener physicsListener = physicsComponent.physicsListener;
 		if (physicsListener != null)
 			physicsListener.preSolve(e, contact, fixtureA);
 	}
@@ -115,7 +115,7 @@ public class PhysicsContactListener implements ContactListener {
 		if (physicsComponent == null)
 			return;
 
-		ImmediateModePhysicsListener physicsListener = physicsComponent.m_physicsListener;
+		ImmediateModePhysicsListener physicsListener = physicsComponent.physicsListener;
 		if (physicsListener != null)
 			physicsListener.postSolve(e, contact, fixtureA);
 	}

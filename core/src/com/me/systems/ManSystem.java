@@ -22,37 +22,37 @@ public class ManSystem extends PlayerSystem {
     private float VELOCITY = 11.0f;
     private float VELOCITYINR = 3.0f;
     @Mapper
-    ComponentMapper<SingleParticleComponent> m_particleComps;
+    ComponentMapper<SingleParticleComponent> particleComps;
     @Mapper
-    ComponentMapper<JointComponent> m_jointComp;
+    ComponentMapper<JointComponent> jointComp;
     @Mapper
-    ComponentMapper<PlayerComponent> m_playerComps;
+    ComponentMapper<PlayerComponent> playerComps;
     @Mapper
-    ComponentMapper<PhysicsComponent> m_physComps;
+    ComponentMapper<PhysicsComponent> physComps;
     @Mapper
-    ComponentMapper<PlayerAnimationComponent> m_animComps;
+    ComponentMapper<PlayerAnimationComponent> animComps;
     @Mapper
-    ComponentMapper<KeyInputComponent> m_movComps;
+    ComponentMapper<KeyInputComponent> movComps;
     @Mapper
-    ComponentMapper<TouchComponent> m_touchComps;
+    ComponentMapper<TouchComponent> touchComps;
     @Mapper
-    ComponentMapper<HangComponent> m_hangComps;
+    ComponentMapper<HangComponent> hangComps;
     @Mapper
-    ComponentMapper<VelocityLimitComponent> m_velComps;
+    ComponentMapper<VelocityLimitComponent> velComps;
     @Mapper
-    ComponentMapper<PushComponent> m_pushComps;
+    ComponentMapper<PushComponent> pushComps;
     @Mapper
-    ComponentMapper<CharacterMovementComponent> m_movementComps;
+    ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
-    ComponentMapper<FeetComponent> m_rayCastComps;
+    ComponentMapper<FeetComponent> rayCastComps;
     @Mapper
-    ComponentMapper<HandHoldComponent> m_handHoldComps;
+    ComponentMapper<HandHoldComponent> handHoldComps;
 
     @SuppressWarnings("unchecked")
     public ManSystem(LevelEventListener listener) {
         super(Aspect.getAspectForOne(PlayerOneComponent.class));
 
-        m_inputMgr = InputManager.getInstance();
+        inputMgr = InputManager.getInstance();
         InputManager.getInstance().addEventListener(listener);
 
         if (GlobalConfig.getInstance().config.platform == GameConfig.Platform.DESKTOP) {
@@ -62,30 +62,29 @@ public class ManSystem extends PlayerSystem {
 
     @Override
     protected void process(Entity entity) {
-        PlayerComponent player = m_playerComps.get(entity);
-        PlayerAnimationComponent animation = m_animComps.get(entity);
-        TouchComponent touch = m_touchComps.get(entity);
-        PhysicsComponent physicsComponent = m_physComps.get(entity);
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        KeyInputComponent keyInputComponent = m_movComps.get(entity);
-        VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
+        PlayerAnimationComponent animation = animComps.get(entity);
+        TouchComponent touch = touchComps.get(entity);
+        PhysicsComponent physicsComponent = physComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        KeyInputComponent keyInputComponent = movComps.get(entity);
 
         animation.setFacing(player.isFacingLeft());
 
         choose(entity);
 
-        keyInputComponent.update(m_inputMgr);
+        keyInputComponent.update(inputMgr);
 
         if (canBeControlled(player)) {
 
-            if (keyInputComponent.m_left) {
+            if (keyInputComponent.left) {
                 moveLeft(entity);
-            } else if (keyInputComponent.m_right) {
+            } else if (keyInputComponent.right) {
                 moveRight(entity);
             }
 
-            if (keyInputComponent.m_jump) {
-                if(touch.m_boxTouch){
+            if (keyInputComponent.jump) {
+                if(touch.boxTouch){
                     movementComponent.standStill();
                     setPlayerState(entity, PlayerState.ClimbBox);
                 } else {
@@ -93,49 +92,49 @@ public class ManSystem extends PlayerSystem {
                     jump(entity);
                 }
                 if (player.isHanging()) {
-                    if(touch.m_pullEdgeTouch){
+                    if(touch.pullEdgeTouch){
                         setPlayerState(entity, PlayerState.PullingLedge);
                     } else {
                         //temp fix for ground dust when climbing up
-                        m_particleComps.get(entity).setEnabled(false);
+                        particleComps.get(entity).setEnabled(false);
                         setPlayerState(entity, PlayerState.ClimbingLedge);
                     }
                 }
             }
 
-            if (m_inputMgr.isDown(action)) {
-                if (touch.m_footEdge) {
-                    if (touch.m_footEdgeL) {
+            if (inputMgr.isDown(action)) {
+                if (touch.footEdge) {
+                    if (touch.footEdgeL) {
                         player.setFacingLeft(true);
                     }
-                    if (touch.m_footEdgeR) {
+                    if (touch.footEdgeR) {
                         player.setFacingLeft(false);
                     }
-                    physicsComponent.warp("feet", touch.m_touchCenter);
+                    physicsComponent.warp("feet", touch.touchCenter);
                     setPlayerState(entity, PlayerState.LieDown);
                     movementComponent.standStill();
                 }
-                if (touch.m_pushArea) {
-                    if (touch.m_leftPushArea) {
+                if (touch.pushArea) {
+                    if (touch.leftPushArea) {
                         player.setFacingLeft(false);
                         setPlayerState(entity, PlayerState.PressButton);
                     }
-                    if (touch.m_rightPushArea) {
+                    if (touch.rightPushArea) {
                         player.setFacingLeft(true);
                         setPlayerState(entity, PlayerState.PressButton);
                     }
                     movementComponent.standStill();
                 }
-                if (touch.m_handHoldArea) {
+                if (touch.handHoldArea) {
                     holdHands(entity);
                 }
                 if (player.isHanging()) {
 
-                    if(touch.m_pullEdgeTouch){
+                    if(touch.pullEdgeTouch){
                         setPlayerState(entity, PlayerState.PullingLedge);
                     } else {
                         //temp fix for ground dust when climbing up
-                        m_particleComps.get(entity).setEnabled(false);
+                        particleComps.get(entity).setEnabled(false);
                         setPlayerState(entity, PlayerState.ClimbingLedge);
                     }
                 }
@@ -145,7 +144,7 @@ public class ManSystem extends PlayerSystem {
         setPlayerState(entity);
 
         if (isDead(physicsComponent) || animation.isCompleted(PlayerState.Drowning)) {
-            m_inputMgr.callRestart();
+            inputMgr.callRestart();
         }
 
         animateBody(physicsComponent, player, animation);
@@ -153,15 +152,15 @@ public class ManSystem extends PlayerSystem {
     }
 
     private void setPlayerState(Entity entity) {
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        KeyInputComponent keyInput = m_movComps.get(entity);
-        PhysicsComponent physicsComponent = m_physComps.get(entity);
-        VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
-        PlayerComponent playerComponent = m_playerComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        KeyInputComponent keyInput = movComps.get(entity);
+        PhysicsComponent physicsComponent = physComps.get(entity);
+        VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
+        PlayerComponent playerComponent = playerComps.get(entity);
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
-            velocityLimitComponent.m_velocity = 0;
+            velocityLimitComponent.velocity = 0;
             if (playerComponent.shouldBeIdle() && !physicsComponent.isFalling()) {
                 setPlayerState(entity, PlayerState.Idle);
                 movementComponent.standStill();
@@ -183,20 +182,20 @@ public class ManSystem extends PlayerSystem {
     }
 
     protected void setPlayerState(Entity entity, PlayerState state) {
-        m_animComps.get(entity).setAnimationState(state);
-        m_playerComps.get(entity).setState(state);
+        animComps.get(entity).setAnimationState(state);
+        playerComps.get(entity).setState(state);
     }
 
     private void jump(Entity entity) {
-        PlayerComponent player = m_playerComps.get(entity);
-        PhysicsComponent physicsComponent = m_physComps.get(entity);
-        KeyInputComponent keyInputComponent = m_movComps.get(entity);
-        FeetComponent feetComponent = m_rayCastComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
+        PhysicsComponent physicsComponent = physComps.get(entity);
+        KeyInputComponent keyInputComponent = movComps.get(entity);
+        FeetComponent feetComponent = rayCastComps.get(entity);
 
         if (feetComponent.hasCollided() && !player.isJumping()) {
             if (keyInputComponent.isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
-                    physicsComponent.applyLinearImpulse((keyInputComponent.m_left ? -10 : 10) + physicsComponent.getLinearVelocity().x, 60);
+                    physicsComponent.applyLinearImpulse((keyInputComponent.left ? -10 : 10) + physicsComponent.getLinearVelocity().x, 60);
                 } else {
                     physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 60);
                 }
@@ -209,48 +208,48 @@ public class ManSystem extends PlayerSystem {
 
     private void moveLeft(Entity entity) {
 
-        VelocityLimitComponent vel = m_velComps.get(entity);
-        PhysicsComponent ps = m_physComps.get(entity);
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        TouchComponent touch = m_touchComps.get(entity);
-        HangComponent hangComponent = m_hangComps.get(entity);
-        PlayerComponent player = m_playerComps.get(entity);
-        PushComponent push = m_pushComps.get(entity);
-        FeetComponent feetComponent = m_rayCastComps.get(entity);
-        JointComponent jointComponent = m_jointComp.get(entity);
+        VelocityLimitComponent vel = velComps.get(entity);
+        PhysicsComponent ps = physComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        TouchComponent touch = touchComps.get(entity);
+        HangComponent hangComponent = hangComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
+        PushComponent push = pushComps.get(entity);
+        FeetComponent feetComponent = rayCastComps.get(entity);
+        JointComponent jointComponent = jointComp.get(entity);
 
-        if (vel.m_velocity > 0) {
-            vel.m_velocity = -VELOCITYINR;
+        if (vel.velocity > 0) {
+            vel.velocity = -VELOCITYINR;
         }
         if (feetComponent.hasCollided() && !player.isHanging()) {
-            if (!touch.m_boxTouch) {
-                vel.m_velocity -= VELOCITY * world.delta;
-                movementComponent.setVelocity(vel.m_velocity);
-                if (movementComponent.getSpeed() < -vel.m_walkLimit) {
-                    movementComponent.setVelocity(-vel.m_walkLimit);
+            if (!touch.boxTouch) {
+                vel.velocity -= VELOCITY * world.delta;
+                movementComponent.setVelocity(vel.velocity);
+                if (movementComponent.getSpeed() < -vel.walkLimit) {
+                    movementComponent.setVelocity(-vel.walkLimit);
                     setPlayerState(entity, PlayerState.Running);
-                    vel.m_velocity = -vel.m_walkLimit;
+                    vel.velocity = -vel.walkLimit;
                 } else {
                     setPlayerState(entity, PlayerState.Jogging);
                 }
             }
-            if (touch.m_boxTouch && push.m_pushLeft) {
-                movementComponent.setVelocity(-vel.m_pushlimit);
+            if (touch.boxTouch && push.pushLeft) {
+                movementComponent.setVelocity(-vel.pushlimit);
                 setPlayerState(entity, PlayerState.Pushing);
             }
-            if (touch.m_boxTouch && !push.m_pushLeft) {
+            if (touch.boxTouch && !push.pushLeft) {
                 setPlayerState(entity, PlayerState.Walking);
-                movementComponent.setVelocity(-vel.m_pushlimit);
+                movementComponent.setVelocity(-vel.pushlimit);
             }
             if (!ps.isDynamic()) {
                 setPlayerState(entity, PlayerState.Walking);
                 ps.makeDynamic();
-                ps.setLinearVelocity(-vel.m_walkLimit, ps.getLinearVelocity().y);
-                touch.m_ladderTouch = false;
+                ps.setLinearVelocity(-vel.walkLimit, ps.getLinearVelocity().y);
+                touch.ladderTouch = false;
             }
         }
         if (player.isHanging()) {
-            if (hangComponent.m_hangingRight) {
+            if (hangComponent.hangingRight) {
                 jointComponent.destroyHangJoint();
                 setPlayerState(entity, PlayerState.Falling);
             }
@@ -260,48 +259,48 @@ public class ManSystem extends PlayerSystem {
 
     private void moveRight(Entity entity) {
 
-        VelocityLimitComponent vel = m_velComps.get(entity);
-        PhysicsComponent ps = m_physComps.get(entity);
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        TouchComponent touch = m_touchComps.get(entity);
-        HangComponent hangComponent = m_hangComps.get(entity);
-        PlayerComponent player = m_playerComps.get(entity);
-        PushComponent push = m_pushComps.get(entity);
-        FeetComponent feetComponent = m_rayCastComps.get(entity);
-        JointComponent jointComponent = m_jointComp.get(entity);
+        VelocityLimitComponent vel = velComps.get(entity);
+        PhysicsComponent ps = physComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        TouchComponent touch = touchComps.get(entity);
+        HangComponent hangComponent = hangComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
+        PushComponent push = pushComps.get(entity);
+        FeetComponent feetComponent = rayCastComps.get(entity);
+        JointComponent jointComponent = jointComp.get(entity);
 
-        if (vel.m_velocity < 0) {
-            vel.m_velocity = VELOCITYINR;
+        if (vel.velocity < 0) {
+            vel.velocity = VELOCITYINR;
         }
 
         if (feetComponent.hasCollided() && !player.isHanging()) {
-            if (!touch.m_boxTouch) {
-                vel.m_velocity += VELOCITY * world.delta;
-                movementComponent.setVelocity(vel.m_velocity);
-                if (movementComponent.getSpeed() > vel.m_walkLimit) {
-                    movementComponent.setVelocity(vel.m_walkLimit);
+            if (!touch.boxTouch) {
+                vel.velocity += VELOCITY * world.delta;
+                movementComponent.setVelocity(vel.velocity);
+                if (movementComponent.getSpeed() > vel.walkLimit) {
+                    movementComponent.setVelocity(vel.walkLimit);
                     setPlayerState(entity, PlayerState.Running);
-                    vel.m_velocity = vel.m_walkLimit;
+                    vel.velocity = vel.walkLimit;
                 } else {
                     setPlayerState(entity, PlayerState.Jogging);
                 }
             }
-            if (touch.m_boxTouch && push.m_pushRight) {
+            if (touch.boxTouch && push.pushRight) {
                 setPlayerState(entity, PlayerState.Pushing);
-                movementComponent.setVelocity(vel.m_pushlimit);
-            } else if (touch.m_boxTouch && !push.m_pushRight) {
+                movementComponent.setVelocity(vel.pushlimit);
+            } else if (touch.boxTouch && !push.pushRight) {
                 setPlayerState(entity, PlayerState.Walking);
-                movementComponent.setVelocity(vel.m_pushlimit);
+                movementComponent.setVelocity(vel.pushlimit);
             }
             if (!ps.isDynamic()) {
                 setPlayerState(entity, PlayerState.Walking);
                 ps.makeDynamic();
-                ps.setLinearVelocity(vel.m_walkLimit, ps.getLinearVelocity().y);
-                touch.m_ladderTouch = false;
+                ps.setLinearVelocity(vel.walkLimit, ps.getLinearVelocity().y);
+                touch.ladderTouch = false;
             }
         }
         if (player.isHanging()) {
-            if (hangComponent.m_hangingLeft) {
+            if (hangComponent.hangingLeft) {
                 jointComponent.destroyHangJoint();
                 setPlayerState(entity, PlayerState.Falling);
             }
@@ -310,12 +309,12 @@ public class ManSystem extends PlayerSystem {
     }
 
     private void holdHands(Entity entity) {
-        HandHoldComponent handHoldComponent = m_handHoldComps.get(entity);
-        TouchComponent touch = m_touchComps.get(entity);
-        PlayerComponent player = m_playerComps.get(entity);
+        HandHoldComponent handHoldComponent = handHoldComps.get(entity);
+        TouchComponent touch = touchComps.get(entity);
+        PlayerComponent player = playerComps.get(entity);
 
         handHoldComponent.setHoldingHands(true);
-        if (touch.m_rightHoldArea) {
+        if (touch.rightHoldArea) {
             TelegramEvent telegramEvent;
             if (player.isFacingLeft()) {
                 setPlayerState(entity, PlayerState.HoldHandLeading);
@@ -328,7 +327,7 @@ public class ManSystem extends PlayerSystem {
             }
             telegramEvent.notify(this, entity);
         }
-        if (touch.m_leftHoldArea) {
+        if (touch.leftHoldArea) {
             TelegramEvent telegramEvent;
             if (player.isFacingLeft()) {
                 setPlayerState(entity, PlayerState.HoldHandFollowing);
@@ -350,23 +349,23 @@ public class ManSystem extends PlayerSystem {
     }
 
     private void choose(Entity entity) {
-        if (m_inputMgr.m_playerSelected == InputManager.PlayerSelection.ONE) {
-            m_playerComps.get(entity).setActive(true);
-        } else if (m_playerComps.get(entity).canDeActivate()) {
-            m_playerComps.get(entity).setActive(false);
-            m_velComps.get(entity).m_velocity = 0;
+        if (inputMgr.playerSelected == InputManager.PlayerSelection.ONE) {
+            playerComps.get(entity).setActive(true);
+        } else if (playerComps.get(entity).canDeActivate()) {
+            playerComps.get(entity).setActive(false);
+            velComps.get(entity).velocity = 0;
         }
 
-        m_inputMgr.reset();
+        inputMgr.reset();
     }
 
     private boolean velocityLimitForJumpBoost(Entity entity) {
 
-        PhysicsComponent physicsComponent = m_physComps.get(entity);
-        KeyInputComponent keyInputComponent = m_movComps.get(entity);
-        if (keyInputComponent.m_left && physicsComponent.getLinearVelocity().x < -4) {
+        PhysicsComponent physicsComponent = physComps.get(entity);
+        KeyInputComponent keyInputComponent = movComps.get(entity);
+        if (keyInputComponent.left && physicsComponent.getLinearVelocity().x < -4) {
             return false;
-        } else if (keyInputComponent.m_right && physicsComponent.getLinearVelocity().x > 4) {
+        } else if (keyInputComponent.right && physicsComponent.getLinearVelocity().x > 4) {
             return false;
         }
         return true;
@@ -374,13 +373,13 @@ public class ManSystem extends PlayerSystem {
 
     @Override
     public boolean keyDown(int keycode) {
-        m_inputMgr.keyDown(keycode);
+        inputMgr.keyDown(keycode);
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        m_inputMgr.keyUp(keycode);
+        inputMgr.keyUp(keycode);
         return true;
     }
 }

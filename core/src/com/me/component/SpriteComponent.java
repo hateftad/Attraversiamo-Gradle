@@ -15,39 +15,39 @@ public class SpriteComponent extends BaseComponent {
         DEFAULT, BACKGROUND3, BACKGROUND2, BACKGROUND1, BACKGROUND0, ACTOR1, ACTOR2, FOREGROUND1, FOREGROUND2, FOREGROUND3, FOREGROUND4,
     }
 
-    private float m_width;
+    private float width;
 
-    private float m_height;
+    private float height;
 
-    private Vector2 m_position = new Vector2();
+    private Vector2 position = new Vector2();
 
-    private Vector2 m_scale = new Vector2();
+    private Vector2 scale = new Vector2();
 
-    private float m_rotation;
+    private float rotation;
 
-    private Sprite m_sprite;
+    private Sprite sprite;
 
-    private final Vector2 m_center = new Vector2();
+    private final Vector2 center = new Vector2();
 
-    private final Vector2 m_halfSize = new Vector2();
+    private final Vector2 halfSize = new Vector2();
 
-    private float m_rot;
+    private float rot;
 
-    private static final Vector2 m_tmp = new Vector2();
+    private static final Vector2 tmp = new Vector2();
 
-    private int m_drawOrder;
+    private int drawOrder;
 
-    private Texture m_texture;
+    private Texture texture;
 
-    public boolean m_shouldDraw = true;
+    public boolean shouldDraw = true;
 
-    public Layer m_layer = Layer.DEFAULT;
+    public Layer spriteLayer = Layer.DEFAULT;
 
     public SpriteComponent(Texture texture, boolean flip, Body body,
                            Color color, Vector2 size, Vector2 center, float rotationInDegrees,
                            int drawOrder) {
-        m_texture = texture;
-        m_sprite = new Sprite(texture);
+        this.texture = texture;
+        this.sprite = new Sprite(texture);
         size.set(Converters.ToWorld(size));
         center.set(Converters.ToWorld(center));
         initTexture(flip, color, body, size, center, rotationInDegrees);
@@ -57,132 +57,130 @@ public class SpriteComponent extends BaseComponent {
     private void initTexture(boolean flip, Color color, Body body,
                              Vector2 size, Vector2 center, float rotationInDegrees) {
         Vector2 s = new Vector2(size.x, size.y);
-        m_sprite.flip(flip, false);
-        m_sprite.setColor(color);
-        m_rot = rotationInDegrees;
-        m_sprite.setSize(size.x, size.y);
-        m_sprite.setOrigin(size.x / 2, size.y / 2);
-        m_halfSize.set(size.x / 2, size.y / 2);
-        m_center.set(center.x, center.y);
+        this.sprite.flip(flip, false);
+        this.sprite.setColor(color);
+        this.rot = rotationInDegrees;
+        this.sprite.setSize(size.x, size.y);
+        this.sprite.setOrigin(size.x / 2, size.y / 2);
+        this.halfSize.set(size.x / 2, size.y / 2);
+        this.center.set(center.x, center.y);
 
         if (body != null) {
-            m_tmp.set(body.getPosition());
-            m_sprite.setPosition(m_tmp.x - s.x / 2, m_tmp.y - s.y / 2);
+            tmp.set(body.getPosition());
+            this.sprite.setPosition(tmp.x - s.x / 2, tmp.y - s.y / 2);
 
             float angle = body.getAngle() * MathUtils.radiansToDegrees;
-            m_tmp.set(m_center).rotate(angle).add(body.getPosition())
-                    .sub(m_halfSize);
-            m_sprite.setRotation(m_rotation + angle);
+            tmp.set(center).rotate(angle).add(body.getPosition())
+                    .sub(halfSize);
+            this.sprite.setRotation(rotation + angle);
         } else {
-            m_tmp.set(center.x - s.x / 2, center.y - s.y / 2);
-            m_sprite.setRotation(rotationInDegrees);
+            tmp.set(center.x - s.x / 2, center.y - s.y / 2);
+            this.sprite.setRotation(rotationInDegrees);
         }
-
-        m_sprite.setPosition(m_tmp.x, m_tmp.y);
-
+        this.sprite.setPosition(tmp.x, tmp.y);
     }
 
     public Texture getTexture() {
-        return m_texture;
+        return texture;
     }
 
     public void draw(SpriteBatch sb) {
-        float angle = m_rotation * MathUtils.radiansToDegrees;
-        m_tmp.set(m_center).rotate(angle).add(m_position).sub(m_halfSize);
-        m_sprite.setPosition(m_tmp.x, m_tmp.y);
-        m_sprite.setRotation(m_rot + angle);
-        m_sprite.draw(sb);
+        float angle = rotation * MathUtils.radiansToDegrees;
+        tmp.set(center).rotate(angle).add(position).sub(halfSize);
+        sprite.setPosition(tmp.x, tmp.y);
+        sprite.setRotation(rot + angle);
+        sprite.draw(sb);
     }
 
     public void setLayer(int layer) {
 
         switch (layer) {
             case 0:
-                m_layer = Layer.BACKGROUND3;
+                spriteLayer = Layer.BACKGROUND3;
                 break;
             case 1:
-                m_layer = Layer.BACKGROUND2;
+                spriteLayer = Layer.BACKGROUND2;
                 break;
             case 2:
-                m_layer = Layer.BACKGROUND1;
+                spriteLayer = Layer.BACKGROUND1;
                 break;
             case 3:
-                m_layer = Layer.BACKGROUND0;
+                spriteLayer = Layer.BACKGROUND0;
                 break;
             case 4:
-                m_layer = Layer.ACTOR1;
+                spriteLayer = Layer.ACTOR1;
                 break;
             case 5:
-                m_layer = Layer.ACTOR2;
+                spriteLayer = Layer.ACTOR2;
                 break;
             case 6:
-                m_layer = Layer.FOREGROUND1;
+                spriteLayer = Layer.FOREGROUND1;
                 break;
             case 7:
-                m_layer = Layer.FOREGROUND2;
+                spriteLayer = Layer.FOREGROUND2;
                 break;
             case 8:
-                m_layer = Layer.FOREGROUND3;
+                spriteLayer = Layer.FOREGROUND3;
                 break;
             case 9:
-                m_layer = Layer.FOREGROUND4;
+                spriteLayer = Layer.FOREGROUND4;
                 break;
             default:
-                m_layer = Layer.DEFAULT;
+                spriteLayer = Layer.DEFAULT;
                 break;
         }
     }
 
     public float getWidth() {
-        return m_width;
+        return width;
     }
 
     public void setWidth(float width) {
-        m_width = width;
+        this.width = width;
     }
 
     public float getHeight() {
-        return m_height;
+        return height;
     }
 
     public void setHeight(float height) {
-        m_height = height;
+        this.height = height;
     }
 
     public void setPosition(Vector2 pos) {
-        this.m_position = pos;
+        this.position = pos;
     }
 
     public Vector2 getPosition() {
-        return m_position;
+        return position;
     }
 
     public void setScale(float x, float y) {
-        m_scale.set(x, y);
+        scale.set(x, y);
     }
 
     public void setRotation(float r) {
-        this.m_rotation = r;
+        this.rotation = r;
     }
 
     public float getRotation() {
-        return m_rotation;
+        return rotation;
     }
 
     public void setDrawOrder(int order) {
-        m_drawOrder = order;
+        drawOrder = order;
     }
 
     public int getDrawOrder() {
-        return m_drawOrder;
+        return drawOrder;
     }
 
     @Override
     public void dispose() {
 
-        m_sprite.getTexture().dispose();
-        m_sprite = null;
-        m_texture.dispose();
+        sprite.getTexture().dispose();
+        sprite = null;
+        texture.dispose();
     }
 
     public void addTexture(Texture texture, boolean flip, Body body,

@@ -12,19 +12,19 @@ import com.me.utils.Direction;
  */
 public class PrismaticEngineComponent extends BaseComponent implements ButtonStateObserverComponent {
 
-    private PrismaticJoint m_wheelJoint;
-    private int m_eventId;
+    private PrismaticJoint wheelJoint;
+    private int eventId;
     private static final int SPEED = 3;
 
     public PrismaticEngineComponent(int taskId, Joint wheelJoint){
-        m_eventId = taskId;
-        m_wheelJoint = (PrismaticJoint) wheelJoint;
+        eventId = taskId;
+        this.wheelJoint = (PrismaticJoint) wheelJoint;
     }
 
     @Override
     public void onNotify(ButtonEvent event) {
         if(event.getEventType() == GameEventType.VerticalButton) {
-            if (m_eventId == event.getEventId()) {
+            if (eventId == event.getEventId()) {
                 VerticalButtonEvent buttonEvent = (VerticalButtonEvent) event;
                 buttonEvent.update();
                 if(buttonEvent.getDirection() == Direction.Up){
@@ -37,7 +37,7 @@ public class PrismaticEngineComponent extends BaseComponent implements ButtonSta
     }
 
     public void setVelocity(float velocity){
-        m_wheelJoint.setMotorSpeed(velocity);
+        wheelJoint.setMotorSpeed(velocity);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PrismaticEngineComponent extends BaseComponent implements ButtonSta
 
     @Override
     public void restart() {
-        m_wheelJoint.setMotorSpeed(0);
+        wheelJoint.setMotorSpeed(0);
     }
 
     @Override

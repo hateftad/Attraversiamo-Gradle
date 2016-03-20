@@ -13,7 +13,7 @@ import com.me.component.LightComponent;
 public class LightSystem extends GameEntityProcessingSystem {
 
     @Mapper
-    ComponentMapper<LightComponent> m_lightComps;
+    ComponentMapper<LightComponent> lightComps;
 
     @SuppressWarnings("unchecked")
     public LightSystem() {
@@ -22,14 +22,14 @@ public class LightSystem extends GameEntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        updateLights(m_lightComps.get(entity));
+        updateLights(lightComps.get(entity));
     }
 
     private void updateLights(LightComponent light){
         if(light.getName().equals("portalLight")){
             float a = light.getAlpha();
 
-//            if(!m_currentLevel.isFinished()){
+//            if(!currentLevel.isFinished()){
 //                if(a >= 1){
 //                    light.setColor(Color.RED);
 //                    inc = -0.01f;

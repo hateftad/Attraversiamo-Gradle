@@ -14,53 +14,53 @@ import com.me.manager.ScriptManager;
 
 public class LevelSystem extends GameEntityProcessingSystem {
 
-    private LevelEventListener m_levelListener;
-    private ScriptManager m_scriptMgr;
-    private Level m_currentLevel;
-    private boolean m_enable;
+    private LevelEventListener levelListener;
+    private ScriptManager scriptMgr;
+    private Level currentLevel;
+    private boolean enable;
 
     @Mapper
-    ComponentMapper<ReachEndComponent> m_reachEndComps;
+    ComponentMapper<ReachEndComponent> reachEndComps;
     @Mapper
-    ComponentMapper<LevelComponent> m_levelComps;
+    ComponentMapper<LevelComponent> levelComps;
 
 
     @SuppressWarnings("unchecked")
     public LevelSystem(LevelEventListener listener) {
         super(Aspect.getAspectForAll(LevelComponent.class));
-        m_levelListener = listener;
+        levelListener = listener;
     }
 
     public void setCurrentLevel(Level level) {
-        m_currentLevel = level;
+        currentLevel = level;
     }
 
     public void setProcessing(boolean enable) {
-        m_enable = enable;
+        this.enable = enable;
     }
 
     @Override
     protected void process(Entity e) {
-        if (m_reachEndComps.has(e)) {
+        if (reachEndComps.has(e)) {
             checkFinished(e);
         }
     }
 
     @Override
     protected boolean checkProcessing() {
-        return m_enable;
+        return enable;
     }
 
 
     private void checkFinished(Entity entity) {
 
-        LevelComponent levelComponent = m_levelComps.get(entity);
-        ReachEndComponent reachEndComponent = m_reachEndComps.get(entity);
-        if (reachEndComponent.allFinished() && !m_currentLevel.isFinished()) {
+        LevelComponent levelComponent = levelComps.get(entity);
+        ReachEndComponent reachEndComponent = reachEndComps.get(entity);
+        if (reachEndComponent.allFinished() && !currentLevel.isFinished()) {
             notifyObservers(new TaskEvent(GameEventType.AllReachedEnd));
             GameEvent event = reachEndComponent.getEndEvent();
             event.notify((GameEntityWorld) world);
-            m_currentLevel.setFinished(true);
+            currentLevel.setFinished(true);
         }
 
         if (levelComponent.allFinished()) {
@@ -70,7 +70,7 @@ public class LevelSystem extends GameEntityProcessingSystem {
     }
 
     private void levelFinished() {
-        m_levelListener.onFinishedLevel(m_currentLevel.getNextLevel());
+        levelListener.onFinishedLevel(currentLevel.getNextLevel());
     }
 
 }

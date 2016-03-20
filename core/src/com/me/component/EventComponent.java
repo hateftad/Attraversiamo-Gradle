@@ -7,14 +7,14 @@ import com.me.events.GameEvent;
  */
 public class EventComponent extends BaseComponent {
 
-    private GameEvent m_eventInfo;
+    private GameEvent eventInfo;
 
     public GameEvent getEventInfo() {
-        return m_eventInfo;
+        return eventInfo;
     }
 
     public void setEventInfo(GameEvent eventInfo){
-        m_eventInfo = eventInfo;
+        this.eventInfo = eventInfo;
     }
 
     @Override

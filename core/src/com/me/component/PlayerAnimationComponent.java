@@ -20,28 +20,28 @@ import com.me.utils.Converters;
  */
 public class PlayerAnimationComponent extends AnimationComponent implements TelegramEventObserverComponent {
 
-    private PlayerState m_finishAnimation;
-    private PlayerComponent.PlayerNumber m_playerNumber;
+    private PlayerState finishAnimation;
+    private PlayerComponent.PlayerNumber playerNumber;
 
     public PlayerAnimationComponent(String atlas, String skeleton, float scale, PlayerState finishAnimation, PlayerComponent.PlayerNumber playerNumber) {
         super(atlas, skeleton, scale);
-        m_finishAnimation = finishAnimation;
-        m_playerNumber = playerNumber;
+        this.finishAnimation = finishAnimation;
+        this.playerNumber = playerNumber;
     }
 
     public AnimationEvent getEvent() {
-        return m_event;
+        return event;
     }
 
     public boolean shouldJump() {
-        return m_event.getEventType().equals(AnimationEvent.AnimationEventType.JUMPUP);
+        return event.getEventType().equals(AnimationEvent.AnimationEventType.JUMPUP);
     }
 
     @Override
     public void setAnimationState(PlayerState state) {
 
 
-        if (state != m_previousState) {
+        if (state != previousState) {
             setState(state);
             switch (state) {
                 case Walking:
@@ -134,14 +134,14 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                 default:
                     break;
             }
-            m_skeleton.setToSetupPose();
+            skeleton.setToSetupPose();
         }
-        m_previousState = state;
+        previousState = state;
     }
 
-    public void setIK(Vector2 position){
+    public void setIK(Vector2 position) {
 
-        for(IkConstraint constraint : m_skeleton.getIkConstraints()){
+        for (IkConstraint constraint : skeleton.getIkConstraints()) {
             constraint.setMix(100);
             Bone target = constraint.getTarget();
             target.setX(position.x);
@@ -151,12 +151,12 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
             target.updateWorldTransform();
             constraint.apply();
         }
-        m_skeleton.updateCache();
-        m_skeleton.updateWorldTransform();
+        skeleton.updateCache();
+        skeleton.updateWorldTransform();
     }
 
     public void rotateBoneTo(String name, Vector2 myPos, Vector2 target, boolean left) {
-        Bone b = m_skeleton.findBone(name);
+        Bone b = skeleton.findBone(name);
         Vector3 bonePos = new Vector3(myPos.x, myPos.y, 0);
         Vector3 targetDir = bonePos.sub(new Vector3(target.x, target.y, 0));
         double angle = Math.atan2(targetDir.y, targetDir.x);
@@ -166,21 +166,21 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     }
 
     public Vector2 setBonePosition(String name, Vector2 position) {
-        Bone b = m_skeleton.findBone(name);
+        Bone b = skeleton.findBone(name);
 
         return new Vector2(b.getX(), b.getY());
     }
 
     public Vector2 getPositionRelative(String attachmentName) {
         Slot slot;
-        if (!m_skeleton.getSkin().getName().equals("color")) {
+        if (!skeleton.getSkin().getName().equals("color")) {
             attachmentName = "silhouette/" + attachmentName;
         }
-        for (Slot s : m_skeleton.getSlots()) {
+        for (Slot s : skeleton.getSlots()) {
             if (s.getAttachment() != null) {
                 if (s.getAttachment().getName().equals(attachmentName)) {
                     slot = s;
-                    return new Vector2(Converters.ToBox(m_skeleton.getX() + slot.getBone().getWorldX()), Converters.ToBox(m_skeleton.getY() + slot.getBone().getWorldY()));
+                    return new Vector2(Converters.ToBox(skeleton.getX() + slot.getBone().getWorldX()), Converters.ToBox(skeleton.getY() + slot.getBone().getWorldY()));
                 }
             }
         }
@@ -190,21 +190,21 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
 
     @Override
     public void update(SpriteBatch sb, float dt) {
-        m_animationState.update(dt);
-        m_animationState.apply(m_skeleton);
-        m_skeleton.update(dt);
-        m_skeleton.updateWorldTransform();
-        m_renderer.draw(sb, m_skeleton);
+        animationState.update(dt);
+        animationState.apply(skeleton);
+        skeleton.update(dt);
+        skeleton.updateWorldTransform();
+        renderer.draw(sb, skeleton);
     }
 
     @Override
     public void onNotify(TaskEvent event) {
         if (event.getEventType() == GameEventType.AllReachedEnd) {
-            setAnimationState(m_finishAnimation);
-        } else if(event.getEventType() == GameEventType.ColorSkin && event.getPlayerNr() == m_playerNumber){
-            m_skeleton.setSkin(ColorSkin);
-        } else if(event.getEventType() == GameEventType.BlackSkin && event.getPlayerNr() == m_playerNumber){
-            m_skeleton.setSkin(BlackSkin);
+            setAnimationState(finishAnimation);
+        } else if (event.getEventType() == GameEventType.ColorSkin && event.getPlayerNr() == playerNumber) {
+            skeleton.setSkin(ColorSkin);
+        } else if (event.getEventType() == GameEventType.BlackSkin && event.getPlayerNr() == playerNumber) {
+            skeleton.setSkin(BlackSkin);
         }
     }
 
@@ -212,10 +212,10 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     public void onNotify(TelegramEvent event) {
         Entity entity = event.getEntity();
         PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
-        if (m_playerNumber != playerComponent.getPlayerNr()) {
+        if (playerNumber != playerComponent.getPlayerNr()) {
             if (event.getEventType() == GameEventType.HoldingHandsFollowing) {
                 setAnimationState(PlayerState.HoldHandLeading);
-            } else if(event.getEventType() == GameEventType.HoldingHandsLeading){
+            } else if (event.getEventType() == GameEventType.HoldingHandsLeading) {
                 setAnimationState(PlayerState.HoldHandFollowing);
             }
         }

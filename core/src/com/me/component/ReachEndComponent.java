@@ -25,13 +25,13 @@ public class ReachEndComponent extends TaskComponent {
     }
 
     private void put(PlayerComponent.PlayerNumber playerNumber){
-        if(!m_finishers.containsKey(playerNumber)){
-            m_finishers.put(playerNumber, true);
+        if(!finishers.containsKey(playerNumber)){
+            finishers.put(playerNumber, true);
         }
     }
 
     private void remove(PlayerComponent.PlayerNumber playerNumber){
-        m_finishers.remove(playerNumber);
+        finishers.remove(playerNumber);
     }
 
     @Override

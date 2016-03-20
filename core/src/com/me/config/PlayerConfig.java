@@ -5,97 +5,97 @@ import com.me.events.states.PlayerState;
 
 public class PlayerConfig {
 
-    private Vector2 m_playerPosition;
-    private boolean m_facingleft;
-    private boolean m_active;
-    private boolean m_canDeactivate;
-    private String m_name;
-    private PlayerState m_finishAnimation;
- 	private String m_skinName;
-    private int m_playerNumber;
-    private boolean m_finishFacingLeft;
+    private Vector2 playerPosition;
+    private boolean facingleft;
+    private boolean active;
+    private boolean canDeactivate;
+    private String name;
+    private PlayerState finishAnimation;
+ 	private String skinName;
+    private int playerNumber;
+    private boolean finishFacingLeft;
 
  	public PlayerConfig(){
- 		m_playerPosition = new Vector2();
+ 		playerPosition = new Vector2();
  	}
 
-    public void setFacingleft(boolean m_facingleft) {
-        this.m_facingleft = m_facingleft;
+    public void setFacingleft(boolean facingleft) {
+        this.facingleft = facingleft;
     }
 
-    public void setFinishFacingleft(boolean m_facingleft) {
-        this.m_finishFacingLeft = m_facingleft;
+    public void setFinishFacingleft(boolean facingleft) {
+        this.finishFacingLeft = facingleft;
     }
     public boolean getFinishFacingleft() {
-        return this.m_finishFacingLeft;
+        return this.finishFacingLeft;
     }
 
-    public void setActive(boolean m_active) {
-        this.m_active = m_active;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public void setCanDeactivate(boolean m_canDeactivate) {
-        this.m_canDeactivate = m_canDeactivate;
+    public void setCanDeactivate(boolean canDeactivate) {
+        this.canDeactivate = canDeactivate;
     }
 
-    public void setName(String m_name) {
-        this.m_name = m_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPlayerPosition(Vector2 position){
-        m_playerPosition.set(position);
+        playerPosition.set(position);
     }
 
     public void setPlayerNumber(int number){
-        m_playerNumber = number;
+        playerNumber = number;
     }
 
     public int getPlayerNumber(){
-        return m_playerNumber;
+        return playerNumber;
     }
 
     public Vector2 getPlayerPosition() {
-        return m_playerPosition;
+        return playerPosition;
     }
 
     public boolean isFacingleft() {
-        return m_facingleft;
+        return facingleft;
     }
 
     public boolean isActive() {
-        return m_active;
+        return active;
     }
 
     public boolean canDeactivate() {
-        return m_canDeactivate;
+        return canDeactivate;
     }
 
     public PlayerState getFinishAnimation() {
-        return m_finishAnimation;
+        return finishAnimation;
     }
 
  	public String getName(){
- 		return m_name;
+ 		return name;
  	}
 
  	public void setFinishAnimation(String state){
  		
  		if(state.equals("suckin")){
- 			m_finishAnimation = PlayerState.SuckIn;
+ 			finishAnimation = PlayerState.SuckIn;
  		}
  		if(state.equals("walkout")){
- 			m_finishAnimation = PlayerState.WalkOut;
+ 			finishAnimation = PlayerState.WalkOut;
  		}
  		if(state.equals("runOut")){
- 			m_finishAnimation = PlayerState.RunOut;
+ 			finishAnimation = PlayerState.RunOut;
  		}
  	}
  	
 	public void setSkinName(String name){
-		m_skinName = name;
+		skinName = name;
 	}
 	
 	public String getSkinName(){
-		return m_skinName;
+		return skinName;
 	}
 }

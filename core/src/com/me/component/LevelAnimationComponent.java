@@ -15,20 +15,20 @@ import com.me.utils.Direction;
 public class LevelAnimationComponent extends AnimationComponent implements ButtonStateObserverComponent {
 
 
-    private int m_eventId;
+    private int eventId;
     public LevelAnimationComponent(String atlas, String skeleton, float scale) {
         super(atlas, skeleton, scale);
     }
 
     public LevelAnimationComponent(String atlas, String skeleton, float scale, int taskId) {
         super(atlas, skeleton, scale);
-        m_eventId = taskId;
+        eventId = taskId;
     }
 
     @Override
     public void onNotify(ButtonEvent event) {
         if(event.getEventType() == GameEventType.VerticalButton) {
-            if (m_eventId == event.getEventId()) {
+            if (eventId == event.getEventId()) {
                 VerticalButtonEvent buttonEvent = (VerticalButtonEvent) event;
                 if(buttonEvent.getDirection() == Direction.Up){
                     setAnimationState(PlayerState.Up);
@@ -46,7 +46,7 @@ public class LevelAnimationComponent extends AnimationComponent implements Butto
 
     @Override
     public void setAnimationState(PlayerState state) {
-        if (state != m_previousState) {
+        if (state != previousState) {
             setState(state);
             switch (state) {
                 case Idle:
@@ -61,18 +61,18 @@ public class LevelAnimationComponent extends AnimationComponent implements Butto
                 default:
                     break;
             }
-            m_skeleton.setToSetupPose();
+            skeleton.setToSetupPose();
         }
-        m_previousState = state;
+        previousState = state;
     }
 
     @Override
     public void update(SpriteBatch sb, float dt) {
-        m_animationState.update(dt);
-        m_animationState.apply(m_skeleton);
-        m_skeleton.update(dt);
-        m_skeleton.updateWorldTransform();
-        m_renderer.draw(sb, m_skeleton);
+        animationState.update(dt);
+        animationState.apply(skeleton);
+        skeleton.update(dt);
+        skeleton.updateWorldTransform();
+        renderer.draw(sb, skeleton);
     }
 
     @Override

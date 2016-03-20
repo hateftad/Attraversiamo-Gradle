@@ -23,93 +23,93 @@ import com.me.utils.Converters;
 
 public abstract class AnimationComponent extends BaseComponent implements TaskEventObserverComponent {
 
-	protected SkeletonRenderer m_renderer;
+	protected SkeletonRenderer renderer;
 
-    protected TextureAtlas m_atlas;
+    protected TextureAtlas atlas;
 
-    protected Skeleton m_skeleton;
+    protected Skeleton skeleton;
 
-    protected SkeletonData m_skeletonData;
+    protected SkeletonData skeletonData;
 
-    protected AnimationState m_animationState;
+    protected AnimationState animationState;
 
-    protected PlayerState m_state;
+    protected PlayerState state;
 
-	protected PlayerState m_previousState;
+	protected PlayerState previousState;
 
-    protected Vector2 m_center;
+    protected Vector2 center;
 
-    protected AnimationEvent m_event;
+    protected AnimationEvent event;
 
-    protected boolean m_isCompleted;
+    protected boolean isCompleted;
 
     protected static final String BlackSkin = "silhouette", ColorSkin = "color";
 
 
 	public AnimationComponent(String atlas, String skeleton, float scale){
-		m_renderer = new SkeletonRenderer();
-		m_atlas = new TextureAtlas(Gdx.files.internal(atlas+".atlas"));
-		AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(m_atlas);
+		renderer = new SkeletonRenderer();
+		this.atlas = new TextureAtlas(Gdx.files.internal(atlas+".atlas"));
+		AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(this.atlas);
 		SkeletonJson json = new SkeletonJson(atlasLoader);
 		json.setScale(scale);
-		m_skeletonData = json.readSkeletonData(Gdx.files.internal(skeleton + ".json"));
+		this.skeletonData = json.readSkeletonData(Gdx.files.internal(skeleton + ".json"));
 		Gdx.gl20.glDepthMask(false);
 	}
 
 	public AnimationStateData setUp(RubeImage image){
-        m_state = PlayerState.Idle;
-		AnimationStateData stateData = new AnimationStateData(m_skeletonData);
+        state = PlayerState.Idle;
+		AnimationStateData stateData = new AnimationStateData(skeletonData);
 		Vector2 size = new Vector2(image.width, image.height);
 		size = Converters.ToWorld(size);
-		m_center = new Vector2();
-		m_center.set(image.center.x - size.x/2, image.center.y - (size.y/2));
-		m_animationState = new AnimationState(stateData);
-		//m_animationState.setAnimation(0, "running", true);
-		m_animationState.addListener(new AnimationStateListener() {
+		center = new Vector2();
+		center.set(image.center.x - size.x/2, image.center.y - (size.y/2));
+		animationState = new AnimationState(stateData);
+		//animationState.setAnimation(0, "running", true);
+		animationState.addListener(new AnimationStateListener() {
 
             @Override
             public void start(int trackIndex) {
-                m_isCompleted = false;
+                isCompleted = false;
             }
 
             @Override
             public void event(int trackIndex, Event event) {
                 System.out.println(event.getData().getName());
-                m_event.setEvent(event);
+                setEvent(event);
             }
 
             @Override
             public void end(int trackIndex) {
-                m_isCompleted = true;
+                isCompleted = true;
             }
 
             @Override
             public void complete(int trackIndex, int loopCount) {
-                m_isCompleted = true;
+                isCompleted = true;
             }
         });
-        m_event = new AnimationEvent();
+        event = new AnimationEvent();
 
-		m_skeleton = new Skeleton(m_skeletonData);
-		m_skeleton.setX(m_center.x);
-		m_skeleton.setY(m_center.y);
-		Skin skin = m_skeletonData.findSkin("silhouette");
-		m_skeleton.setSkin(skin);
-		m_center = Converters.ToBox(m_center);
-		m_skeleton.updateWorldTransform();
+		skeleton = new Skeleton(skeletonData);
+		skeleton.setX(center.x);
+		skeleton.setY(center.y);
+		Skin skin = skeletonData.findSkin("silhouette");
+		skeleton.setSkin(skin);
+		center = Converters.ToBox(center);
+		skeleton.updateWorldTransform();
 		return stateData;
 	}
 
 	public void setUp(Vector2 center, String animation){
-		AnimationStateData stateData = new AnimationStateData(m_skeletonData);
-		m_animationState = new AnimationState(stateData);
-		m_animationState.setAnimation(0, animation, false);
-		m_animationState.addListener(new AnimationStateListener() {
+		AnimationStateData stateData = new AnimationStateData(skeletonData);
+		animationState = new AnimationState(stateData);
+		animationState.setAnimation(0, animation, false);
+		animationState.addListener(new AnimationStateListener() {
 
 			@Override
 			public void start(int trackIndex) {
 				// TODO Auto-generated method stub
-				m_isCompleted = false;
+				isCompleted = false;
 			}
 
 			@Override
@@ -121,111 +121,111 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 			@Override
 			public void end(int trackIndex) {
 				// TODO Auto-generated method stub
-				m_isCompleted = true;	
+				isCompleted = true;
 			}
 
 			@Override
 			public void complete(int trackIndex, int loopCount) {
 				// TODO Auto-generated method stub
-				m_isCompleted = true;
+				isCompleted = true;
 			}
 		});
 
-		m_skeleton = new Skeleton(m_skeletonData);
-		m_skeleton.setX(center.x);
-		m_skeleton.setY(center.y);
-		m_center = Converters.ToBox(center);
-		m_skeleton.updateWorldTransform();
+		skeleton = new Skeleton(skeletonData);
+		skeleton.setX(center.x);
+		skeleton.setY(center.y);
+		center = Converters.ToBox(center);
+		skeleton.updateWorldTransform();
 	}
 
 	public TextureAtlas getAtlas(){
-		return m_atlas;
+		return atlas;
 	}
 
 	public Vector2 getCenter(){
-		return m_center;
+		return center;
 	}
 
 	public void setPosition(Vector2 position){
-		m_skeleton.setX(Converters.ToWorld(position.x));
-		m_skeleton.setY(Converters.ToWorld(m_center.y + position.y));
+		skeleton.setX(Converters.ToWorld(position.x));
+		skeleton.setY(Converters.ToWorld(center.y + position.y));
 	}
 
 	public void setRotation(float rotation){
-		Bone bone = m_skeleton.findBone("root");
+		Bone bone = skeleton.findBone("root");
 		bone.setRotation(rotation);
 		//System.out.println("Rotation "+rotation);
 	}
 
 	public void setFacing(boolean left){
-		m_skeleton.setFlipX(left);
+		skeleton.setFlipX(left);
 	}
 
 	public void playAnimation(String name, boolean loop){
-		m_animationState.setAnimation(0, name, loop);
+		animationState.setAnimation(0, name, loop);
 	}
 
 	public void addAnimation(String name, boolean loop, float delay){
-		m_animationState.addAnimation(0, name, loop, delay);
+		animationState.addAnimation(0, name, loop, delay);
 	}
 
 	public boolean isCompleted(){		
-		return m_isCompleted;
+		return isCompleted;
 	}
 
 	public float getTime(){
-		return m_animationState.getCurrent(0).getTime();
+		return animationState.getCurrent(0).getTime();
 	}
 
 	public AnimationState getAnimationState(){
-		return m_animationState;
+		return animationState;
 	}
 
 	public PlayerState getState(){
-		return m_state;
+		return state;
 	}
 
 	public void setState(PlayerState state){
-		m_state = state;
+		this.state = state;
 	}
 
 	public void setSkin(String skinName){
-		m_skeleton.setSkin(m_skeletonData.findSkin(skinName));
+		skeleton.setSkin(skeletonData.findSkin(skinName));
 	}
 
 	public abstract void setAnimationState(PlayerState animationState);
 
 	public boolean isCompleted(PlayerState state){
-		return ((state == m_state) && (m_isCompleted));
+		return ((this.state == state) && (isCompleted));
 	}
 
 	public Skeleton getSkeleton(){
-		return m_skeleton;
+		return skeleton;
 	}
 
 	public void setupPose(){
-		m_skeleton.setBonesToSetupPose();
-        //m_skeleton.setToSetupPose();
+		skeleton.setBonesToSetupPose();
+        //skeleton.setToSetupPose();
 	}
 
 	public float getX(){
-		return m_skeleton.getX();
+		return skeleton.getX();
 	}
 
 	public float getY(){
-		return m_skeleton.getY();
+		return skeleton.getY();
 	}
 	
 	public abstract void update(SpriteBatch sb, float dt);
 
 	@Override
 	public void dispose() {
-		m_skeleton.getBones().clear();
-		m_animationState.clearTracks();
-		m_renderer = null;
-		m_atlas.getRegions().clear();
-		m_atlas.getTextures().clear();
-		m_atlas.dispose();
+		skeleton.getBones().clear();
+		animationState.clearTracks();
+		renderer = null;
+		atlas.getRegions().clear();
+		atlas.getTextures().clear();
+		atlas.dispose();
 	}
 
 	@Override
@@ -234,4 +234,7 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 		setFacing(false);
 	}
 
+	public void setEvent(Event event) {
+		this.event.setEvent(event);
+	}
 }

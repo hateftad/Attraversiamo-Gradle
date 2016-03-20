@@ -17,24 +17,24 @@ import com.me.events.states.PlayerState;
 public class ManInteractionSystem extends PlayerSystem {
 
     @Mapper
-    ComponentMapper<PlayerAnimationComponent> m_animComps;
+    ComponentMapper<PlayerAnimationComponent> animComps;
     @Mapper
-    ComponentMapper<PlayerComponent> m_playerComp;
+    ComponentMapper<PlayerComponent> playerComp;
     @Mapper
-    ComponentMapper<PhysicsComponent> m_physComp;
+    ComponentMapper<PhysicsComponent> physComp;
     @Mapper
-    ComponentMapper<TouchComponent> m_touchComp;
+    ComponentMapper<TouchComponent> touchComp;
     @Mapper
-    ComponentMapper<HangComponent> m_hangComp;
+    ComponentMapper<HangComponent> hangComp;
     @Mapper
-    ComponentMapper<JointComponent> m_jointComp;
+    ComponentMapper<JointComponent> jointComp;
     @Mapper
-    ComponentMapper<EventComponent> m_eventComps;
+    ComponentMapper<EventComponent> eventComps;
 
     @Mapper
-    ComponentMapper<VelocityLimitComponent> m_velComps;
+    ComponentMapper<VelocityLimitComponent> velComps;
     @Mapper
-    ComponentMapper<CharacterMovementComponent> m_movementComps;
+    ComponentMapper<CharacterMovementComponent> movementComps;
     @SuppressWarnings("unchecked")
     public ManInteractionSystem() {
         super(Aspect.getAspectForAll(PlayerOneComponent.class));
@@ -42,16 +42,16 @@ public class ManInteractionSystem extends PlayerSystem {
 
     @Override
     protected void process(Entity entity) {
-        JointComponent jointComponent = m_jointComp.get(entity);
-        TouchComponent touchComponent = m_touchComp.get(entity);
-        PlayerComponent playerComponent = m_playerComp.get(entity);
-        PlayerAnimationComponent animation = m_animComps.get(entity);
-        PhysicsComponent physicsComponent = m_physComp.get(entity);
-        HangComponent hangComponent = m_hangComp.get(entity);
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
-        VelocityLimitComponent velocityLimitComponent = m_velComps.get(entity);
+        JointComponent jointComponent = jointComp.get(entity);
+        TouchComponent touchComponent = touchComp.get(entity);
+        PlayerComponent playerComponent = playerComp.get(entity);
+        PlayerAnimationComponent animation = animComps.get(entity);
+        PhysicsComponent physicsComponent = physComp.get(entity);
+        HangComponent hangComponent = hangComp.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
+        VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
 
-        if (touchComponent.m_edgeTouch) {
+        if (touchComponent.edgeTouch) {
             if (!playerComponent.isHanging()) {
                 jointComponent.createHangJoint();
             }
@@ -91,7 +91,7 @@ public class ManInteractionSystem extends PlayerSystem {
         }
         if (playerComponent.isPullingUp()) {
             if (animation.isCompleted(PlayerState.PullUp)) {
-                touchComponent.m_handTouch = false;
+                touchComponent.handTouch = false;
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
@@ -121,7 +121,7 @@ public class ManInteractionSystem extends PlayerSystem {
         if(playerComponent.isPressingButton()){
             if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.PRESSINGBUTTON){
                 animation.getEvent().resetEvent();
-                EventComponent component = m_eventComps.get(entity);
+                EventComponent component = eventComps.get(entity);
                 component.getEventInfo().notify(this, playerComponent.getPlayerNr());
             }
 
@@ -130,15 +130,15 @@ public class ManInteractionSystem extends PlayerSystem {
             }
         }
 
-        if(touchComponent.m_waterTouch){
+        if(touchComponent.waterTouch){
             setPlayerState(entity, PlayerState.Drowning);
         }
     }
 
     @Override
     protected void setPlayerState(Entity entity, PlayerState state) {
-        m_animComps.get(entity).setAnimationState(state);
-        m_playerComp.get(entity).setState(state);
+        animComps.get(entity).setAnimationState(state);
+        playerComp.get(entity).setState(state);
     }
 
     @Override

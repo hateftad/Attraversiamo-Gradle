@@ -2,8 +2,8 @@ package com.me.component;
 
 public class PushComponent extends BaseComponent {
 
-	public boolean m_pushLeft = false;
-	public boolean m_pushRight = false;
+	public boolean pushLeft = false;
+	public boolean pushRight = false;
 	
 	@Override
 	public void dispose() {
@@ -13,7 +13,7 @@ public class PushComponent extends BaseComponent {
 
 	@Override
 	public void restart() {
-		m_pushLeft = false;
-		m_pushRight = false;
+		pushLeft = false;
+		pushRight = false;
 	}
 }

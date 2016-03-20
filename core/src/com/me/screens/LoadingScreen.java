@@ -16,25 +16,25 @@ import java.util.ArrayList;
 
 public class LoadingScreen extends AbstractScreen {
 
-    private Texture m_splsh;
-    private BackgroundLoader m_loader;
-    private boolean m_loadComplete = false;
+    private Texture splsh;
+    private BackgroundLoader loader;
+    private boolean loadComplete = false;
 
     public LoadingScreen(Attraversiamo game) {
         super(game);
-        m_splsh = new Texture(Gdx.files.internal("data/loading.png"));
-        m_loader = new BackgroundLoader(game);
-        m_loader.setListener(new LoadCompletionListener() {
+        this.splsh = new Texture(Gdx.files.internal("data/loading.png"));
+        this.loader = new BackgroundLoader(game);
+        this.loader.setListener(new LoadCompletionListener() {
             @Override
             public void onComplete() {
-                m_loadComplete = true;
+                loadComplete = true;
             }
         });
     }
 
     public void load(int levelNr) {
-        m_loader.setLevel(levelNr);
-        m_loader.run();
+        loader.setLevel(levelNr);
+        loader.run();
     }
 
     @Override
@@ -42,26 +42,26 @@ public class LoadingScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        m_spriteBatch.begin();
-        m_spriteBatch.draw(m_splsh, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2.5f);
-        m_spriteBatch.end();
-        if (m_loadComplete) {
+        spriteBatch.begin();
+        spriteBatch.draw(splsh, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2.5f);
+        spriteBatch.end();
+        if (loadComplete) {
             changeScreen();
         }
 
     }
 
     private void changeScreen() {
-        Screen current = m_game.getScreen();
-        Screen next = m_game.m_gameScreen;
+        Screen current = game.getScreen();
+        Screen next = game.gameScreen;
 
 //        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
 //
 //        effects.add(new FadeOutTransitionEffect(1f));
 //
-//        Screen transitionScreen = new TransitionScreen(m_game, current, next, effects);
+//        Screen transitionScreen = new TransitionScreen(game, current, next, effects);
 
-        m_game.setScreen(next);
+        game.setScreen(next);
     }
 
     @Override
@@ -87,8 +87,8 @@ public class LoadingScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        m_spriteBatch.dispose();
-        m_splsh.dispose();
+        spriteBatch.dispose();
+        splsh.dispose();
 
     }
 

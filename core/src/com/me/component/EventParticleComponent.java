@@ -10,18 +10,18 @@ import com.me.events.TaskEvent;
  */
 public class EventParticleComponent extends ParticleComponent implements ParticleEventObserverComponent {
 
-    private int m_id;
+    private int id;
     private ParticleEvent event;
 
     public EventParticleComponent(String effect, int id, Vector2 position) {
         super(effect, 10);
-        m_id = id;
+        this.id = id;
         setPosition(position);
     }
 
     @Override
     public void onNotify(ParticleEvent particleEvent) {
-        if (particleEvent.getEventId() == m_id) {
+        if (particleEvent.getEventId() == id) {
             start();
             event.setStarted(true);
         }

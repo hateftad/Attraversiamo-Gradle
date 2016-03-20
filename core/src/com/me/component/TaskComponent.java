@@ -8,15 +8,15 @@ import com.me.component.interfaces.TaskEventObserverComponent;
  */
 public abstract class TaskComponent extends BaseComponent implements TaskEventObserverComponent {
 
-    protected int m_nrfinishers;
-    protected ObjectMap<PlayerComponent.PlayerNumber, Boolean> m_finishers;
+    protected int nrfinishers;
+    protected ObjectMap<PlayerComponent.PlayerNumber, Boolean> finishers;
 
     public TaskComponent(int finishers) {
-        m_nrfinishers = finishers;
-        m_finishers = new ObjectMap<>(m_nrfinishers);
+        this.nrfinishers = finishers;
+        this.finishers = new ObjectMap<>(nrfinishers);
     }
 
     public boolean allFinished() {
-        return m_finishers.size == m_nrfinishers;
+        return finishers.size == nrfinishers;
     }
 }

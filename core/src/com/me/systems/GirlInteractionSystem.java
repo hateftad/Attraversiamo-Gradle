@@ -18,19 +18,19 @@ public class GirlInteractionSystem extends PlayerSystem {
 
 
     @Mapper
-    ComponentMapper<PlayerAnimationComponent> m_animComps;
+    ComponentMapper<PlayerAnimationComponent> animComps;
     @Mapper
-    ComponentMapper<PlayerComponent> m_playerComp;
+    ComponentMapper<PlayerComponent> playerComp;
     @Mapper
-    ComponentMapper<PhysicsComponent> m_physComp;
+    ComponentMapper<PhysicsComponent> physComp;
     @Mapper
-    ComponentMapper<TouchComponent> m_touchComp;
+    ComponentMapper<TouchComponent> touchComp;
     @Mapper
-    ComponentMapper<GrabComponent> m_grabComps;
+    ComponentMapper<GrabComponent> grabComps;
     @Mapper
-    ComponentMapper<CharacterMovementComponent> m_movementComps;
+    ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
-    ComponentMapper<EventComponent> m_eventComps;
+    ComponentMapper<EventComponent> eventComps;
 
     @SuppressWarnings("unchecked")
     public GirlInteractionSystem() {
@@ -40,15 +40,15 @@ public class GirlInteractionSystem extends PlayerSystem {
     @Override
     protected void process(Entity entity) {
 
-        TouchComponent touchComponent = m_touchComp.get(entity);
-        PlayerComponent playerComponent = m_playerComp.get(entity);
-        PlayerAnimationComponent animation = m_animComps.get(entity);
-        PhysicsComponent physicsComponent = m_physComp.get(entity);
-        CharacterMovementComponent movementComponent = m_movementComps.get(entity);
+        TouchComponent touchComponent = touchComp.get(entity);
+        PlayerComponent playerComponent = playerComp.get(entity);
+        PlayerAnimationComponent animation = animComps.get(entity);
+        PhysicsComponent physicsComponent = physComp.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
 
-        if (touchComponent.m_handTouch && playerComponent.isJumping()) {
+        if (touchComponent.handTouch && playerComponent.isJumping()) {
             if (!playerComponent.isPullingUp()) {
-                GrabComponent grabComponent = m_grabComps.get(entity);
+                GrabComponent grabComponent = grabComps.get(entity);
                 physicsComponent.setBodyActive(false);
                 physicsComponent.setPosition(grabComponent.handPositionX, physicsComponent.getPosition().y);
                 setPlayerState(entity, PlayerState.PullUp);
@@ -58,7 +58,7 @@ public class GirlInteractionSystem extends PlayerSystem {
             if (animation.isCompleted(PlayerState.PullUp)) {
                 physicsComponent.setBodyActive(true);
                 physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left foot"));
-                touchComponent.m_handTouch = false;
+                touchComponent.handTouch = false;
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
@@ -68,7 +68,7 @@ public class GirlInteractionSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.LyingDown);
             }
         }
-        if (playerComponent.isCrawling() && !touchComponent.m_canCrawl) {
+        if (playerComponent.isCrawling() && !touchComponent.canCrawl) {
             setPlayerState(entity, PlayerState.StandUp);
         }
 
@@ -100,7 +100,7 @@ public class GirlInteractionSystem extends PlayerSystem {
         if(playerComponent.isPressingButton()){
             if (animation.getEvent().getEventType() == AnimationEvent.AnimationEventType.PRESSINGBUTTON){
                 animation.getEvent().resetEvent();
-                EventComponent component = m_eventComps.get(entity);
+                EventComponent component = eventComps.get(entity);
                 component.getEventInfo().notify(this, playerComponent.getPlayerNr());
             }
 
@@ -115,15 +115,15 @@ public class GirlInteractionSystem extends PlayerSystem {
             }
         }
 
-        if(touchComponent.m_waterTouch){
+        if(touchComponent.waterTouch){
             setPlayerState(entity, PlayerState.Drowning);
         }
     }
 
     @Override
     protected void setPlayerState(Entity entity, PlayerState state) {
-        m_animComps.get(entity).setAnimationState(state);
-        m_playerComp.get(entity).setState(state);
+        animComps.get(entity).setAnimationState(state);
+        playerComp.get(entity).setState(state);
     }
 
     @Override

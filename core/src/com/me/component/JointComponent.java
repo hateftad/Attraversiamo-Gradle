@@ -1,6 +1,5 @@
 package com.me.component;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointDef;
@@ -9,38 +8,38 @@ import com.me.utils.Converters;
 
 public class JointComponent extends BaseComponent{
 
-	private Joint m_joint;
+	private Joint joint;
 	
-	private JointDef m_jointDef;
+	private JointDef jointDef;
 
-	public boolean m_created;
+	public boolean created;
 
-	public boolean m_destroyed;
+	public boolean destroyed;
 	
 	public JointComponent(){
 
 	}
 
 	public void setPrismJoint(Joint joint){
-		m_joint = joint;
+		this.joint = joint;
 	}
 
 	public Joint getJoint(){
-		return m_joint;
+		return joint;
 	}
 	
 	public JointDef getJointDef(){
-		return m_jointDef;
+		return jointDef;
 	}
 	
 	public void createEdgeHang(Body b1, Body b2){
-		m_jointDef = JointFactory.getInstance().createWeldJoint(
+		jointDef = JointFactory.getInstance().createWeldJoint(
                 b2, b1,
                 Converters.ToBox(b2.getPosition()),
                 Converters.ToBox(b2.getPosition()),
                 true);
-		m_created = true;
-		m_destroyed = false;
+		created = true;
+		destroyed = false;
 	}
 
     public void createHangJoint(){
@@ -52,12 +51,12 @@ public class JointComponent extends BaseComponent{
     public void destroyHangJoint(){
         if(getJoint() != null) {
             JointFactory.getInstance().destroyJoint(getJoint());
-            m_joint = null;
+            joint = null;
         }
     }
 
 	public boolean hasMotor(){
-		return m_joint != null;
+		return joint != null;
 	}
 
 	@Override
@@ -68,13 +67,13 @@ public class JointComponent extends BaseComponent{
 	@Override
 	public void restart() {
 		// TODO Auto-generated method stub
-		if(m_joint != null){
-			JointFactory.getInstance().destroyJoint(m_joint);
-            m_joint = null;
+		if(joint != null){
+			JointFactory.getInstance().destroyJoint(joint);
+            joint = null;
 		}
 	}
 
     public boolean isHanging() {
-        return m_joint != null;
+        return joint != null;
     }
 }

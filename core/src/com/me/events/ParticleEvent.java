@@ -8,17 +8,17 @@ import com.me.systems.GameEntityWorld;
  */
 public class ParticleEvent extends GameEvent {
 
-    private int m_eventId;
-    private boolean m_started;
+    private int eventId;
+    private boolean started;
 
     public ParticleEvent(BodyInfo bodyInfo) {
         super(bodyInfo.getEventType());
-        m_eventId = bodyInfo.getEventId();
+        eventId = bodyInfo.getEventId();
     }
 
     public ParticleEvent(GameEventType type, int eventId){
         super(type);
-        m_eventId = eventId;
+        this.eventId = eventId;
     }
 
     @Override
@@ -27,14 +27,14 @@ public class ParticleEvent extends GameEvent {
     }
 
     public int getEventId() {
-        return m_eventId;
+        return eventId;
     }
 
     public boolean isStarted() {
-        return m_started;
+        return started;
     }
 
-    public void setStarted(boolean m_started) {
-        this.m_started = m_started;
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 }

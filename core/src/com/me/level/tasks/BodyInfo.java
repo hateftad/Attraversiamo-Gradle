@@ -8,49 +8,49 @@ import com.me.events.GameEventType;
  */
 public class BodyInfo {
 
-    private int m_taskFinishers;
+    private int taskFinishers;
 
     public int getEventId() {
-        return m_taskId;
+        return taskId;
     }
 
-    private int m_taskId;
-    private GameEventType m_taskType;
+    private int taskId;
+    private GameEventType taskType;
 
     public BodyInfo(int taskFinishers, int taskId, String taskType) {
-        m_taskFinishers = taskFinishers;
-        m_taskId = taskId;
+        this.taskFinishers = taskFinishers;
+        this.taskId = taskId;
         setTaskType(taskType);
     }
 
     private void setTaskType(String taskType) {
         if ("Door".equalsIgnoreCase(taskType)) {
-            m_taskType = GameEventType.Door;
+            this.taskType = GameEventType.Door;
         } else if ("WaterEngine".equalsIgnoreCase(taskType)) {
-            m_taskType = GameEventType.WaterEngine;
+            this.taskType = GameEventType.WaterEngine;
         } else if ("ReachEnd".equalsIgnoreCase(taskType)) {
-            m_taskType = GameEventType.InsideFinishArea;
+            this.taskType = GameEventType.InsideFinishArea;
         } else if ("HorizontalButton".equalsIgnoreCase(taskType)) {
-            m_taskType = GameEventType.HorizontalButton;
+            this.taskType = GameEventType.HorizontalButton;
         } else if ("GroundTouch".equalsIgnoreCase(taskType)){
-            m_taskType = GameEventType.GroundTouch;
+            this.taskType = GameEventType.GroundTouch;
         } else if ("VerticalButton".equalsIgnoreCase(taskType)) {
-            m_taskType = GameEventType.VerticalButton;
+            this.taskType = GameEventType.VerticalButton;
         } else if ("Particle".equalsIgnoreCase(taskType)){
-            m_taskType = GameEventType.Particle;
+            this.taskType = GameEventType.Particle;
         } else if ("PortalReachEnd".equalsIgnoreCase(taskType)){
-            m_taskType = GameEventType.PortalParticle;
+            this.taskType = GameEventType.PortalParticle;
         } else if ("PortalParticleFinish".equalsIgnoreCase(taskType)){
-            m_taskType = GameEventType.PortalParticleFinish;
+            this.taskType = GameEventType.PortalParticleFinish;
         }
     }
 
     public int getTaskFinishers() {
-        return m_taskFinishers;
+        return taskFinishers;
     }
 
     public GameEventType getEventType() {
-        return m_taskType;
+        return taskType;
     }
 
 }

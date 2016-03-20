@@ -13,7 +13,7 @@ import com.me.events.ParticleEvent;
 public class EventParticlesSystem extends GameEntityProcessingSystem {
 
     @Mapper
-    ComponentMapper<EventParticleComponent> m_eventParticles;
+    ComponentMapper<EventParticleComponent> eventParticles;
 
     public EventParticlesSystem() {
         super(Aspect.getAspectForOne(EventParticleComponent.class));
@@ -21,8 +21,8 @@ public class EventParticlesSystem extends GameEntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        if(m_eventParticles.has(entity)){
-            EventParticleComponent eventParticleComponent = m_eventParticles.get(entity);
+        if(eventParticles.has(entity)){
+            EventParticleComponent eventParticleComponent = eventParticles.get(entity);
             ParticleEvent event = eventParticleComponent.getEvent();
             if(event.isStarted() && eventParticleComponent.isCompleted()){
                 eventParticleComponent.getEvent().notify((GameEntityWorld)world);

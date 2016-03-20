@@ -10,16 +10,16 @@ import com.me.events.TaskEvent;
  */
 public class HingeComponent extends TaskComponent {
 
-    private Joint m_joint;
+    private Joint joint;
 
     public HingeComponent(int finishers, Joint joint) {
         super(finishers);
-        m_joint = joint;
+        this.joint = joint;
     }
 
     private void openDoor(){
-        if(m_joint != null){
-            RevoluteJoint revoluteJoint = (RevoluteJoint) m_joint;
+        if(joint != null){
+            RevoluteJoint revoluteJoint = (RevoluteJoint) joint;
             revoluteJoint.enableLimit(false);
         }
     }

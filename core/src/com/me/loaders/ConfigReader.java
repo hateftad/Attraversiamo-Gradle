@@ -15,24 +15,23 @@ import com.me.config.PlayerConfig;
 import com.me.level.LevelConfigSerializer;
 
 public class ConfigReader {
-	
-	private XmlReader m_reader;
+
 	private static final String PATH = "data/level/lvlconf.xml";
 	private static final String JSONPATH = "data/level/levelconfig.json";
 	
-	private Map<String, LevelConfig> m_levelConfigs;
+	private Map<String, LevelConfig> levelConfigs;
 	
 	public ConfigReader(){
 
-		m_levelConfigs = new HashMap<>();
-		m_reader = new XmlReader();
+		levelConfigs = new HashMap<>();
+		XmlReader reader = new XmlReader();
 //		Json json = new Json();
 //		json.setSerializer(LevelConfig.class, new LevelConfigSerializer());
 //		LevelList levelList = json.fromJson(LevelList.class, Gdx.files.internal(JSONPATH));
 
 
 		try {
-			Element root = m_reader.parse(Gdx.files.internal(PATH));
+			Element root = reader.parse(Gdx.files.internal(PATH));
 			Array<Element> items = root.getChildrenByName("Level");
 			for (Element child : items){
 				
@@ -56,7 +55,7 @@ public class ConfigReader {
 				config.setNumberOfPlayers(child.getInt("nrOfPlayers"));
                 config.setZoom(child.getInt("zoom"));
                 config.setNextLevel(child.getInt("nextLevel"));
-				m_levelConfigs.put(child.getAttribute("name"), config);
+				levelConfigs.put(child.getAttribute("name"), config);
 				
 			}
 		} catch (IOException e) {
@@ -69,7 +68,7 @@ public class ConfigReader {
 	}
 	
 	public LevelConfig getLevelConfigByName(String name){
-		return m_levelConfigs.get(name);
+		return levelConfigs.get(name);
 	}
 
 }

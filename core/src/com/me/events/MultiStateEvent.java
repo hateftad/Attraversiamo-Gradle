@@ -7,15 +7,15 @@ import com.me.level.tasks.BodyInfo;
  */
 public abstract class MultiStateEvent extends GameEvent {
 
-    protected int m_eventId;
+    protected int eventId;
 
     public int getEventId() {
-        return m_eventId;
+        return eventId;
     }
 
     public MultiStateEvent(BodyInfo bodyInfo) {
         super(bodyInfo.getEventType());
-        m_eventId = bodyInfo.getEventId();
+        eventId = bodyInfo.getEventId();
     }
 
 }

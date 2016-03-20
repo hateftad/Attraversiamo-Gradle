@@ -12,24 +12,24 @@ import com.me.utils.Direction;
 
 public class BuoyancyComponent extends BaseComponent implements ButtonStateObserverComponent {
 
-	private ObjectMap<String, BuoyancyControllerConfig> m_controllerInfo = new ObjectMap<>();
-    private int m_eventId;
+	private ObjectMap<String, BuoyancyControllerConfig> controllerInfo = new ObjectMap<>();
+    private int eventId;
 
 	//pass in fluid velocity
 	public BuoyancyComponent(int taskId){
-        m_eventId = taskId;
+        eventId = taskId;
 	}
 
 	public void addControllerInfo(String name, Vector2 fluidVelocity, float linearDrag, float angularDrag){
-		m_controllerInfo.put(name, new BuoyancyControllerConfig(fluidVelocity, linearDrag, angularDrag));
+		controllerInfo.put(name, new BuoyancyControllerConfig(fluidVelocity, linearDrag, angularDrag));
 	}
 
 	public ObjectMap getControllerInfo(){
-		return m_controllerInfo;
+		return controllerInfo;
 	}
 
     public BuoyancyControllerConfig getController(String name){
-        return m_controllerInfo.get(name);
+        return controllerInfo.get(name);
     }
 
 	@Override
@@ -39,7 +39,7 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
 
 	@Override
 	public void restart() {
-		for(BuoyancyControllerConfig config : m_controllerInfo.values()){
+		for(BuoyancyControllerConfig config : controllerInfo.values()){
             config.reset();
         }
 	}
@@ -47,7 +47,7 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
     @Override
     public void onNotify(ButtonEvent event) {
         if(event.getEventType() == GameEventType.HorizontalButton){
-            if(m_eventId == event.getEventId()){
+            if(eventId == event.getEventId()){
                 HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
                 buttonEvent.update();
                 //get fluid velocity from other component
@@ -67,30 +67,30 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
     }
 
     public class BuoyancyControllerConfig {
-		private float m_angularDrag;
-		private float m_linearDrag;
-		private Vector2 m_fluidVelocity;
+		private float angularDrag;
+		private float linearDrag;
+		private Vector2 fluidVelocity;
 
 		public BuoyancyControllerConfig(Vector2 fluidVelocity, float linearDrag, float angularDrag){
-			m_angularDrag = angularDrag;
-			m_linearDrag = linearDrag;
-			m_fluidVelocity = fluidVelocity;
+			angularDrag = angularDrag;
+			linearDrag = linearDrag;
+			fluidVelocity = fluidVelocity;
 		}
 
 		public float getAngularDrag() {
-			return m_angularDrag;
+			return angularDrag;
 		}
 
 		public float getLinearDrag() {
-			return m_linearDrag;
+			return linearDrag;
 		}
 
 		public Vector2 getFluidVelocity() {
-			return m_fluidVelocity;
+			return fluidVelocity;
 		}
 
         public void setFluidVelocity(float x, float y){
-            m_fluidVelocity.set(x, y);
+            fluidVelocity.set(x, y);
         }
 
         public void reset(){
