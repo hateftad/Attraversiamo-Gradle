@@ -1,6 +1,7 @@
 package com.me.attraversiamo.android;
 
 import android.app.Application;
+import android.content.Context;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
@@ -24,6 +25,18 @@ public class AttraversiamoApplication extends Application {
         // roll-up tracking.
         ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a
         // company.
+    }
+
+    private static Context applicationContext;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        applicationContext = getApplicationContext();
+    }
+
+    public static Context getContext(){
+        return applicationContext;
     }
 
     HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();

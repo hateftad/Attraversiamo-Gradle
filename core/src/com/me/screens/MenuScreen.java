@@ -47,6 +47,9 @@ public class MenuScreen extends AbstractScreen {
         AnimationComponent scene = new LevelAnimationComponent(SCENEPATH, SCENEPATH, SCALE);
         scene.setUp(middlePoint, "running");
         animation.add(scene);
+        if(!this.game.getPlayServices().isSignedIn()) {
+            this.game.getPlayServices().signIn();
+        }
     }
 
     @Override

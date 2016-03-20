@@ -26,7 +26,12 @@ public class DesktopLauncher {
 
     private static IActivityRequestHandler requestHandler = new IActivityRequestHandler() {
         @Override
-        public void showAds(boolean show) {
+        public void showBannerAd(boolean show) {
+
+        }
+
+        @Override
+        public void showInterstitialAd() {
 
         }
 

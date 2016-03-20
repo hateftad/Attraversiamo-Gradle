@@ -65,6 +65,7 @@ public class AdManager {
 
         final CGSize screenSize = UIScreen.getMainScreen().getBounds().getSize();
         double screenWidth = screenSize.getWidth();
+        double screenHeight = screenSize.getHeight();
 
         final CGSize adSize = adview.getBounds().getSize();
         double adWidth = adSize.getWidth();
@@ -76,7 +77,7 @@ public class AdManager {
         float bannerHeight = (float) (bannerWidth / adWidth * adHeight);
 
         if (show) {
-            adview.setFrame(new CGRect((screenWidth / 2) - adWidth / 2, 0, bannerWidth, bannerHeight));
+            adview.setFrame(new CGRect((screenWidth / 2) - adWidth / 2, screenHeight - adHeight, bannerWidth, bannerHeight));
         } else {
             adview.setFrame(new CGRect(0, -bannerHeight, bannerWidth, bannerHeight));
         }

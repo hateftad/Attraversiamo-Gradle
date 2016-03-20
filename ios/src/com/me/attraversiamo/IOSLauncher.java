@@ -34,6 +34,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         Attraversiamo attraversiamo = new Attraversiamo(cfg, this);
         attraversiamo.setPlayServices(playServicesManager);
         iosApplication = new IOSApplication(attraversiamo, config);
+        adHandler = new AdManager(iosApplication);
         return iosApplication;
     }
 
@@ -44,11 +45,13 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
     }
 
     @Override
-    public void showAds(boolean show) {
-        if (adHandler == null) {
-            adHandler = new AdManager(iosApplication);
-        }
+    public void showBannerAd(boolean show) {
         adHandler.showAds(show);
+    }
+
+    @Override
+    public void showInterstitialAd() {
+
     }
 
     @Override

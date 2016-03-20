@@ -8,11 +8,6 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 import com.me.component.LevelAnimationComponent;
-import com.me.screens.transitions.FadeInTransitionEffect;
-import com.me.screens.transitions.FadeOutTransitionEffect;
-import com.me.screens.transitions.TransitionEffect;
-
-import java.util.ArrayList;
 
 public class SplashScreen extends AbstractScreen {
 
@@ -26,7 +21,6 @@ public class SplashScreen extends AbstractScreen {
         this.animation = new LevelAnimationComponent("data/intro", "data/intro", 1f);
         this.animation.setUp(new Vector2(0, 0), "intro");
         this.camera.zoom = 2f;
-        this.game.getPlayServices().signIn();
     }
 
     @Override
@@ -74,7 +68,7 @@ public class SplashScreen extends AbstractScreen {
 //        Screen transitionScreen = new TransitionScreen(game, current, next, effects);
 
         game.setScreen(next);
-        game.showAd(true);
+        game.showBannerAd(true);
     }
 
     @Override

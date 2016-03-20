@@ -1,20 +1,15 @@
 package com.me.attraversiamo.android;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.games.Games;
-import com.google.example.games.basegameutils.GameHelper;
 import com.me.ads.IActivityRequestHandler;
-import com.me.ads.PlayServices;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.attraversiamo.android.ads.AdManager;
 import com.me.attraversiamo.android.analytics.AnalyticsManager;
@@ -58,7 +53,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         analyticsHandler = new AnalyticsManager(application.getTracker(AttraversiamoApplication.TrackerName.APP_TRACKER));
 
         setContentView(rootLayout);
-
+        adManager = new AdManager(rootLayout);
     }
 
     @Override
@@ -83,11 +78,13 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
     }
 
     @Override
-    public void showAds(boolean show) {
-        if (adManager == null) {
-            adManager = new AdManager(rootLayout);
-        }
-        adManager.showAd(show);
+    public void showBannerAd(boolean show) {
+        adManager.showBannerAd(show);
+    }
+
+    @Override
+    public void showInterstitialAd() {
+        adManager.showInterstitialAd(this);
     }
 
     @Override

@@ -49,8 +49,12 @@ public class Attraversiamo extends Game implements ApplicationListener {
     }
 
 
-    public void showAd(boolean show) {
-        adRequestHandler.showAds(show);
+    public void showBannerAd(boolean show) {
+        adRequestHandler.showBannerAd(show);
+    }
+
+    public void showInterstitialAd(){
+        adRequestHandler.showInterstitialAd();
     }
 
     public void setScreenName(String name) {

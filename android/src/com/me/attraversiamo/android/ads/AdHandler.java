@@ -3,7 +3,9 @@ package com.me.attraversiamo.android.ads;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.lang.ref.WeakReference;
 
@@ -17,7 +19,7 @@ public class AdHandler extends Handler {
     private static final int HIDE_ADS = 0;
 
     public AdHandler(AdView view) {
-        weakReference = new WeakReference<AdView>(view);
+        weakReference = new WeakReference<>(view);
     }
 
     @Override
@@ -25,19 +27,28 @@ public class AdHandler extends Handler {
         if (weakReference.get() == null) {
             return;
         }
-        switch (msg.what) {
-            case SHOW_ADS: {
-                weakReference.get().setVisibility(View.VISIBLE);
+        switch (msg.arg1) {
+            case AdManager.BANNER:
+                switch (msg.what) {
+                    case SHOW_ADS: {
+                        weakReference.get().setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    case HIDE_ADS: {
+                        weakReference.get().setVisibility(View.GONE);
+                        break;
+                    }
+                }
                 break;
-            }
-            case HIDE_ADS: {
-                weakReference.get().setVisibility(View.GONE);
-                break;
-            }
+
         }
+
     }
 
-    public void sendMessage(boolean show){
-        sendEmptyMessage(show ? SHOW_ADS : HIDE_ADS);
+    public void sendMessage(int type, boolean show) {
+        Message message = new Message();
+        message.arg1 = type;
+        message.what = show ? SHOW_ADS : HIDE_ADS;
+        sendMessage(message);
     }
 }
