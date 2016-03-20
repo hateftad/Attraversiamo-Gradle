@@ -6,15 +6,19 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.me.config.LevelConfig;
+import com.me.config.LevelList;
 import com.me.config.PlayerConfig;
+import com.me.level.LevelConfigSerializer;
 
 public class ConfigReader {
 	
 	private XmlReader m_reader;
 	private static final String PATH = "data/level/lvlconf.xml";
+	private static final String JSONPATH = "data/level/levelconfig.json";
 	
 	private Map<String, LevelConfig> m_levelConfigs;
 	
@@ -22,6 +26,10 @@ public class ConfigReader {
 
 		m_levelConfigs = new HashMap<>();
 		m_reader = new XmlReader();
+//		Json json = new Json();
+//		json.setSerializer(LevelConfig.class, new LevelConfigSerializer());
+//		LevelList levelList = json.fromJson(LevelList.class, Gdx.files.internal(JSONPATH));
+
 
 		try {
 			Element root = m_reader.parse(Gdx.files.internal(PATH));

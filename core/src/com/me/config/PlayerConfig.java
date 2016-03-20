@@ -5,7 +5,6 @@ import com.me.events.states.PlayerState;
 
 public class PlayerConfig {
 
-
     private Vector2 m_playerPosition;
     private boolean m_facingleft;
     private boolean m_active;

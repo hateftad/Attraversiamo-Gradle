@@ -2,11 +2,8 @@ package com.me.config;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.utils.GameUtils;
-
-import java.util.HashMap;
 
 public class LevelConfig {
 
@@ -18,6 +15,8 @@ public class LevelConfig {
     private int m_numberOfPlayers;
     private float m_zoom;
     private int m_nextLevel;
+
+    public LevelConfig(){}
 
 	public LevelConfig(String name) {
 		m_name = name;
