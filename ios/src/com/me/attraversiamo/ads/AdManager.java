@@ -5,7 +5,10 @@ import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.utils.Logger;
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.coregraphics.CGSize;
+import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.pods.google.mobileads.*;
 
 import java.util.ArrayList;
@@ -20,9 +23,37 @@ public class AdManager {
     private static final boolean USE_TEST_DEVICES = true;
 
     private GADBannerView adview;
+    private GADInterstitial interstitial;
 
     public AdManager(IOSApplication application) {
         initializeAds(application);
+        initializeInterstitial(application);
+    }
+
+    private void initializeInterstitial(IOSApplication application) {
+        UIViewController rootViewController = application.getUIViewController();
+
+        interstitial = new GADInterstitial("ca-app-pub-8364054019750662/3112945839");
+        interstitial.setDelegate(new GADInterstitialDelegateAdapter() {
+            @Override
+            public void didReceiveAd (GADInterstitial ad) {
+                System.out.println("Did receive ad.");
+            }
+
+            @Override
+            public void didFailToReceiveAd (GADInterstitial ad, GADRequestError error) {
+                System.out.println(error.description());
+                System.out.println(error.getErrorCode());
+            }
+        });
+
+        UIWindow window = new UIWindow(UIScreen.getMainScreen().getBounds());
+        window.setRootViewController(rootViewController);
+        window.addSubview(rootViewController.getView());
+        window.makeKeyAndVisible();
+        final GADRequest request = new GADRequest();
+        interstitial.loadRequest(request);
+        interstitial.present(rootViewController);
     }
 
     public void initializeAds(IOSApplication iosApplication) {
@@ -81,5 +112,12 @@ public class AdManager {
         } else {
             adview.setFrame(new CGRect(0, -bannerHeight, bannerWidth, bannerHeight));
         }
+    }
+
+    public void showInterstitialAd(IOSApplication application){
+        UIViewController rootViewController = application.getUIViewController();
+        final GADRequest request = new GADRequest();
+        interstitial.loadRequest(request);
+        interstitial.present(rootViewController);
     }
 }

@@ -17,10 +17,9 @@ import org.robovm.pods.google.signin.GIDSignIn;
 public class IOSLauncher extends IOSApplication.Delegate implements IActivityRequestHandler {
 
 
-    private IOSApplication iosApplication;
     private AnalyticsManager analyticsHandler;
     private AdManager adHandler;
-    private PlayServicesManager playServicesManager;
+    private IOSApplication iosApplication;
 
     @Override
     protected IOSApplication createApplication() {
@@ -30,7 +29,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         cfg.showUI = true;
         cfg.timeStep = 1 / 65f;
         cfg.zoom = 5f;
-        playServicesManager = new PlayServicesManager();
+        PlayServicesManager playServicesManager = new PlayServicesManager();
         Attraversiamo attraversiamo = new Attraversiamo(cfg, this);
         attraversiamo.setPlayServices(playServicesManager);
         iosApplication = new IOSApplication(attraversiamo, config);
@@ -51,7 +50,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
 
     @Override
     public void showInterstitialAd() {
-
+        adHandler.showInterstitialAd(iosApplication);
     }
 
     @Override
