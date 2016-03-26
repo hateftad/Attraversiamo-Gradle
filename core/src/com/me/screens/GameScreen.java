@@ -76,6 +76,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
 
         if (userInterface != null) {
             userInterface.update(delta);
+            toggleProcessingOnSystems(!userInterface.isPaused());
         }
 
         if (loadedNextLevel) {

@@ -57,7 +57,7 @@ public class AdManager {
     }
 
     public void initializeAds(IOSApplication iosApplication) {
-        log.debug("Initalizing ads...");
+        //log.debug("Initalizing ads...");
 
         adview = new GADBannerView(GADAdSize.SmartBannerLandscape());
         adview.setAdUnitID("ca-app-pub-8364054019750662/3829375835"); //put your secret key here

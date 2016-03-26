@@ -53,7 +53,6 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         analyticsHandler = new AnalyticsManager(application.getTracker(AttraversiamoApplication.TrackerName.APP_TRACKER));
 
         setContentView(rootLayout);
-        adManager = new AdManager(rootLayout);
     }
 
     @Override

@@ -24,6 +24,7 @@ public class UserInterface {
     private Skin skin;
     private int nrOfPlayers;
     private Window pauseWindow;
+    private UIButton jumpBtn;
 
 
     public UserInterface(Level level){
@@ -42,7 +43,7 @@ public class UserInterface {
 	
 	public void init(){
 
-        UIButton leftBtn = createButton("left.up", new InputListener() {
+        UIButton leftBtn = createButton("left.up", "left.down", new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.A);
                 return true;
@@ -53,7 +54,7 @@ public class UserInterface {
             }
         });
 
-        UIButton rightBtn = createButton("right.up",new InputListener() {
+        UIButton rightBtn = createButton("right.up", "right.down",new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.D);
                 return true;
@@ -64,7 +65,7 @@ public class UserInterface {
             }
         });
 
-        UIButton menuBtn = createButton("menu.up", new InputListener() {
+        UIButton menuBtn = createButton("menu.up", "menu.down", new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 setPauseVisibility(true);
                 return true;
@@ -74,9 +75,6 @@ public class UserInterface {
 
             }
         });
-
-
-
 
 		int size = Gdx.graphics.getWidth() / 10;
         setupBottomRightButtons(size);
@@ -91,7 +89,7 @@ public class UserInterface {
 
 		topBtnsTable.setFillParent(true);
 		topBtnsTable.top().left();
-		topBtnsTable.add(menuBtn).width(100).height(100).padLeft(10).padTop(10);
+		topBtnsTable.add(menuBtn).width(size*0.6f).height(size*0.6f).padLeft(20).padTop(20);
 		
 		stage.addActor(topBtnsTable);
 		stage.addActor(bottomLeftBtnsTable);
@@ -106,7 +104,8 @@ public class UserInterface {
 
     private void setupBottomRightButtons(int size){
 
-        UIButton jumpBtn = createButton("up.up", new InputListener() {
+
+        jumpBtn = createButton("jump.up", "jump.down", new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.SPACE);
                 return true;
@@ -117,7 +116,7 @@ public class UserInterface {
             }
         });
 
-        UIButton actionBtn = createButton("action.up", new InputListener() {
+        UIButton actionBtn = createButton("action.up", "action.down", new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.F);
                 return true;
@@ -174,18 +173,16 @@ public class UserInterface {
 
     public void createPauseMenu(int width, int height, int size){
 
-        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"), new TextureAtlas(Gdx.files.internal("data/uiskin.atlas")));
+        Skin skin = new Skin(Gdx.files.internal("data/ui/uiskin.json"), new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas")));
 
-        TextButton continueButton = new TextButton("CONTINUE", skin);
-		continueButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				setPauseVisibility(false);
-			}
-		});
+        UIButton continueButton = createButton("continue.up", "continue.up", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setPauseVisibility(false);
+            }
+        });
 
-        TextButton restartButton = new TextButton("RESTART", skin);
-        restartButton.addListener(new ClickListener() {
+        UIButton restartButton = createButton("reset.up", "reset.up", new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setPauseVisibility(false);
@@ -193,11 +190,20 @@ public class UserInterface {
             }
         });
 
+        UIButton backButton = createButton("back.up", "back.up", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setPauseVisibility(false);
+
+            }
+        });
+
         pauseWindow = new Window("", skin);
         pauseWindow.setSize(width, height);
         pauseWindow.setPosition(width / 2 - pauseWindow.getWidth() / 2, height / 2 - pauseWindow.getHeight() / 2);
-        pauseWindow.add(continueButton).width(size * 1.5f).height(size * 1.5f).row();
-        pauseWindow.add(restartButton).width(size * 1.5f).height(size * 1.5f).row();
+        pauseWindow.add(continueButton).width(width/3).height(size * 0.8f).padTop(10).row();
+        pauseWindow.add(restartButton).width(width/3).height(size * 0.8f).padTop(10).row();
+        pauseWindow.add(backButton).width(width/3).height(size * 0.8f).padTop(10).row();
         stage.addActor(pauseWindow);
         pauseWindow.setVisible(false);
     }
@@ -206,9 +212,14 @@ public class UserInterface {
         pauseWindow.setVisible(visibility);
     }
 
-    private UIButton createButton(String drawableName, InputListener inputListener){
+    public boolean isPaused(){
+        return pauseWindow.isVisible();
+    }
+
+    private UIButton createButton(String upDrawable, String downDrawable, InputListener inputListener){
         TextButtonStyle btnStyle = new TextButtonStyle();
-        btnStyle.up = skin.getDrawable(drawableName);
+        btnStyle.up = skin.getDrawable(upDrawable);
+        btnStyle.down = skin.getDrawable(downDrawable);
         UIButton button = createButton(btnStyle);
         button.addListener(inputListener);
         return button;
@@ -219,6 +230,9 @@ public class UserInterface {
     }
 	
 	public void update(float delta){
+
+        jumpBtn.setDisabled(InputManager.getInstance().playerOneActive);
+
         stage.act(delta);
         stage.draw();
 	}
