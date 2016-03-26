@@ -5,6 +5,9 @@ import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.utils.Logger;
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.coregraphics.CGSize;
+import org.robovm.apple.foundation.NSBundle;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UIViewController;
@@ -24,20 +27,34 @@ public class AdManager {
 
     private GADBannerView adview;
     private GADInterstitial interstitial;
+    private UIWindow window;
+    private UIViewController rootViewController;
 
     public AdManager(IOSApplication application) {
         initializeAds(application);
-        initializeInterstitial(application);
+        rootViewController = new UIViewController();
+        window = new UIWindow(UIScreen.getMainScreen().getBounds());
+        window.setRootViewController(rootViewController);
+        window.addSubview(rootViewController.getView());
+        initializeInterstitial();
     }
 
-    private void initializeInterstitial(IOSApplication application) {
-        UIViewController rootViewController = application.getUIViewController();
+    private void initializeInterstitial() {
 
-        interstitial = new GADInterstitial("ca-app-pub-8364054019750662/3112945839");
+        NSDictionary infoDictionary = NSBundle.getMainBundle().getInfoDictionary();
+        String interstitialId = infoDictionary.get(new NSString("AD_UNIT_ID_FOR_INTERSTITIAL_TEST")).toString();
+
+        interstitial = new GADInterstitial(interstitialId);
         interstitial.setDelegate(new GADInterstitialDelegateAdapter() {
             @Override
             public void didReceiveAd (GADInterstitial ad) {
                 System.out.println("Did receive ad.");
+            }
+
+            @Override
+            public void didDismissScreen(GADInterstitial ad) {
+                window.setHidden(true);
+                initializeInterstitial();
             }
 
             @Override
@@ -47,22 +64,21 @@ public class AdManager {
             }
         });
 
-        UIWindow window = new UIWindow(UIScreen.getMainScreen().getBounds());
-        window.setRootViewController(rootViewController);
-        window.addSubview(rootViewController.getView());
-        window.makeKeyAndVisible();
-        final GADRequest request = new GADRequest();
-        interstitial.loadRequest(request);
-        interstitial.present(rootViewController);
+        interstitial.loadRequest(new GADRequest());
+
     }
 
-    public void initializeAds(IOSApplication iosApplication) {
+    public void initializeAds(IOSApplication application) {
         //log.debug("Initalizing ads...");
 
+        NSDictionary infoDictionary = NSBundle.getMainBundle().getInfoDictionary();
+        String bannerId = infoDictionary.get(new NSString("AD_UNIT_ID_FOR_BANNER_TEST")).toString();
+
+        UIViewController rootViewController = application.getUIViewController();
         adview = new GADBannerView(GADAdSize.SmartBannerLandscape());
-        adview.setAdUnitID("ca-app-pub-8364054019750662/3829375835"); //put your secret key here
-        adview.setRootViewController(iosApplication.getUIViewController());
-        iosApplication.getUIViewController().getView().addSubview(adview);
+        adview.setAdUnitID(bannerId); //put your secret key here
+        adview.setRootViewController(rootViewController);
+        rootViewController.getView().addSubview(adview);
 
         final GADRequest request = new GADRequest();
         if (USE_TEST_DEVICES) {
@@ -114,10 +130,20 @@ public class AdManager {
         }
     }
 
-    public void showInterstitialAd(IOSApplication application){
-        UIViewController rootViewController = application.getUIViewController();
-        final GADRequest request = new GADRequest();
-        interstitial.loadRequest(request);
-        interstitial.present(rootViewController);
+    public void showInterstitialAd(){
+        log.debug("interstitial isReady ?"+ interstitial.isReady());
+        if (interstitial.isReady()) {
+            if (rootViewController == null) {
+                rootViewController = new UIViewController();
+            }
+            if (window == null) {
+                window = new UIWindow(UIScreen.getMainScreen().getBounds());
+                window.setRootViewController(rootViewController);
+            }
+            window.makeKeyAndVisible();
+            interstitial.present(rootViewController);
+        } else {
+            interstitial.loadRequest(new GADRequest());
+        }
     }
 }

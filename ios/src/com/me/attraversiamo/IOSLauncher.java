@@ -33,7 +33,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         Attraversiamo attraversiamo = new Attraversiamo(cfg, this);
         attraversiamo.setPlayServices(playServicesManager);
         iosApplication = new IOSApplication(attraversiamo, config);
-        adHandler = new AdManager(iosApplication);
+
         return iosApplication;
     }
 
@@ -50,7 +50,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
 
     @Override
     public void showInterstitialAd() {
-        adHandler.showInterstitialAd(iosApplication);
+        adHandler.showInterstitialAd();
     }
 
     @Override
@@ -71,6 +71,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
     @Override
     public boolean didFinishLaunching(UIApplication application, UIApplicationLaunchOptions launchOptions) {
         super.didFinishLaunching(application, launchOptions);
+        adHandler = new AdManager(iosApplication);
         Foundation.log("IOSLauncher didFinishLaunching()");
         try {
             GGLContext.getSharedInstance().configure();
