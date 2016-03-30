@@ -96,11 +96,11 @@
             <string>com.googleusercontent.apps.xxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxx</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.googleusercontent.apps.xxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxx</string>
+                <string>com.googleusercontent.apps.348314594616-e23t3p1t7h6jqihbopgs456job8lvlmu</string>
             </array>
         </dict>
     </array>
     <key>GPGApplicationID</key>
-    <string>880938203023</string>
+    <string>348314594616</string>
 </dict>
 </plist>

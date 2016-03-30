@@ -75,7 +75,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     private ObjectMap<String, B2Controller> b2Controllers;
 
     public PhysicsSystem(World physicsWorld) {
-        this(physicsWorld, 50, 30);
+        this(physicsWorld, 60, 60);
         this.timeStep = GlobalConfig.getInstance().config.timeStep;
         this.b2Controllers = new ObjectMap<>();
     }

@@ -20,6 +20,7 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
     private AnalyticsManager analyticsHandler;
     private AdManager adHandler;
     private IOSApplication iosApplication;
+    private PlayServicesManager playServicesManager;
 
     @Override
     protected IOSApplication createApplication() {
@@ -73,13 +74,9 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         super.didFinishLaunching(application, launchOptions);
         adHandler = new AdManager(iosApplication);
         Foundation.log("IOSLauncher didFinishLaunching()");
-        try {
-            GGLContext.getSharedInstance().configure();
-            GIDSignIn.getSharedInstance().setAllowsSignInWithWebView(true);
-            GPGManager.getSharedInstance().signIn(PlayServicesManager.CLIENT_ID, true);
-        } catch (NSErrorException e) {
-            Foundation.log("Error configuring the Google context: " + e);
-        }
+        GIDSignIn.getSharedInstance().setAllowsSignInWithWebView(true);
+        playServicesManager = new PlayServicesManager();
+        playServicesManager.signIn();
         return true;
     }
 

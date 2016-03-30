@@ -49,7 +49,7 @@ public class PlayServicesManager implements PlayServices {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        gameHelper.onActivityResult(requestCode, requestCode, data);
+        gameHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

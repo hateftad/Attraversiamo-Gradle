@@ -15,7 +15,7 @@ import org.robovm.pods.google.signin.GIDSignInUIDelegateAdapter;
  * Created by hateftadayon on 3/17/16.
  */
 public class PlayServicesManager implements PlayServices {
-    public static final String CLIENT_ID = "xxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com";
+    public static final String CLIENT_ID = "348314594616-e23t3p1t7h6jqihbopgs456job8lvlmu.apps.googleusercontent.com";
 
     public PlayServicesManager() {
         GPGManager.getSharedInstance().setStatusDelegate(new GPGStatusDelegateAdapter() {

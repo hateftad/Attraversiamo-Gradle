@@ -21,7 +21,6 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 
     private AnalyticsManager analyticsHandler;
     private AdManager adManager;
-    private RelativeLayout rootLayout;
     private PlayServicesManager playServicesManager;
 
     @Override
@@ -36,7 +35,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
         cfg.showUI = true;
         cfg.zoom = 9f;
 
-        rootLayout = new RelativeLayout(this);
+        RelativeLayout rootLayout = new RelativeLayout(this);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
