@@ -90,7 +90,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
         super(Aspect.getAspectForAll(PhysicsComponent.class));
         this.physicsWorld = physicsWorld;
         this.physicsWorld.setAutoClearForces(true);
-        this.physicsWorld.setContinuousPhysics(true);
+        this.physicsWorld.setContinuousPhysics(false);
         this.physicsWorld.setWarmStarting(true);
         this.velocityItr = velocityIterations;
         this.positionItr = positionIterations;
@@ -201,6 +201,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                     comp.restart();
                 }
             }
+            physicsWorld.clearForces();
             OnStartLevel();
             printInfo();
         }

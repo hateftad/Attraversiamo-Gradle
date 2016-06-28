@@ -5,6 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.me.component.*;
 import com.me.config.GameConfig;
 import com.me.config.GlobalConfig;
@@ -77,10 +78,12 @@ public class ManSystem extends PlayerSystem {
 
         if (canBeControlled(player)) {
 
-            if (keyInputComponent.left) {
-                moveLeft(entity);
-            } else if (keyInputComponent.right) {
-                moveRight(entity);
+            if(!keyInputComponent.jump) {
+                if (keyInputComponent.left) {
+                    moveLeft(entity);
+                } else if (keyInputComponent.right) {
+                    moveRight(entity);
+                }
             }
 
             if (keyInputComponent.jump) {
@@ -195,9 +198,9 @@ public class ManSystem extends PlayerSystem {
         if (feetComponent.hasCollided() && !player.isJumping()) {
             if (keyInputComponent.isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
-                    physicsComponent.applyLinearImpulse((keyInputComponent.left ? -10 : 10) + physicsComponent.getLinearVelocity().x, 60);
+                    physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -10 : 10), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
                 } else {
-                    physicsComponent.applyLinearImpulse(physicsComponent.getLinearVelocity().x, 60);
+                    physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2(physicsComponent.getLinearVelocity().x, physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
                 }
                 setPlayerState(entity, PlayerState.Jumping);
             } else {
