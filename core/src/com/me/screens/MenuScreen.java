@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.Array;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 import com.me.component.LevelAnimationComponent;
+import com.me.level.LevelInfo;
+import com.me.manager.PersistenceManager;
 import com.me.screens.transitions.FadeInTransitionEffect;
 import com.me.screens.transitions.FadeOutTransitionEffect;
 import com.me.screens.transitions.TransitionEffect;
@@ -72,7 +74,8 @@ public class MenuScreen extends AbstractScreen {
     private void changeScreen() {
         Screen current = game.getScreen();
         game.loadingScreen = new LoadingScreen(game);
-        game.loadingScreen.load(1);
+        LevelInfo levelInfo = PersistenceManager.getInstance().getLevelInfo();
+        game.loadingScreen.load(levelInfo.getCurrentLevel());
 
 //        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
 //        effects.add(new FadeOutTransitionEffect(1f));

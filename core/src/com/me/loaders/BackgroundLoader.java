@@ -1,9 +1,11 @@
 package com.me.loaders;
 
+import com.me.level.LevelInfo;
 import com.me.level.Player;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.level.Level;
 import com.me.listeners.LoadCompletionListener;
+import com.me.manager.PersistenceManager;
 import com.me.screens.GameScreen;
 import com.me.systems.LevelSystem;
 import com.me.ui.InputManager;
@@ -47,6 +49,7 @@ public class BackgroundLoader {
             stopProcessingSystems();
             clearLevel();
         } else {
+
             game.gameScreen = new GameScreen(game, currentLevel);
         }
 

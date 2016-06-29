@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
+import com.me.manager.PersistenceManager;
 import com.me.physics.JointFactory;
 import com.me.systems.*;
 import com.me.ui.InputManager;
@@ -174,6 +175,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     @Override
     public void onFinishedLevel(int nr) {
         game.showInterstitialAd();
+        PersistenceManager.getInstance().saveLevelProgress(nr, 5);
         game.loadingScreen.load(nr);
         game.setScreen(game.loadingScreen);
         loadedNextLevel = true;
