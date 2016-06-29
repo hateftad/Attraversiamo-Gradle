@@ -412,7 +412,7 @@ public class EntityLoader {
                 stateData.setMix("jogging", "pushing", 0.5f);
                 stateData.setMix("idle1", "pushing", 0.4f);
                 stateData.setMix("running", "pushing", 0.3f);
-                stateData.setMix("runJumping", "falling", 0.4f);
+                stateData.setMix("runJumping", "falling", 0.2f);
                 stateData.setMix("pushing", "idle1", 0.4f);
                 stateData.setMix("falling", "drowning", 0.4f);
 

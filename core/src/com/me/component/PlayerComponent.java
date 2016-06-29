@@ -8,6 +8,8 @@ import com.me.events.states.PlayerState;
 
 public class PlayerComponent extends BaseComponent implements TelegramEventObserverComponent {
 
+    private boolean finished;
+
     public boolean isMoving() {
         return state == PlayerState.Walking ||
                 state == PlayerState.Running ||
@@ -88,6 +90,14 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     public boolean isDrowning() {
         return state == PlayerState.Drowning;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public enum PlayerNumber {

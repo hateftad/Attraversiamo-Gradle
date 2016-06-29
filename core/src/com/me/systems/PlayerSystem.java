@@ -7,6 +7,7 @@ import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
 import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
 import com.me.ui.InputManager;
@@ -41,6 +42,16 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
                 float y = Converters.ToBox(slot.getBone().getWorldY());
                 float y2 = (ps.getBody().getPosition().y + y);
                 ps.getBody(attachment).setTransform(x2, animation.getCenter().y + y2, 0);
+            }
+        }
+    }
+
+    protected void checkFinished(TouchComponent touch, PlayerComponent player, FeetComponent feetComponent) {
+        if(touch.insideFinish){
+            if(feetComponent.hasCollided() && !player.isFinishing() && !player.isFinished()){
+                System.out.println("finished");
+                player.setFinished(true);
+                notifyObservers(new TaskEvent(GameEventType.InsideFinishArea, player.getPlayerNr()));
             }
         }
     }

@@ -99,6 +99,8 @@ public class GirlSystem extends PlayerSystem {
 
         setPlayerState(entity);
 
+        checkFinished(touch, player, feetComps.get(entity));
+
         animateBody(physicsComponent, player, animation);
 
     }

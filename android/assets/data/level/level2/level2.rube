@@ -42,16 +42,9 @@
   [
     
     {
-      "class" : "body",
+      "class" : "joint",
       "displayName" : "taskFinishers",
       "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "playerNr",
-      "name" : "playerNr",
       "type" : "int"
     },
     
@@ -64,16 +57,23 @@
     
     {
       "class" : "body",
-      "displayName" : "particlename",
-      "name" : "particlename",
-      "type" : "string"
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
     },
     
     {
-      "class" : "joint",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
+      "class" : "body",
+      "displayName" : "playerNr",
+      "name" : "playerNr",
       "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "particlename",
+      "name" : "particlename",
+      "type" : "string"
     },
     
     {
@@ -85,16 +85,16 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
       "type" : "int"
     },
     
     {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
+      "displayName" : "lightColor",
+      "name" : "lightColor",
+      "type" : "string"
     },
     
     {
@@ -106,9 +106,9 @@
     
     {
       "class" : "body",
-      "displayName" : "lightColor",
-      "name" : "lightColor",
-      "type" : "string"
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
     }
   ],
   "metaworld" : 
@@ -121,7 +121,10 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
+      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
+      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
+      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -357,16 +360,16 @@
               "x" : 
               [
                 10.72238731384277,
-                10.72238731384277,
-                -6.212368011474609,
-                -6.212397575378418
+                11.03253746032715,
+                -12.72540092468262,
+                -13.03557872772217
               ],
               "y" : 
               [
-                -2.746002197265625,
-                2.830229520797729,
-                2.830229520797729,
-                -2.746000289916992
+                -3.909042358398438,
+                8.645445823669434,
+                8.645445823669434,
+                -3.909040451049805
               ]
             }
           }
@@ -2034,7 +2037,7 @@
           "x" : 41.04880142211914,
           "y" : 25.32469940185547
         },
-        "file" : "level.png",
+        "file" : "level2.png",
         "filter" : 1,
         "flip" : false,
         "id" : 2,

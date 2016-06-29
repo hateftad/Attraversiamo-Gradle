@@ -43,16 +43,16 @@
     
     {
       "class" : "body",
-      "displayName" : "lightColor",
-      "name" : "lightColor",
-      "type" : "string"
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
     },
     
     {
       "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
+      "displayName" : "lightColor",
+      "name" : "lightColor",
+      "type" : "string"
     },
     
     {
@@ -79,7 +79,10 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
+      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
+      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
+      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -312,17 +315,17 @@
             {
               "x" : 
               [
-                3.140203952789307,
-                3.140203952789307,
-                -16.66482162475586,
-                -16.66485214233398
+                3.070700168609619,
+                3.209722995758057,
+                -23.19878768920898,
+                -23.05979537963867
               ],
               "y" : 
               [
-                -5.088111877441406,
-                0.4881198406219482,
-                0.5301482677459717,
-                -5.046081542968750
+                -6.617338180541992,
+                4.936781883239746,
+                4.839783668518066,
+                -6.158246994018555
               ]
             }
           }
@@ -704,7 +707,7 @@
           "x" : 52.77907562255859,
           "y" : -12.06082057952881
         },
-        "file" : "level.png",
+        "file" : "level3.png",
         "filter" : 1,
         "flip" : false,
         "id" : 2,

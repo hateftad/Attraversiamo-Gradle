@@ -3,6 +3,7 @@ package com.me.screens;
 import box2dLight.RayHandler;
 
 import com.artemis.managers.GroupManager;
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
@@ -54,12 +55,12 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         this.game.processors.add(cameraSystem);
         this.game.processors.add(playerOneSystem);
 
-//        if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
-        this.userInterface = new UserInterface(currentLevel);
-        this.userInterface.init();
-//        } else {
-//            Gdx.input.setInputProcessor(game.multiPlexer);
-//        }
+        if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
+            this.userInterface = new UserInterface(currentLevel);
+            this.userInterface.init();
+        } else {
+            Gdx.input.setInputProcessor(game.multiPlexer);
+        }
 
         InputManager.getInstance().reset();
     }

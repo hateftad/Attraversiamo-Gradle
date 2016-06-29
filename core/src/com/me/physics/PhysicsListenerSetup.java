@@ -139,7 +139,7 @@ public class PhysicsListenerSetup {
                             if (otherUd.getType() == Type.BottomLadder) {
                                 e.getComponent(LadderClimbComponent.class).bottomLadder = true;
                             }
-                            if(otherUd.getType() == Type.ColorChangeSensor){
+                            if (otherUd.getType() == Type.ColorChangeSensor) {
                                 gameEntityWorld.onNotify(new TaskEvent(GameEventType.ColorSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
                             }
                             if (otherUd.getType() == Type.TopLadder) {
@@ -208,7 +208,7 @@ public class PhysicsListenerSetup {
                                 e.getComponent(TouchComponent.class).leftHoldArea = true;
                             }
 
-                            if(otherUd.getType() == Type.InsideCage){
+                            if (otherUd.getType() == Type.InsideCage) {
                                 e.getComponent(PhysicsComponent.class).setFixedRotation("center", false);
                             }
 
@@ -216,19 +216,17 @@ public class PhysicsListenerSetup {
                                 e.getComponent(TouchComponent.class).canCrawl = true;
                             }
                             if (otherUd.getType() == Type.Portal) {
-                                if(e.getComponent(FeetComponent.class).hasCollided()) {
-                                    gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
-                                }
+                                System.out.println("inside finish");
+                                e.getComponent(TouchComponent.class).insideFinish = true;
                             }
                             if (otherUd.getType() == Type.Finish) {
-                                if(e.getComponent(FeetComponent.class).hasCollided()) {
-                                    gameEntityWorld.onNotify(new TaskEvent(GameEventType.InsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
-                                }
+                                System.out.println("inside finish");
+                                e.getComponent(TouchComponent.class).insideFinish = true;
                             }
-                            if(otherUd.getType() == Type.InsideCage){
+                            if (otherUd.getType() == Type.InsideCage) {
                                 e.getComponent(PhysicsComponent.class).setFixedRotation("center", true);
                             }
-                            if(otherUd.getType() == Type.InsideCage){
+                            if (otherUd.getType() == Type.InsideCage) {
                                 e.getComponent(TouchComponent.class).cageTouch = true;
                             }
                         }
@@ -311,7 +309,7 @@ public class PhysicsListenerSetup {
                         if (otherUd.getType() == Type.Hand && playerUd.getType() == Type.Hand) {
 
                         }
-                        if(otherUd.getType() == Type.ColorChangeSensor){
+                        if (otherUd.getType() == Type.ColorChangeSensor) {
                             gameEntityWorld.onNotify(new TaskEvent(GameEventType.BlackSkin, e.getComponent(PlayerComponent.class).getPlayerNr()));
                         }
                         if (otherUd.getType() == Type.LeftCrawl) {
@@ -319,9 +317,14 @@ public class PhysicsListenerSetup {
                             e.getComponent(TouchComponent.class).canCrawl = false;
                         }
                         if (otherUd.getType() == Type.Portal) {
+                            e.getComponent(PlayerComponent.class).setFinished(false);
+                            e.getComponent(TouchComponent.class).insideFinish = false;
                             gameEntityWorld.onNotify(new TaskEvent(GameEventType.OutsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
                         }
                         if (otherUd.getType() == Type.Finish) {
+                            System.out.println("outside finish");
+                            e.getComponent(PlayerComponent.class).setFinished(false);
+                            e.getComponent(TouchComponent.class).insideFinish = false;
                             gameEntityWorld.onNotify(new TaskEvent(GameEventType.OutsideFinishArea, e.getComponent(PlayerComponent.class).getPlayerNr()));
                         }
                         if (otherUd.getType() == Type.LeftPushButton) {
@@ -372,10 +375,10 @@ public class PhysicsListenerSetup {
                             e.getComponent(TouchComponent.class).edgeTouch = false;
                             e.getComponent(TouchComponent.class).pullEdgeTouch = false;
                         }
-                        if(otherUd.getType() == Type.InsideCage){
+                        if (otherUd.getType() == Type.InsideCage) {
                             e.getComponent(PhysicsComponent.class).setFixedRotation("center", false);
                         }
-                        if(otherUd.getType() == Type.InsideCage){
+                        if (otherUd.getType() == Type.InsideCage) {
                             e.getComponent(TouchComponent.class).cageTouch = false;
                         }
                     }
@@ -478,7 +481,7 @@ public class PhysicsListenerSetup {
                 } else {
                     b2c.removeBody(body);
                 }
-                System.out.println("adding ? "+add + "in controller "+ key);
+                System.out.println("adding ? " + add + "in controller " + key);
             }
 
             private void treatBouyancy(Body body, boolean submerged) {

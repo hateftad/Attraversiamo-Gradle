@@ -10,6 +10,7 @@ import com.me.component.*;
 import com.me.config.GameConfig;
 import com.me.config.GlobalConfig;
 import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
 import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
 import com.me.listeners.LevelEventListener;
@@ -69,6 +70,7 @@ public class ManSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = physComps.get(entity);
         CharacterMovementComponent movementComponent = movementComps.get(entity);
         KeyInputComponent keyInputComponent = movComps.get(entity);
+        FeetComponent feetComponent = rayCastComps.get(entity);
 
         animation.setFacing(player.isFacingLeft());
 
@@ -150,6 +152,8 @@ public class ManSystem extends PlayerSystem {
             inputMgr.callRestart();
         }
 
+        checkFinished(touch, player, feetComponent);
+
         animateBody(physicsComponent, player, animation);
 
     }
@@ -200,7 +204,7 @@ public class ManSystem extends PlayerSystem {
                 if (velocityLimitForJumpBoost(entity)) {
                     physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -10 : 10), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
                 } else {
-                    physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2(physicsComponent.getLinearVelocity().x, physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
+                    physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2(physicsComponent.getLinearVelocity().x * 3, physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
                 }
                 setPlayerState(entity, PlayerState.Jumping);
             } else {

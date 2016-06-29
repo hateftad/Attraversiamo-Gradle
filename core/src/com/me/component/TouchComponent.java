@@ -22,6 +22,7 @@ public class TouchComponent extends BaseComponent {
     public boolean canCrawl;
     public boolean cageTouch;
     public boolean waterTouch;
+	public boolean insideFinish;
 
     public TouchComponent() {
 		edgeTouch = false;
@@ -68,6 +69,7 @@ public class TouchComponent extends BaseComponent {
         canCrawl = false;
         cageTouch = false;
         waterTouch = false;
+		insideFinish = false;
 	}
 
 }
