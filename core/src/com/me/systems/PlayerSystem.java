@@ -8,8 +8,8 @@ import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
-import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
+import com.me.level.Level;
 import com.me.ui.InputManager;
 import com.me.utils.Converters;
 
@@ -58,8 +58,8 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
 
     protected abstract void setPlayerState(Entity entity, PlayerState state);
 
-    protected boolean isDead(PhysicsComponent ps) {
-        return ps.getPosition().y < -100;
+    protected boolean isDead(PhysicsComponent ps, Level currentLevel) {
+        return ps.getWorldPosition().y < currentLevel.getLevelBoundaries().minY;
     }
 
     public void restartSystem() {

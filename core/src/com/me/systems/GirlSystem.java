@@ -6,6 +6,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
 import com.me.events.states.PlayerState;
+import com.me.level.Level;
 import com.me.ui.InputManager;
 
 /**
@@ -13,6 +14,7 @@ import com.me.ui.InputManager;
  */
 public class GirlSystem extends PlayerSystem {
 
+    private Level currentLevel;
     @Mapper
     ComponentMapper<PlayerComponent> playerComps;
     @Mapper
@@ -35,9 +37,10 @@ public class GirlSystem extends PlayerSystem {
     private float VELOCITY = 5.5f;
 
     @SuppressWarnings("unchecked")
-    public GirlSystem() {
+    public GirlSystem(Level currentLevel) {
         super(Aspect.getAspectForOne(PlayerTwoComponent.class));
         inputMgr = InputManager.getInstance();
+        this.currentLevel = currentLevel;
     }
 
     @Override
@@ -93,7 +96,7 @@ public class GirlSystem extends PlayerSystem {
             }
         }
 
-        if (isDead(physicsComponent) || animation.isCompleted(PlayerState.Drowning)) {
+        if (isDead(physicsComponent, currentLevel) || animation.isCompleted(PlayerState.Drowning)) {
             inputMgr.callRestart();
         }
 

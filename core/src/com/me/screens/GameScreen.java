@@ -48,13 +48,13 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         this.entityWorld.setSystem(new EventParticlesSystem());
         this.entityWorld.setSystem(new ManInteractionSystem());
         this.entityWorld.setSystem(new GirlInteractionSystem());
-        this.playerOneSystem = new ManSystem(physicsSystem);
+        this.playerOneSystem = new ManSystem(currentLevel);
         this.entityWorld.setSystem(playerOneSystem);
-        this.playerTwoSystem = entityWorld.setSystem(new GirlSystem());
+        this.playerTwoSystem = entityWorld.setSystem(new GirlSystem(currentLevel));
         this.entityWorld.initialize();
         this.game.processors.add(cameraSystem);
         this.game.processors.add(playerOneSystem);
-
+        InputManager.getInstance().addEventListener(physicsSystem);
         if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
             this.userInterface = new UserInterface(currentLevel);
             this.userInterface.init();

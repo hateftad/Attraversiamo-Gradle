@@ -110,6 +110,11 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         body.get(name).setType(BodyType.StaticBody);
     }
 
+    public void makeDynamic(String name) {
+        body.get(name).setType(BodyType.DynamicBody);
+        setIsDynamic(true);
+    }
+
     public void makeDynamic(String name, float mass) {
         body.get(name).setType(BodyType.DynamicBody);
         setMass(mass, name);

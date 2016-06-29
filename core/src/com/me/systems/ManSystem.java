@@ -13,6 +13,7 @@ import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
 import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
+import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.ui.InputManager;
 
@@ -23,6 +24,7 @@ public class ManSystem extends PlayerSystem {
 
     private float VELOCITY = 11.0f;
     private float VELOCITYINR = 3.0f;
+    private Level currentLevel;
     @Mapper
     ComponentMapper<SingleParticleComponent> particleComps;
     @Mapper
@@ -51,12 +53,11 @@ public class ManSystem extends PlayerSystem {
     ComponentMapper<HandHoldComponent> handHoldComps;
 
     @SuppressWarnings("unchecked")
-    public ManSystem(LevelEventListener listener) {
+    public ManSystem(Level currentLevel) {
         super(Aspect.getAspectForOne(PlayerOneComponent.class));
 
         inputMgr = InputManager.getInstance();
-        InputManager.getInstance().addEventListener(listener);
-
+        this.currentLevel = currentLevel;
         if (GlobalConfig.getInstance().config.platform == GameConfig.Platform.DESKTOP) {
             Gdx.input.setInputProcessor(this);
         }
@@ -148,7 +149,7 @@ public class ManSystem extends PlayerSystem {
 
         setPlayerState(entity);
 
-        if (isDead(physicsComponent) || animation.isCompleted(PlayerState.Drowning)) {
+        if (isDead(physicsComponent, currentLevel) || animation.isCompleted(PlayerState.Drowning)) {
             inputMgr.callRestart();
         }
 

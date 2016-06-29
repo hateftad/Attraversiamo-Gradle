@@ -43,20 +43,6 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "boxIndex",
       "name" : "boxIndex",
       "type" : "int"
@@ -71,6 +57,20 @@
     
     {
       "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "particlename",
       "name" : "particlename",
       "type" : "string"
@@ -78,15 +78,15 @@
     
     {
       "class" : "body",
-      "displayName" : "lightColor",
-      "name" : "lightColor",
+      "displayName" : "eventType",
+      "name" : "eventType",
       "type" : "string"
     },
     
     {
       "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
+      "displayName" : "lightColor",
+      "name" : "lightColor",
       "type" : "string"
     }
   ],
@@ -946,8 +946,8 @@
         "name" : "minY",
         "position" : 
         {
-          "x" : 25.28189086914062,
-          "y" : -22.84389877319336
+          "x" : 26.00247192382812,
+          "y" : -41.21989059448242
         },
         "type" : "static"
       },
@@ -1386,7 +1386,7 @@
           "x" : 0.3716599941253662,
           "y" : 48.52870178222656
         },
-        "file" : "level.png",
+        "file" : "level1.png",
         "filter" : 1,
         "flip" : false,
         "id" : 7,
