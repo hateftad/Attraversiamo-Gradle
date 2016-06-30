@@ -42,6 +42,7 @@ public class LevelConfigSerializer extends Json.ReadOnlySerializer<LevelConfigMa
             playerConfig.setCanDeactivate(jsonValue.getBoolean("canDeactivate"));
             playerConfig.setSkinName(jsonValue.getString("skinName"));
             playerConfig.setName(jsonValue.getString("playerName"));
+            playerConfig.setFinishAnimation(jsonValue.getString("finishAnim"));
             levelConfig.addPlayerConfig(playerConfig);
         }
     }
