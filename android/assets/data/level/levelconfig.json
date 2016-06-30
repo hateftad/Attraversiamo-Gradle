@@ -1,6 +1,6 @@
 {
-  "Levels": {
-    "Level": [
+  "levels": {
+    "level": [
       {
         "name": "level1",
         "levelNr": "1",
@@ -68,16 +68,18 @@
         "levelNr": "3",
         "nrOfPlayers": "1",
         "hasPortal": "false",
-        "player": {
-          "finishFacingLeft": "false",
-          "skinName": "silhouette",
-          "active": "true",
-          "canDeactivate": "false",
-          "playerName": "smallCharacter",
-          "playerNr": "1",
-          "facingLeft": "false",
-          "finishAnim": "runOut"
-        },
+        "player": [
+          {
+            "finishFacingLeft": "false",
+            "skinName": "silhouette",
+            "active": "true",
+            "canDeactivate": "false",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          }
+        ],
         "zoom": "18",
         "lightColor": "Yellow",
         "nextLevel": "4"

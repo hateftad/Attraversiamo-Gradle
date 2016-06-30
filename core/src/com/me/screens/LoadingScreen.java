@@ -89,7 +89,6 @@ public class LoadingScreen extends AbstractScreen {
     public void dispose() {
         spriteBatch.dispose();
         splsh.dispose();
-
     }
 
     @Override

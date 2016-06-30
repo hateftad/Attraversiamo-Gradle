@@ -7,7 +7,7 @@ import com.me.utils.GameUtils;
 
 public class LevelConfig {
 
-	private ObjectMap<Integer, PlayerConfig> playerConfigs = new ObjectMap<>();
+	private PlayerConfigMap player = new PlayerConfigMap();
 	private String name;
 	private Color skyLightColor;
 	private int levelNr;
@@ -23,11 +23,11 @@ public class LevelConfig {
 	}
 
     public void addPlayerConfig(PlayerConfig config){
-        playerConfigs.put(config.getPlayerNumber(), config);
+        player.put(config.getPlayerNumber(), config);
     }
 
     public ObjectMap.Values<PlayerConfig> getPlayerConfigs(){
-        return playerConfigs.values();
+        return player.values();
     }
 
 	public String getLevelName(){
@@ -44,12 +44,12 @@ public class LevelConfig {
 		skyLightColor = GameUtils.getColor(color);
 	}
 
-    public void addPlayerPosition(int player, Vector2 position){
-        playerConfigs.get(player).setPlayerPosition(position);
+    public void addPlayerPosition(int playerNr, Vector2 position){
+        player.get(playerNr).setPlayerPosition(position);
     }
 
-    public Vector2 getPlayerPosition(int player){
-        return playerConfigs.get(player).getPlayerPosition();
+    public Vector2 getPlayerPosition(int playerNr){
+        return player.get(playerNr).getPlayerPosition();
     }
 		
 	public Color getLightColor(){
@@ -57,7 +57,7 @@ public class LevelConfig {
 	}
 	
 	public void dispose(){
-        playerConfigs.clear();
+        player.clear();
 	}
 
 	public int getLevelNr() {

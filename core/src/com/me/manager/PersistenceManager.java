@@ -6,7 +6,9 @@ import com.me.level.LevelInfo;
 
 public class PersistenceManager {
 
-    private static final String AppPrefName = "AttraversiamoPrefrences";
+    private static final String AppPrefName = "attraversiamo_preferences";
+    private static final String CurrentLives = "current_lives";
+    private static final String CurrentLevel = "current_level";
     private static PersistenceManager instance;
     private Preferences preferences;
 
@@ -25,16 +27,21 @@ public class PersistenceManager {
         preferences.putBoolean(name, onOff);
     }
 
-    public void saveLevelProgress(int level, int lives) {
-        preferences.putInteger("current_level", level);
-        preferences.putInteger("current_lives", lives);
+    public void saveProgress(int level) {
+        int currentLives = preferences.getInteger(CurrentLives, 5);
+        preferences.putInteger(CurrentLevel, level);
+        preferences.putInteger(CurrentLives, currentLives);
         preferences.flush();
     }
 
     public LevelInfo getLevelInfo() {
-        int current_level = preferences.getInteger("current_level", 1);
-        int current_lives = preferences.getInteger("current_lives", 5);
+        int currentLevel = preferences.getInteger(CurrentLevel, 1);
+        int currentLives = preferences.getInteger(CurrentLives, 5);
 
-        return new LevelInfo(current_level, current_lives);
+        return new LevelInfo(currentLevel, currentLives);
+    }
+
+    public int getLives(){
+        return preferences.getInteger(CurrentLives, 5);
     }
 }

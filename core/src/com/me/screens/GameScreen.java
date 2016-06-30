@@ -18,6 +18,7 @@ import com.me.ui.UserInterface;
 
 public class GameScreen extends AbstractScreen implements LevelEventListener {
 
+    private final Level currentLevel;
     private GameEntityWorld entityWorld;
     private PhysicsSystem physicsSystem;
     private PlayerSystem playerOneSystem;
@@ -30,6 +31,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
 
     public GameScreen(Attraversiamo game, Level currentLevel) {
         super(game);
+        this.currentLevel = currentLevel;
         this.camera.viewportWidth = 800;
         this.camera.viewportHeight = 600;
         this.camera.zoom = currentLevel.getLevelConfig().getZoom();
@@ -148,6 +150,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     public void pause() {
         System.out.println("pause()");
         physicsSystem.setEnabled(false);
+        PersistenceManager.getInstance().saveProgress(currentLevel.getLevelNumber());
     }
 
     @Override
@@ -175,7 +178,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     @Override
     public void onFinishedLevel(int nr) {
         game.showInterstitialAd();
-        PersistenceManager.getInstance().saveLevelProgress(nr, 5);
+        PersistenceManager.getInstance().saveProgress(nr);
         game.loadingScreen.load(nr);
         game.setScreen(game.loadingScreen);
         loadedNextLevel = true;
