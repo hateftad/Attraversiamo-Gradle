@@ -81,7 +81,7 @@ public class ManSystem extends PlayerSystem {
 
         if (canBeControlled(player)) {
 
-            if(!keyInputComponent.jump && !player.isLanding() && !player.isFalling()) {
+            if (!keyInputComponent.jump && !player.isLanding() && !player.isFalling()) {
                 if (keyInputComponent.left) {
                     moveLeft(entity);
                 } else if (keyInputComponent.right) {
@@ -90,7 +90,7 @@ public class ManSystem extends PlayerSystem {
             }
 
             if (keyInputComponent.jump) {
-                if(touch.boxTouch){
+                if (touch.boxTouch) {
                     movementComponent.standStill();
                     setPlayerState(entity, PlayerState.ClimbBox);
                 } else {
@@ -98,7 +98,7 @@ public class ManSystem extends PlayerSystem {
                     jump(entity);
                 }
                 if (player.isHanging()) {
-                    if(touch.pullEdgeTouch){
+                    if (touch.pullEdgeTouch) {
                         setPlayerState(entity, PlayerState.PullingLedge);
                     } else {
                         //temp fix for ground dust when climbing up
@@ -136,7 +136,7 @@ public class ManSystem extends PlayerSystem {
                 }
                 if (player.isHanging()) {
 
-                    if(touch.pullEdgeTouch){
+                    if (touch.pullEdgeTouch) {
                         setPlayerState(entity, PlayerState.PullingLedge);
                     } else {
                         //temp fix for ground dust when climbing up
@@ -147,7 +147,6 @@ public class ManSystem extends PlayerSystem {
             }
         }
         setPlayerState(entity);
-        System.out.println("State "+player.getState());
         if (isDead(physicsComponent, currentLevel) || animation.isCompleted(PlayerState.Drowning)) {
             inputMgr.callRestart();
         }
@@ -177,20 +176,21 @@ public class ManSystem extends PlayerSystem {
 
         if (physicsComponent.isFalling() &&
                 !playerComponent.isHanging()) {
-            if(playerComponent.isFalling() && feetComponent.hasCollided()){
+            if (playerComponent.isFalling() && feetComponent.hasCollided()) {
                 setPlayerState(entity, PlayerState.Landing);
+                movementComponent.standStill();
             } else {
                 setPlayerState(entity, PlayerState.Falling);
             }
         }
 
-        if(playerComponent.isFalling() && feetComponent.hasCollided()){
+        if (playerComponent.isFalling() && feetComponent.hasCollided()) {
             setPlayerState(entity, PlayerState.Landing);
         }
 
-        if(!playerComponent.isActive() &&
+        if (!playerComponent.isActive() &&
                 feetComponent.hasCollided() &&
-                playerComponent.shouldBeIdle()){
+                playerComponent.shouldBeIdle()) {
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
         }
@@ -208,7 +208,7 @@ public class ManSystem extends PlayerSystem {
         KeyInputComponent keyInputComponent = movComps.get(entity);
         FeetComponent feetComponent = rayCastComps.get(entity);
 
-        if (feetComponent.hasCollided() && !player.isJumping()) {
+        if (feetComponent.hasCollided() && !player.isJumping() && !player.isFalling() && !player.isLanding()) {
             if (keyInputComponent.isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
                     physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -10 : 10), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));

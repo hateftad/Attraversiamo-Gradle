@@ -74,9 +74,9 @@ public class IOSLauncher extends IOSApplication.Delegate implements IActivityReq
         super.didFinishLaunching(application, launchOptions);
         adHandler = new AdManager(iosApplication);
         Foundation.log("IOSLauncher didFinishLaunching()");
-        GIDSignIn.getSharedInstance().setAllowsSignInWithWebView(true);
-        playServicesManager = new PlayServicesManager();
-        playServicesManager.signIn();
+        //GIDSignIn.getSharedInstance().setAllowsSignInWithWebView(true);
+//        playServicesManager = new PlayServicesManager();
+//        playServicesManager.signIn();
         return true;
     }
 
