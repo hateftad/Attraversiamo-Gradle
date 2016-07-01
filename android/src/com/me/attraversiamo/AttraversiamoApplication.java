@@ -1,4 +1,4 @@
-package com.me.attraversiamo.android;
+package com.me.attraversiamo;
 
 import android.app.Application;
 import android.content.Context;
@@ -41,7 +41,7 @@ public class AttraversiamoApplication extends Application {
 
     HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
-    synchronized Tracker getTracker(TrackerName trackerId) {
+    public synchronized Tracker getTracker(TrackerName trackerId) {
         if (!mTrackers.containsKey(trackerId)) {
 
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);

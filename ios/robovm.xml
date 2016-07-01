@@ -49,12 +49,11 @@
         <framework>OpenAL</framework>
         <framework>AudioToolbox</framework>
         <framework>AVFoundation</framework>
+        <framework>GoogleMobileAds</framework>
+        <framework>SafariServices</framework>
+        <framework>CoreBluetooth</framework>
         <framework>gpg</framework>
         <framework>GoogleOpenSource</framework>
         <framework>GoogleSignIn</framework>
     </frameworks>
-    <weakFrameworks>
-        <framework>AdSupport</framework>
-        <framework>StoreKit</framework>
-    </weakFrameworks>
 </config>

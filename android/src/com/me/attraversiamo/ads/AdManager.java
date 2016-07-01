@@ -1,4 +1,5 @@
-package com.me.attraversiamo.android.ads;
+package com.me.attraversiamo.ads;
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,9 +7,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.google.android.gms.ads.*;
-import com.me.attraversiamo.android.AttraversiamoApplication;
-import com.me.attraversiamo.android.BuildConfig;
-import com.me.attraversiamo.android.R;
+import com.me.attraversiamo.AttraversiamoApplication;
+import com.me.attraversiamo.BuildConfig;
+import com.me.attraversiamo.R;
 
 /**
  * Created by hateftadayon on 12/27/15.

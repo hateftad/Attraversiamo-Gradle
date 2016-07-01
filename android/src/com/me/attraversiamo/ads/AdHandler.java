@@ -1,4 +1,4 @@
-package com.me.attraversiamo.android.ads;
+package com.me.attraversiamo.ads;
 
 import android.os.Handler;
 import android.os.Message;

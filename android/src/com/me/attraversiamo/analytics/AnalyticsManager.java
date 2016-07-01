@@ -1,4 +1,4 @@
-package com.me.attraversiamo.android.analytics;
+package com.me.attraversiamo.analytics;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;

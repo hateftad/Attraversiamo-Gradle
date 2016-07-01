@@ -1,14 +1,13 @@
-package com.me.attraversiamo.android.gpg;
+package com.me.attraversiamo.gpg;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import com.badlogic.gdx.Gdx;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.me.ads.PlayServices;
-import com.me.attraversiamo.android.R;
+import com.me.attraversiamo.R;
 
 /**
  * Created by hateftadayon on 3/17/16.
