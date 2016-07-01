@@ -37,6 +37,8 @@
     </forceLinkClasses>
     <libs>
         <lib>z</lib>
+        <lib>libs/libGoogleAnalyticsServices.a</lib>
+        <lib>libs/libAdIdAccess.a</lib>
     </libs>
     <frameworkPaths>
         <path>libs</path>
@@ -55,5 +57,15 @@
         <framework>gpg</framework>
         <framework>GoogleOpenSource</framework>
         <framework>GoogleSignIn</framework>
+        <framework>AdSupport</framework>
+        <framework>AudioToolbox</framework>
+        <framework>CoreMedia</framework>
+        <framework>CoreTelephony</framework>
+        <framework>EventKit</framework>
+        <framework>EventKitUI</framework>
+        <framework>MediaPlayer</framework>
+        <framework>MessageUI</framework>
+        <framework>StoreKit</framework>
+        <framework>SystemConfiguration</framework>
     </frameworks>
 </config>

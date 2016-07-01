@@ -8,7 +8,6 @@ import org.robovm.apple.coregraphics.CGSize;
 import org.robovm.apple.foundation.NSBundle;
 import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSString;
-import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;

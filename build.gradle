@@ -22,7 +22,7 @@ allprojects {
         artemisVersion = '0.5.0'
         appName = "Attraversiamo"
         gdxVersion = '1.9.3'
-        roboVMVersion = '2.2.0-SNAPSHOT'
+        roboVMVersion = '1.14.0'
         box2DLightsVersion = '1.4'
         robopodsVersion = "1.14.0"
         ashleyVersion = '1.7.0'
