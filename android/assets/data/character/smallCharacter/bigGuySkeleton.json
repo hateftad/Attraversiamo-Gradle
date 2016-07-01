@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "/GmPEbSxzaZnflUl7vIEZKEEwp4", "spine": "3.3.07", "width": 143.66, "height": 729.71, "images": "./../Images/" },
+"skeleton": { "hash": "CwO6az1MjeHuuUOyrGQo3t77nmQ", "spine": "3.3.07", "width": 143.66, "height": 729.71, "images": "./../Images/" },
 "bones": [
 	{ "name": "root", "x": -4.12, "scaleX": 1.4, "scaleY": 1.4 },
 	{ "name": "hip", "parent": "root", "x": -5.41, "y": 271.15 },
@@ -826,7 +826,7 @@
 		"bones": {
 			"hip": {
 				"translate": [
-					{ "time": 0, "x": 0, "y": -13.88 },
+					{ "time": 0, "x": 0, "y": 16.5 },
 					{ "time": 1.5, "x": 0, "y": -13.88 }
 				]
 			},
@@ -1811,54 +1811,56 @@
 				],
 				"translate": [
 					{ "time": 0, "x": -0.01, "y": -91.9 },
-					{ "time": 0.6666, "x": -0.01, "y": -21.26 }
+					{ "time": 0.5, "x": -6.76, "y": -1 }
 				]
 			},
 			"spine": {
 				"rotate": [
 					{ "time": 0, "angle": -29.2 },
-					{ "time": 0.6666, "angle": -19.7 }
+					{ "time": 0.5, "angle": -2.66 }
 				]
 			},
 			"neck": {
 				"rotate": [
 					{ "time": 0, "angle": 20, "curve": "stepped" },
-					{ "time": 0.6666, "angle": 20 }
+					{ "time": 0.5, "angle": 20 }
 				]
 			},
 			"head": {
 				"rotate": [
-					{ "time": 0, "angle": -0.06 }
+					{ "time": 0, "angle": -0.06 },
+					{ "time": 0.5, "angle": -12.11 }
 				]
 			},
 			"leftUpperLeg": {
 				"rotate": [
 					{ "time": 0, "angle": 43.18 },
-					{ "time": 0.6666, "angle": 31.8 }
+					{ "time": 0.5, "angle": 31.8 }
 				]
 			},
 			"leftLowerLeg": {
 				"rotate": [
 					{ "time": 0, "angle": -42.56 },
-					{ "time": 0.6666, "angle": -32.01 }
+					{ "time": 0.5, "angle": -32.01 }
 				]
 			},
 			"leftFoot": {
 				"rotate": [
 					{ "time": 0, "angle": -0.06 },
-					{ "time": 0.6666, "angle": -12.51 }
+					{ "time": 0.2666, "angle": 17.42 },
+					{ "time": 0.5, "angle": -4.11 }
 				]
 			},
 			"leftUpperArm": {
 				"rotate": [
 					{ "time": 0, "angle": 31.89 },
-					{ "time": 0.6666, "angle": 9.07 }
+					{ "time": 0.5, "angle": 9.07 }
 				]
 			},
 			"leftLowerArm": {
 				"rotate": [
 					{ "time": 0, "angle": 57.25, "curve": "stepped" },
-					{ "time": 0.6666, "angle": 57.25 }
+					{ "time": 0.5, "angle": 57.25 }
 				]
 			},
 			"leftHand": {
@@ -1869,31 +1871,32 @@
 			"rightUpperLeg": {
 				"rotate": [
 					{ "time": 0, "angle": -20.45 },
-					{ "time": 0.6666, "angle": -8.56 }
+					{ "time": 0.5, "angle": -8.56 }
 				]
 			},
 			"rightLowerLeg": {
 				"rotate": [
 					{ "time": 0, "angle": -47.91, "curve": "stepped" },
-					{ "time": 0.6666, "angle": -47.91 }
+					{ "time": 0.5, "angle": -47.91 }
 				]
 			},
 			"rightFoot": {
 				"rotate": [
 					{ "time": 0, "angle": 34.75 },
-					{ "time": 0.6666, "angle": 16.2 }
+					{ "time": 0.2666, "angle": 26.25 },
+					{ "time": 0.5, "angle": -3.34 }
 				]
 			},
 			"rightUpperArm": {
 				"rotate": [
 					{ "time": 0, "angle": 1.01, "curve": "stepped" },
-					{ "time": 0.6666, "angle": 1.01 }
+					{ "time": 0.5, "angle": 1.01 }
 				]
 			},
 			"rightLowerArm": {
 				"rotate": [
 					{ "time": 0, "angle": 45.82, "curve": "stepped" },
-					{ "time": 0.6666, "angle": 45.82 }
+					{ "time": 0.5, "angle": 45.82 }
 				]
 			},
 			"rightHand": {
@@ -1901,26 +1904,43 @@
 					{ "time": 0, "angle": -0.06 }
 				]
 			},
+			"left_arm_constraint": {
+				"translate": [
+					{ "time": 0, "x": -28.7, "y": 0 },
+					{ "time": 0.2666, "x": 5.06, "y": -15.19 },
+					{ "time": 0.5, "x": -28.7, "y": 25.32 }
+				]
+			},
+			"right_arm_constraint": {
+				"translate": [
+					{ "time": 0, "x": 172.23, "y": 27.01 },
+					{ "time": 0.2666, "x": 99.62, "y": -27.01 },
+					{ "time": 0.5, "x": 1.68, "y": 25.32 }
+				]
+			},
 			"left_leg_constraint": {
 				"translate": [
-					{ "time": 0, "x": 88.79, "y": 37.81 }
+					{ "time": 0, "x": 88.79, "y": 37.81 },
+					{ "time": 0.2666, "x": 44.55, "y": 38.49 },
+					{ "time": 0.5, "x": 2.67, "y": 32.75 }
 				]
 			},
 			"right_leg_constraint": {
 				"translate": [
-					{ "time": 0, "x": 19.73, "y": 36.17 }
+					{ "time": 0, "x": 19.73, "y": 36.17 },
+					{ "time": 0.5, "x": 7.91, "y": 36.17 }
 				]
 			}
 		},
 		"ik": {
 			"left_arm_constraint": [
-				{ "time": 0, "mix": 0 }
+				{ "time": 0 }
 			],
 			"left_leg_constraint": [
 				{ "time": 0, "bendPositive": false }
 			],
 			"right_arm_constraint": [
-				{ "time": 0, "mix": 0 }
+				{ "time": 0 }
 			],
 			"right_leg_constraint": [
 				{ "time": 0, "bendPositive": false }

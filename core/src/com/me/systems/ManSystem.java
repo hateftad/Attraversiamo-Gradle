@@ -147,6 +147,7 @@ public class ManSystem extends PlayerSystem {
             }
         }
         setPlayerState(entity);
+
         if (isDead(physicsComponent, currentLevel) || animation.isCompleted(PlayerState.Drowning)) {
             inputMgr.callRestart();
         }
@@ -235,7 +236,7 @@ public class ManSystem extends PlayerSystem {
         JointComponent jointComponent = jointComp.get(entity);
 
 
-        if (feetComponent.hasCollided() && !player.isHanging()) {
+        if (feetComponent.hasCollided() && !player.isHanging() && !player.isLanding()) {
             if (vel.velocity > 0) {
                 vel.velocity = -VELOCITYINR;
             }
@@ -286,7 +287,7 @@ public class ManSystem extends PlayerSystem {
         FeetComponent feetComponent = rayCastComps.get(entity);
         JointComponent jointComponent = jointComp.get(entity);
 
-        if (feetComponent.hasCollided() && !player.isHanging()) {
+        if (feetComponent.hasCollided() && !player.isHanging()&& !player.isLanding()) {
             if (vel.velocity < 0) {
                 vel.velocity = VELOCITYINR;
             }

@@ -415,6 +415,7 @@ public class EntityLoader {
                 stateData.setMix("runJumping", "falling", 0.2f);
                 stateData.setMix("pushing", "idle1", 0.4f);
                 stateData.setMix("falling", "drowning", 0.4f);
+                stateData.setMix("landing", "jogging", 0.4f);
 
                 animationComponent.setSkin(playerConfig.getSkinName());
                 pComp.setAllBodiesPosition(playerConfig.getPosition());

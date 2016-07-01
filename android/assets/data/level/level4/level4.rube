@@ -42,44 +42,9 @@
   [
     
     {
-      "class" : "body",
-      "displayName" : "playerNr",
-      "name" : "playerNr",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "joint",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "bodyType",
-      "name" : "bodyType",
-      "type" : "string"
-    },
-    
-    {
       "class" : "joint",
       "displayName" : "taskId",
       "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -92,16 +57,16 @@
     
     {
       "class" : "body",
-      "displayName" : "particlename",
-      "name" : "particlename",
+      "displayName" : "lightColor",
+      "name" : "lightColor",
       "type" : "string"
     },
     
     {
       "class" : "body",
-      "displayName" : "lightColor",
-      "name" : "lightColor",
-      "type" : "string"
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
     },
     
     {
@@ -113,9 +78,44 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "displayName" : "playerNr",
+      "name" : "playerNr",
       "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "joint",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "particlename",
+      "name" : "particlename",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "bodyType",
+      "name" : "bodyType",
+      "type" : "string"
     }
   ],
   "metaworld" : 
@@ -128,7 +128,10 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
+      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
+      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
+      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -361,17 +364,17 @@
             {
               "x" : 
               [
-                6.340519905090332,
-                6.340519905090332,
-                -6.235680103302002,
-                -6.235710144042969
+                7.691357612609863,
+                7.745396614074707,
+                -12.44953918457031,
+                -12.50360870361328
               ],
               "y" : 
               [
-                -2.868590116500854,
-                2.707639932632446,
-                2.707639932632446,
-                -2.868590116500854
+                -3.949262380599976,
+                8.165037155151367,
+                8.111003875732422,
+                -4.00329589843750
               ]
             }
           }
@@ -1926,7 +1929,7 @@
           "x" : 41.48070144653320,
           "y" : 25.23349952697754
         },
-        "file" : "Level.png",
+        "file" : "level4.png",
         "filter" : 1,
         "flip" : false,
         "id" : 8,

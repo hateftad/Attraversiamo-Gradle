@@ -50,6 +50,20 @@
     
     {
       "class" : "body",
+      "displayName" : "particlename",
+      "name" : "particlename",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "eventType",
+      "name" : "eventType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "flip_animation",
       "name" : "flip_animation",
       "type" : "bool"
@@ -57,8 +71,43 @@
     
     {
       "class" : "body",
-      "displayName" : "lightColor",
-      "name" : "lightColor",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "joint",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "bodyType",
+      "name" : "bodyType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "atlas",
+      "name" : "atlas",
       "type" : "string"
     },
     
@@ -71,57 +120,8 @@
     
     {
       "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "particlename",
-      "name" : "particlename",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "joint",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "atlas",
-      "name" : "atlas",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "bodyType",
-      "name" : "bodyType",
+      "displayName" : "lightColor",
+      "name" : "lightColor",
       "type" : "string"
     }
   ],
@@ -135,7 +135,10 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
+      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
+      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
+      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -258,8 +261,8 @@
         "name" : "minY",
         "position" : 
         {
-          "x" : 61.73634338378906,
-          "y" : 4.892089843750
+          "x" : 62.14820861816406,
+          "y" : -29.15174484252930
         },
         "type" : "static"
       },
@@ -4024,7 +4027,7 @@
           "x" : 41.76160049438477,
           "y" : 33.98180007934570
         },
-        "file" : "level.png",
+        "file" : "level7.png",
         "filter" : 1,
         "flip" : false,
         "id" : 2,
