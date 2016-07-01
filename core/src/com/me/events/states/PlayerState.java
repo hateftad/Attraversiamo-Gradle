@@ -14,5 +14,5 @@ public enum PlayerState {
     LyingDown, PressButton, HoldHandLeading,
     HoldHandFollowing, RunOut, Swinging, PullingLedge,
     Down, Up, Drowning, HoldingCage,
-    ClimbBox
+    ClimbBox, Landing
 }

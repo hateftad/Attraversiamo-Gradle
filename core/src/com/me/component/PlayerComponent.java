@@ -33,19 +33,28 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
         return state == PlayerState.LieDown;
     }
 
+    public boolean isLanding() {
+        return state == PlayerState.Landing;
+    }
+
+    public boolean isFalling() {
+        return state == PlayerState.Falling;
+    }
+
     public boolean shouldBeIdle() {
-        return !isJumping() &&
-                !isHanging() &&
-                !isClimbing() &&
-                !isLyingDown() &&
-                !lyingDown() &&
-                !isPullingUp() &&
-                !isPressingButton() &&
-                !isCrawling() &&
-                !isFinishing() &&
-                !isPullingLedge() &&
-                !isSwingingCage() &&
-                !isDrowning();
+        return !isJumping() &
+                !isHanging() &
+                !isClimbing() &
+                !isLyingDown() &
+                !lyingDown() &
+                !isPullingUp() &
+                !isPressingButton() &
+                !isCrawling() &
+                !isFinishing() &
+                !isPullingLedge() &
+                !isSwingingCage() &
+                !isDrowning() &
+                !isLanding();
     }
 
     public boolean isHoldingCage(){

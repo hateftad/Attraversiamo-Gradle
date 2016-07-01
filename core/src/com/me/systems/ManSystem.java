@@ -81,7 +81,7 @@ public class ManSystem extends PlayerSystem {
 
         if (canBeControlled(player)) {
 
-            if(!keyInputComponent.jump) {
+            if(!keyInputComponent.jump && !player.isLanding() && !player.isFalling()) {
                 if (keyInputComponent.left) {
                     moveLeft(entity);
                 } else if (keyInputComponent.right) {
@@ -146,9 +146,8 @@ public class ManSystem extends PlayerSystem {
                 }
             }
         }
-
         setPlayerState(entity);
-
+        System.out.println("State "+player.getState());
         if (isDead(physicsComponent, currentLevel) || animation.isCompleted(PlayerState.Drowning)) {
             inputMgr.callRestart();
         }
@@ -165,6 +164,7 @@ public class ManSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = physComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         PlayerComponent playerComponent = playerComps.get(entity);
+        FeetComponent feetComponent = rayCastComps.get(entity);
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
@@ -177,11 +177,19 @@ public class ManSystem extends PlayerSystem {
 
         if (physicsComponent.isFalling() &&
                 !playerComponent.isHanging()) {
-            setPlayerState(entity, PlayerState.Falling);
+            if(playerComponent.isFalling() && feetComponent.hasCollided()){
+                setPlayerState(entity, PlayerState.Landing);
+            } else {
+                setPlayerState(entity, PlayerState.Falling);
+            }
+        }
+
+        if(playerComponent.isFalling() && feetComponent.hasCollided()){
+            setPlayerState(entity, PlayerState.Landing);
         }
 
         if(!playerComponent.isActive() &&
-                !physicsComponent.isFalling() &&
+                feetComponent.hasCollided() &&
                 playerComponent.shouldBeIdle()){
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
@@ -226,10 +234,11 @@ public class ManSystem extends PlayerSystem {
         FeetComponent feetComponent = rayCastComps.get(entity);
         JointComponent jointComponent = jointComp.get(entity);
 
-        if (vel.velocity > 0) {
-            vel.velocity = -VELOCITYINR;
-        }
+
         if (feetComponent.hasCollided() && !player.isHanging()) {
+            if (vel.velocity > 0) {
+                vel.velocity = -VELOCITYINR;
+            }
             if (!touch.boxTouch) {
                 vel.velocity -= VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
@@ -277,11 +286,10 @@ public class ManSystem extends PlayerSystem {
         FeetComponent feetComponent = rayCastComps.get(entity);
         JointComponent jointComponent = jointComp.get(entity);
 
-        if (vel.velocity < 0) {
-            vel.velocity = VELOCITYINR;
-        }
-
         if (feetComponent.hasCollided() && !player.isHanging()) {
+            if (vel.velocity < 0) {
+                vel.velocity = VELOCITYINR;
+            }
             if (!touch.boxTouch) {
                 vel.velocity += VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);

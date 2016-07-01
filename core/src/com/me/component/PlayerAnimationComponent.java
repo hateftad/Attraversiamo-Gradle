@@ -131,6 +131,9 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                 case ClimbBox:
                     playAnimation("boxClimb", false);
                     break;
+                case Landing:
+                    playAnimation("landing", false);
+                    break;
                 default:
                     break;
             }
