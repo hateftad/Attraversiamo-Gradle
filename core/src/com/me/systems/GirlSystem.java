@@ -34,7 +34,7 @@ public class GirlSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<FeetComponent> feetComps;
 
-    private float VELOCITY = 5.5f;
+    private float VELOCITY = 4.5f;
 
     @SuppressWarnings("unchecked")
     public GirlSystem(Level currentLevel) {
