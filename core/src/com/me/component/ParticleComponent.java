@@ -15,6 +15,7 @@ public abstract class ParticleComponent extends BaseComponent {
     protected ParticleEffectPool pool;
     protected Array<ParticleEffectPool.PooledEffect> effects;
     protected String effect;
+    private boolean isStarted;
 
 	public ParticleComponent(String effect, int max){
 		particle = loadParticle(effect);
@@ -44,6 +45,7 @@ public abstract class ParticleComponent extends BaseComponent {
 
 		effect.setPosition(Converters.ToWorld(position.x), Converters.ToWorld(position.y));
 		effects.add(effect);
+        setStarted(true);
 	}
 
 	public boolean isCompleted(){
@@ -78,4 +80,11 @@ public abstract class ParticleComponent extends BaseComponent {
 
 	}
 
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
+    }
 }

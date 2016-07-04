@@ -22,8 +22,10 @@ public class EventParticleComponent extends ParticleComponent implements Particl
     @Override
     public void onNotify(ParticleEvent particleEvent) {
         if (particleEvent.getEventId() == id) {
-            start();
-            event.setStarted(true);
+            if(!isStarted()) {
+                start();
+                event.setStarted(true);
+            }
         }
     }
 

@@ -132,6 +132,7 @@ public class ManInteractionSystem extends PlayerSystem {
 
         if(playerComponent.isLanding()){
             if(animation.isCompleted(PlayerState.Landing)){
+                velocityLimitComponent.velocity = 0;
                 setPlayerState(entity, PlayerState.Idle);
             }
         }

@@ -383,7 +383,7 @@ public class EntityLoader {
                         .addComponent(new HangComponent())
                         .addComponent(new RagDollComponent())
                         .addComponent(new LadderClimbComponent())
-                        .addComponent(new VelocityLimitComponent(12, 14, 5, 5))
+                        .addComponent(new VelocityLimitComponent(12, 14, 5, 6f))
                         .addComponent(new PushComponent())
                         .addComponent(new JumpComponent())
                         .addComponent(new GrabComponent())

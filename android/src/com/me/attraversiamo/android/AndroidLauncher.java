@@ -69,7 +69,6 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 		playServicesManager.onStop();
 	}
 
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
