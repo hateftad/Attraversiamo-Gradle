@@ -1,6 +1,5 @@
 package com.me.events;
 
-import com.artemis.Entity;
 import com.me.component.PlayerComponent;
 import com.me.systems.GameEntityProcessingSystem;
 import com.me.systems.GameEntityWorld;
@@ -10,14 +9,14 @@ import com.me.systems.GameEntityWorld;
  */
 public class GameEvent extends Events {
 
-    protected GameEventType m_eventType;
+    protected GameEventType eventType;
 
     public GameEvent(GameEventType type) {
-        m_eventType = type;
+        eventType = type;
     }
 
     public GameEventType getEventType() {
-        return m_eventType;
+        return eventType;
     }
 
     public void notify(GameEntityProcessingSystem entityProcessingSystem, PlayerComponent.PlayerNumber playerNumber) {

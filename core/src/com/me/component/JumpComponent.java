@@ -2,7 +2,7 @@ package com.me.component;
 
 public class JumpComponent extends BaseComponent {
 
-	public boolean m_jumped = false;
+	public boolean jumped = false;
 
 	@Override
 	public void dispose() {
@@ -12,7 +12,7 @@ public class JumpComponent extends BaseComponent {
 
 	@Override
 	public void restart() {
-		m_jumped = false;
+		jumped = false;
 		
 	} 
 	

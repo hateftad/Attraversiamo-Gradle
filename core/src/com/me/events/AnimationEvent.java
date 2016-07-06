@@ -9,35 +9,45 @@ import com.esotericsoftware.spine.EventData;
  */
 public class AnimationEvent {
 
-    private Event m_event;
+    private Event event;
 
     public AnimationEvent(){
-        m_event = new Event(new EventData(AnimationEventType.NONE.name()));
+        event = new Event(0, new EventData(AnimationEventType.NONE.name()));
     }
 
     public void setEvent(Event event) {
-        this.m_event = event;
+        this.event = event;
     }
 
     public AnimationEventType getEventType(){
-        return determineEvent(m_event.getData().getName());
+        return determineEvent(event.getData().getName());
     }
 
     private AnimationEventType determineEvent(String eventName){
         if(eventName.equalsIgnoreCase(AnimationEventType.JUMPUP.name())){
             return AnimationEventType.JUMPUP;
+        } else if(eventName.equalsIgnoreCase(AnimationEventType.JUMP.name())){
+            return AnimationEventType.JUMP;
+        } else if(eventName.equalsIgnoreCase(AnimationEventType.PULLLEDGE.name())){
+            return AnimationEventType.PULLLEDGE;
+        } else if (eventName.equalsIgnoreCase(AnimationEventType.SWING.name())){
+            return AnimationEventType.SWING;
+        } else if (eventName.equalsIgnoreCase(AnimationEventType.PRESSINGBUTTON.name())){
+            return AnimationEventType.PRESSINGBUTTON;
         }
-
         return AnimationEventType.NONE;
     }
 
     public void resetEvent() {
-        m_event = new Event(new EventData(AnimationEventType.NONE.name()));
+        event = new Event(0, new EventData(AnimationEventType.NONE.name()));
     }
-
 
     public enum AnimationEventType {
         JUMPUP,
+        JUMP,
+        PULLLEDGE,
+        SWING,
+        PRESSINGBUTTON,
         NONE
     }
 }

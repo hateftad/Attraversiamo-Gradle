@@ -13,13 +13,13 @@ public class TransitionScreen implements Screen {
 
     private Screen current;
     private Screen next;
-    private Attraversiamo m_game;
+    private Attraversiamo game;
 
     private int currentTransitionEffect;
     private ArrayList<TransitionEffect> transitionEffects;
 
     public TransitionScreen(Attraversiamo game, Screen current, Screen next, ArrayList<TransitionEffect> transitionEffects) {
-        m_game = game;
+        this.game = game;
         this.current = current;
         this.next = next;
         this.transitionEffects = transitionEffects;
@@ -35,7 +35,7 @@ public class TransitionScreen implements Screen {
     public void render(float delta) {
 
         if (currentTransitionEffect >= transitionEffects.size()) {
-            m_game.setScreen(next);
+            game.setScreen(next);
             return;
         }
 

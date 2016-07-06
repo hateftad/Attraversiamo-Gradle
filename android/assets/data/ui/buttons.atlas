@@ -1,26 +1,151 @@
 
 buttons.png
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-left
+action.up
   rotate: false
-  xy: 1, 1
-  size: 128, 128
-  orig: 128, 128
+  xy: 590, 699
+  size: 256, 256
+  orig: 256, 256
   offset: 0, 0
   index: -1
-right
+back.up
   rotate: false
-  xy: 131, 1
-  size: 128, 128
-  orig: 128, 128
+  xy: 2, 299
+  size: 555, 112
+  orig: 555, 112
   offset: 0, 0
   index: -1
-up
+background
   rotate: false
-  xy: 261, 1
-  size: 128, 128
-  orig: 128, 128
+  xy: 590, 413
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+change1.up
+  rotate: false
+  xy: 2, 413
+  size: 586, 542
+  orig: 586, 542
+  offset: 0, 0
+  index: -1
+continue.up
+  rotate: false
+  xy: 2, 185
+  size: 555, 112
+  orig: 555, 112
+  offset: 0, 0
+  index: -1
+default
+  rotate: false
+  xy: 2, 2
+  size: 221, 67
+  orig: 221, 67
+  offset: 0, 0
+  index: -1
+dim
+  rotate: false
+  xy: 652, 413
+  size: 27, 26
+  orig: 27, 26
+  offset: 0, 0
+  index: -1
+jump.up
+  rotate: false
+  xy: 590, 441
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+left.up
+  rotate: false
+  xy: 559, 155
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+reset.up
+  rotate: false
+  xy: 2, 71
+  size: 555, 112
+  orig: 555, 112
+  offset: 0, 0
+  index: -1
+white
+  rotate: false
+  xy: 621, 413
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+
+buttons2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+action.down
+  rotate: false
+  xy: 2, 2
+  size: 254, 253
+  orig: 254, 253
+  offset: 0, 0
+  index: -1
+change2.up
+  rotate: false
+  xy: 2, 257
+  size: 586, 542
+  orig: 586, 542
+  offset: 0, 0
+  index: -1
+menu.down
+  rotate: false
+  xy: 590, 30
+  size: 255, 254
+  orig: 255, 254
+  offset: 0, 0
+  index: -1
+menu.up
+  rotate: false
+  xy: 590, 543
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+right.down
+  rotate: false
+  xy: 258, 2
+  size: 254, 253
+  orig: 254, 253
+  offset: 0, 0
+  index: -1
+right.up
+  rotate: false
+  xy: 590, 286
+  size: 256, 255
+  orig: 256, 255
+  offset: 0, 0
+  index: -1
+
+buttons3.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jump.down
+  rotate: false
+  xy: 2, 257
+  size: 253, 253
+  orig: 253, 253
+  offset: 0, 0
+  index: -1
+left.down
+  rotate: false
+  xy: 2, 2
+  size: 253, 253
+  orig: 253, 253
   offset: 0, 0
   index: -1

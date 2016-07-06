@@ -4,110 +4,73 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.badlogic.gdx.graphics.Color;
 import com.me.component.*;
+import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.ScriptManager;
 
-public class LevelSystem extends GameEntityProcessingSystem{
+public class LevelSystem extends GameEntityProcessingSystem {
 
-	private float inc = 0.0f;
-	private LevelEventListener m_levelListener;
-	private ScriptManager m_scriptMgr;
-    private Level m_currentLevel;
-	private boolean m_enable;
+    private LevelEventListener levelListener;
+    private ScriptManager scriptMgr;
+    private Level currentLevel;
+    private boolean enable;
 
-	@Mapper ComponentMapper<LightComponent> m_lightComps;
-	@Mapper ComponentMapper<ReachEndComponent> m_reachEndComps;
-	@Mapper ComponentMapper<LevelComponent> m_levelComp;
-	@Mapper ComponentMapper<ParticleComponent> m_particleComps;
+    @Mapper
+    ComponentMapper<ReachEndComponent> reachEndComps;
+    @Mapper
+    ComponentMapper<LevelComponent> levelComps;
 
 
-	@SuppressWarnings("unchecked")
-	public LevelSystem(LevelEventListener listener) {
-		super(Aspect.getAspectForAll(TriggerComponent.class));
-		m_levelListener = listener;
-	}
-
-    public void setCurrentLevel(Level level){
-        m_currentLevel = level;
+    @SuppressWarnings("unchecked")
+    public LevelSystem(LevelEventListener listener) {
+        super(Aspect.getAspectForAll(LevelComponent.class));
+        levelListener = listener;
     }
 
-    public Level getCurrentLevel(){
-        return m_currentLevel;
+    public void setCurrentLevel(Level level) {
+        currentLevel = level;
     }
 
-	public void setProcessing(boolean enable){
-		m_enable = enable;
-	}
+    public void setProcessing(boolean enable) {
+        this.enable = enable;
+    }
 
-	@Override
-	protected void process(Entity e) {
+    @Override
+    protected void process(Entity e) {
+        if (reachEndComps.has(e)) {
+            checkFinished(e);
+        }
+    }
 
-		//m_scriptMgr.update();
+    @Override
+    protected boolean checkProcessing() {
+        return enable;
+    }
 
-		if(m_lightComps.has(e)){
-			updateLights(m_lightComps.get(e));
-		}
 
-        if(m_reachEndComps.has(e)) {
-			checkFinished(e);
-		}
-		
-	}
+    private void checkFinished(Entity entity) {
 
-	@Override
-	protected boolean checkProcessing() {
-		return m_enable;
-	}
-
-	private void updateLights(LightComponent light){
-		if(light.getName().equals("portalLight")){
-			float a = light.getAlpha();
-
-			if(!m_currentLevel.isFinished()){
-				if(a >= 1){
-					light.setColor(Color.RED);
-					inc = -0.01f;
-				}else if(a < 0.1f){
-					inc = 0.01f;
-				}
-				light.setAlpha(a + inc);
-
-			} else {
-				light.setAlpha(1);
-				light.setColor(Color.GREEN);
-				world.getSystem(CameraSystem.class).getRayHandler().setAmbientLight(1f);
-			}
-		}
-	}
-	
-	private void checkFinished(Entity entity){
-
-        ReachEndComponent reachEndComponent = m_reachEndComps.get(entity);
-        if (reachEndComponent.allFinished() && !m_currentLevel.isFinished()) {
+        LevelComponent levelComponent = levelComps.get(entity);
+        ReachEndComponent reachEndComponent = reachEndComps.get(entity);
+        if (reachEndComponent.allFinished() && !currentLevel.isFinished()) {
             notifyObservers(new TaskEvent(GameEventType.AllReachedEnd));
-            m_currentLevel.setFinished(true);
+            GameEvent event = reachEndComponent.getEndEvent();
+            event.notify((GameEntityWorld) world);
+            currentLevel.setFinished(true);
         }
 
-        LevelComponent levelComponent = m_levelComp.get(entity);
-        if (levelComponent.isFinished()) {
-            if(!m_particleComps.has(entity)) {
-                levelFinished();
-            } else {
-                ParticleComponent particleComponent = m_particleComps.get(entity);
-                if(particleComponent.isCompleted()){
-                    levelFinished();
-                }
-            }
+        if (levelComponent.allFinished()) {
+            levelFinished();
         }
-	}
 
-    private void levelFinished(){
-        m_levelListener.onFinishedLevel(m_currentLevel.getNextLevel());
+    }
+
+    private void levelFinished() {
+        levelListener.onFinishedLevel(currentLevel.getNextLevel());
     }
 
 }

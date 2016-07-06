@@ -10,32 +10,33 @@ import com.me.systems.GameEntityWorld;
  */
 public class TaskEvent extends GameEvent {
 
-    private int m_eventId;
-    private PlayerComponent.PlayerNumber m_playerNr;
-    public int getEventId() {
-        return m_eventId;
-    }
-
+    private int eventId;
+    private PlayerComponent.PlayerNumber playerNr;
     public TaskEvent(BodyInfo bodyInfo){
         super(bodyInfo.getEventType());
-        m_eventId = bodyInfo.getEventId();
+        eventId = bodyInfo.getEventId();
+        playerNr = PlayerComponent.PlayerNumber.NONE;
     }
 
     public TaskEvent(GameEventType type, PlayerComponent.PlayerNumber playerNumber){
         super(type);
-        m_playerNr = playerNumber;
+        playerNr = playerNumber;
     }
 
     public TaskEvent(GameEventType type){
         super(type);
     }
 
+    public int getEventId() {
+        return eventId;
+    }
+
     public PlayerComponent.PlayerNumber getPlayerNr(){
-        return m_playerNr;
+        return playerNr;
     }
 
     public void notify(GameEntityProcessingSystem entityProcessingSystem, PlayerComponent.PlayerNumber playerNumber){
-        m_playerNr = playerNumber;
+        playerNr = playerNumber;
         entityProcessingSystem.notifyObservers(this);
     }
 

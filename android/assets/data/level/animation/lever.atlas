@@ -1,0 +1,20 @@
+
+lever.png
+size: 128,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+lever_hand
+  rotate: true
+  xy: 2, 2
+  size: 15, 52
+  orig: 15, 52
+  offset: 0, 0
+  index: -1
+lever_stand
+  rotate: true
+  xy: 2, 19
+  size: 29, 102
+  orig: 29, 102
+  offset: 0, 0
+  index: -1

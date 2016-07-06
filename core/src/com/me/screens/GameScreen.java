@@ -2,7 +2,6 @@ package com.me.screens;
 
 import box2dLight.RayHandler;
 
-import com.artemis.World;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -11,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
+import com.me.manager.PersistenceManager;
 import com.me.physics.JointFactory;
 import com.me.systems.*;
 import com.me.ui.InputManager;
@@ -18,153 +18,170 @@ import com.me.ui.UserInterface;
 
 public class GameScreen extends AbstractScreen implements LevelEventListener {
 
-    private GameEntityWorld m_entityWorld;
-    private PhysicsSystem m_physicsSystem;
-    private PlayerOneSystem m_playerOneSystem;
-    private PlayerTwoSystem m_playerTwoSystem;
-    private RenderSystem m_renderSystem;
-    private CameraSystem m_cameraSystem;
-    private UserInterface m_userInterface;
-    private boolean m_loadedNextLevel;
+    private final Level currentLevel;
+    private GameEntityWorld entityWorld;
+    private PhysicsSystem physicsSystem;
+    private PlayerSystem playerOneSystem;
+    private PlayerSystem playerTwoSystem;
+    private RenderSystem renderSystem;
+    private CameraSystem cameraSystem;
+    private UserInterface userInterface;
+    private boolean loadedNextLevel;
 
 
     public GameScreen(Attraversiamo game, Level currentLevel) {
         super(game);
-        m_camera.viewportWidth = 800;
-        m_camera.viewportHeight = 600;
-        m_camera.zoom = currentLevel.getLevelConfig().getZoom();
-        m_entityWorld = new GameEntityWorld();
-        m_entityWorld.setManager(new GroupManager());
-        m_physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -14), true));
-        JointFactory.getInstance().initialize(m_physicsSystem.getWorld());
-        RayHandler rayHandler = new RayHandler(m_physicsSystem.getWorld());
-        rayHandler.setAmbientLight(1f);
+        this.currentLevel = currentLevel;
+        this.camera.viewportWidth = 800;
+        this.camera.viewportHeight = 600;
+        this.camera.zoom = currentLevel.getLevelConfig().getZoom();
+        this.entityWorld = new GameEntityWorld();
+        this.entityWorld.setManager(new GroupManager());
+        this.physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -14), true));
+        JointFactory.getInstance().initialize(physicsSystem.getPhysicsWorld());
+        RayHandler rayHandler = new RayHandler(physicsSystem.getPhysicsWorld());
+        rayHandler.setAmbientLight(0.5f);
         rayHandler.setShadows(false);
         rayHandler.setAmbientLight(Color.GREEN);
-        m_cameraSystem = m_entityWorld.setSystem(new CameraSystem(rayHandler, m_camera));
-        m_renderSystem = m_entityWorld.setSystem(new RenderSystem(m_camera));
-        m_entityWorld.setSystem(m_physicsSystem);
-        m_entityWorld.setSystem(new PlayerAttributeSystem());
-        m_entityWorld.setSystem(new LevelSystem(this));
-        m_entityWorld.setSystem(new ParticlesSystem(2));
-        m_playerOneSystem = new PlayerOneSystem(m_physicsSystem);
-        m_entityWorld.setSystem(m_playerOneSystem);
-        m_playerTwoSystem = m_entityWorld.setSystem(new PlayerTwoSystem());
-        m_entityWorld.initialize();
-        game.m_processors.add(m_cameraSystem);
-        game.m_processors.add(m_playerOneSystem);
-
+        this.cameraSystem = entityWorld.setSystem(new CameraSystem(rayHandler, camera));
+        this.renderSystem = entityWorld.setSystem(new RenderSystem(camera));
+        this.entityWorld.setSystem(physicsSystem);
+        this.entityWorld.setSystem(new LevelSystem(this));
+        this.entityWorld.setSystem(new ContinousParticlesSystem(2));
+        this.entityWorld.setSystem(new EventParticlesSystem());
+        this.entityWorld.setSystem(new ManInteractionSystem());
+        this.entityWorld.setSystem(new GirlInteractionSystem());
+        this.playerOneSystem = new ManSystem(currentLevel);
+        this.entityWorld.setSystem(playerOneSystem);
+        this.playerTwoSystem = entityWorld.setSystem(new GirlSystem(currentLevel));
+        this.entityWorld.initialize();
+        this.game.processors.add(cameraSystem);
+        this.game.processors.add(playerOneSystem);
+        InputManager.getInstance().addEventListener(physicsSystem);
         if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
-            m_userInterface = new UserInterface();
-            m_userInterface.init();
+            this.userInterface = new UserInterface(currentLevel);
+            this.userInterface.init();
         } else {
-            Gdx.input.setInputProcessor(game.m_multiPlexer);
+            Gdx.input.setInputProcessor(game.multiPlexer);
         }
 
+        InputManager.getInstance().reset();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
 
-        m_entityWorld.setDelta(Gdx.graphics.getDeltaTime());
-        m_entityWorld.process();
+        entityWorld.setDelta(Gdx.graphics.getDeltaTime());
+        entityWorld.process();
 
-        m_cameraSystem.process();
+        cameraSystem.process();
         InputManager.getInstance().update();
 
-        if (m_userInterface != null) {
-            m_userInterface.update(delta);
+        if (userInterface != null) {
+            userInterface.update(delta);
+            toggleProcessingOnSystems(!userInterface.isPaused());
         }
 
-        if (m_loadedNextLevel) {
+        if (loadedNextLevel) {
             OnStartLevel();
         }
     }
 
     public GameEntityWorld getEntityWorld() {
-        return m_entityWorld;
+        return entityWorld;
     }
 
     public PhysicsSystem getPhysicsSystem() {
-        return m_physicsSystem;
+        return physicsSystem;
     }
 
     public CameraSystem getCameraSystem() {
-        return m_cameraSystem;
+        return cameraSystem;
     }
 
-    public PlayerOneSystem getPlayerSystem() {
-        return m_playerOneSystem;
+    public PlayerSystem getPlayerSystem() {
+        return playerOneSystem;
     }
 
     public void toggleProcessingOnSystems(boolean state) {
-        m_playerOneSystem.toggleProcessing(state);
-        m_playerTwoSystem.toggleProcessing(state);
-        m_cameraSystem.toggleProcess(state);
-        m_physicsSystem.toggleProcessing(state);
+        playerOneSystem.toggleProcessing(state);
+        playerTwoSystem.toggleProcessing(state);
+        cameraSystem.toggleProcess(state);
+        physicsSystem.toggleProcessing(state);
     }
 
     public void clear() {
-        m_entityWorld = null;
-        m_physicsSystem.clearSystem();
-        m_renderSystem.dispose();
-        m_cameraSystem.dispose();
+        entityWorld = null;
+        physicsSystem.clearSystem();
+        renderSystem.dispose();
+        cameraSystem.dispose();
 
     }
 
     public void printInfo() {
-        if (m_entityWorld != null && m_entityWorld.getEntityManager() != null) {
-            System.out.println("Active Entities" + m_entityWorld.getEntityManager().getActiveEntityCount());
+        if (entityWorld != null && entityWorld.getEntityManager() != null) {
+            System.out.println("Active Entities" + entityWorld.getEntityManager().getActiveEntityCount());
         }
     }
 
     @Override
     public void resize(int width, int height) {
-        super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getWidth());
+        super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
     }
 
 
     @Override
     public void show() {
         super.show();
+        System.out.println("show()");
         OnStartLevel();
+        game.showBannerAd(false);
+
     }
 
     @Override
     public void hide() {
+        System.out.println("hide()");
     }
 
     @Override
     public void pause() {
+        System.out.println("pause()");
+        physicsSystem.setEnabled(false);
+        PersistenceManager.getInstance().saveProgress(currentLevel.getLevelNumber());
     }
 
     @Override
     public void resume() {
+        System.out.println("resume()");
+        physicsSystem.setEnabled(true);
     }
 
     @Override
     public void dispose() {
-        m_physicsSystem.dispose();
+        physicsSystem.dispose();
         super.dispose();
     }
 
     @Override
     public void onRestartLevel() {
-        m_loadedNextLevel = false;
+        loadedNextLevel = false;
     }
 
     @Override
     public void OnStartLevel() {
-        m_loadedNextLevel = false;
+        loadedNextLevel = false;
     }
 
     @Override
     public void onFinishedLevel(int nr) {
-        m_game.m_loadingScreen.load(nr);
-        m_game.setScreen(m_game.m_loadingScreen);
-        m_loadedNextLevel = true;
-
+        game.showInterstitialAd();
+        PersistenceManager.getInstance().saveProgress(nr);
+        game.loadingScreen.load(nr);
+        game.setScreen(game.loadingScreen);
+        loadedNextLevel = true;
     }
 
     @Override

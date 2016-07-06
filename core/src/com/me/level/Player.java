@@ -3,50 +3,51 @@ package com.me.level;
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.AnimationComponent;
 import com.me.config.PlayerConfig;
+import com.me.events.states.PlayerState;
 
 /**
  * Created by hateftadayon on 7/5/15.
  */
 public class Player {
 
-    private PlayerConfig m_playerConfig;
+    private PlayerConfig playerConfig;
 
     public Player(PlayerConfig playerConfig){
-        m_playerConfig = playerConfig;
+        this.playerConfig = playerConfig;
     }
 
     public String getName(){
-        return m_playerConfig.getName();
+        return playerConfig.getName();
     }
 
     public boolean canDeactivate(){
-        return m_playerConfig.canDeactivate();
+        return playerConfig.canDeactivate();
     }
 
     public boolean isFacingLeft(){
-        return m_playerConfig.isFacingleft();
+        return playerConfig.isFacingleft();
     }
     public boolean isFinishFacingLeft(){
-        return m_playerConfig.getFinishFacingleft();
+        return playerConfig.getFinishFacingleft();
     }
 
     public boolean isActive(){
-        return m_playerConfig.isActive();
+        return playerConfig.isActive();
     }
 
     public String getSkinName(){
-        return m_playerConfig.getSkinName();
+        return playerConfig.getSkinName();
     }
 
     public Vector2 getPosition(){
-        return m_playerConfig.getPlayerPosition();
+        return playerConfig.getPlayerPosition();
     }
 
     public int getPlayerNumber(){
-        return m_playerConfig.getPlayerNumber();
+        return playerConfig.getPlayerNumber();
     }
 
-    public AnimationComponent.AnimState getFinishAnimation(){
-        return m_playerConfig.getFinishAnimation();
+    public PlayerState getFinishAnimation(){
+        return playerConfig.getFinishAnimation();
     }
 }

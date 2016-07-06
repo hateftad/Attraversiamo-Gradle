@@ -11,20 +11,20 @@ import com.me.events.TaskEvent;
  */
 public class CharacterMovementComponent extends BaseComponent implements TaskEventObserverComponent {
 
-    private RevoluteJoint m_wheelJoint;
+    private RevoluteJoint wheelJoint;
 
     public CharacterMovementComponent(Joint wheelJoint){
-        m_wheelJoint = (RevoluteJoint) wheelJoint;
+       this.wheelJoint = (RevoluteJoint) wheelJoint;
     }
 
     public void setVelocity(float velocity){
-        m_wheelJoint.enableMotor(true);
-        m_wheelJoint.setMotorSpeed(velocity);
+        wheelJoint.enableMotor(true);
+        wheelJoint.setMotorSpeed(velocity);
     }
 
     public void standStill(){
-        m_wheelJoint.enableMotor(true);
-        m_wheelJoint.setMotorSpeed(0);
+        wheelJoint.enableMotor(true);
+        wheelJoint.setMotorSpeed(0);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class CharacterMovementComponent extends BaseComponent implements TaskEve
     }
 
     public float getSpeed(){
-        return m_wheelJoint.getMotorSpeed();
+        return wheelJoint.getMotorSpeed();
     }
 
     @Override

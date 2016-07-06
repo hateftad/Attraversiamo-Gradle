@@ -16,6 +16,9 @@
         <resource>
             <directory>data</directory>
         </resource>
+        <resource>
+            <directory>resources</directory>
+        </resource>
     </resources>
     <forceLinkClasses>
         <pattern>com.badlogic.gdx.scenes.scene2d.ui.*</pattern>
@@ -34,7 +37,12 @@
     </forceLinkClasses>
     <libs>
         <lib>z</lib>
+        <lib>libs/libGoogleAnalyticsServices.a</lib>
+        <lib>libs/libAdIdAccess.a</lib>
     </libs>
+    <frameworkPaths>
+        <path>libs</path>
+    </frameworkPaths>
     <frameworks>
         <framework>UIKit</framework>
         <framework>OpenGLES</framework>
@@ -43,9 +51,21 @@
         <framework>OpenAL</framework>
         <framework>AudioToolbox</framework>
         <framework>AVFoundation</framework>
-    </frameworks>
-    <weakFrameworks>
+        <framework>GoogleMobileAds</framework>
+        <framework>SafariServices</framework>
+        <framework>CoreBluetooth</framework>
+        <framework>gpg</framework>
+        <framework>GoogleOpenSource</framework>
+        <framework>GoogleSignIn</framework>
         <framework>AdSupport</framework>
+        <framework>AudioToolbox</framework>
+        <framework>CoreMedia</framework>
+        <framework>CoreTelephony</framework>
+        <framework>EventKit</framework>
+        <framework>EventKitUI</framework>
+        <framework>MediaPlayer</framework>
+        <framework>MessageUI</framework>
         <framework>StoreKit</framework>
-    </weakFrameworks>
+        <framework>SystemConfiguration</framework>
+    </frameworks>
 </config>

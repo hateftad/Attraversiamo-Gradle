@@ -9,22 +9,22 @@ import com.me.utils.TimeTransition;
  */
 public abstract class TransitionEffect {
 
-    TimeTransition m_timeTransition;
+    TimeTransition timeTransition;
 
     public TransitionEffect(float duration){
-        m_timeTransition = new TimeTransition();
-        m_timeTransition.start(duration);
+        timeTransition = new TimeTransition();
+        timeTransition.start(duration);
     }
 
     protected float getAlpha(){
-        return m_timeTransition.get();
+        return timeTransition.get();
     }
     public void update(float delta) {
-        m_timeTransition.update(delta);
+        timeTransition.update(delta);
     }
 
     public abstract void render(float delta, Screen current, Screen next);
     public boolean isFinished(){
-        return m_timeTransition.isFinished();
+        return timeTransition.isFinished();
     }
 }

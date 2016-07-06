@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.me.attraversiamo.android"
-    android:versionCode="1"
+    package="com.me.attraversiamo"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="23" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
-        android:name=".AttraversiamoApplication"
-        android:icon="@drawable/ic_launcher"
+        android:name="com.me.attraversiamo.AttraversiamoApplication"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
 
         <meta-data
                 android:name="com.google.android.gms.analytics.globalConfigResource"
                 android:resource="@xml/global_tracker" />
+
+        <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="@string/app_id" />
 
         <meta-data android:name="com.google.android.gms.version"
                    android:value="@integer/google_play_services_version"/>

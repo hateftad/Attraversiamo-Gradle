@@ -4,32 +4,43 @@ import com.badlogic.gdx.math.Vector2;
 
 public class TouchComponent extends BaseComponent {
 
-	public boolean m_groundTouch;
-	public boolean m_edgeTouch;
-	public boolean m_wallTouch;
-	public boolean m_ladderTouch;
-	public boolean m_boxTouch;
-	public boolean m_footEdgeL;
-	public boolean m_footEdgeR;
-	public boolean m_footEdge;
-	public boolean m_rightPushArea;
-	public boolean m_leftPushArea;
-	public boolean m_pushArea;
-	public boolean m_handTouch;
-	public boolean m_feetToBox;
-	public Vector2 m_touchCenter;
+	public boolean edgeTouch;
+    public boolean pullEdgeTouch;
+	public boolean ladderTouch;
+	public boolean boxTouch;
+	public boolean footEdgeL;
+	public boolean footEdgeR;
+	public boolean footEdge;
+	public boolean rightPushArea;
+	public boolean leftPushArea;
+	public boolean pushArea;
+	public boolean handTouch;
+	public Vector2 touchCenter;
+    public boolean handHoldArea;
+    public boolean leftHoldArea;
+    public boolean rightHoldArea;
+    public boolean canCrawl;
+    public boolean cageTouch;
+    public boolean waterTouch;
+	public boolean insideFinish;
 
-	public TouchComponent() {
-		m_groundTouch = false;
-		m_edgeTouch = false;
-		m_wallTouch = false;
-		m_ladderTouch = false;
-		m_boxTouch = false;
-		m_footEdgeL = false;
-		m_footEdgeR = false;
-		m_handTouch = false;
-		m_touchCenter = new Vector2();
+    public TouchComponent() {
+		edgeTouch = false;
+		ladderTouch = false;
+		boxTouch = false;
+		footEdgeL = false;
+		footEdgeR = false;
+		handTouch = false;
+		touchCenter = Vector2.Zero;
 	}
+
+    public boolean isHanging(){
+        return edgeTouch;
+    }
+
+    public boolean canPullUp(){
+        return handTouch && footEdge;
+    }
 
 	@Override
 	public void dispose() {
@@ -38,16 +49,27 @@ public class TouchComponent extends BaseComponent {
 
 	@Override
 	public void restart() {
-		m_groundTouch = false;
-		m_edgeTouch = false;
-		m_wallTouch = false;
-		m_ladderTouch = false;
-		m_boxTouch = false;
-		m_footEdgeL = false;
-		m_footEdgeR = false;
-		m_handTouch = false;
-		m_touchCenter = Vector2.Zero;
-
+		edgeTouch = false;
+		footEdgeL = false;
+		footEdgeR = false;
+		handTouch = false;
+		touchCenter = Vector2.Zero;
+        edgeTouch = false;
+        pullEdgeTouch = false;
+        ladderTouch = false;
+        boxTouch = false;
+        footEdge = false;
+        rightPushArea = false;
+        leftPushArea = false;
+        pushArea = false;
+        handTouch = false;
+        handHoldArea = false;
+        leftHoldArea = false;
+        rightHoldArea = false;
+        canCrawl = false;
+        cageTouch = false;
+        waterTouch = false;
+		insideFinish = false;
 	}
 
 }

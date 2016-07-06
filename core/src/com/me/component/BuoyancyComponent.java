@@ -6,40 +6,40 @@ import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.events.ButtonEvent;
 import com.me.events.GameEventType;
 import com.me.events.HorizontalButtonEvent;
+import com.me.events.TaskEvent;
 import com.me.utils.Direction;
 
 
 public class BuoyancyComponent extends BaseComponent implements ButtonStateObserverComponent {
 
-	private ObjectMap<String, BuoyancyControllerConfig> m_controllerInfo = new ObjectMap<String, BuoyancyControllerConfig>();
-    private int m_eventId;
+	private ObjectMap<String, BuoyancyControllerConfig> controllerInfo = new ObjectMap<>();
+    private int eventId;
 
 	//pass in fluid velocity
 	public BuoyancyComponent(int taskId){
-        m_eventId = taskId;
+        eventId = taskId;
 	}
 
 	public void addControllerInfo(String name, Vector2 fluidVelocity, float linearDrag, float angularDrag){
-		m_controllerInfo.put(name, new BuoyancyControllerConfig(fluidVelocity, linearDrag, angularDrag));
+		controllerInfo.put(name, new BuoyancyControllerConfig(fluidVelocity, linearDrag, angularDrag));
 	}
 
 	public ObjectMap getControllerInfo(){
-		return m_controllerInfo;
+		return controllerInfo;
 	}
 
     public BuoyancyControllerConfig getController(String name){
-        return m_controllerInfo.get(name);
+        return controllerInfo.get(name);
     }
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void restart() {
-		for(BuoyancyControllerConfig config : m_controllerInfo.values()){
+		for(BuoyancyControllerConfig config : controllerInfo.values()){
             config.reset();
         }
 	}
@@ -47,48 +47,54 @@ public class BuoyancyComponent extends BaseComponent implements ButtonStateObser
     @Override
     public void onNotify(ButtonEvent event) {
         if(event.getEventType() == GameEventType.HorizontalButton){
-            if(m_eventId == event.getEventId()){
+            if(eventId == event.getEventId()){
                 HorizontalButtonEvent buttonEvent = (HorizontalButtonEvent) event;
                 buttonEvent.update();
                 //get fluid velocity from other component
+                Vector2 fluidVelocity = getController(WorldObjectComponent.WorldObject).getFluidVelocity();
                 if(buttonEvent.getDirection() == Direction.Left){
-                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(-3, 1);
+                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(-3, fluidVelocity.y);
                 } else if(buttonEvent.getDirection() == Direction.Right){
-                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(3, 1);
+                    getController(WorldObjectComponent.WorldObject).setFluidVelocity(3, fluidVelocity.y);
                 }
             }
         }
     }
 
+    @Override
+    public void onNotify(TaskEvent event) {
+
+    }
+
     public class BuoyancyControllerConfig {
-		private float m_angularDrag;
-		private float m_linearDrag;
-		private Vector2 m_fluidVelocity;
+		private float angularDrag;
+		private float linearDrag;
+		private Vector2 fluidVelocity;
 
 		public BuoyancyControllerConfig(Vector2 fluidVelocity, float linearDrag, float angularDrag){
-			m_angularDrag = angularDrag;
-			m_linearDrag = linearDrag;
-			m_fluidVelocity = fluidVelocity;
+			this.angularDrag = angularDrag;
+			this.linearDrag = linearDrag;
+			this.fluidVelocity = fluidVelocity;
 		}
 
 		public float getAngularDrag() {
-			return m_angularDrag;
+			return angularDrag;
 		}
 
 		public float getLinearDrag() {
-			return m_linearDrag;
+			return linearDrag;
 		}
 
 		public Vector2 getFluidVelocity() {
-			return m_fluidVelocity;
+			return fluidVelocity;
 		}
 
         public void setFluidVelocity(float x, float y){
-            m_fluidVelocity.set(x, y);
+            fluidVelocity.set(x, y);
         }
 
         public void reset(){
-            setFluidVelocity(0, 1);
+            //setFluidVelocity(0, 1);
         }
 	}
 }

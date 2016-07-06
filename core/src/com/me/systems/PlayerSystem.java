@@ -1,10 +1,15 @@
 package com.me.systems;
 
 import com.artemis.Aspect;
+import com.artemis.Entity;
 import com.badlogic.gdx.InputProcessor;
 import com.esotericsoftware.spine.Slot;
 import com.esotericsoftware.spine.attachments.RegionAttachment;
 import com.me.component.*;
+import com.me.events.GameEventType;
+import com.me.events.TaskEvent;
+import com.me.events.states.PlayerState;
+import com.me.level.Level;
 import com.me.ui.InputManager;
 import com.me.utils.Converters;
 
@@ -16,8 +21,8 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
     protected final static int left = 0, right = 1, up = 2, down = 3, jump = 4, rag = 5,
             changePlayer = 6, action = 7, skinChange = 8;
 
-    protected boolean m_process = true;
-    protected InputManager m_inputMgr;
+    protected boolean process = true;
+    protected InputManager inputMgr;
 
     public PlayerSystem(Aspect aspect) {
         super(aspect);
@@ -41,29 +46,34 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
         }
     }
 
-    protected boolean isDead(PhysicsComponent ps) {
-
-        if (ps.getPosition().y < -100) {
-            return true;
+    protected void checkFinished(TouchComponent touch, PlayerComponent player, FeetComponent feetComponent) {
+        if(touch.insideFinish){
+            if(feetComponent.hasCollided() && !player.isFinishing() && !player.isFinished()){
+                System.out.println("finished");
+                player.setFinished(true);
+                notifyObservers(new TaskEvent(GameEventType.InsideFinishArea, player.getPlayerNr()));
+            }
         }
-        return false;
+    }
+
+    protected abstract void setPlayerState(Entity entity, PlayerState state);
+
+    protected boolean isDead(PhysicsComponent ps, Level currentLevel) {
+        return ps.getWorldPosition().y < currentLevel.getLevelBoundaries().minY;
     }
 
     public void restartSystem() {
-        m_inputMgr.reset();
-    }
-
-    public void clearSystem() {
+        inputMgr.reset();
     }
 
     public void toggleProcessing(boolean process) {
-        m_process = process;
+        this.process = process;
     }
 
     @Override
     protected boolean checkProcessing() {
         // TODO Auto-generated method stub
-        return m_process;
+        return process;
     }
 
     @Override

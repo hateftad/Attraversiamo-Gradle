@@ -9,79 +9,70 @@ import com.badlogic.gdx.utils.Array;
 import com.me.utils.Converters;
 
 public abstract class ParticleComponent extends BaseComponent {
-    public enum ParticleType{
-        SINGLE,
-        PORTAL,
-        CONTINUOUS
-    }
 
-	protected ParticleEffect m_particle;
-    private Vector2 m_position = Vector2.Zero;
-    protected ParticleType m_type;
-    protected ParticleEffectPool m_pool;
-    protected Array<ParticleEffectPool.PooledEffect> m_effects;
-    protected String m_effect;
+	protected ParticleEffect particle;
+    private Vector2 position = Vector2.Zero;
+    protected ParticleEffectPool pool;
+    protected Array<ParticleEffectPool.PooledEffect> effects;
+    protected String effect;
+    private boolean isStarted;
 
-	public ParticleComponent(String effect, ParticleType type, int max){
-		m_particle = loadParticle(effect);
-		m_pool = new ParticleEffectPool(m_particle, 0, max);
-		m_effects = new Array<ParticleEffectPool.PooledEffect>();
-		m_type = type;
+	public ParticleComponent(String effect, int max){
+		particle = loadParticle(effect);
+		pool = new ParticleEffectPool(particle, 0, max);
+		effects = new Array<>();
 	}
 
-	public ParticleComponent(String effect, ParticleType type, Vector2 position){
-		m_particle = loadParticle(effect);
-		m_pool = new ParticleEffectPool(m_particle, 10, 10);
-		m_effects = new Array<ParticleEffectPool.PooledEffect>();
-		m_type = type;
+	public ParticleComponent(String effect, Vector2 position){
+		particle = loadParticle(effect);
+		pool = new ParticleEffectPool(particle, 10, 10);
+		effects = new Array<>();
 		setPosition(Converters.ToWorld(position));
 	}
 
     public ParticleComponent(){}
 
 	protected ParticleEffect loadParticle(String effectName){
-        m_effect = effectName;
+        effect = effectName;
 		ParticleEffect particle = new ParticleEffect();
-		particle.load(Gdx.files.internal("data/particles/" + m_effect + ".p"), Gdx.files.internal("data"));
+		particle.load(Gdx.files.internal("data/particles/" + effect + ".p"), Gdx.files.internal("data"));
 		particle.start();
 		return particle;
 	}
 
-	public ParticleType getType(){
-		return m_type;
-	}
-
 	public void start(){
-		ParticleEffectPool.PooledEffect effect = m_pool.obtain();
-		effect.setPosition(m_position.x, m_position.y);
-		m_effects.add(effect);
+		ParticleEffectPool.PooledEffect effect = pool.obtain();
+
+		effect.setPosition(Converters.ToWorld(position.x), Converters.ToWorld(position.y));
+		effects.add(effect);
+        setStarted(true);
 	}
 
 	public boolean isCompleted(){
-		return m_effects.size == 0;
+		return effects.size == 0;
 	}
 
 	public void setPosition(Vector2 position){
-		m_position = position.cpy();
+		this.position = position;
 	}
 
     public boolean needsDrawAndUpdate(){
-        return m_effects.size > 0;
+        return effects.size > 0;
     }
 
 	public void draw(SpriteBatch spriteBatch, float delta){
-		for(ParticleEffectPool.PooledEffect effect : m_effects) {
+		for(ParticleEffectPool.PooledEffect effect : effects) {
 			effect.draw(spriteBatch, delta);
 			if(effect.isComplete()) {
-				m_effects.removeValue(effect, true);
+				effects.removeValue(effect, true);
 				effect.free();
 			}
 		}
 	}
 
 	public void dispose(){
-        m_pool.freeAll(m_effects);
-		m_particle.dispose();
+        pool.freeAll(effects);
+		particle.dispose();
 	}
 
 	@Override
@@ -89,4 +80,11 @@ public abstract class ParticleComponent extends BaseComponent {
 
 	}
 
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
+    }
 }

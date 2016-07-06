@@ -1,12 +1,9 @@
 package com.me.level;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.config.LevelConfig;
 import com.me.config.PlayerConfig;
-
-import java.util.HashMap;
 
 /**
  * Created by hateftadayon on 6/23/15.
@@ -17,65 +14,66 @@ public class Level {
         public float minX;
         public float maxX;
         public float minY;
+        public float maxY;
     }
 
-    private LevelConfig m_levelConfig;
-    private LevelBoundaries m_levelBoundaries;
+    private LevelConfig levelConfig;
+    private LevelBoundaries levelBoundaries;
 
 
     public boolean isFinished() {
-        return m_isFinished;
+        return isFinished;
     }
 
     public void setFinished(boolean state) {
-        m_isFinished = state;
+        isFinished = state;
     }
 
-    private boolean m_isFinished;
+    private boolean isFinished;
 
     public Level(LevelConfig levelConfig) {
-        m_levelConfig = levelConfig;
-        m_levelBoundaries = new LevelBoundaries();
+        this.levelConfig = levelConfig;
+        this.levelBoundaries = new LevelBoundaries();
     }
 
     public void addPlayerPosition(int player, Vector2 position) {
-        m_levelConfig.addPlayerPosition(player, position);
+        levelConfig.addPlayerPosition(player, position);
     }
 
     public Vector2 getPlayerPosition(int player) {
-        return m_levelConfig.getPlayerPosition(player);
+        return levelConfig.getPlayerPosition(player);
     }
 
     public int getNumberOfFinishers() {
-        return m_levelConfig.getNumberOfPlayers();
+        return levelConfig.getNumberOfPlayers();
     }
 
     public String getLevelName() {
-        return m_levelConfig.getLevelName();
+        return levelConfig.getLevelName();
     }
 
     public int getLevelNumber() {
-        return m_levelConfig.getLevelNr();
+        return levelConfig.getLevelNr();
     }
 
     public int getNextLevel() {
-        return m_levelConfig.getNextLevel();
+        return levelConfig.getNextLevel();
     }
 
     public boolean hasPortal() {
-        return m_levelConfig.hasPortal();
+        return levelConfig.hasPortal();
     }
 
     public LevelConfig getLevelConfig() {
-        return m_levelConfig;
+        return levelConfig;
     }
 
     public LevelBoundaries getLevelBoundaries() {
-        return m_levelBoundaries;
+        return levelBoundaries;
     }
 
     public ObjectMap.Values<PlayerConfig> getPlayerConfigs() {
-        return m_levelConfig.getPlayerConfigs();
+        return levelConfig.getPlayerConfigs();
     }
 
     public void restart() {

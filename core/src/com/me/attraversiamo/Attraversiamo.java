@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.utils.Array;
 import com.me.ads.IActivityRequestHandler;
+import com.me.ads.PlayServices;
 import com.me.screens.GameScreen;
 import com.me.screens.LoadingScreen;
 import com.me.screens.SplashScreen;
@@ -16,12 +17,13 @@ import com.me.config.GlobalConfig;
 
 public class Attraversiamo extends Game implements ApplicationListener {
 
-    public GameScreen m_gameScreen;
-    public LoadingScreen m_loadingScreen;
-    private FPSLogger m_fpsLogger;
-    private IActivityRequestHandler m_adRequestHandler;
-    public Array<InputProcessor> m_processors = new Array<InputProcessor>();
-    public InputMultiplexer m_multiPlexer = new InputMultiplexer();
+    public GameScreen gameScreen;
+    public LoadingScreen loadingScreen;
+    private FPSLogger fpsLogger;
+    private IActivityRequestHandler adRequestHandler;
+    private PlayServices playServices;
+    public Array<InputProcessor> processors = new Array<>();
+    public InputMultiplexer multiPlexer = new InputMultiplexer();
 
     public Attraversiamo(GameConfig config, IActivityRequestHandler requestHandler) {
         if (config != null) {
@@ -32,23 +34,31 @@ public class Attraversiamo extends Game implements ApplicationListener {
             conf.showUI = false;
             conf.timeStep = 1 / 60f;
         }
-        m_adRequestHandler = requestHandler;
+        adRequestHandler = requestHandler;
     }
 
     @Override
     public void create() {
-
-        m_fpsLogger = new FPSLogger();
+        fpsLogger = new FPSLogger();
         setScreen(new SplashScreen(this));
-        m_multiPlexer.setProcessors(m_processors);
+        multiPlexer.setProcessors(processors);
     }
 
-    public void showAd(boolean show) {
-        m_adRequestHandler.showAds(show);
+    public void setPlayServices(PlayServices playSevices){
+        playServices = playSevices;
+    }
+
+
+    public void showBannerAd(boolean show) {
+        adRequestHandler.showBannerAd(show);
+    }
+
+    public void showInterstitialAd(){
+        adRequestHandler.showInterstitialAd();
     }
 
     public void setScreenName(String name) {
-        m_adRequestHandler.setScreenName(name);
+        adRequestHandler.setScreenName(name);
     }
 
     @Override
@@ -67,5 +77,9 @@ public class Attraversiamo extends Game implements ApplicationListener {
 
     @Override
     public void resume() {
+    }
+
+    public PlayServices getPlayServices() {
+        return playServices;
     }
 }

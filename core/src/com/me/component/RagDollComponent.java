@@ -2,7 +2,7 @@ package com.me.component;
 
 public class RagDollComponent extends BaseComponent {
 
-	public boolean m_activated = true;
+	public boolean activated = true;
 
 	@Override
 	public void dispose() {
@@ -13,6 +13,6 @@ public class RagDollComponent extends BaseComponent {
 	@Override
 	public void restart() {
 		// TODO Auto-generated method stub
-		m_activated = true;
+		activated = true;
 	}
 }

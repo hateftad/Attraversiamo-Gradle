@@ -36,11 +36,11 @@ public class B2GravityController extends B2Controller
    
    public void step(float timeStep)
    {
-      if (m_bodyList != null)
+      if (bodyList != null)
       {
-         for (int i = 0; i < m_bodyList.size; i++)
+         for (int i = 0; i < bodyList.size; i++)
          {
-            Body body = m_bodyList.get(i);
+            Body body = bodyList.get(i);
             mTmp.set(mControllerGravity).scl(body.getMass());
             body.applyForce(mTmp, body.getPosition(),true);
          }

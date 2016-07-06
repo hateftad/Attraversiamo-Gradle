@@ -1,0 +1,244 @@
+{
+  "levels": {
+    "level": [
+      {
+        "name": "level1",
+        "levelNr": "1",
+        "nrOfPlayers": "2",
+        "hasPortal": "true",
+        "player": [
+          {
+            "finishFacingLeft": "false",
+            "skinName": "color",
+            "active": "true",
+            "canDeactivate": "true",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "suckin"
+          },
+          {
+            "finishFacingLeft": "false",
+            "skinName": "color",
+            "active": "false",
+            "canDeactivate": "true",
+            "playerName": "littleGirl",
+            "playerNr": "2",
+            "facingLeft": "false",
+            "finishAnim": "suckin"
+          }
+        ],
+        "zoom": "10",
+        "lightColor": "Grey",
+        "nextLevel": "2"
+      },
+      {
+        "name": "level2",
+        "levelNr": "2",
+        "nrOfPlayers": "2",
+        "hasPortal": "false",
+        "player": [
+          {
+            "finishFacingLeft": "false",
+            "skinName": "color",
+            "active": "true",
+            "canDeactivate": "true",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          },
+          {
+            "finishFacingLeft": "false",
+            "skinName": "color",
+            "active": "false",
+            "canDeactivate": "true",
+            "playerName": "littleGirl",
+            "playerNr": "2",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          }
+        ],
+        "zoom": "16",
+        "lightColor": "White",
+        "nextLevel": "3"
+      },
+      {
+        "name": "level3",
+        "levelNr": "3",
+        "nrOfPlayers": "1",
+        "hasPortal": "false",
+        "player": [
+          {
+            "finishFacingLeft": "false",
+            "skinName": "silhouette",
+            "active": "true",
+            "canDeactivate": "false",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          }
+        ],
+        "zoom": "18",
+        "lightColor": "Yellow",
+        "nextLevel": "4"
+      },
+      {
+        "name": "level4",
+        "levelNr": "4",
+        "nrOfPlayers": "2",
+        "hasPortal": "false",
+        "player": [
+          {
+            "finishFacingLeft": "false",
+            "skinName": "silhouette",
+            "active": "true",
+            "canDeactivate": "true",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          },
+          {
+            "finishFacingLeft": "false",
+            "skinName": "color",
+            "active": "false",
+            "canDeactivate": "true",
+            "playerName": "littleGirl",
+            "playerNr": "2",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          }
+        ],
+        "zoom": "13",
+        "lightColor": "White",
+        "nextLevel": "7"
+      },
+      {
+        "name": "level5",
+        "levelNr": "5",
+        "nrOfPlayers": "2",
+        "hasPortal": "false",
+        "player": [
+          {
+            "finishFacingLeft": "false",
+            "skinName": "silhouette",
+            "active": "true",
+            "canDeactivate": "true",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          },
+          {
+            "finishFacingLeft": "false",
+            "skinName": "silhouette",
+            "active": "false",
+            "canDeactivate": "true",
+            "playerName": "littleGirl",
+            "playerNr": "2",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          }
+        ],
+        "zoom": "9",
+        "lightColor": "Black",
+        "nextLevel": "1"
+      },
+      {
+        "name": "level6",
+        "levelNr": "6",
+        "nrOfPlayers": "1",
+        "hasPortal": "false",
+        "player": [
+          {
+            "skinName": "silhouette",
+            "finishFacingLeft": "false",
+            "active": "true",
+            "canDeactivate": "true",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          },
+          {
+            "skinName": "silhouette",
+            "finishFacingLeft": "false",
+            "active": "false",
+            "canDeactivate": "true",
+            "playerName": "littleGirl",
+            "playerNr": "2",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          }
+        ],
+        "zoom": "5",
+        "lightColor": "Black",
+        "nextLevel": "2"
+      },
+      {
+        "name": "level7",
+        "levelNr": "7",
+        "nrOfPlayers": "2",
+        "hasPortal": "false",
+        "player": [
+          {
+            "skinName": "color",
+            "finishFacingLeft": "false",
+            "active": "true",
+            "canDeactivate": "true",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          },
+          {
+            "skinName": "color",
+            "finishFacingLeft": "false",
+            "active": "false",
+            "canDeactivate": "true",
+            "playerName": "littleGirl",
+            "playerNr": "2",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          }
+        ],
+        "zoom": "10",
+        "lightColor": "Black",
+        "nextLevel": "5"
+      },
+      {
+        "name": "level8",
+        "levelNr": "7",
+        "nrOfPlayers": "2",
+        "hasPortal": "false",
+        "player": [
+          {
+            "skinName": "color",
+            "finishFacingLeft": "false",
+            "active": "true",
+            "canDeactivate": "true",
+            "playerName": "smallCharacter",
+            "playerNr": "1",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          },
+          {
+            "skinName": "color",
+            "finishFacingLeft": "false",
+            "active": "false",
+            "canDeactivate": "true",
+            "playerName": "littleGirl",
+            "playerNr": "2",
+            "facingLeft": "false",
+            "finishAnim": "runOut"
+          }
+        ],
+        "zoom": "10",
+        "lightColor": "Black",
+        "nextLevel": "5"
+      }
+    ]
+  }
+}

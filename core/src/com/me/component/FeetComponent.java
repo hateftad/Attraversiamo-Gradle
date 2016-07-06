@@ -19,48 +19,48 @@ import java.util.List;
 public class FeetComponent extends BaseComponent {
 
     private static final int RAY_LENGTH = 1;
-    private RaycastListener m_raycastCallback;
-    private boolean m_collided;
-    private RaySet m_rays;
-    private String m_name;
-    private Vector2 m_normal = new Vector2(0, 1);
+    private RaycastListener raycastCallback;
+    private boolean collided;
+    private RaySet rays;
+    private String name;
+    private Vector2 normal = new Vector2(0, 1);
 
     public FeetComponent(String name) {
-        m_raycastCallback = new RaycastListener();
-        m_name = name;
-        m_rays = new RaySet();
+        raycastCallback = new RaycastListener();
+        this.name = name;
+        rays = new RaySet();
     }
 
     public String getBodyName(){
-        return m_name;
+        return name;
     }
 
     public RaycastListener getRaycastCallback(){
-        return m_raycastCallback;
+        return raycastCallback;
     }
 
     public List<Vector2> getStartPoints(){
-        return m_rays.startPoints;
+        return rays.startPoints;
     }
 
     public List<Vector2> getEndPoints(){
-        return m_rays.endPoints;
+        return rays.endPoints;
     }
 
     public Vector2 getNormal(){
-        return m_normal;
+        return normal;
     }
 
     public void reset(){
-        m_collided = false;
+        collided = false;
     }
 
     public boolean hasCollided(){
-        return m_collided;
+        return collided;
     }
 
     public void update(Body body){
-        m_rays.updatePoints(body.getPosition());
+        rays.updatePoints(body.getPosition());
     }
 
     class RaycastListener implements RayCastCallback {
@@ -71,10 +71,10 @@ public class FeetComponent extends BaseComponent {
             Entity entity = (Entity) bodyA.getUserData();
             PhysicsComponent component = entity.getComponent(PhysicsComponent.class);
             RBUserData other = component.getRBUserData(fixture.getBody());
-            if(other.getType() == RBUserData.Type.Ground || other.getType() == RBUserData.Type.Box){
-                m_collided = true;
+            if(other.getType() == RBUserData.Type.Ground || other.getType() == RBUserData.Type.Box || other.getType() == RBUserData.Type.CageHatch){
+                collided = true;
             }
-            m_normal = normal;
+            normal = normal;
             return 1;
         }
     }
@@ -97,27 +97,26 @@ public class FeetComponent extends BaseComponent {
         }
 
         private void init(){
-            startPoints = new ArrayList<Vector2>();
-            startPoints.add(new Vector2());
-            startPoints.add(new Vector2());
-            startPoints.add(new Vector2());
+            startPoints = new ArrayList<>();
+            startPoints.add(Vector2.Zero);
+            startPoints.add(Vector2.Zero);
+            startPoints.add(Vector2.Zero);
 
-            endPoints = new ArrayList<Vector2>();
-            endPoints.add(new Vector2());
-            endPoints.add(new Vector2());
-            endPoints.add(new Vector2());
+            endPoints = new ArrayList<>();
+            endPoints.add(new Vector2(0, 0));
+            endPoints.add(new Vector2(0, 0));
+            endPoints.add(new Vector2(0, 0));
         }
 
         private void updatePoints(Vector2 bodyPosition){
             Vector2 startCpy = bodyPosition.cpy();
-            Vector2 left = startPoints.get(0).set(startCpy.x - 0.3f, startCpy.y);
+            Vector2 left = startPoints.get(0).set(startCpy.x, startCpy.y);
             Vector2 middle = startPoints.get(1).set(startCpy.x, startCpy.y);
-            Vector2 right = startPoints.get(2).set(startCpy.x + 0.3f, startCpy.y);
+            Vector2 right = startPoints.get(2).set(startCpy.x, startCpy.y);
 
-
-            endPoints.get(0).set(left.x, left.y - RAY_LENGTH);
+            endPoints.get(0).set(left.x - 0.4f, left.y - RAY_LENGTH + 0.1f);
             endPoints.get(1).set(middle.x, middle.y - RAY_LENGTH);
-            endPoints.get(2).set(right.x, right.y - RAY_LENGTH);
+            endPoints.get(2).set(right.x + 0.4f, right.y - RAY_LENGTH + 0.1f);
         }
     }
 

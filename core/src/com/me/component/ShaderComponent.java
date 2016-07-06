@@ -23,11 +23,11 @@ import com.me.utils.Converters;
 
 public class ShaderComponent extends BaseComponent {
 	
-	private Texture m_displacementTexture;
-	private Matrix4 m_matrix;
-	private ShaderProgram m_shader;
-	private ShaderProgram m_waterShader;
-	private Mesh m_waterMesh;
+	private Texture displacementTexture;
+	private Matrix4 matrix;
+	private ShaderProgram shader;
+	private ShaderProgram waterShader;
+	private Mesh waterMesh;
 	private String vertexShader;
 	private String fragmentShader;
 	private String fragmentShader2;
@@ -39,25 +39,25 @@ public class ShaderComponent extends BaseComponent {
     float time;
 
 	public ShaderComponent(String extraTexture, Body body){
-        m_displacementTexture = new Texture(Gdx.files.internal("data/level/common/waterdisplacement.png"));
-        m_displacementTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-        m_displacementTexture.bind();
+        displacementTexture = new Texture(Gdx.files.internal("data/level/common/waterdisplacement.png"));
+        displacementTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        displacementTexture.bind();
         ShaderProgram.pedantic = false;
         vertexShader = Gdx.files.internal("data/shaders/vertex.vert").readString();
         fragmentShader = Gdx.files.internal("data/shaders/fragment.frag").readString();
         fragmentShader2 = Gdx.files.internal("data/shaders/fragment2.frag").readString();
-        m_shader = new ShaderProgram(vertexShader, fragmentShader);
-        m_waterShader = new ShaderProgram(vertexShader, fragmentShader2);
-        m_matrix = new Matrix4();
-        m_waterShader.setUniformMatrix("u_projTrans", m_matrix);
+        shader = new ShaderProgram(vertexShader, fragmentShader);
+        waterShader = new ShaderProgram(vertexShader, fragmentShader2);
+        matrix = new Matrix4();
+        waterShader.setUniformMatrix("u_projTrans", matrix);
         PolygonShape shape = (PolygonShape) body.getFixtureList().get(0).getShape();
-        ArrayList<Vector2> vertices = new ArrayList<Vector2>();
+        ArrayList<Vector2> vertices = new ArrayList<>();
         for(int i = 0; i < shape.getVertexCount(); i++){
             Vector2 vertex = new Vector2();
             shape.getVertex(i, vertex);
             vertices.add(vertex);
 		}
-		m_waterMesh = createQuad(vertices.get(3).x * 100, vertices.get(3).y* 100,
+		waterMesh = createQuad(vertices.get(3).x * 100, vertices.get(3).y* 100,
 								vertices.get(0).x* 100, vertices.get(0).y* 100,
 								vertices.get(1).x* 100, vertices.get(1).y* 160,
 								vertices.get(2).x* 100, vertices.get(2).y* 160);
@@ -75,9 +75,9 @@ public class ShaderComponent extends BaseComponent {
 		model.setToTranslation(sprite.getPosition().x, sprite.getPosition().y, 0);
 		combined.set(projection).mul(view).mul(model);
 		
-		batch.setShader(m_waterShader);
+		batch.setShader(waterShader);
 		batch.begin();
-		m_waterShader.setUniformMatrix("u_mvpMatrix", combined);
+		waterShader.setUniformMatrix("u_mvpMatrix", combined);
 		sprite.draw(batch);
 		batch.end();
 		
@@ -85,19 +85,19 @@ public class ShaderComponent extends BaseComponent {
 		Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl20.glEnable(GL20.GL_BLEND);
 		sprite.getTexture().bind(1);
-		m_displacementTexture.bind(2);
+		displacementTexture.bind(2);
 		batch.setShader(null);
-		m_shader.begin();
-		m_shader.setUniformMatrix("u_mvpMatrix", combined);
+		shader.begin();
+		shader.setUniformMatrix("u_mvpMatrix", combined);
 
-		m_shader.setUniformi("u_texture", 1);
-		m_shader.setUniformi("u_texture2", 2);
-		m_shader.setUniformf("timedelta", angle * 2 );
-		m_waterMesh.render(m_shader, GL20.GL_TRIANGLE_FAN);
-		m_shader.end();
+		shader.setUniformi("u_texture", 1);
+		shader.setUniformi("u_texture2", 2);
+		shader.setUniformf("timedelta", angle * 2 );
+		waterMesh.render(shader, GL20.GL_TRIANGLE_FAN);
+		shader.end();
 		
-		m_displacementTexture.bind(0);
-		m_displacementTexture.dispose();
+		displacementTexture.bind(0);
+		displacementTexture.dispose();
 		Gdx.gl20.glDisable(GL20.GL_BLEND);
 		//Gdx.gl20.glBlendFunc(GL20.GL_ONE_MINUS_SRC_ALPHA, GL20.GL_SRC_ALPHA);
 		
@@ -147,7 +147,7 @@ public class ShaderComponent extends BaseComponent {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		m_displacementTexture.dispose();
+		displacementTexture.dispose();
 		
 	}
 

@@ -1,100 +1,199 @@
 package com.me.component;
 
-import com.me.component.interfaces.TaskEventObserverComponent;
+import com.me.component.interfaces.TelegramEventObserverComponent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
+import com.me.events.TelegramEvent;
+import com.me.events.states.PlayerState;
 
-public class PlayerComponent extends BaseComponent implements TaskEventObserverComponent {
+public class PlayerComponent extends BaseComponent implements TelegramEventObserverComponent {
 
+    private boolean finished;
 
-    public enum State {
-        WALKING, IDLE, JUMPING, DYING, JUMPED, HANGING, CRAWLING, LYINGDOWN, GETTINGUP, WAITTILDONE
+    public boolean isMoving() {
+        return state == PlayerState.Walking ||
+                state == PlayerState.Running ||
+                state == PlayerState.Jogging;
+    }
+
+    public boolean isJumping() {
+        return state == PlayerState.Jumping ||
+                state == PlayerState.UpJump;
+    }
+
+    public boolean isHanging() {
+        return state == PlayerState.Hanging;
+    }
+
+    public boolean isLyingDown() {
+        return state == PlayerState.LyingDown;
+    }
+
+    public boolean lyingDown() {
+        return state == PlayerState.LieDown;
+    }
+
+    public boolean isLanding() {
+        return state == PlayerState.Landing || state == PlayerState.RunLanding;
+    }
+
+    public boolean isFalling() {
+        return state == PlayerState.Dropping || state == PlayerState.RunFalling;
+    }
+
+    public boolean shouldBeIdle() {
+        return !isJumping() &
+                !isHanging() &
+                !isClimbing() &
+                !isLyingDown() &
+                !lyingDown() &
+                !isPullingUp() &
+                !isPressingButton() &
+                !isCrawling() &
+                !isFinishing() &
+                !isPullingLedge() &
+                !isSwingingCage() &
+                !isDrowning() &
+                !isLanding();
+
+    }
+
+    public boolean isHoldingCage(){
+        return state == PlayerState.HoldingCage;
+    }
+
+    public boolean isSwingingCage(){
+        return state == PlayerState.Swinging;
+    }
+
+    public boolean isIdle(){
+        return state == PlayerState.Idle;
+    }
+
+    public boolean isClimbing() {
+        return state == PlayerState.ClimbingLedge || state == PlayerState.ClimbBox;
+    }
+
+    public boolean isPullingUp() {
+        return state == PlayerState.PullUp;
+    }
+
+    public boolean isCrawling() {
+        return crawling() || isLyingDown() || lyingDown();
+    }
+
+    public boolean crawling() {
+        return state == PlayerState.Crawl;
+    }
+
+    public boolean isPressingButton() {
+        return state == PlayerState.PressButton;
+    }
+
+    public boolean isGettingUp() {
+        return state == PlayerState.StandUp;
+    }
+
+    public boolean isPullingLedge() {
+        return state == PlayerState.PullingLedge;
+    }
+
+    public boolean isDrowning() {
+        return state == PlayerState.Drowning;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public boolean isUpJumping() {
+        return state == PlayerState.UpJump;
+    }
+
+    public boolean isDropping() {
+        return state == PlayerState.Dropping;
     }
 
     public enum PlayerNumber {
+        NONE,
         ONE, TWO, THREE
     }
 
-    private PlayerNumber m_playerNr;
+    private PlayerNumber playerNr;
 
-    private State m_state = State.IDLE;
+    private PlayerState state = PlayerState.Idle;
 
-    private boolean m_facingLeft;
+    private boolean facingLeft;
 
-    private boolean m_active;
+    private boolean active;
 
-    private boolean m_onGround;
+    private boolean canDeactivate;
 
-    private boolean m_canDeactivate;
+    private boolean isFinishing;
 
-    private boolean m_isFinishing;
+    private boolean finishFacingLeft;
 
-    private boolean m_finishFacingLeft;
-
-    private boolean m_isFinishedAnimating;
-
-    public PlayerComponent(String player, boolean finishFacingLeft) {
-        m_finishFacingLeft = finishFacingLeft;
-        setPlayerNr(player);
-        setFacingLeft(true);
-        setState(State.IDLE);
+    public PlayerComponent(PlayerNumber player, boolean finishFacingLeft) {
+        this.finishFacingLeft = finishFacingLeft;
+        this.playerNr = player;
+        this.setFacingLeft(true);
+        this.setState(PlayerState.Idle);
     }
 
-    public State getState() {
-        return m_state;
+    public PlayerState getState() {
+        return state;
     }
 
-    public void setState(State m_state) {
-        this.m_state = m_state;
+    public boolean canBeControlled() {
+        return state != PlayerState.LyingDown &&
+                state != PlayerState.StandUp &&
+                state != PlayerState.PressButton;
+    }
+
+    public boolean isSuckingIn() {
+        return state == PlayerState.SuckIn;
+    }
+
+    public void setState(PlayerState state) {
+        this.state = state;
     }
 
     public void setCanBecomeInactive(boolean state) {
-        m_canDeactivate = state;
+        canDeactivate = state;
     }
 
     public boolean canDeActivate() {
-        return m_canDeactivate;
+        return canDeactivate;
     }
 
     public boolean isFacingLeft() {
-        return m_facingLeft;
+        return facingLeft;
     }
 
-    public void setFacingLeft(boolean m_facingLeft) {
-        this.m_facingLeft = m_facingLeft;
+    public void setFacingLeft(boolean facingLeft) {
+        this.facingLeft = facingLeft;
     }
 
     public boolean isActive() {
-        return m_active;
+        return active;
     }
 
     public void setActive(boolean active) {
-        m_active = active;
-    }
-
-    public boolean isOnGround() {
-        return m_onGround;
-    }
-
-    public void setOnGround(boolean onGround) {
-        this.m_onGround = onGround;
+        this.active = active;
     }
 
     public boolean isFinishing() {
-        return m_isFinishing;
+        return isFinishing;
     }
 
     public PlayerNumber getPlayerNr() {
-        return m_playerNr;
+        return playerNr;
     }
 
-    public void setPlayerNr(String playerNr) {
-        if (playerNr.equalsIgnoreCase("player_one")) {
-            m_playerNr = PlayerNumber.ONE;
-        } else if (playerNr.equalsIgnoreCase("player_two")) {
-            m_playerNr = PlayerNumber.TWO;
-        }
-    }
 
     @Override
     public void dispose() {
@@ -104,18 +203,22 @@ public class PlayerComponent extends BaseComponent implements TaskEventObserverC
     @Override
     public void onNotify(TaskEvent event) {
         if (event.getEventType() == GameEventType.AllReachedEnd) {
-            setFacingLeft(m_finishFacingLeft);
-            m_isFinishing = true;
+            setFacingLeft(finishFacingLeft);
+            isFinishing = true;
         }
     }
 
-    public void setIsFinishedAnimating(boolean isFinished) {
-        m_isFinishedAnimating = isFinished;
+    @Override
+    public void onNotify(TelegramEvent event) {
+        if (event.getEventType() == GameEventType.HoldingHandsFollowing ||
+                event.getEventType() == GameEventType.HoldingHandsLeading) {
+            //setState();
+        }
     }
 
     @Override
     public void restart() {
-        m_facingLeft = false;
-        m_isFinishedAnimating = false;
+        facingLeft = false;
+        setState(PlayerState.Idle);
     }
 }

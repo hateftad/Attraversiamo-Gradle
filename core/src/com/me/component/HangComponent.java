@@ -2,11 +2,11 @@ package com.me.component;
 
 public class HangComponent extends BaseComponent {
 
-	public boolean m_hangingLeft = false;
-	public boolean m_hangingRight = false;
-	public boolean m_isHanging = false;
-	public boolean m_release = false;
-	public boolean m_climbingUp = false;
+	public boolean hangingLeft = false;
+	public boolean hangingRight = false;
+	public boolean isHanging = false;
+	public boolean release = false;
+	public boolean climbingUp = false;
 	
 	
 	@Override
@@ -15,14 +15,19 @@ public class HangComponent extends BaseComponent {
 		
 	}
 
+    public void notHanging(){
+        hangingLeft = false;
+        isHanging = false;
+        hangingRight = false;
+    }
 
 	@Override
 	public void restart() {
 		// TODO Auto-generated method stub
-		m_hangingLeft = false;
-		m_hangingRight = false;
-		m_isHanging = false;
-		m_release = false;
-		m_climbingUp = false;
+		hangingLeft = false;
+		hangingRight = false;
+		isHanging = false;
+		release = false;
+		climbingUp = false;
 	}
 }

@@ -2,25 +2,26 @@ package com.me.component;
 
 public class VelocityLimitComponent extends BaseComponent{
 	
-	public float m_walkLimit;
-	public float m_jumpLimit;
-	public float m_ladderLimit;
-	public float m_velocity = 0;
-	public float m_ladderClimbVelocity;
-	public float m_crawlLimit;
-	public float m_pushlimit;
+	public float walkLimit;
+	public float jumpLimit;
+	public float ladderLimit;
+	public float velocity = 0;
+	public float ladderClimbVelocity;
+	public float crawlLimit;
+	public float pushlimit;
 	
 	public VelocityLimitComponent(float walkLimit, float jumpLimit, float ladderLimit, float pushLimit)
 	{
-		m_walkLimit = walkLimit;
-		m_jumpLimit = jumpLimit;
-		m_ladderLimit = ladderLimit;
-		m_pushlimit = pushLimit;
+		this.walkLimit = walkLimit;
+		this.jumpLimit = jumpLimit;
+		this.ladderLimit = ladderLimit;
+		this.pushlimit = pushLimit;
 	}
 	
-	public VelocityLimitComponent(float walkLimit, float jumpLimit){
-		m_walkLimit = walkLimit;
-		m_jumpLimit = jumpLimit;		
+	public VelocityLimitComponent(float walkLimit, float jumpLimit, float crawlLimit){
+		this.walkLimit = walkLimit;
+		this.jumpLimit = jumpLimit;
+		this.crawlLimit = crawlLimit;
 	}
 
 	@Override
@@ -35,4 +36,7 @@ public class VelocityLimitComponent extends BaseComponent{
 		
 	}
 
+	public void standStill() {
+		velocity = 0;
+	}
 }

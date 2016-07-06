@@ -86,6 +86,7 @@ public class B2BuoyancyController extends B2Controller {
         mLinearDrag = linearDrag;
         mAngularDrag = angularDrag;
         mControllerType = B2Controller.BUOYANCY_CONTROLLER;
+
     }
 
     /**
@@ -174,9 +175,9 @@ public class B2BuoyancyController extends B2Controller {
 
     @Override
     public void step(float timeStep) {
-        if (m_bodyList != null) {
-            for (int i = 0; i < m_bodyList.size; i++) {
-                Array<Fixture> fixtureList = m_bodyList.get(i).getFixtureList();
+        if (bodyList != null) {
+            for (int i = 0; i < bodyList.size; i++) {
+                Array<Fixture> fixtureList = bodyList.get(i).getFixtureList();
                 for (int j = 0; j < fixtureList.size; j++) {
                     ApplyToFixture(fixtureList.get(j));
                 }

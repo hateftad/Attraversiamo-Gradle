@@ -16,154 +16,163 @@ import com.me.component.*;
 
 public class RenderSystem extends EntitySystem {
 
-	@Mapper
-	ComponentMapper<PhysicsComponent> m_physics;
+    @Mapper
+    ComponentMapper<PhysicsComponent> physicsComponents;
+    @Mapper
+    ComponentMapper<SpriteComponent> spritesComponents;
+    @Mapper
+    ComponentMapper<PlayerAnimationComponent> playerAnimation;
+    @Mapper
+    ComponentMapper<LevelAnimationComponent> levelAnimation;
+    @Mapper
+    ComponentMapper<SingleParticleComponent> singleParticles;
+    @Mapper
+    ComponentMapper<ContinuousParticles> continuousParticles;
+    @Mapper
+    ComponentMapper<EventParticleComponent> eventParticles;
+    @Mapper
+    ComponentMapper<ShaderComponent> shaderComps;
 
-	@Mapper
-	ComponentMapper<SpriteComponent> m_sprites;
+    private List<Entity> sortedEntities;
 
-	@Mapper
-	ComponentMapper<PlayerAnimationComponent> m_playerAnimation;
+    private SpriteBatch batch;
 
-	@Mapper
-	ComponentMapper<SingleParticleComponent> m_particles;
+    private OrthographicCamera camera;
 
-	@Mapper
-	ComponentMapper<ContinuousParticles> m_continuousParticles;
+    @SuppressWarnings("unchecked")
+    public RenderSystem(OrthographicCamera camera) {
 
-	@Mapper
-	ComponentMapper<ShaderComponent> m_shaderComps;
+        super(Aspect.getAspectForAll(PhysicsComponent.class,
+                SpriteComponent.class));
+        this.camera = camera;
+    }
 
-	private List<Entity> m_sortedEntities;
+    @Override
+    protected void initialize() {
+        this.batch = new SpriteBatch();
+        this.sortedEntities = new ArrayList<>();
+    }
 
-	private SpriteBatch m_batch;
+    @Override
+    protected boolean checkProcessing() {
+        return true;
+    }
 
-    private OrthographicCamera m_camera;
+    @Override
+    protected void begin() {
+        this.batch.begin();
+        this.batch.setProjectionMatrix(camera.combined);
+    }
 
-	@SuppressWarnings("unchecked")
-	public RenderSystem(OrthographicCamera camera) {
+    @Override
+    protected void end() {
+        this.batch.end();
+    }
 
-		super(Aspect.getAspectForAll(PhysicsComponent.class,
-				SpriteComponent.class));
-		m_camera = camera;
-	}
+    @Override
+    protected void processEntities(ImmutableBag<Entity> entities) {
+        for (Entity sortedEntity : sortedEntities) {
+            process(sortedEntity);
+        }
+    }
 
-	@Override
-	protected void initialize() {
-		m_batch = new SpriteBatch();
-		m_sortedEntities = new ArrayList<Entity>();
-	}
+    protected void process(Entity entity) {
 
-	@Override
-	protected boolean checkProcessing() {
+        if (physicsComponents.has(entity)) {
 
-		return true;
-	}
+            drawParticles(entity);
 
-	@Override
-	protected void begin() {
-		m_batch.setProjectionMatrix(m_camera.combined);
-		// m_batch.begin();
+            PhysicsComponent physics = physicsComponents.getSafe(entity);
+            physics.updateWorldPosition();
+            if (spritesComponents.has(entity)) {
 
-	}
+                SpriteComponent sprite = spritesComponents.get(entity);
+                sprite.setPosition(physics.getWorldPosition());
+                sprite.setRotation(physics.getBody().getAngle());
+                if (playerAnimation.has(entity)) {
+                    PlayerAnimationComponent anim = playerAnimation.get(entity);
+                    anim.setPosition(physics.getPosition());
+                    anim.update(batch, world.delta);
+                } else {
+                    if (sprite.shouldDraw) {
+                        sprite.draw(batch);
+                    }
+                }
+                if (levelAnimation.has(entity)) {
+                    LevelAnimationComponent anim = levelAnimation.get(entity);
+                    anim.setPosition(physics.getPosition());
+                    anim.update(batch, world.delta);
+                }
+            }
 
-	@Override
-	protected void end() {
-		// m_batch.end();
-	}
+        }
 
-	@Override
-	protected void processEntities(ImmutableBag<Entity> entities) {
-		for (Entity sortedEntity : m_sortedEntities) {
-			process(sortedEntity);
-		}
-	}
 
-	protected void process(Entity e) {
-		m_batch.begin();
+        if (shaderComps.has(entity)) {
+            ShaderComponent sComp = shaderComps.get(entity);
+            sComp.render(batch, camera, spritesComponents.get(entity));
+        }
 
-		if (m_physics.has(e)) {
+    }
 
-			if (m_continuousParticles.has(e)) {
-				ContinuousParticles particles = m_continuousParticles.get(e);
-				if (particles.needsDrawAndUpdate()) {
-					particles.draw(m_batch, world.delta);
-				}
-			}
+    private void drawParticles(Entity entity) {
+        if (continuousParticles.has(entity)) {
+            ContinuousParticles particles = continuousParticles.get(entity);
+            if (particles.needsDrawAndUpdate()) {
+                particles.draw(batch, world.delta);
+            }
+        }
 
-			PhysicsComponent physics = m_physics.getSafe(e);
-			physics.updateWorldPosition();
-			if (m_sprites.has(e)) {
+        if (eventParticles.has(entity)) {
+            EventParticleComponent particles = eventParticles.get(entity);
+            if (particles.needsDrawAndUpdate()) {
+                particles.draw(batch, world.delta);
+            }
+        }
 
-				SpriteComponent sprite = m_sprites.get(e);
-				sprite.setPosition(physics.getWorldPosition());
-				sprite.setRotation(physics.getBody().getAngle());
-				if (m_playerAnimation.has(e)) {
-					PlayerAnimationComponent anim = m_playerAnimation.get(e);
-					anim.setPosition(physics.getPosition());
-					anim.update(m_batch, world.delta);
-				} else {
-					if(sprite.m_shouldDraw){
-						sprite.draw(m_batch);
-					}
-				}
-			}
+        if (singleParticles.has(entity)) {
+            SingleParticleComponent particles = singleParticles.get(entity);
+            if (particles.needsDrawAndUpdate()) {
+                particles.draw(batch, world.delta);
+            }
+        }
+    }
 
-			if (m_particles.has(e)) {
-				ParticleComponent particles = m_particles.get(e);
-                particles.setPosition(physics.getWorldPosition());
-				if(particles.needsDrawAndUpdate()) {
-					particles.draw(m_batch, world.delta);
-				}
-			}
+    @Override
+    protected void inserted(Entity e) {
 
-		}
-		m_batch.end();
+        sortedEntities.add(e);
+        Collections.sort(sortedEntities, new Comparator<Entity>() {
+            @Override
+            public int compare(Entity e1, Entity e2) {
+                SpriteComponent s1 = spritesComponents.get(e1);
+                SpriteComponent s2 = spritesComponents.get(e2);
+                return s1.spriteLayer.compareTo(s2.spriteLayer);
+            }
+        });
+    }
 
-		if (m_shaderComps.has(e)) {
-			ShaderComponent sComp = m_shaderComps.get(e);
-			sComp.render(m_batch, m_camera, m_sprites.get(e));
-		}
+    @Override
+    protected void removed(Entity e) {
+        sortedEntities.remove(e);
+    }
 
-	}
+    public void dispose() {
 
-	@Override
-	protected void inserted(Entity e) {
-
-		m_sortedEntities.add(e);
-		Collections.sort(m_sortedEntities, new Comparator<Entity>() {
-			@Override
-			public int compare(Entity e1, Entity e2) {
-				SpriteComponent s1 = m_sprites.get(e1);
-				SpriteComponent s2 = m_sprites.get(e2);
-				return s1.m_layer.compareTo(s2.m_layer);
-
-			}
-		});
-
-	}
-
-	@Override
-	protected void removed(Entity e) {
-		m_sortedEntities.remove(e);
-	}
-
-	public void dispose() {
-
-		m_batch.dispose();
-        Iterator<Entity> iterator = m_sortedEntities.iterator();
-		while(iterator.hasNext()){
-			Bag<Component> bag = new Bag<Component>();
-			Entity e = iterator.next();
+        batch.dispose();
+        Iterator<Entity> iterator = sortedEntities.iterator();
+        while (iterator.hasNext()) {
+            Bag<Component> bag = new Bag<>();
+            Entity e = iterator.next();
             e.getComponents(bag);
-			for (int i = 0; i < bag.size(); i++) {
-				((BaseComponent) bag.get(i)).dispose();
-			}
-			iterator.remove();
+            for (int i = 0; i < bag.size(); i++) {
+                ((BaseComponent) bag.get(i)).dispose();
+            }
+            iterator.remove();
 
-		}
-		m_sortedEntities.clear();
+        }
+        sortedEntities.clear();
 
-	}
+    }
 
 }

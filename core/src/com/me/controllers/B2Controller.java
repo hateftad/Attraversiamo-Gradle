@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 
 public class B2Controller {
-    protected Array<Body> m_bodyList;
+    protected Array<Body> bodyList;
     public int mControllerType;
     boolean mIsActive; // defines whether or not the controller is presently active
 
@@ -21,31 +21,31 @@ public class B2Controller {
     // public void draw(DebugDraw debugDraw) { }
 
     public void addBody(Body body) {
-        if (m_bodyList == null) {
-            m_bodyList = new Array<Body>();
+        if (bodyList == null) {
+            bodyList = new Array<>();
         }
 
         // if the list does not already contain this body...
-        if (!m_bodyList.contains(body, true)) {
-            m_bodyList.add(body);
+        if (!bodyList.contains(body, true)) {
+            bodyList.add(body);
         }
     }
 
     public void removeBody(Body body) {
-        if (m_bodyList != null) {
-            m_bodyList.removeValue(body, true);
+        if (bodyList != null) {
+            bodyList.removeValue(body, true);
         }
     }
 
     public void clear() {
-        if (m_bodyList != null) {
-            m_bodyList.clear();
+        if (bodyList != null) {
+            bodyList.clear();
         }
-        m_bodyList = null;
+        bodyList = null;
     }
 
     public Array<Body> getBodyList() {
-        return m_bodyList;
+        return bodyList;
     }
 
     public boolean isActive() {

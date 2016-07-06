@@ -7,29 +7,35 @@ import com.badlogic.gdx.physics.box2d.Filter;
  */
 public class FixtureData {
 
-    private short m_currentBits;
-    private Filter m_currentFilter;
-    private float m_currentFriction;
+    private Filter currentFilter;
+    private Filter restoredFilter;
+    private float currentFriction;
 
     public FixtureData(Filter filter, float friction){
-        m_currentBits = filter.categoryBits;
-        m_currentFilter = filter;
-        m_currentFriction = friction;
+        currentFilter = filter;
+        currentFriction = friction;
+        restoredFilter = new Filter();
+        restoredFilter.maskBits = filter.maskBits;
+        restoredFilter.categoryBits = filter.categoryBits;
+        restoredFilter.groupIndex = filter.groupIndex;
     }
 
     public void restoreCategoryBits(){
-        m_currentFilter.categoryBits = m_currentBits;
+        currentFilter.categoryBits = restoredFilter.categoryBits;
+        currentFilter.groupIndex = restoredFilter.groupIndex;
+        currentFilter.maskBits = restoredFilter.maskBits;
     }
 
     public float getCurrentFriction() {
-        return m_currentFriction;
+        return currentFriction;
     }
 
-    public short getCurrentBits() {
-        return m_currentBits;
-    }
 
     public Filter getCurrentFilter(){
-        return m_currentFilter;
+        Filter filter = new Filter();
+        filter.maskBits = currentFilter.maskBits;
+        filter.categoryBits = currentFilter.categoryBits;
+        filter.groupIndex = currentFilter.groupIndex;
+        return filter;
     }
 }

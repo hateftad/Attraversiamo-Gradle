@@ -4,166 +4,236 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.me.config.PlayerConfig;
+import com.me.level.Level;
 
 public class UserInterface {
 
-	private UIButton m_leftBtn;
-	private UIButton m_rightBtn;
-	private UIButton m_restartBtn;
-	private UIButton m_jumpBtn;
-	private UIButton m_actionBtn;
-	private UIButton m_charSwitchBtn;
-	private Table m_bottomLeftBtnsTable;
-	private Table m_bottomRightBtnsTable;
-	private Table m_topBtnsTable;
-	private Stage m_stage;
-	private TextureAtlas m_atlas;
-	private Skin m_skin;
-	
-	
-	public UserInterface(){
-		
-		m_stage = new Stage();
-		
-		m_bottomLeftBtnsTable = new Table();
-		m_bottomRightBtnsTable = new Table();
-		m_topBtnsTable = new Table();
-		
-		m_atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.pack"));
-		m_skin = new Skin(m_atlas);
-	}
+    private Stage stage;
+    private Skin skin;
+    private int nrOfPlayers;
+    private Window pauseWindow;
+    private UIButton jumpBtn;
+
+
+    public UserInterface(Level level){
+		stage = new Stage();
+        loadSkin();
+        nrOfPlayers = level.getNumberOfFinishers();
+        for (PlayerConfig playerConfig : level.getPlayerConfigs()) {
+
+        }
+    }
+
+    private void loadSkin(){
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas"));
+        skin = new Skin(atlas);
+    }
 	
 	public void init(){
-		
-		TextButtonStyle btnStyle = new TextButtonStyle();
-		btnStyle.up = m_skin.getDrawable("left.up");
 
-		m_leftBtn = new UIButton(btnStyle);
-		//m_leftBtn.debug();
-		m_leftBtn.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyDown(Input.Keys.A);
-				return true;
-			}
+        UIButton leftBtn = createButton("left.up", "left.down", new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                InputManager.getInstance().keyDown(Input.Keys.A);
+                return true;
+            }
 
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyUp(Input.Keys.A);
-			}
-		});
-		
-		TextButtonStyle btnStyle2 = new TextButtonStyle();
-		btnStyle2.up = m_skin.getDrawable("right.up");
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                InputManager.getInstance().keyUp(Input.Keys.A);
+            }
+        });
 
-		m_rightBtn = new UIButton(btnStyle2);
-		//m_rightBtn.debug();
-		m_rightBtn.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyDown(Input.Keys.D);
-				return true;
-			}
+        UIButton rightBtn = createButton("right.up", "right.down",new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                InputManager.getInstance().keyDown(Input.Keys.D);
+                return true;
+            }
 
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyUp(Input.Keys.D);
-			}
-		});
-		
-		
-		TextButtonStyle btnStyle5 = new TextButtonStyle();
-		btnStyle5.up = m_skin.getDrawable("change.up");
-		m_restartBtn = new UIButton(btnStyle5);
-		//m_restartBtn.debug();
-		m_restartBtn.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().callRestart();
-				return true;
-			}
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                InputManager.getInstance().keyUp(Input.Keys.D);
+            }
+        });
 
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				
-			}
-		});
-		
-		TextButtonStyle btnStyle4 = new TextButtonStyle();
-		btnStyle4.up = m_skin.getDrawable("change.up");
-		
-		m_charSwitchBtn = new UIButton(btnStyle4);
-		//m_charSwitchBtn.debug();
-		m_charSwitchBtn.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().characterSwitch();
-				return true;
-			}
+        UIButton menuBtn = createButton("menu.up", "menu.down", new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                setPauseVisibility(true);
+                return true;
+            }
 
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyUp(Input.Keys.C);
-			}
-		});
-		
-		TextButtonStyle btnStyle3 = new TextButtonStyle();
-		btnStyle3.up = m_skin.getDrawable("up.up");
-		
-		m_jumpBtn = new UIButton(btnStyle3);
-		//m_jumpBtn.debug();
-		m_jumpBtn.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyDown(Input.Keys.SPACE);
-				return true;
-			}
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyUp(Input.Keys.SPACE);
-			}
-		});
-		
-		TextButtonStyle btnStyle6 = new TextButtonStyle();
-		btnStyle6.up = m_skin.getDrawable("up.up");
-		
-		m_actionBtn = new UIButton(btnStyle6);
-		//m_actionBtn.debug();
-		m_actionBtn.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyDown(Input.Keys.F);
-				return true;
-			}
-
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				InputManager.getInstance().keyUp(Input.Keys.F);
-			}
-		});
+            }
+        });
 
 		int size = Gdx.graphics.getWidth() / 10;
+        setupBottomRightButtons(size);
+
+        Table bottomLeftBtnsTable = new Table();
+        Table topBtnsTable = new Table();
 		
-		m_bottomLeftBtnsTable.setFillParent(true);
-		m_bottomLeftBtnsTable.bottom().left();
-		m_bottomLeftBtnsTable.add(m_leftBtn).bottom().left().space(20).width(size).height(size).padRight(20).padLeft(20);
-		m_bottomLeftBtnsTable.add(m_rightBtn).bottom().left().width(size).height(size);
+		bottomLeftBtnsTable.setFillParent(true);
+		bottomLeftBtnsTable.bottom().left();
+		bottomLeftBtnsTable.add(leftBtn).bottom().left().space(20).width(size).height(size).padRight(20).padLeft(20);
+		bottomLeftBtnsTable.add(rightBtn).bottom().left().width(size).height(size);
+
+		topBtnsTable.setFillParent(true);
+		topBtnsTable.top().left();
+		topBtnsTable.add(menuBtn).width(size*0.6f).height(size*0.6f).padLeft(20).padTop(20);
 		
-		m_bottomRightBtnsTable.setFillParent(true);
-		m_bottomRightBtnsTable.bottom().right().setHeight(size);
-		m_bottomRightBtnsTable.add(m_actionBtn).bottom().right().space(20).width(size).height(size);
-		m_bottomRightBtnsTable.add(m_jumpBtn).bottom().right().space(20).width(size).height(size);
-		m_bottomRightBtnsTable.add(m_charSwitchBtn).bottom().right().width(size).height(size);
-		
-		m_topBtnsTable.setFillParent(true);
-		m_topBtnsTable.top().left();
-		m_topBtnsTable.add(m_restartBtn).width(100).height(100).padLeft(10).padTop(10);
-		
-		m_stage.addActor(m_topBtnsTable);
-		m_stage.addActor(m_bottomLeftBtnsTable);
-		m_stage.addActor(m_bottomRightBtnsTable);
+		stage.addActor(topBtnsTable);
+		stage.addActor(bottomLeftBtnsTable);
+
+
 		if(Gdx.app.getType() != ApplicationType.Desktop){
-			Gdx.input.setInputProcessor(m_stage);
+			Gdx.input.setInputProcessor(stage);
 		}
+
+        createPauseMenu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), size);
 	}
+
+    private void setupBottomRightButtons(int size){
+
+
+        jumpBtn = createButton("jump.up", "jump.down", new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                InputManager.getInstance().keyDown(Input.Keys.SPACE);
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                InputManager.getInstance().keyUp(Input.Keys.SPACE);
+            }
+        });
+
+        UIButton actionBtn = createButton("action.up", "action.down", new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                InputManager.getInstance().keyDown(Input.Keys.F);
+                return true;
+            }
+
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                InputManager.getInstance().keyUp(Input.Keys.F);
+            }
+        });
+
+        Table bottomRightBtnsTable = new Table();
+        if(nrOfPlayers > 1) {
+            final TextButtonStyle btnStyleFirst = new TextButtonStyle();
+            final TextButtonStyle btnStyleSecond = new TextButtonStyle();
+            btnStyleFirst.up = skin.getDrawable("change1.up");
+            btnStyleSecond.up = skin.getDrawable("change2.up");
+
+            final UIButton charSwitchBtn = createButton(btnStyleSecond);
+            charSwitchBtn.addListener(new InputListener() {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    InputManager.getInstance().characterSwitch();
+                    return true;
+                }
+
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    InputManager.getInstance().keyUp(Input.Keys.C);
+                }
+            });
+
+            charSwitchBtn.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    if (InputManager.getInstance().playerOneActive) {
+                        charSwitchBtn.setStyle(btnStyleSecond);
+                    } else {
+                        charSwitchBtn.setStyle(btnStyleFirst);
+                    }
+                }
+            });
+
+            Table charSwitchTable = new Table();
+            stage.addActor(charSwitchTable);
+            charSwitchTable.setFillParent(true);
+            charSwitchTable.bottom().right().padBottom(size);
+            charSwitchTable.add(charSwitchBtn).bottom().right().width(size * 1.5f).height(size * 1.5f);
+        }
+        bottomRightBtnsTable.setFillParent(true);
+        bottomRightBtnsTable.bottom().right().setHeight(size);
+        bottomRightBtnsTable.add(actionBtn).bottom().right().space(20).width(size).height(size);
+        bottomRightBtnsTable.add(jumpBtn).bottom().right().padRight(size).width(size).height(size);
+
+        stage.addActor(bottomRightBtnsTable);
+    }
+
+    public void createPauseMenu(int width, int height, int size){
+
+        Skin skin = new Skin(Gdx.files.internal("data/ui/uiskin.json"), new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas")));
+
+        UIButton continueButton = createButton("continue.up", "continue.up", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setPauseVisibility(false);
+            }
+        });
+
+        UIButton restartButton = createButton("reset.up", "reset.up", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setPauseVisibility(false);
+                InputManager.getInstance().callRestart();
+            }
+        });
+
+        UIButton backButton = createButton("back.up", "back.up", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setPauseVisibility(false);
+
+            }
+        });
+
+        pauseWindow = new Window("", skin);
+        pauseWindow.setSize(width, height);
+        pauseWindow.setPosition(width / 2 - pauseWindow.getWidth() / 2, height / 2 - pauseWindow.getHeight() / 2);
+        pauseWindow.add(continueButton).width(width/3).height(size * 0.8f).padTop(10).row();
+        pauseWindow.add(restartButton).width(width/3).height(size * 0.8f).padTop(10).row();
+        pauseWindow.add(backButton).width(width/3).height(size * 0.8f).padTop(10).row();
+        stage.addActor(pauseWindow);
+        pauseWindow.setVisible(false);
+    }
+
+    public void setPauseVisibility(boolean visibility){
+        pauseWindow.setVisible(visibility);
+    }
+
+    public boolean isPaused(){
+        return pauseWindow.isVisible();
+    }
+
+    private UIButton createButton(String upDrawable, String downDrawable, InputListener inputListener){
+        TextButtonStyle btnStyle = new TextButtonStyle();
+        btnStyle.up = skin.getDrawable(upDrawable);
+        btnStyle.down = skin.getDrawable(downDrawable);
+        UIButton button = createButton(btnStyle);
+        button.addListener(inputListener);
+        return button;
+    }
+
+    private UIButton createButton(TextButtonStyle btnStyle){
+        return new UIButton(btnStyle);
+    }
 	
 	public void update(float delta){
-        m_stage.act(delta);
-        m_stage.draw();
+
+        jumpBtn.setDisabled(InputManager.getInstance().playerOneActive);
+
+        stage.act(delta);
+        stage.draw();
 	}
 }
