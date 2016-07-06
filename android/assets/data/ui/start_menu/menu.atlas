@@ -18,3 +18,30 @@ ground
   orig: 800, 150
   offset: 0, 0
   index: -1
+
+menu2.png
+size: 1024,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+menuButtons/sound_off
+  rotate: false
+  xy: 592, 3
+  size: 151, 151
+  orig: 151, 151
+  offset: 0, 0
+  index: -1
+menuButtons/sound_on
+  rotate: false
+  xy: 745, 3
+  size: 151, 151
+  orig: 151, 151
+  offset: 0, 0
+  index: -1
+menuButtons/start
+  rotate: false
+  xy: 2, 2
+  size: 588, 152
+  orig: 588, 152
+  offset: 0, 0
+  index: -1

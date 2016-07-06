@@ -189,7 +189,7 @@ public class ManSystem extends PlayerSystem {
         if (playerComponent.isFalling() && feetComponent.hasCollided()) {
             if (playerComponent.getState() == PlayerState.RunFalling) {
                 setPlayerState(entity, PlayerState.RunLanding);
-            } else if (playerComponent.isDropping()) {
+            } else {
                 setPlayerState(entity, PlayerState.Landing);
                 movementComponent.standStill();
             }
@@ -218,7 +218,7 @@ public class ManSystem extends PlayerSystem {
         if (feetComponent.hasCollided() && !player.isJumping() && !player.isFalling()) {
             if (keyInputComponent.isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
-                    physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -10 : 10), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
+                    physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -20 : 20), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
                 } else {
                     physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2(physicsComponent.getLinearVelocity().x * 3, physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
                 }

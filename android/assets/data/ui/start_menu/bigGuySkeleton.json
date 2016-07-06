@@ -1,10 +1,10 @@
 {
 "skeleton": {
-	"hash": "q1+Adj2veH9rVLOuI28IEpOn32k",
+	"hash": "lWWaxWkkBMV3+O6OoZI6m5tT3+A",
 	"spine": "3.3.07",
 	"width": 137.5,
 	"height": 737.1,
-	"images": "../../Characters/Guy/Images/"
+	"images": "./../../Characters/Guy/Images/"
 },
 "bones": [
 	{ "name": "root", "x": 269.1, "y": -336.44, "scaleX": 1.4, "scaleY": 1.4 },

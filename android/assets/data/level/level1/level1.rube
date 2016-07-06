@@ -43,13 +43,6 @@
     
     {
       "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "collisionGroup",
       "name" : "collisionGroup",
       "type" : "int"
@@ -57,8 +50,8 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
       "type" : "int"
     },
     
@@ -66,6 +59,13 @@
       "class" : "body",
       "displayName" : "taskFinishers",
       "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     },
     
@@ -100,10 +100,7 @@
       "compactCommonFloats" : false,
       "compactZeroVecs" : false,
       "saveFullPathForImages" : false,
-      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
-      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
-      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : false
     },
@@ -218,15 +215,15 @@
               "x" : 
               [
                 22.23673248291016,
-                22.21509933471680,
-                -33.67307281494141,
+                22.21510314941406,
+                -33.67310333251953,
                 -33.61140060424805
               ],
               "y" : 
               [
                 -3.434156417846680,
-                3.497100114822388,
-                3.416967153549194,
+                3.497099876403809,
+                3.497099876403809,
                 -3.434159994125366
               ]
             }
