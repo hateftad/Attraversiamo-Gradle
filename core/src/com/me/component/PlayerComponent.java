@@ -34,11 +34,11 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
     }
 
     public boolean isLanding() {
-        return state == PlayerState.Landing;
+        return state == PlayerState.Landing || state == PlayerState.RunLanding;
     }
 
     public boolean isFalling() {
-        return state == PlayerState.Falling;
+        return state == PlayerState.Dropping || state == PlayerState.RunFalling;
     }
 
     public boolean shouldBeIdle() {
@@ -55,6 +55,7 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
                 !isSwingingCage() &
                 !isDrowning() &
                 !isLanding();
+
     }
 
     public boolean isHoldingCage(){
@@ -107,6 +108,14 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    public boolean isUpJumping() {
+        return state == PlayerState.UpJump;
+    }
+
+    public boolean isDropping() {
+        return state == PlayerState.Dropping;
     }
 
     public enum PlayerNumber {

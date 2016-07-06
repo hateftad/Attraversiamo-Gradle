@@ -10,11 +10,9 @@ import com.me.component.*;
 import com.me.config.GameConfig;
 import com.me.config.GlobalConfig;
 import com.me.events.GameEventType;
-import com.me.events.TaskEvent;
 import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
 import com.me.level.Level;
-import com.me.listeners.LevelEventListener;
 import com.me.ui.InputManager;
 
 /**
@@ -94,7 +92,7 @@ public class ManSystem extends PlayerSystem {
                     movementComponent.standStill();
                     setPlayerState(entity, PlayerState.ClimbBox);
                 } else {
-                    movementComponent.standStill();
+//                    movementComponent.standStill();
                     jump(entity);
                 }
                 if (player.isHanging()) {
@@ -173,20 +171,28 @@ public class ManSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
                 movementComponent.standStill();
             }
-        }
-
-        if (physicsComponent.isFalling() &&
-                !playerComponent.isHanging()) {
             if (playerComponent.isFalling() && feetComponent.hasCollided()) {
                 setPlayerState(entity, PlayerState.Landing);
                 movementComponent.standStill();
-            } else {
-                setPlayerState(entity, PlayerState.Falling);
             }
         }
 
+        if (physicsComponent.isFalling() &&
+                !feetComponent.hasCollided() &&
+                !playerComponent.isFalling()) {
+            if(!playerComponent.isUpJumping()) {
+                setPlayerState(entity, PlayerState.RunFalling);
+            } else {
+                setPlayerState(entity, PlayerState.Dropping);
+            }
+        }
         if (playerComponent.isFalling() && feetComponent.hasCollided()) {
-            setPlayerState(entity, PlayerState.Landing);
+            if (playerComponent.getState() == PlayerState.RunFalling) {
+                setPlayerState(entity, PlayerState.RunLanding);
+            } else if (playerComponent.isDropping()) {
+                setPlayerState(entity, PlayerState.Landing);
+                movementComponent.standStill();
+            }
         }
 
         if (!playerComponent.isActive() &&
@@ -209,7 +215,7 @@ public class ManSystem extends PlayerSystem {
         KeyInputComponent keyInputComponent = movComps.get(entity);
         FeetComponent feetComponent = rayCastComps.get(entity);
 
-        if (feetComponent.hasCollided() && !player.isJumping() && !player.isFalling() && !player.isLanding()) {
+        if (feetComponent.hasCollided() && !player.isJumping() && !player.isFalling()) {
             if (keyInputComponent.isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
                     physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -10 : 10), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
@@ -269,7 +275,7 @@ public class ManSystem extends PlayerSystem {
         if (player.isHanging()) {
             if (hangComponent.hangingRight) {
                 jointComponent.destroyHangJoint();
-                setPlayerState(entity, PlayerState.Falling);
+                setPlayerState(entity, PlayerState.Dropping);
             }
         }
         player.setFacingLeft(true);
@@ -287,7 +293,7 @@ public class ManSystem extends PlayerSystem {
         FeetComponent feetComponent = rayCastComps.get(entity);
         JointComponent jointComponent = jointComp.get(entity);
 
-        if (feetComponent.hasCollided() && !player.isHanging()&& !player.isLanding()) {
+        if (feetComponent.hasCollided() && !player.isHanging() && !player.isLanding()) {
             if (vel.velocity < 0) {
                 vel.velocity = VELOCITYINR;
             }
@@ -319,7 +325,7 @@ public class ManSystem extends PlayerSystem {
         if (player.isHanging()) {
             if (hangComponent.hangingLeft) {
                 jointComponent.destroyHangJoint();
-                setPlayerState(entity, PlayerState.Falling);
+                setPlayerState(entity, PlayerState.Dropping);
             }
         }
         player.setFacingLeft(false);
@@ -380,12 +386,7 @@ public class ManSystem extends PlayerSystem {
 
         PhysicsComponent physicsComponent = physComps.get(entity);
         KeyInputComponent keyInputComponent = movComps.get(entity);
-        if (keyInputComponent.left && physicsComponent.getLinearVelocity().x < -4) {
-            return false;
-        } else if (keyInputComponent.right && physicsComponent.getLinearVelocity().x > 4) {
-            return false;
-        }
-        return true;
+        return !(keyInputComponent.left && physicsComponent.getLinearVelocity().x < -4) && !(keyInputComponent.right && physicsComponent.getLinearVelocity().x > 4);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 import com.me.component.LevelAnimationComponent;
+import com.me.component.PlayerAnimationComponent;
 import com.me.level.LevelInfo;
 import com.me.manager.PersistenceManager;
 import com.me.screens.transitions.FadeInTransitionEffect;
@@ -24,8 +25,9 @@ import java.util.ArrayList;
 
 public class MenuScreen extends AbstractScreen {
 
-    private static final String SCENEPATH = "data/ui/menu";
-    private static final float SCALE = 0.5f;
+    private static final String SCENEPATH = "data/ui/start_menu/menu";
+    private static final String CHARPATH = "data/character/";
+    private static final float SCALE = 1f;
 
     private Array<AnimationComponent> animation;
 
@@ -40,15 +42,27 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private void init() {
-        this.camera.viewportWidth = 800;
-        this.camera.viewportHeight = 600;
-        this.camera.zoom = 2f;
+        this.camera.viewportWidth = 1024;
+        this.camera.viewportHeight = 720;
+        this.camera.zoom = 2.5f;
         this.animation = new Array<>();
 
         Vector2 middlePoint = new Vector2(0, 0);
         AnimationComponent scene = new LevelAnimationComponent(SCENEPATH, SCENEPATH, SCALE);
-        scene.setUp(middlePoint, "running");
+        scene.setUp(middlePoint, "start");
+        scene.playAnimation("start", true);
+
+        AnimationComponent playerOne = new LevelAnimationComponent(CHARPATH + "smallCharacter/bigGuy", CHARPATH + "smallCharacter/bigGuySkeleton", 0.5f);
+        playerOne.setUp(new Vector2(240, -338), "running");
+        playerOne.playAnimation("running", true);
+        playerOne.setSkin("silhouette");
+        AnimationComponent playerTwo = new LevelAnimationComponent(CHARPATH + "littleGirl/littleGirl", CHARPATH + "littleGirl/littleGirlSkeleton", 0.5f);
+        playerTwo.setUp(new Vector2(-130, -338), "running");
+        playerTwo.playAnimation("running", true);
+        playerTwo.setSkin("silhouette");
         animation.add(scene);
+        animation.add(playerOne);
+        animation.add(playerTwo);
     }
 
     @Override
@@ -62,9 +76,11 @@ public class MenuScreen extends AbstractScreen {
         camera.update();
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        for (AnimationComponent comp : animation) {
+        for (int i = 0; i < animation.size; i++) {
+            AnimationComponent comp = animation.get(i);
             comp.update(spriteBatch, delta);
         }
+
         spriteBatch.end();
         if (Gdx.input.justTouched()) {
             changeScreen();
@@ -76,7 +92,7 @@ public class MenuScreen extends AbstractScreen {
         game.loadingScreen = new LoadingScreen(game);
         LevelInfo levelInfo = PersistenceManager.getInstance().getLevelInfo();
 //        game.loadingScreen.load(levelInfo.getCurrentLevel());
-        game.loadingScreen.load(1);
+        game.loadingScreen.load(6);
 
 //        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
 //        effects.add(new FadeOutTransitionEffect(1f));
@@ -96,12 +112,6 @@ public class MenuScreen extends AbstractScreen {
         for (AnimationComponent animationComponent : animation) {
             animationComponent.dispose();
         }
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        //super.resize(width, height);
-
     }
 
 }

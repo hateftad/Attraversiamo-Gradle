@@ -51,7 +51,7 @@ public class PhysicsListenerSetup {
                                     other.setFriction(1f);
                                     contact.resetFriction();
                                 } else {
-                                    other.setFriction(0.001f);
+                                    other.setFriction(0.1f);
                                     contact.resetFriction();
                                 }
                             }

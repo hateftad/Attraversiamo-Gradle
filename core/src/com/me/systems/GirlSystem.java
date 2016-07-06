@@ -145,7 +145,7 @@ public class GirlSystem extends PlayerSystem {
 
         if (physicsComponent.isFalling() &&
                 !playerComponent.isHanging() && !playerComponent.isJumping()) {
-            setPlayerState(entity, PlayerState.Falling);
+            setPlayerState(entity, PlayerState.Dropping);
         }
 
         if (!playerComponent.isActive() &&

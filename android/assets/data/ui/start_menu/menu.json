@@ -1,0 +1,50 @@
+{
+"skeleton": {
+	"hash": "tYq+GShXiZngowvyq2ETUzCtINY",
+	"spine": "3.3.07",
+	"width": 6379.13,
+	"height": 2477.91,
+	"images": "/Users/hateftadayon/Git/Attraversiamo-Gradle/android/assets/data/ui/start_menu/"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "length": 76.39, "rotation": 90.95, "x": -0.17, "y": 14.14 },
+	{ "name": "bone2", "parent": "bone", "length": 345.81, "rotation": -179.62, "x": -277.58, "y": 2.95 },
+	{ "name": "bone3", "parent": "bone2", "length": 107.54, "rotation": -1.32, "x": 127.47, "y": 2900.28 }
+],
+"slots": [
+	{ "name": "Background RAW2", "bone": "bone", "attachment": "background" },
+	{ "name": "ground", "bone": "bone2", "attachment": "ground" },
+	{ "name": "ground2", "bone": "bone3", "attachment": "ground" }
+],
+"skins": {
+	"default": {
+		"Background RAW2": {
+			"background": { "x": 361.6, "y": -6.02, "scaleX": 4, "scaleY": 4, "rotation": -90.95, "width": 800, "height": 600 }
+		},
+		"ground": {
+			"ground": { "x": 335.75, "y": -22.82, "scaleX": 4, "scaleY": 4, "rotation": 88.58, "width": 800, "height": 150 }
+		},
+		"ground2": {
+			"ground": { "x": 276.53, "y": 261.17, "scaleX": 4, "scaleY": 4, "rotation": 90, "width": 800, "height": 150 }
+		}
+	}
+},
+"animations": {
+	"start": {
+		"bones": {
+			"bone": {
+				"translate": [
+					{ "time": 0, "x": -0.07, "y": 4.57 }
+				]
+			},
+			"bone2": {
+				"translate": [
+					{ "time": 0, "x": 8.83, "y": -2.11 },
+					{ "time": 4, "x": 61.34, "y": 3148.27 }
+				]
+			}
+		}
+	}
+}
+}

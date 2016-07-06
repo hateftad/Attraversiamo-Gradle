@@ -118,6 +118,16 @@ public class GirlInteractionSystem extends PlayerSystem {
         if(touchComponent.waterTouch){
             setPlayerState(entity, PlayerState.Drowning);
         }
+
+        if(touchComponent.boxTouch && !playerComponent.isActive()){
+            if(!physicsComponent.isImmovable()) {
+                physicsComponent.makeImmovable();
+            }
+        } else {
+            if(physicsComponent.isImmovable()) {
+                physicsComponent.makeMovable();
+            }
+        }
     }
 
     @Override

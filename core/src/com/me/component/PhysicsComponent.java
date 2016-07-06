@@ -38,6 +38,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
     public ImmediateModePhysicsListener physicsListener;
     private boolean submerged;
     private GameEvent eventInfo;
+    private boolean isImmovable;
 
     public PhysicsComponent(World world, Body b, String name) {
         this.name = name;
@@ -110,6 +111,22 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         body.get(name).setType(BodyType.StaticBody);
     }
 
+    private MassData previousMassData;
+    public void makeImmovable(){
+        previousMassData = body.get(name).getMassData();
+        MassData massData = new MassData();
+        massData.I = 0;
+        massData.mass = 0;
+        massData.center.set(0, 0);
+        body.get(name).setMassData(massData);
+        setImmovable(true);
+    }
+
+    public void makeMovable(){
+        body.get(name).setMassData(previousMassData);
+        setImmovable(false);
+    }
+
     public void makeDynamic(String name) {
         body.get(name).setType(BodyType.DynamicBody);
         setIsDynamic(true);
@@ -121,10 +138,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
     }
 
     public boolean isFalling() {
-        if (body.get(name).getLinearVelocity().y < -4) {
-            return true;
-        }
-        return false;
+        return body.get(name).getLinearVelocity().y < -4;
     }
 
     public void disableBody(String name) {
@@ -437,6 +451,14 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 
     public void applyLinearImpulseAtPoint(String bodyName, Vector2 center) {
         getBody(bodyName).applyLinearImpulse(center, getBody(bodyName).getWorldCenter(), true);
+    }
+
+    public boolean isImmovable() {
+        return isImmovable;
+    }
+
+    public void setImmovable(boolean immovable) {
+        isImmovable = immovable;
     }
 
 

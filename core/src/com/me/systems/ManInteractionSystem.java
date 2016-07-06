@@ -135,6 +135,9 @@ public class ManInteractionSystem extends PlayerSystem {
                 velocityLimitComponent.velocity = 0;
                 setPlayerState(entity, PlayerState.Idle);
             }
+            if(animation.isCompleted(PlayerState.RunLanding)){
+                setPlayerState(entity, PlayerState.Jogging);
+            }
         }
 
         if(touchComponent.waterTouch){

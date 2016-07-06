@@ -29,6 +29,10 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
         this.playerNumber = playerNumber;
     }
 
+    public PlayerAnimationComponent(String atlas, String skeleton, float scale) {
+        super(atlas, skeleton, scale);
+    }
+
     public AnimationEvent getEvent() {
         return event;
     }
@@ -40,8 +44,8 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     @Override
     public void setAnimationState(PlayerState state) {
 
-
         if (state != previousState) {
+            System.out.println("Animation State " + state);
             setState(state);
             switch (state) {
                 case Walking:
@@ -65,8 +69,11 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                 case UpJump:
                     playAnimation("upJump", false);
                     break;
-                case Falling:
+                case Dropping:
                     playAnimation("falling", true);
+                    break;
+                case RunFalling:
+                    playAnimation("runFalling", true);
                     break;
                 case Hanging:
                     playAnimation("hang", true);
@@ -133,6 +140,9 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     break;
                 case Landing:
                     playAnimation("landing", false);
+                    break;
+                case RunLanding:
+                    playAnimation("runLanding", false);
                     break;
                 default:
                     break;

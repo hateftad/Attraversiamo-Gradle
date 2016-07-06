@@ -218,6 +218,10 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 	
 	public abstract void update(SpriteBatch sb, float dt);
 
+    public PlayerState getPreviousState(){
+        return previousState;
+    }
+
 	@Override
 	public void dispose() {
 		skeleton.getBones().clear();

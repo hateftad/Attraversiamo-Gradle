@@ -8,11 +8,11 @@ public enum PlayerState {
     Running, Jogging, JogJump,
     Dying, UpJump, Hanging,
     ClimbingLedge, LadderClimbUp, LadderClimbDown,
-    LadderHang, Falling, Pushing,
+    LadderHang, Dropping, RunFalling, Pushing,
     LieDown, PullUp, SuckIn,
     WalkOut, Crawl, StandUp,
     LyingDown, PressButton, HoldHandLeading,
     HoldHandFollowing, RunOut, Swinging, PullingLedge,
     Down, Up, Drowning, HoldingCage,
-    ClimbBox, Landing
+    ClimbBox, Landing, RunLanding
 }

@@ -49,6 +49,20 @@
     },
     
     {
+      "class" : "image",
+      "displayName" : "shouldDraw",
+      "name" : "shouldDraw",
+      "type" : "bool"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
       "class" : "body",
       "displayName" : "collisionGroup",
       "name" : "collisionGroup",
@@ -64,16 +78,16 @@
     
     {
       "class" : "body",
-      "displayName" : "skeleton",
-      "name" : "skeleton",
-      "type" : "string"
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
     },
     
     {
       "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
-      "type" : "int"
+      "displayName" : "skeleton",
+      "name" : "skeleton",
+      "type" : "string"
     },
     
     {
@@ -88,20 +102,6 @@
       "displayName" : "taskFinishers",
       "name" : "taskFinishers",
       "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "image",
-      "displayName" : "shouldDraw",
-      "name" : "shouldDraw",
-      "type" : "bool"
     },
     
     {
@@ -251,8 +251,8 @@
               [
                 -120.3718948364258,
                 12.42230033874512,
-                12.42230033874512,
-                -59.11579895019531,
+                12.42233657836914,
+                -59.11576080322266,
                 -61.50017929077148,
                 -66.11092376708984,
                 -86.53236389160156,
@@ -263,8 +263,8 @@
               [
                 -1.449601173400879,
                 -3.039040088653564,
-                2.898989915847778,
-                3.298990011215210,
+                2.898990392684937,
+                2.898990392684937,
                 3.501065731048584,
                 4.536315917968750,
                 9.779116630554199,
@@ -481,6 +481,78 @@
           "y" : -43.95835113525391
         },
         "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 13,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 20.0,
+            "filter-categoryBits" : 64,
+            "filter-maskBits" : 78,
+            "friction" : 0.1,
+            "id" : 7,
+            "name" : "fixture32",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -2.911959886550903,
+                2.849699974060059,
+                2.849699974060059,
+                -2.911959886550903
+              ],
+              "y" : 
+              [
+                -2.806010007858276,
+                -2.806010007858276,
+                2.955650091171265,
+                2.955650091171265
+              ]
+            }
+          }
+        ],
+        "id" : 7,
+        "linearVelocity" : 0,
+        "massData-I" : 3677.768310546875,
+        "massData-center" : 
+        {
+          "x" : -0.03112995810806751,
+          "y" : 0.07482004165649414
+        },
+        "massData-mass" : 663.9344482421875,
+        "name" : "box",
+        "position" : 
+        {
+          "x" : -9.050346374511719,
+          "y" : 2.873908996582031
+        },
+        "sleepingAllowed" : false,
+        "type" : "dynamic"
       },
       
       {
@@ -1729,6 +1801,23 @@
       
       {
         "aspectScale" : 1,
+        "body" : 10,
+        "center" : 
+        {
+          "x" : -50.36120605468750,
+          "y" : -0.731506347656250
+        },
+        "file" : "../common/dawn.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 4,
+        "name" : "image1",
+        "opacity" : 0.5,
+        "scale" : 286.5864868164062
+      },
+      
+      {
+        "aspectScale" : 1,
         "body" : 13,
         "center" : 
         {
@@ -1783,6 +1872,24 @@
       
       {
         "aspectScale" : 1,
+        "body" : 7,
+        "center" : 
+        {
+          "x" : -0.03999387845396996,
+          "y" : 0.08659583330154419
+        },
+        "file" : "../common/box.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 8,
+        "name" : "box",
+        "opacity" : 1,
+        "renderOrder" : 6,
+        "scale" : 5.848246574401855
+      },
+      
+      {
+        "aspectScale" : 1,
         "body" : 18,
         "center" : 
         {
@@ -1815,7 +1922,7 @@
             "name" : "shouldDraw"
           }
         ],
-        "file" : "../common/water.png",
+        "file" : "../common/watergray.png",
         "filter" : 1,
         "flip" : false,
         "id" : 11,
