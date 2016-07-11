@@ -1,0 +1,110 @@
+buttons.png
+size: 842, 1564
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+action.down
+  rotate: false
+  xy: 512, 352
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+action.up
+  rotate: false
+  xy: 0, 480
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+back.up
+  rotate: false
+  xy: 0, 112
+  size: 555, 112
+  orig: 555, 112
+  offset: 0, 0
+  index: -1
+change1.up
+  rotate: false
+  xy: 0, 1022
+  size: 586, 542
+  orig: 586, 542
+  offset: 0, 0
+  index: -1
+change2.up
+  rotate: false
+  xy: 256, 480
+  size: 586, 542
+  orig: 586, 542
+  offset: 0, 0
+  index: -1
+continue.up
+  rotate: false
+  xy: 0, 224
+  size: 555, 112
+  orig: 555, 112
+  offset: 0, 0
+  index: -1
+jump.down
+  rotate: false
+  xy: 128, 480
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+jump.up
+  rotate: false
+  xy: 384, 352
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+left.down
+  rotate: false
+  xy: 256, 352
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+left.up
+  rotate: false
+  xy: 555, 224
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+menu.down
+  rotate: false
+  xy: 683, 224
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+menu.up
+  rotate: false
+  xy: 0, 352
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+reset.up
+  rotate: false
+  xy: 0, 0
+  size: 555, 112
+  orig: 555, 112
+  offset: 0, 0
+  index: -1
+right.down
+  rotate: false
+  xy: 128, 352
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+right.up
+  rotate: false
+  xy: 640, 352
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

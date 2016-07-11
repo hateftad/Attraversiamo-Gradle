@@ -12,7 +12,7 @@ public class DesktopLauncher {
     public static void main(String[] arg) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.width = 1024;
-        cfg.height = 768;
+        cfg.height = 720;
 
         GameConfig config = new GameConfig();
         config.platform = Platform.DESKTOP;

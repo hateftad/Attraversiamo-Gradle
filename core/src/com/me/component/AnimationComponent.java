@@ -46,14 +46,18 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
     protected static final String BlackSkin = "silhouette", ColorSkin = "color";
 
 
+    public AnimationComponent(TextureAtlas atlas, String skeleton, float scale){
+        this.renderer = new SkeletonRenderer();
+        this.atlas = atlas;
+        AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(this.atlas);
+        SkeletonJson json = new SkeletonJson(atlasLoader);
+        json.setScale(scale);
+        this.skeletonData = json.readSkeletonData(Gdx.files.internal(skeleton + ".json"));
+        Gdx.gl20.glDepthMask(false);
+    }
+
 	public AnimationComponent(String atlas, String skeleton, float scale){
-		this.renderer = new SkeletonRenderer();
-		this.atlas = new TextureAtlas(Gdx.files.internal(atlas+".atlas"));
-		AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(this.atlas);
-		SkeletonJson json = new SkeletonJson(atlasLoader);
-		json.setScale(scale);
-		this.skeletonData = json.readSkeletonData(Gdx.files.internal(skeleton + ".json"));
-		Gdx.gl20.glDepthMask(false);
+        this(new TextureAtlas(Gdx.files.internal(atlas+".atlas")), skeleton, scale);
 	}
 
 	public AnimationStateData setUp(RubeImage image){

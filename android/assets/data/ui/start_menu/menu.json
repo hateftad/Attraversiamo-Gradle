@@ -1,25 +1,21 @@
 {
 "skeleton": {
-	"hash": "cTixdFMIB8X7cy46e1YG3EPs4Rg",
+	"hash": "TRToyUNI2HCSShfY41OEyf1nNro",
 	"spine": "3.3.07",
-	"width": 7497.69,
-	"height": 3101.99,
+	"width": 6379.13,
+	"height": 2477.91,
 	"images": "../../UI/menu_resources/"
 },
 "bones": [
 	{ "name": "root" },
 	{ "name": "bone", "parent": "root", "length": 76.39, "rotation": 90.95, "x": -0.17, "y": 14.14 },
 	{ "name": "bone2", "parent": "bone", "length": 345.81, "rotation": -179.62, "x": -277.58, "y": 2.95 },
-	{ "name": "bone3", "parent": "bone2", "length": 107.54, "rotation": -1.32, "x": 127.47, "y": 2900.28 },
-	{ "name": "bone4", "parent": "root", "length": 445.6, "rotation": -88.65, "x": 27.28, "y": 2123.88 },
-	{ "name": "bone5", "parent": "root", "length": 488.19, "rotation": 0.55, "x": -2657.07, "y": 265.65 }
+	{ "name": "bone3", "parent": "bone2", "length": 107.54, "rotation": -1.32, "x": 127.47, "y": 2900.28 }
 ],
 "slots": [
 	{ "name": "Background RAW2", "bone": "bone", "attachment": "background" },
 	{ "name": "ground", "bone": "bone2", "attachment": "ground" },
-	{ "name": "ground2", "bone": "bone3", "attachment": "ground" },
-	{ "name": "menuButtons/start", "bone": "bone4", "attachment": "menuButtons/start" },
-	{ "name": "menuButtons/sound_on", "bone": "bone5", "attachment": "menuButtons/sound_on" }
+	{ "name": "ground2", "bone": "bone3", "attachment": "ground" }
 ],
 "skins": {
 	"default": {
@@ -31,12 +27,6 @@
 		},
 		"ground2": {
 			"ground": { "x": 276.53, "y": 261.17, "scaleX": 4, "scaleY": 4, "rotation": 90, "width": 800, "height": 150 }
-		},
-		"menuButtons/sound_on": {
-			"menuButtons/sound_on": { "rotation": -0.55, "width": 151, "height": 151 }
-		},
-		"menuButtons/start": {
-			"menuButtons/start": { "rotation": 88.65, "width": 588, "height": 152 }
 		}
 	}
 },
@@ -52,18 +42,6 @@
 				"translate": [
 					{ "time": 0, "x": 8.83, "y": -2.11 },
 					{ "time": 4, "x": 61.34, "y": 3148.27 }
-				]
-			},
-			"bone4": {
-				"translate": [
-					{ "time": 0, "x": 0, "y": 13.08 },
-					{ "time": 0.6666, "x": 0, "y": -1526.8 }
-				]
-			},
-			"bone5": {
-				"translate": [
-					{ "time": 0, "x": -4.69, "y": 0 },
-					{ "time": 0.6666, "x": 1840.04, "y": 0 }
 				]
 			}
 		}

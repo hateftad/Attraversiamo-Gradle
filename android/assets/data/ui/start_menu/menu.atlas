@@ -1,47 +1,40 @@
-
 menu.png
-size: 1024,1024
+size: 800, 901
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 2, 154
+  xy: 0, 301
   size: 800, 600
   orig: 800, 600
   offset: 0, 0
   index: -1
 ground
   rotate: false
-  xy: 2, 2
+  xy: 0, 151
   size: 800, 150
   orig: 800, 150
   offset: 0, 0
   index: -1
-
-menu2.png
-size: 1024,256
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-menuButtons/sound_off
+menuButtons/input/sound_off
   rotate: false
-  xy: 592, 3
+  xy: 0, 0
   size: 151, 151
   orig: 151, 151
   offset: 0, 0
   index: -1
-menuButtons/sound_on
+menuButtons/input/sound_on
   rotate: false
-  xy: 745, 3
+  xy: 151, 0
   size: 151, 151
   orig: 151, 151
   offset: 0, 0
   index: -1
-menuButtons/start
+menuButtons/input/start
   rotate: false
-  xy: 2, 2
-  size: 588, 152
-  orig: 588, 152
+  xy: 302, 0
+  size: 400, 103
+  orig: 400, 103
   offset: 0, 0
   index: -1

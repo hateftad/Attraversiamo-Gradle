@@ -1,20 +1,20 @@
 package com.me.ui;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.me.config.PlayerConfig;
 import com.me.level.Level;
 
@@ -28,7 +28,9 @@ public class UserInterface {
 
 
     public UserInterface(Level level){
+
 		stage = new Stage();
+
         loadSkin();
         nrOfPlayers = level.getNumberOfFinishers();
         for (PlayerConfig playerConfig : level.getPlayerConfigs()) {
@@ -37,93 +39,119 @@ public class UserInterface {
     }
 
     private void loadSkin(){
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas"));
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/hud/buttons.atlas"));
         skin = new Skin(atlas);
     }
 	
 	public void init(){
 
-        UIButton leftBtn = createButton("left.up", "left.down", new InputListener() {
+
+        UIButton leftBtn = createButton("left.up", "left.down");
+        final Container leftBtnWrapper = createWrapper(leftBtn, 1);
+        leftBtnWrapper.bottom().left();
+        leftBtn.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.A);
+                leftBtnWrapper.setScale(0.95f);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyUp(Input.Keys.A);
+                leftBtnWrapper.setScale(1f);
             }
         });
+        leftBtn.bottom().left();
 
-        UIButton rightBtn = createButton("right.up", "right.down",new InputListener() {
+        UIButton rightBtn = createButton("right.up", "right.down");
+        final Container rightBtnWrapper = createWrapper(rightBtn, 1);
+
+        rightBtn.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.D);
+                rightBtnWrapper.setScale(0.95f);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyUp(Input.Keys.D);
+                rightBtnWrapper.setScale(1);
             }
         });
 
-        UIButton menuBtn = createButton("menu.up", "menu.down", new InputListener() {
+        UIButton menuBtn = createButton("menu.up", "menu.down");
+        final Container menuBtnWrapper = createWrapper(menuBtn, 0.8f);
+        menuBtn.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                setPauseVisibility(true);
+                menuBtnWrapper.setScale(0.85f);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
+                menuBtnWrapper.setScale(.8f);
+                setPauseVisibility(true);
             }
         });
 
 		int size = Gdx.graphics.getWidth() / 10;
         setupBottomRightButtons(size);
-
+        rightBtnWrapper.width(size).height(size);
         Table bottomLeftBtnsTable = new Table();
-        Table topBtnsTable = new Table();
-		
-		bottomLeftBtnsTable.setFillParent(true);
-		bottomLeftBtnsTable.bottom().left();
-		bottomLeftBtnsTable.add(leftBtn).bottom().left().space(20).width(size).height(size).padRight(20).padLeft(20);
-		bottomLeftBtnsTable.add(rightBtn).bottom().left().width(size).height(size);
+        bottomLeftBtnsTable.setFillParent(true);
+        bottomLeftBtnsTable.setClip(true);
+		bottomLeftBtnsTable.add(leftBtnWrapper.width(size).height(size)).padLeft(20).space(50);
+		bottomLeftBtnsTable.add(rightBtnWrapper.width(size).height(size));
+        bottomLeftBtnsTable.bottom().left();
+        bottomLeftBtnsTable.padLeft(10);
 
-		topBtnsTable.setFillParent(true);
-		topBtnsTable.top().left();
-		topBtnsTable.add(menuBtn).width(size*0.6f).height(size*0.6f).padLeft(20).padTop(20);
-		
-		stage.addActor(topBtnsTable);
+
+        Table topButtonsTable = new Table();
+        topButtonsTable.setFillParent(true);
+        topButtonsTable.add(menuBtnWrapper.width(size).height(size)).top().left();
+        topButtonsTable.padLeft(10);
+        topButtonsTable.top().left();
+
+
 		stage.addActor(bottomLeftBtnsTable);
+		stage.addActor(topButtonsTable);
 
 
-		if(Gdx.app.getType() != ApplicationType.Desktop){
+//		if(Gdx.app.getType() != ApplicationType.Desktop){
 			Gdx.input.setInputProcessor(stage);
-		}
+//		}
 
         createPauseMenu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), size);
 	}
 
     private void setupBottomRightButtons(int size){
 
-
-        jumpBtn = createButton("jump.up", "jump.down", new InputListener() {
+        jumpBtn = createButton("jump.up", "jump.down");
+        final Container jumpBtnWrapper = createWrapper(jumpBtn, 1f);
+        jumpBtn.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.SPACE);
+                jumpBtnWrapper.setScale(0.95f);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyUp(Input.Keys.SPACE);
+                jumpBtnWrapper.setScale(1f);
             }
         });
 
-        UIButton actionBtn = createButton("action.up", "action.down", new InputListener() {
+        UIButton actionBtn = createButton("action.up", "action.down");
+        final Container actionBtnWrapper = createWrapper(actionBtn, 1f);
+        actionBtn.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyDown(Input.Keys.F);
+                actionBtnWrapper.setScale(0.95f);
                 return true;
             }
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 InputManager.getInstance().keyUp(Input.Keys.F);
+                actionBtnWrapper.setScale(1f);
             }
         });
 
@@ -164,16 +192,16 @@ public class UserInterface {
             charSwitchTable.add(charSwitchBtn).bottom().right().width(size * 1.5f).height(size * 1.5f);
         }
         bottomRightBtnsTable.setFillParent(true);
-        bottomRightBtnsTable.bottom().right().setHeight(size);
-        bottomRightBtnsTable.add(actionBtn).bottom().right().space(20).width(size).height(size);
-        bottomRightBtnsTable.add(jumpBtn).bottom().right().padRight(size).width(size).height(size);
+        bottomRightBtnsTable.bottom().right();
+        bottomRightBtnsTable.add(actionBtnWrapper.width(size).height(size)).bottom().right().space(20);
+        bottomRightBtnsTable.add(jumpBtnWrapper.width(size).height(size)).bottom().right().padRight(size);
 
         stage.addActor(bottomRightBtnsTable);
     }
 
     public void createPauseMenu(int width, int height, int size){
 
-        Skin skin = new Skin(Gdx.files.internal("data/ui/uiskin.json"), new TextureAtlas(Gdx.files.internal("data/ui/buttons.atlas")));
+
 
         UIButton continueButton = createButton("continue.up", "continue.up", new ClickListener() {
             @Override
@@ -182,6 +210,7 @@ public class UserInterface {
             }
         });
 
+        Container continueWrapper = createWrapper(continueButton, 1f);
         UIButton restartButton = createButton("reset.up", "reset.up", new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -190,6 +219,7 @@ public class UserInterface {
             }
         });
 
+        Container restartWrapper = createWrapper(restartButton, 1f);
         UIButton backButton = createButton("back.up", "back.up", new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -198,12 +228,15 @@ public class UserInterface {
             }
         });
 
+        Skin skin = new Skin(Gdx.files.internal("data/ui/window/uiskin.json"), new TextureAtlas(Gdx.files.internal("data/ui/window/window.atlas")));
+        Container backWrapper = createWrapper(backButton, 1f);
+
         pauseWindow = new Window("", skin);
         pauseWindow.setSize(width, height);
         pauseWindow.setPosition(width / 2 - pauseWindow.getWidth() / 2, height / 2 - pauseWindow.getHeight() / 2);
-        pauseWindow.add(continueButton).width(width/3).height(size * 0.8f).padTop(10).row();
-        pauseWindow.add(restartButton).width(width/3).height(size * 0.8f).padTop(10).row();
-        pauseWindow.add(backButton).width(width/3).height(size * 0.8f).padTop(10).row();
+        pauseWindow.add(continueWrapper).height(continueButton.getPrefHeight()).width(continueButton.getPrefWidth()).padBottom(50).row();
+        pauseWindow.add(restartWrapper).height(restartButton.getPrefHeight()).width(restartButton.getPrefWidth()).padBottom(50).row();
+        pauseWindow.add(backWrapper).height(backButton.getPrefHeight()).width(backButton.getPrefWidth()).row();
         stage.addActor(pauseWindow);
         pauseWindow.setVisible(false);
     }
@@ -225,8 +258,24 @@ public class UserInterface {
         return button;
     }
 
+    private UIButton createButton(String upDrawable, String downDrawable){
+        TextButtonStyle btnStyle = new TextButtonStyle();
+        btnStyle.up = skin.getDrawable(upDrawable);
+        btnStyle.down = skin.getDrawable(downDrawable);
+        UIButton button = createButton(btnStyle);
+        return button;
+    }
+
     private UIButton createButton(TextButtonStyle btnStyle){
         return new UIButton(btnStyle);
+    }
+
+    private Container createWrapper(WidgetGroup btn, float scale){
+        Container wrapper = new Container(btn);
+        wrapper.setTransform(true);
+        wrapper.setOrigin(wrapper.getPrefWidth() / 2, wrapper.getPrefHeight() / 2);
+        wrapper.setScale(scale);
+        return wrapper;
     }
 	
 	public void update(float delta){
