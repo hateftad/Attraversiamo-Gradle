@@ -229,6 +229,15 @@ public class PhysicsListenerSetup {
                             if (otherUd.getType() == Type.InsideCage) {
                                 e.getComponent(TouchComponent.class).cageTouch = true;
                             }
+
+                        }
+                    }
+                } else {
+                    if (player.getRBUserData(fB.getBody()).getCollisionGroup() == otherUd.getCollisionGroup()) {
+                        if (e.getComponent(PlayerComponent.class) != null) {
+                            if (otherUd.getType() == Type.Box && playerUd.getType() == Type.BoxHand) {
+                                e.getComponent(TouchComponent.class).boxHandTouch = true;
+                            }
                         }
                     }
                 }
@@ -380,6 +389,9 @@ public class PhysicsListenerSetup {
                         }
                         if (otherUd.getType() == Type.InsideCage) {
                             e.getComponent(TouchComponent.class).cageTouch = false;
+                        }
+                        if (otherUd.getType() == Type.Box && playerUd.getType() == Type.BoxHand) {
+                            e.getComponent(TouchComponent.class).boxHandTouch = false;
                         }
                     }
                 }

@@ -245,7 +245,7 @@ public class ManSystem extends PlayerSystem {
             if (vel.velocity > 0) {
                 vel.velocity = -VELOCITYINR;
             }
-            if (!touch.boxTouch) {
+            if (!touch.shouldPush()) {
                 vel.velocity -= VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() < -vel.walkLimit) {
@@ -256,13 +256,9 @@ public class ManSystem extends PlayerSystem {
                     setPlayerState(entity, PlayerState.Jogging);
                 }
             }
-            if (touch.boxTouch && push.pushLeft) {
+            if (touch.shouldPush() && push.pushLeft) {
                 movementComponent.setVelocity(-vel.pushlimit);
                 setPlayerState(entity, PlayerState.Pushing);
-            }
-            if (touch.boxTouch && !push.pushLeft) {
-                setPlayerState(entity, PlayerState.Walking);
-                movementComponent.setVelocity(-vel.pushlimit);
             }
             if (!ps.isDynamic()) {
                 setPlayerState(entity, PlayerState.Walking);
@@ -296,7 +292,7 @@ public class ManSystem extends PlayerSystem {
             if (vel.velocity < 0) {
                 vel.velocity = VELOCITYINR;
             }
-            if (!touch.boxTouch) {
+            if (!touch.shouldPush()) {
                 vel.velocity += VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() > vel.walkLimit) {
@@ -307,11 +303,8 @@ public class ManSystem extends PlayerSystem {
                     setPlayerState(entity, PlayerState.Jogging);
                 }
             }
-            if (touch.boxTouch && push.pushRight) {
+            if (touch.shouldPush() && push.pushRight) {
                 setPlayerState(entity, PlayerState.Pushing);
-                movementComponent.setVelocity(vel.pushlimit);
-            } else if (touch.boxTouch && !push.pushRight) {
-                setPlayerState(entity, PlayerState.Walking);
                 movementComponent.setVelocity(vel.pushlimit);
             }
             if (!ps.isDynamic()) {

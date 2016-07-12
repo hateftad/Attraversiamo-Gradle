@@ -23,23 +23,18 @@ public class TouchComponent extends BaseComponent {
     public boolean cageTouch;
     public boolean waterTouch;
 	public boolean insideFinish;
+    public boolean boxHandTouch;
 
     public TouchComponent() {
-		edgeTouch = false;
-		ladderTouch = false;
-		boxTouch = false;
-		footEdgeL = false;
-		footEdgeR = false;
-		handTouch = false;
 		touchCenter = Vector2.Zero;
 	}
 
-    public boolean isHanging(){
-        return edgeTouch;
-    }
-
     public boolean canPullUp(){
         return handTouch && footEdge;
+    }
+
+    public boolean shouldPush(){
+        return boxTouch && boxHandTouch;
     }
 
 	@Override
@@ -70,6 +65,7 @@ public class TouchComponent extends BaseComponent {
         cageTouch = false;
         waterTouch = false;
 		insideFinish = false;
+        boxHandTouch = false;
 	}
 
 }

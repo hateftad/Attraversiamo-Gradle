@@ -37,15 +37,11 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
         return event;
     }
 
-    public boolean shouldJump() {
-        return event.getEventType().equals(AnimationEvent.AnimationEventType.JUMPUP);
-    }
-
     @Override
     public void setAnimationState(PlayerState state) {
 
         if (state != previousState) {
-            System.out.println("Animation State " + state);
+//            System.out.println("Animation State " + state);
             setState(state);
             switch (state) {
                 case Walking:

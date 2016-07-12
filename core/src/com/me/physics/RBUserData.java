@@ -124,7 +124,7 @@ public class RBUserData {
             case 13:
                 setType(Type.Box);
                 filter.categoryBits = WorldObject;
-                filter.maskBits = CharacterTorso | CharacterFeet | Boundary | WorldSensor | WorldObject;
+                filter.maskBits = CharacterTorso | CharacterFeet | Boundary | WorldSensor | WorldObject | CharacterSensor;
                 break;
             case 14:
                 setType(Type.Hand);
@@ -133,6 +133,8 @@ public class RBUserData {
                 break;
             case 15:
                 setType(Type.BoxHand);
+                filter.categoryBits = CharacterSensor;
+                filter.maskBits = WorldObject;
                 break;
             case 16:
                 setType(Type.Portal);
