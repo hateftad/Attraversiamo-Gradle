@@ -90,6 +90,7 @@ public class MenuScreen extends AbstractScreen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 soundButtonOnwrapper.setScale(0.8f);
+                PersistenceManager.getInstance().toggleSound(true);
                 soundButtonOn.setVisible(false);
                 soundButtonOff.setVisible(true);
             }
@@ -104,6 +105,7 @@ public class MenuScreen extends AbstractScreen {
 
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 soundButtonOffwrapper.setScale(0.8f);
+                PersistenceManager.getInstance().toggleSound(false);
                 soundButtonOff.setVisible(false);
                 soundButtonOn.setVisible(true);
             }

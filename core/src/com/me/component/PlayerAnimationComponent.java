@@ -69,7 +69,7 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                 case UpJump:
                     playAnimation("upJump", false);
                     break;
-                case Dropping:
+                case Falling:
                     playAnimation("falling", true);
                     break;
                 case RunFalling:

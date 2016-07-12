@@ -58,12 +58,11 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         this.game.processors.add(cameraSystem);
         this.game.processors.add(playerOneSystem);
         InputManager.getInstance().addEventListener(physicsSystem);
-//        if (Gdx.app.getType() != Application.ApplicationType.Desktop) {
-            this.userInterface = new UserInterface(currentLevel);
-            this.userInterface.init();
-//        } else {
-//            Gdx.input.setInputProcessor(game.multiPlexer);
-//        }
+        this.userInterface = new UserInterface(currentLevel);
+        this.userInterface.init();
+        this.game.processors.add(userInterface.getStage());
+        Gdx.input.setInputProcessor(game.multiPlexer);
+
 
         InputManager.getInstance().reset();
     }

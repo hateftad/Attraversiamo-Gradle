@@ -60,13 +60,14 @@ public class GirlSystem extends PlayerSystem {
         keyInputComponent.update(inputMgr);
 
         if (canBeControlled(player)) {
-            if (keyInputComponent.left) {
-                moveLeft(entity);
-            } else if (keyInputComponent.right) {
-                moveRight(entity);
+            if (!keyInputComponent.jump && !player.isLanding() && !player.isFalling()) {
+                if (keyInputComponent.left) {
+                    moveLeft(entity);
+                } else if (keyInputComponent.right) {
+                    moveRight(entity);
+                }
             }
             if (keyInputComponent.jump) {
-
                 jump(entity);
             }
             if (inputMgr.isDown(action)) {
@@ -128,7 +129,7 @@ public class GirlSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = physComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         PlayerComponent playerComponent = playerComps.get(entity);
-
+        FeetComponent feetComponent = feetComps.get(entity);
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
@@ -141,11 +142,30 @@ public class GirlSystem extends PlayerSystem {
             if (playerComponent.crawling()) {
                 setPlayerState(entity, PlayerState.LyingDown);
             }
+            if (playerComponent.isFalling() && feetComponent.hasCollided()) {
+                setPlayerState(entity, PlayerState.Landing);
+                movementComponent.standStill();
+            }
         }
 
         if (physicsComponent.isFalling() &&
-                !playerComponent.isHanging() && !playerComponent.isJumping()) {
-            setPlayerState(entity, PlayerState.Dropping);
+                !feetComponent.hasCollided() &&
+                !playerComponent.isFalling()) {
+            System.out.println("In the Air!");
+            if (playerComponent.isRunning()) {
+                setPlayerState(entity, PlayerState.RunFalling);
+            } else {
+                setPlayerState(entity, PlayerState.Falling);
+            }
+        }
+        if (playerComponent.isFalling() && feetComponent.hasCollided()) {
+            System.out.println("Hit the ground!");
+            if (playerComponent.getState() == PlayerState.RunFalling) {
+                setPlayerState(entity, PlayerState.RunLanding);
+            } else {
+                setPlayerState(entity, PlayerState.Landing);
+                movementComponent.standStill();
+            }
         }
 
         if (!playerComponent.isActive() &&

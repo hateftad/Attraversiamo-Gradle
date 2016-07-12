@@ -31,6 +31,8 @@ public class GirlInteractionSystem extends PlayerSystem {
     ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
     ComponentMapper<EventComponent> eventComps;
+    @Mapper
+    ComponentMapper<VelocityLimitComponent> velComps;
 
     @SuppressWarnings("unchecked")
     public GirlInteractionSystem() {
@@ -45,6 +47,7 @@ public class GirlInteractionSystem extends PlayerSystem {
         PlayerAnimationComponent animation = animComps.get(entity);
         PhysicsComponent physicsComponent = physComp.get(entity);
         CharacterMovementComponent movementComponent = movementComps.get(entity);
+        VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
 
         if (touchComponent.handTouch && playerComponent.isJumping()) {
             if (!playerComponent.isPullingUp()) {
@@ -126,6 +129,16 @@ public class GirlInteractionSystem extends PlayerSystem {
         } else {
             if(physicsComponent.isImmovable()) {
                 physicsComponent.makeMovable();
+            }
+        }
+
+        if(playerComponent.isLanding()){
+            if(animation.isCompleted(PlayerState.Landing)){
+                velocityLimitComponent.velocity = 0;
+                setPlayerState(entity, PlayerState.Idle);
+            }
+            if(animation.isCompleted(PlayerState.RunLanding)){
+                setPlayerState(entity, PlayerState.Running);
             }
         }
     }

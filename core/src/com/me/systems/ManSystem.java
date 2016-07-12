@@ -92,7 +92,6 @@ public class ManSystem extends PlayerSystem {
                     movementComponent.standStill();
                     setPlayerState(entity, PlayerState.ClimbBox);
                 } else {
-//                    movementComponent.standStill();
                     jump(entity);
                 }
                 if (player.isHanging()) {
@@ -183,7 +182,7 @@ public class ManSystem extends PlayerSystem {
             if(!playerComponent.isUpJumping()) {
                 setPlayerState(entity, PlayerState.RunFalling);
             } else {
-                setPlayerState(entity, PlayerState.Dropping);
+                setPlayerState(entity, PlayerState.Falling);
             }
         }
         if (playerComponent.isFalling() && feetComponent.hasCollided()) {
@@ -275,7 +274,7 @@ public class ManSystem extends PlayerSystem {
         if (player.isHanging()) {
             if (hangComponent.hangingRight) {
                 jointComponent.destroyHangJoint();
-                setPlayerState(entity, PlayerState.Dropping);
+                setPlayerState(entity, PlayerState.Falling);
             }
         }
         player.setFacingLeft(true);
@@ -325,7 +324,7 @@ public class ManSystem extends PlayerSystem {
         if (player.isHanging()) {
             if (hangComponent.hangingLeft) {
                 jointComponent.destroyHangJoint();
-                setPlayerState(entity, PlayerState.Dropping);
+                setPlayerState(entity, PlayerState.Falling);
             }
         }
         player.setFacingLeft(false);

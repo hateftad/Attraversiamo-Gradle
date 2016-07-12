@@ -38,7 +38,7 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
     }
 
     public boolean isFalling() {
-        return state == PlayerState.Dropping || state == PlayerState.RunFalling;
+        return state == PlayerState.Falling || state == PlayerState.RunFalling;
     }
 
     public boolean shouldBeIdle() {
@@ -115,7 +115,11 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
     }
 
     public boolean isDropping() {
-        return state == PlayerState.Dropping;
+        return state == PlayerState.Falling;
+    }
+
+    public boolean isRunning() {
+        return state == PlayerState.Running;
     }
 
     public enum PlayerNumber {

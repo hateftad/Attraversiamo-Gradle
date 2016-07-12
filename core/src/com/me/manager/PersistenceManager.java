@@ -9,6 +9,7 @@ public class PersistenceManager {
     private static final String AppPrefName = "attraversiamo_preferences";
     private static final String CurrentLives = "current_lives";
     private static final String CurrentLevel = "current_level";
+    private static final String Sound = "sound";
     private static PersistenceManager instance;
     private Preferences preferences;
 
@@ -25,6 +26,10 @@ public class PersistenceManager {
 
     public void saveSetting(String name, boolean onOff) {
         preferences.putBoolean(name, onOff);
+    }
+
+    public void toggleSound(boolean sound){
+        preferences.putBoolean(Sound, sound);
     }
 
     public void saveProgress(int level) {

@@ -38,6 +38,10 @@ public class UserInterface {
         }
     }
 
+    public Stage getStage(){
+        return stage;
+    }
+
     private void loadSkin(){
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/hud/buttons.atlas"));
         skin = new Skin(atlas);
@@ -114,11 +118,6 @@ public class UserInterface {
 
 		stage.addActor(bottomLeftBtnsTable);
 		stage.addActor(topButtonsTable);
-
-
-//		if(Gdx.app.getType() != ApplicationType.Desktop){
-			Gdx.input.setInputProcessor(stage);
-//		}
 
         createPauseMenu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), size);
 	}
