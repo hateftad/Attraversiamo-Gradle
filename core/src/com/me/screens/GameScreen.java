@@ -5,6 +5,7 @@ import box2dLight.RayHandler;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
@@ -55,15 +56,14 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         this.entityWorld.setSystem(playerOneSystem);
         this.playerTwoSystem = entityWorld.setSystem(new GirlSystem(currentLevel));
         this.entityWorld.initialize();
-        this.game.processors.add(cameraSystem);
-        this.game.processors.add(playerOneSystem);
         InputManager.getInstance().addEventListener(physicsSystem);
         this.userInterface = new UserInterface(currentLevel);
         this.userInterface.init();
         this.game.processors.add(userInterface.getStage());
-        Gdx.input.setInputProcessor(game.multiPlexer);
-
-
+        this.game.processors.add(cameraSystem);
+        this.game.processors.add(playerOneSystem);
+        this.game.multiPlexer.setProcessors(this.game.processors);
+        Gdx.input.setInputProcessor(this.game.multiPlexer);
         InputManager.getInstance().reset();
     }
 
