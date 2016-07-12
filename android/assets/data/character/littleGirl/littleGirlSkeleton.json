@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "wkncq1/TmKBkre1zAsGGahUOEqk", "spine": "3.3.07", "width": 165.48, "height": 494.55, "images": "./../Images/" },
+"skeleton": { "hash": "wl7bGlhS30ZM4/4gtNVD+dj34Ds", "spine": "3.3.07", "width": 165.48, "height": 494.55, "images": "./../Images/" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "hip", "parent": "root", "x": 6.09, "y": 247.83 },
@@ -969,7 +969,7 @@
 		"bones": {
 			"root": {
 				"translate": [
-					{ "time": 0, "x": 2.29, "y": 0, "curve": "stepped" },
+					{ "time": 0, "x": 0.99, "y": 0 },
 					{ "time": 1, "x": 2.29, "y": 0, "curve": "stepped" },
 					{ "time": 2, "x": 2.29, "y": 0, "curve": "stepped" },
 					{ "time": 3.2827, "x": 2.29, "y": 0, "curve": "stepped" },
@@ -2484,8 +2484,7 @@
 					{ "time": 1.8333, "x": 324.18, "y": 623.42 },
 					{ "time": 2.3333, "x": 324.18, "y": 718.87 },
 					{ "time": 2.5, "x": 324.18, "y": 763.41 },
-					{ "time": 2.6666, "x": 324.18, "y": 801.59, "curve": "stepped" },
-					{ "time": 2.8333, "x": 324.18, "y": 801.59 }
+					{ "time": 2.6666, "x": 324.18, "y": 801.59 }
 				]
 			},
 			"spine": {
@@ -2513,7 +2512,7 @@
 			},
 			"root": {
 				"translate": [
-					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0, "x": 0, "y": 1.29 },
 					{ "time": 2.8333, "x": 2.04, "y": 0 }
 				]
 			}

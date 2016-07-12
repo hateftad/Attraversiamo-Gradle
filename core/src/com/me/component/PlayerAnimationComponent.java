@@ -41,7 +41,7 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     public void setAnimationState(PlayerState state) {
 
         if (state != previousState) {
-//            System.out.println("Animation State " + state);
+            System.out.println("Animation State " + state);
             setState(state);
             switch (state) {
                 case Walking:

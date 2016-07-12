@@ -3,6 +3,7 @@ package com.me.systems;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
+import com.badlogic.gdx.math.Vector2;
 import com.me.component.*;
 import com.me.events.AnimationEvent;
 import com.me.events.GameEventType;
@@ -59,10 +60,11 @@ public class GirlInteractionSystem extends PlayerSystem {
         }
         if (playerComponent.isPullingUp()) {
             if (animation.isCompleted(PlayerState.PullUp)) {
-                physicsComponent.setBodyActive(true);
-                physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left foot"));
-                touchComponent.handTouch = false;
                 setPlayerState(entity, PlayerState.Idle);
+                physicsComponent.setBodyActive(true);
+                Vector2 positionRelative = animation.getPositionRelative("right foot");
+                physicsComponent.setAllBodiesPosition(positionRelative);
+                touchComponent.handTouch = false;
             }
         }
         if (playerComponent.lyingDown()) {

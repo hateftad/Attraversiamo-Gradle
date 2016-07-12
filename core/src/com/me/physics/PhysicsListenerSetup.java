@@ -237,6 +237,7 @@ public class PhysicsListenerSetup {
                         if (e.getComponent(PlayerComponent.class) != null) {
                             if (otherUd.getType() == Type.Box && playerUd.getType() == Type.BoxHand) {
                                 e.getComponent(TouchComponent.class).boxHandTouch = true;
+                                System.out.println("BoxTouch");
                             }
                         }
                     }
@@ -392,6 +393,7 @@ public class PhysicsListenerSetup {
                         }
                         if (otherUd.getType() == Type.Box && playerUd.getType() == Type.BoxHand) {
                             e.getComponent(TouchComponent.class).boxHandTouch = false;
+                            System.out.println("No BoxTouch");
                         }
                     }
                 }

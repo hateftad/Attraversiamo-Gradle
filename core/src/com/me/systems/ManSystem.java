@@ -245,7 +245,7 @@ public class ManSystem extends PlayerSystem {
             if (vel.velocity > 0) {
                 vel.velocity = -VELOCITYINR;
             }
-            if (!touch.shouldPush()) {
+            if (!touch.boxHandTouch) {
                 vel.velocity -= VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() < -vel.walkLimit) {
@@ -292,7 +292,7 @@ public class ManSystem extends PlayerSystem {
             if (vel.velocity < 0) {
                 vel.velocity = VELOCITYINR;
             }
-            if (!touch.shouldPush()) {
+            if (!touch.boxHandTouch) {
                 vel.velocity += VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() > vel.walkLimit) {

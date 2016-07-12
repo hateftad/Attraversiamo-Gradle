@@ -23,7 +23,7 @@ import com.me.utils.Converters;
 
 public abstract class AnimationComponent extends BaseComponent implements TaskEventObserverComponent {
 
-	protected SkeletonRenderer renderer;
+	protected SkeletonRenderer<SpriteBatch> renderer;
 
     protected TextureAtlas atlas;
 
@@ -47,7 +47,7 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 
 
     public AnimationComponent(TextureAtlas atlas, String skeleton, float scale){
-        this.renderer = new SkeletonRenderer();
+        this.renderer = new SkeletonRenderer<>();
         this.atlas = atlas;
         AtlasAttachmentLoader atlasLoader = new AtlasAttachmentLoader(this.atlas);
         SkeletonJson json = new SkeletonJson(atlasLoader);
