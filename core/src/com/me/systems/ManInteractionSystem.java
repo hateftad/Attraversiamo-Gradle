@@ -143,6 +143,12 @@ public class ManInteractionSystem extends PlayerSystem {
         if(touchComponent.waterTouch){
             setPlayerState(entity, PlayerState.Drowning);
         }
+
+        if(playerComponent.isDrowning()){
+            if(animation.isCompleted(PlayerState.Drowning)) {
+                setPlayerState(entity, PlayerState.Idle);
+            }
+        }
     }
 
     @Override
