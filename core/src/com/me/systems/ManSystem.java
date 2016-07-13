@@ -247,12 +247,12 @@ public class ManSystem extends PlayerSystem {
             }
             if (!touch.shouldPush()) {
                 vel.velocity -= VELOCITY * world.delta;
+                movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() < -vel.walkLimit) {
                     movementComponent.setVelocity(-vel.walkLimit);
                     setPlayerState(entity, PlayerState.Running);
                     vel.velocity = -vel.walkLimit;
                 } else {
-                    movementComponent.setVelocity(vel.velocity);
                     setPlayerState(entity, PlayerState.Jogging);
                 }
             }
@@ -294,12 +294,12 @@ public class ManSystem extends PlayerSystem {
             }
             if (!touch.shouldPush()) {
                 vel.velocity += VELOCITY * world.delta;
+                movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() > vel.walkLimit) {
                     movementComponent.setVelocity(vel.walkLimit);
                     setPlayerState(entity, PlayerState.Running);
                     vel.velocity = vel.walkLimit;
                 } else {
-                    movementComponent.setVelocity(vel.velocity);
                     setPlayerState(entity, PlayerState.Jogging);
                 }
             }

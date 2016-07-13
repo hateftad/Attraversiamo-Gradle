@@ -18,7 +18,7 @@ android {
         applicationId "com.me.attraversiamo.android"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 8
+        versionCode 10
     }
 }
 

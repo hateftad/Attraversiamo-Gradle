@@ -110,6 +110,14 @@ project(":ios") {
         compile "org.robovm:robopods-google-analytics-ios:$robopodsVersion"
         compile "org.robovm:robopods-google-mobile-ads-ios:$robopodsVersion"
     }
+
+    robovm {
+        iosSignIdentity = "iPhone Distribution: Hatef  Tadayon"
+        iosProvisioningProfile = "Attraversiamo Production 2016-07-13"
+        iosSkipSigning = false
+        stdoutFifo = ""
+        stderrFifo = ""
+    }
 }
 /*
 

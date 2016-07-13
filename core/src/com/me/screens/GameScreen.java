@@ -59,6 +59,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         InputManager.getInstance().addEventListener(physicsSystem);
         this.userInterface = new UserInterface(currentLevel);
         this.userInterface.init();
+        this.game.processors.clear();
         this.game.processors.add(userInterface.getStage());
         this.game.processors.add(cameraSystem);
         this.game.processors.add(playerOneSystem);
@@ -160,8 +161,12 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
 
     @Override
     public void dispose() {
-        physicsSystem.dispose();
         super.dispose();
+        physicsSystem.dispose();
+        entityWorld.dispose();
+        renderSystem.dispose();
+        cameraSystem.dispose();
+        userInterface.dispose();
     }
 
     @Override

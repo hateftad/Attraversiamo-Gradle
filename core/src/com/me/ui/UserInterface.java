@@ -284,4 +284,8 @@ public class UserInterface {
         stage.act(delta);
         stage.draw();
 	}
+
+    public void dispose() {
+        stage.dispose();
+    }
 }
