@@ -143,6 +143,12 @@ public class GirlInteractionSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Running);
             }
         }
+
+        if(playerComponent.isDrowning()){
+            if(animation.isCompleted(PlayerState.Drowning)){
+                setPlayerState(entity, PlayerState.Idle);
+            }
+        }
     }
 
     @Override
