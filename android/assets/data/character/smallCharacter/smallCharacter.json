@@ -28,6 +28,50 @@
 				{
 					"circle" : 
 					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.09817477315664291,
+			"massData-mass" : 0.7853981852531433,
+			"name" : "ladderSensor",
+			"position" : 
+			{
+				"x" : 0.03916100040078163,
+				"y" : 5.459939956665039
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 15,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
 						"center" : 
 						{
 							"x" : 0,
@@ -54,94 +98,6 @@
 			{
 				"x" : 1.840246796607971,
 				"y" : 5
-			},
-			"type" : 2
-		},
-		
-		{
-			"angle" : 0,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"customProperties" : 
-			[
-				
-				{
-					"int" : 15,
-					"name" : "boxIndex"
-				},
-				
-				{
-					"int" : 1,
-					"name" : "collisionGroup"
-				}
-			],
-			"fixture" : 
-			[
-				
-				{
-					"circle" : 
-					{
-						"center" : 0,
-						"radius" : 0.15
-					},
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture7",
-					"sensor" : true
-				}
-			],
-			"linearVelocity" : 0,
-			"massData-I" : 0.0007952157175168395,
-			"massData-mass" : 0.07068584114313126,
-			"name" : "boxHand",
-			"position" : 
-			{
-				"x" : -1.6,
-				"y" : 5
-			},
-			"type" : 2
-		},
-		
-		{
-			"angle" : 0,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"customProperties" : 
-			[
-				
-				{
-					"int" : 15,
-					"name" : "boxIndex"
-				},
-				
-				{
-					"int" : 1,
-					"name" : "collisionGroup"
-				}
-			],
-			"fixture" : 
-			[
-				
-				{
-					"circle" : 
-					{
-						"center" : 0,
-						"radius" : 0.5
-					},
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture5",
-					"sensor" : true
-				}
-			],
-			"linearVelocity" : 0,
-			"massData-I" : 0.09817477315664291,
-			"massData-mass" : 0.7853981852531433,
-			"name" : "ladderSensor",
-			"position" : 
-			{
-				"x" : 0.03916100040078163,
-				"y" : 5.459939956665039
 			},
 			"type" : 2
 		},
@@ -242,6 +198,50 @@
 			[
 				
 				{
+					"int" : 15,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.15
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture7",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.0007952157175168395,
+			"massData-mass" : 0.07068584114313126,
+			"name" : "boxHand",
+			"position" : 
+			{
+				"x" : -1.6,
+				"y" : 5
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
 					"int" : 7,
 					"name" : "boxIndex"
 				},
@@ -332,9 +332,9 @@
 							[
 								1.040840029716492,
 								-0.7802351713180542,
-								-0.6026297211647034,
+								-0.5485420823097229,
 								-0.05414164066314697,
-								0.5511050224304199,
+								0.5294694900512695,
 								0.7365617752075195
 							],
 							"y" : 
@@ -383,14 +383,14 @@
 				}
 			],
 			"linearVelocity" : 0,
-			"massData-I" : 2.935194253921509,
+			"massData-I" : 2.899101257324219,
 			"massData-center" : 
 			{
-				"x" : 0.02760075218975544,
-				"y" : -0.6179165840148926
+				"x" : 0.02782894857227802,
+				"y" : -0.6143395304679871
 			},
-			"massData-mass" : 7.672050952911377,
-			"name" : "center",
+			"massData-mass" : 7.665777206420898,
+			"name" : "torso",
 			"position" : 
 			{
 				"x" : 0.06056210026144981,
@@ -439,7 +439,7 @@
 					"circle" : 
 					{
 						"center" : 0,
-						"radius" : 0.6582249999046326
+						"radius" : 0.65
 					},
 					"density" : 1,
 					"filter-categoryBits" : 4,
@@ -449,8 +449,8 @@
 				}
 			],
 			"linearVelocity" : 0,
-			"massData-I" : 0.2948610484600067,
-			"massData-mass" : 1.361127018928528,
+			"massData-I" : 0.2803969085216522,
+			"massData-mass" : 1.327322721481323,
 			"name" : "feet",
 			"position" : 
 			{
@@ -663,46 +663,6 @@
 		{
 			"anchorA" : 
 			{
-				"x" : -1.207148313522339,
-				"y" : -0.4263386726379395
-			},
-			"anchorB" : 
-			{
-				"x" : 0.5365868806838989,
-				"y" : 0.1394705772399902
-			},
-			"bodyA" : 6,
-			"bodyB" : 1,
-			"dampingRatio" : 0,
-			"frequency" : 0,
-			"name" : "joint5",
-			"refAngle" : 0,
-			"type" : "weld"
-		},
-		
-		{
-			"anchorA" : 
-			{
-				"x" : -0.4953010082244873,
-				"y" : 0.1537032127380371
-			},
-			"anchorB" : 
-			{
-				"x" : 1.291409969329834,
-				"y" : -0.3975090980529785
-			},
-			"bodyA" : 0,
-			"bodyB" : 6,
-			"dampingRatio" : 0,
-			"frequency" : 0,
-			"name" : "joint6",
-			"refAngle" : 0,
-			"type" : "weld"
-		},
-		
-		{
-			"anchorA" : 
-			{
 				"x" : -0.0002945810556411743,
 				"y" : 0.0007641315460205078
 			},
@@ -736,7 +696,7 @@
 				"x" : -0.05539999902248383,
 				"y" : -0.2794241905212402
 			},
-			"bodyA" : 2,
+			"bodyA" : 0,
 			"bodyB" : 6,
 			"dampingRatio" : 0,
 			"frequency" : 0,
@@ -768,6 +728,46 @@
 		{
 			"anchorA" : 
 			{
+				"x" : -0.4953010082244873,
+				"y" : 0.1537032127380371
+			},
+			"anchorB" : 
+			{
+				"x" : 1.291409969329834,
+				"y" : -0.3975090980529785
+			},
+			"bodyA" : 1,
+			"bodyB" : 6,
+			"dampingRatio" : 0,
+			"frequency" : 0,
+			"name" : "joint6",
+			"refAngle" : 0,
+			"type" : "weld"
+		},
+		
+		{
+			"anchorA" : 
+			{
+				"x" : -1.207148313522339,
+				"y" : -0.4263386726379395
+			},
+			"anchorB" : 
+			{
+				"x" : 0.5365868806838989,
+				"y" : 0.1394705772399902
+			},
+			"bodyA" : 6,
+			"bodyB" : 4,
+			"dampingRatio" : 0,
+			"frequency" : 0,
+			"name" : "joint5",
+			"refAngle" : 0,
+			"type" : "weld"
+		},
+		
+		{
+			"anchorA" : 
+			{
 				"x" : -0.4598850011825562,
 				"y" : -0.7696247100830078
 			},
@@ -792,7 +792,7 @@
 				"x" : -0.01025170087814331,
 				"y" : -0.01541507244110107
 			},
-			"bodyA" : 3,
+			"bodyA" : 2,
 			"bodyB" : 7,
 			"dampingRatio" : 0,
 			"frequency" : 0,

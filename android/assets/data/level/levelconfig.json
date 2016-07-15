@@ -173,7 +173,7 @@
             "finishAnim": "runOut"
           }
         ],
-        "zoom": "5",
+        "zoom": "10",
         "lightColor": "Black",
         "nextLevel": "2"
       },

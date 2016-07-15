@@ -190,7 +190,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                     if (animComponents.has(e)) {
                         animComponents.get(e).setAnimationState(PlayerState.Idle);
                         if (e.getComponent(PlayerTwoComponent.class) != null) {
-                            comp.makeDynamic("center", 0.001f);
+                            comp.makeDynamic(PhysicsComponent.Center, 0.001f);
                         }
                     }
                 }

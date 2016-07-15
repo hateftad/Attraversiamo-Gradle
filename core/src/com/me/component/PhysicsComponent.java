@@ -22,7 +22,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
     public static float LOW_FRICTION = 0.1f;
     public static float LOW_MASS = 0.0001f;
     public static float HIGH_FRICTION = 20f;
-    public static final String Center = "center";
+    public static final String Center = "torso";
 
     protected ObjectMap<String, Body> body = new ObjectMap<>();
     private ObjectMap<Body, RBUserData> userData = new ObjectMap<>();
@@ -108,6 +108,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
     }
 
     public void makeStatic(String name) {
+        storeMass(name);
         body.get(name).setType(BodyType.StaticBody);
     }
 
@@ -122,6 +123,14 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         setImmovable(true);
     }
 
+    private void storeMass(String name){
+        previousMassData = body.get(name).getMassData();
+    }
+
+    private void restoreMassData(String name){
+        body.get(name).setMassData(previousMassData);
+    }
+
     public void makeMovable(){
         body.get(name).setMassData(previousMassData);
         setImmovable(false);
@@ -129,6 +138,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 
     public void makeDynamic(String name) {
         body.get(name).setType(BodyType.DynamicBody);
+        restoreMassData(name);
         setIsDynamic(true);
     }
 
@@ -170,7 +180,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 
     private HashMap<String, Short> filterData = new HashMap<>();
 
-    private void disableAllFilters() {
+    public void disableAllFilters() {
 
         for (ObjectMap.Entry<String, Body> pairs : body.entries()) {
             Body b = pairs.value;
@@ -183,7 +193,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         }
     }
 
-    private void enableAllFilters() {
+    public void enableAllFilters() {
         for (Entry<String, Short> stringShortEntry : filterData.entrySet()) {
             Entry pairs = (Entry) stringShortEntry;
             Filter filter = body.get((String) pairs.getKey()).getFixtureList().get(0).getFilterData();
@@ -294,7 +304,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
     public void setLinearVelocity(float x, float y) {
         //for (Body b : body.values())
         //	b.setLinearVelocity(x, y);
-        body.get("center").setLinearVelocity(x, y);
+        body.get(Center).setLinearVelocity(x, y);
     }
 
     public void applyLinearImpulse(Vector2 imp) {
@@ -429,7 +439,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         if (physicsListener != null) {
             physicsListener.onRestart();
         }
-        enableBody("center");
+        enableBody(Center);
     }
 
     public boolean isSubmerged() {

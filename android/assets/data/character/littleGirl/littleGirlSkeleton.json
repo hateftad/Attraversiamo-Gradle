@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "wl7bGlhS30ZM4/4gtNVD+dj34Ds", "spine": "3.3.07", "width": 165.48, "height": 494.55, "images": "./../Images/" },
+"skeleton": { "hash": "p54tgPTc8CfXoiFQaXHUUmCCWFg", "spine": "3.4.00", "width": 165.48, "height": 494.55, "images": "./../Images/" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "hip", "parent": "root", "x": 6.09, "y": 247.83 },
@@ -2512,7 +2512,7 @@
 			},
 			"root": {
 				"translate": [
-					{ "time": 0, "x": 0, "y": 1.29 },
+					{ "time": 0, "x": 51.07, "y": 1.29 },
 					{ "time": 2.8333, "x": 2.04, "y": 0 }
 				]
 			}

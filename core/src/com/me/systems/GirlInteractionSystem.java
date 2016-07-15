@@ -49,27 +49,25 @@ public class GirlInteractionSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = physComp.get(entity);
         CharacterMovementComponent movementComponent = movementComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
+        GrabComponent grabComponent = grabComps.get(entity);
 
         if (touchComponent.handTouch && playerComponent.isJumping()) {
             if (!playerComponent.isPullingUp()) {
-                GrabComponent grabComponent = grabComps.get(entity);
-                physicsComponent.setBodyActive(false);
-                physicsComponent.setPosition(grabComponent.handPositionX, physicsComponent.getPosition().y);
+                physicsComponent.makeStatic("torso");
                 setPlayerState(entity, PlayerState.PullUp);
             }
         }
         if (playerComponent.isPullingUp()) {
             if (animation.isCompleted(PlayerState.PullUp)) {
                 setPlayerState(entity, PlayerState.Idle);
-                physicsComponent.setBodyActive(true);
-                Vector2 positionRelative = animation.getPositionRelative("right foot");
-                physicsComponent.setAllBodiesPosition(positionRelative);
+                physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left foot"));
+                physicsComponent.makeDynamic("torso");
                 touchComponent.handTouch = false;
             }
         }
         if (playerComponent.lyingDown()) {
             if (animation.isCompleted(PlayerState.LieDown)) {
-                physicsComponent.disableBody("center");
+                physicsComponent.disableBody(PhysicsComponent.Center);
                 setPlayerState(entity, PlayerState.LyingDown);
             }
         }

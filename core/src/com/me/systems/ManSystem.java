@@ -179,7 +179,7 @@ public class ManSystem extends PlayerSystem {
         if (physicsComponent.isFalling() &&
                 !feetComponent.hasCollided() &&
                 !playerComponent.isFalling()) {
-            if(!playerComponent.isUpJumping()) {
+            if (!playerComponent.isUpJumping()) {
                 setPlayerState(entity, PlayerState.RunFalling);
             } else {
                 setPlayerState(entity, PlayerState.Falling);

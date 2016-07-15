@@ -57,13 +57,6 @@
     
     {
       "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "collisionGroup",
       "name" : "collisionGroup",
       "type" : "int"
@@ -78,6 +71,13 @@
     
     {
       "class" : "body",
+      "displayName" : "characterType",
+      "name" : "characterType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "boxIndex",
       "name" : "boxIndex",
       "type" : "int"
@@ -85,8 +85,8 @@
     
     {
       "class" : "body",
-      "displayName" : "characterType",
-      "name" : "characterType",
+      "displayName" : "eventType",
+      "name" : "eventType",
       "type" : "string"
     }
   ],
@@ -282,7 +282,7 @@
             [
               
               {
-                "radius" : 0.6582249999046326,
+                "radius" : 0.65,
                 "type" : "circle"
               }
             ],
@@ -295,8 +295,8 @@
         ],
         "id" : 3,
         "linearVelocity" : 0,
-        "massData-I" : 0.2948610484600067,
-        "massData-mass" : 1.361127018928528,
+        "massData-I" : 0.2803969085216522,
+        "massData-mass" : 1.327322721481323,
         "name" : "feet",
         "position" : 
         {
@@ -368,9 +368,9 @@
                 -0.7987560033798218,
                 -0.9408710002899170,
                 -0.7802351713180542,
-                -0.6026297211647034,
+                -0.5485420823097229,
                 -0.05414164066314697,
-                0.5511050224304199,
+                0.5294694900512695,
                 0.7365617752075195
               ],
               "y" : 
@@ -391,14 +391,14 @@
         ],
         "id" : 4,
         "linearVelocity" : 0,
-        "massData-I" : 2.935194253921509,
+        "massData-I" : 2.899101257324219,
         "massData-center" : 
         {
-          "x" : 0.02760075218975544,
-          "y" : -0.6179165840148926
+          "x" : 0.02782894857227802,
+          "y" : -0.6143395304679871
         },
-        "massData-mass" : 7.672050952911377,
-        "name" : "center",
+        "massData-mass" : 7.665777206420898,
+        "name" : "torso",
         "position" : 
         {
           "x" : 0.06056210026144981,

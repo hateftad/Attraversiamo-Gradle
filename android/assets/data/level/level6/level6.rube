@@ -42,13 +42,6 @@
   [
     
     {
-      "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
-      "type" : "string"
-    },
-    
-    {
       "class" : "image",
       "displayName" : "shouldDraw",
       "name" : "shouldDraw",
@@ -57,15 +50,22 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     },
     
     {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
+      "displayName" : "eventType",
+      "name" : "eventType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     },
     
@@ -91,16 +91,16 @@
     },
     
     {
-      "class" : "body",
-      "displayName" : "bodyType",
-      "name" : "bodyType",
+      "class" : "joint",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
       "type" : "int"
     },
     
     {
-      "class" : "joint",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
+      "class" : "body",
+      "displayName" : "bodyType",
+      "name" : "bodyType",
       "type" : "int"
     },
     
@@ -113,15 +113,15 @@
     
     {
       "class" : "body",
-      "displayName" : "animation",
-      "name" : "animation",
+      "displayName" : "atlas",
+      "name" : "atlas",
       "type" : "string"
     },
     
     {
       "class" : "body",
-      "displayName" : "atlas",
-      "name" : "atlas",
+      "displayName" : "animation",
+      "name" : "animation",
       "type" : "string"
     }
   ],
@@ -250,8 +250,8 @@
               "x" : 
               [
                 -120.3718948364258,
-                12.42230033874512,
-                12.42233657836914,
+                -24.42702674865723,
+                -24.42699050903320,
                 -59.11576080322266,
                 -61.50017929077148,
                 -66.11092376708984,
@@ -262,8 +262,8 @@
               "y" : 
               [
                 -1.449601173400879,
-                -3.039040088653564,
-                2.898990392684937,
+                -2.911533832550049,
+                3.026496648788452,
                 2.898990392684937,
                 3.501065731048584,
                 4.536315917968750,
@@ -1349,6 +1349,55 @@
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 20,
+            "name" : "fixture9",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -5.153350830078125,
+                18.24587631225586,
+                17.98916625976562,
+                -5.410064697265625
+              ],
+              "y" : 
+              [
+                -10.54440307617188,
+                -10.67276287078857,
+                6.693656921386719,
+                6.693656921386719
+              ]
+            }
+          }
+        ],
+        "id" : 21,
+        "linearVelocity" : 0,
+        "name" : "body3",
+        "position" : 
+        {
+          "x" : 17.21582794189453,
+          "y" : -7.659820556640625
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
         "customProperties" : 
         [
           
@@ -1739,6 +1788,174 @@
           "y" : 3.756322383880615
         },
         "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 28,
+            "name" : "fixture9",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -58.29360961914062,
+                20.04291534423828,
+                20.04291152954102,
+                -58.29360961914062
+              ],
+              "y" : 
+              [
+                -5.281719207763672,
+                -4.896644592285156,
+                5.666794776916504,
+                5.281719207763672
+              ]
+            }
+          }
+        ],
+        "id" : 28,
+        "linearVelocity" : 0,
+        "name" : "body3",
+        "position" : 
+        {
+          "x" : 5.021804809570312,
+          "y" : -19.46876716613770
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 22,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "filter-categoryBits" : 128,
+            "filter-maskBits" : 32,
+            "friction" : 0.2,
+            "id" : 29,
+            "name" : "fixture1",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                1.273290038108826,
+                1.273290038108826,
+                -1.251070022583008,
+                -1.251070022583008
+              ],
+              "y" : 
+              [
+                -1.085790038108826,
+                1.138569951057434,
+                1.138569951057434,
+                -1.085790038108826
+              ]
+            }
+          }
+        ],
+        "id" : 29,
+        "linearVelocity" : 0,
+        "name" : "liedownsensor",
+        "position" : 
+        {
+          "x" : -2.383781433105469,
+          "y" : 0.7986783981323242
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 5,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "filter-categoryBits" : 64,
+            "filter-maskBits" : 6,
+            "friction" : 0.2,
+            "id" : 30,
+            "name" : "Edge",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 1.213846683502197,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.02704238891601562 ],
+              "y" : [ -0.03652334213256836 ]
+            }
+          }
+        ],
+        "id" : 30,
+        "linearVelocity" : 0,
+        "name" : "ledgeSensor",
+        "position" : 
+        {
+          "x" : -1.215118408203125,
+          "y" : -0.6487894058227539
+        },
+        "type" : "static"
       }
     ],
     "metaimage" : 

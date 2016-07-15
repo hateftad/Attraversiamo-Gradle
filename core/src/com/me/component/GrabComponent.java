@@ -1,8 +1,10 @@
 package com.me.component;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class GrabComponent extends BaseComponent {
 
-	public float handPositionX;
+	public Vector2 positionToSet = new Vector2();
 
 	@Override
 	public void dispose() {
@@ -12,6 +14,6 @@ public class GrabComponent extends BaseComponent {
 
 	@Override
 	public void restart() {
-		handPositionX = 0;
+		positionToSet = Vector2.Zero;
 	}
 }

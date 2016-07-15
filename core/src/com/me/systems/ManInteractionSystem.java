@@ -72,9 +72,7 @@ public class ManInteractionSystem extends PlayerSystem {
             if (animation.isCompleted(PlayerState.ClimbingLedge)) {
                 jointComponent.destroyHangJoint();
                 physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
-                physicsComponent.setBodyActive(true);
                 hangComponent.notHanging();
-
                 movementComponent.standStill();
                 velocityLimitComponent.standStill();
                 setPlayerState(entity, PlayerState.Idle);

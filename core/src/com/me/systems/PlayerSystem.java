@@ -46,6 +46,26 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
         }
     }
 
+    protected void animateBody(PhysicsComponent ps, PlayerComponent player,
+                               AnimationComponent animation, String name, String bodyName) {
+
+        int rot = player.isFacingLeft() ? -1 : 1;
+        for (Slot slot : animation.getSkeleton().getSlots()) {
+            if (!(slot.getAttachment() instanceof RegionAttachment))
+                continue;
+            String attachment = slot.getBone().getData().getName();
+            System.out.println(attachment);
+            if (ps.getBody(bodyName) != null && attachment.equalsIgnoreCase(name)) {
+                float x = (Converters.ToBox(slot.getBone().getWorldX()));
+                float x2 = (ps.getBody().getPosition().x + x);
+                float y = Converters.ToBox(slot.getBone().getWorldY());
+                float y2 = (ps.getBody().getPosition().y + y);
+                ps.getBody(bodyName).setTransform(x2, animation.getCenter().y + y2, 0);
+                System.out.println(attachment);
+            }
+        }
+    }
+
     protected void checkFinished(TouchComponent touch, PlayerComponent player, FeetComponent feetComponent) {
         if(touch.insideFinish){
             if(feetComponent.hasCollided() && !player.isFinishing() && !player.isFinished()){
