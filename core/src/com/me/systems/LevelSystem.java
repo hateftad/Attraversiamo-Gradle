@@ -5,16 +5,14 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
-import com.me.events.GameEvent;
-import com.me.events.GameEventType;
-import com.me.events.TaskEvent;
+import com.me.events.*;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.ScriptManager;
 
 public class LevelSystem extends GameEntityProcessingSystem {
 
-    private LevelEventListener levelListener;
+
     private ScriptManager scriptMgr;
     private Level currentLevel;
     private boolean enable;
@@ -26,9 +24,8 @@ public class LevelSystem extends GameEntityProcessingSystem {
 
 
     @SuppressWarnings("unchecked")
-    public LevelSystem(LevelEventListener listener) {
+    public LevelSystem() {
         super(Aspect.getAspectForAll(LevelComponent.class));
-        levelListener = listener;
     }
 
     public void setCurrentLevel(Level level) {
@@ -70,7 +67,7 @@ public class LevelSystem extends GameEntityProcessingSystem {
     }
 
     private void levelFinished() {
-        levelListener.onFinishedLevel(currentLevel.getNextLevel());
+        notifyObservers(new LevelEvent(LevelEventType.OnFinished, currentLevel));
     }
 
 }

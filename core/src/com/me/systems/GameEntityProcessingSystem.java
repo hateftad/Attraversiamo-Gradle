@@ -30,4 +30,8 @@ public abstract class GameEntityProcessingSystem extends EntityProcessingSystem 
         ((GameEntityWorld)world).onNotify(event);
     }
 
+    public void notifyObservers(LevelEvent event){
+        ((GameEntityWorld)world).onNotify(event);
+    }
+
 }

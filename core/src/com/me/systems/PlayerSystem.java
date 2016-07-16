@@ -79,7 +79,7 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
     protected abstract void setPlayerState(Entity entity, PlayerState state);
 
     protected boolean isDead(PhysicsComponent ps, Level currentLevel) {
-        return ps.getWorldPosition().y < currentLevel.getLevelBoundaries().minY;
+        return ps.getWorldPosition().y < currentLevel.getLevelBoundaries().minimumLevelY;
     }
 
     public void restartSystem() {

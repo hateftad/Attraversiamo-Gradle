@@ -102,7 +102,7 @@ public class RubeScene {
                 } else if (property.containsKey("float")) {
                     setCustom(item, propertyName, (Float) property.get("float"));
                 } else if (property.containsKey("vec2")) {
-                    //setCustom(item, propertyName, json.readValue(Vector2.class, property.get("vec2")));
+                    setCustom(item, propertyName, json.readValue(Vector2.class, (JsonValue)property.get("vec2")));
                 } else if (property.containsKey("bool")) {
                     setCustom(item, propertyName, (Boolean) property.get("bool"));
                 }

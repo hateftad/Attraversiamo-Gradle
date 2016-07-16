@@ -5,6 +5,8 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
+import com.me.events.LevelEvent;
+import com.me.events.LevelEventType;
 import com.me.events.states.PlayerState;
 import com.me.level.Level;
 import com.me.ui.InputManager;
@@ -97,8 +99,8 @@ public class GirlSystem extends PlayerSystem {
             }
         }
 
-        if (isDead(physicsComponent, currentLevel) || animation.isCompleted(PlayerState.Drowning)) {
-            inputMgr.callRestart();
+        if (isDead(physicsComponent, currentLevel)) {
+            notifyObservers(new LevelEvent(LevelEventType.OnDied, currentLevel));
         }
 
         setPlayerState(entity);

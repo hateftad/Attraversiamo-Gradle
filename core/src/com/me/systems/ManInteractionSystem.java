@@ -5,10 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
-import com.me.events.AnimationEvent;
-import com.me.events.GameEventType;
-import com.me.events.ParticleEvent;
-import com.me.events.TaskEvent;
+import com.me.events.*;
 import com.me.events.states.PlayerState;
 
 /**
@@ -144,6 +141,7 @@ public class ManInteractionSystem extends PlayerSystem {
 
         if(playerComponent.isDrowning()){
             if(animation.isCompleted(PlayerState.Drowning)) {
+                notifyObservers(new LevelEvent(LevelEventType.OnDied));
                 setPlayerState(entity, PlayerState.Idle);
             }
         }

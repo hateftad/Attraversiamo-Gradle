@@ -1349,6 +1349,19 @@
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
         "fixture" : 
         [
           
@@ -1794,6 +1807,19 @@
         "angle" : 0,
         "angularVelocity" : 0,
         "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
         "fixture" : 
         [
           
@@ -1956,6 +1982,45 @@
           "y" : -0.6487894058227539
         },
         "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 31,
+            "name" : "fixture3",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 31,
+        "linearVelocity" : 0,
+        "name" : "levelY",
+        "position" : 
+        {
+          "x" : 47.66757965087891,
+          "y" : -43.16725158691406
+        },
+        "type" : "static"
       }
     ],
     "metaimage" : 
@@ -1985,8 +2050,8 @@
         "body" : 2,
         "center" : 
         {
-          "x" : -39.58924484252930,
-          "y" : -5.210823059082031
+          "x" : -39.97496414184570,
+          "y" : -18.32517051696777
         },
         "file" : "../common/machine.png",
         "filter" : 1,

@@ -42,6 +42,13 @@
   [
     
     {
+      "class" : "body",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
+    },
+    
+    {
       "class" : "joint",
       "displayName" : "taskId",
       "name" : "taskId",
@@ -50,8 +57,8 @@
     
     {
       "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     },
     
@@ -64,8 +71,8 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -85,8 +92,8 @@
     
     {
       "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     },
     
@@ -106,13 +113,6 @@
     
     {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "bodyType",
       "name" : "bodyType",
       "type" : "string"
@@ -128,10 +128,7 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
-      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
-      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
-      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -758,6 +755,45 @@
           "y" : -1.230708122253418
         },
         "sleepingAllowed" : false,
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 12,
+            "name" : "fixture3",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 12,
+        "linearVelocity" : 0,
+        "name" : "levelY",
+        "position" : 
+        {
+          "x" : 60.96419525146484,
+          "y" : -24.24517059326172
+        },
         "type" : "static"
       },
       

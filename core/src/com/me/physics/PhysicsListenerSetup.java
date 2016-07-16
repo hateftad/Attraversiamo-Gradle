@@ -507,7 +507,7 @@ public class PhysicsListenerSetup {
 
                 if (otherUd.getType() == Type.Pelvis) {
                     if (entity.getComponent(PlayerComponent.class) != null) {
-                        entity.getComponent(TouchComponent.class).waterTouch = true;
+                        entity.getComponent(TouchComponent.class).waterTouch = submerged;
                     }
                     System.out.println("Under Water");
                 }

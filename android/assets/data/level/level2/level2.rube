@@ -42,13 +42,6 @@
   [
     
     {
-      "class" : "joint",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
       "class" : "body",
       "displayName" : "eventType",
       "name" : "eventType",
@@ -56,9 +49,9 @@
     },
     
     {
-      "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "class" : "joint",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -71,9 +64,9 @@
     
     {
       "class" : "body",
-      "displayName" : "particlename",
-      "name" : "particlename",
-      "type" : "string"
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
     },
     
     {
@@ -81,6 +74,13 @@
       "displayName" : "boxIndex",
       "name" : "boxIndex",
       "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "particlename",
+      "name" : "particlename",
+      "type" : "string"
     },
     
     {
@@ -98,16 +98,16 @@
     },
     
     {
-      "class" : "joint",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     },
     
     {
-      "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
+      "class" : "joint",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     }
   ],
@@ -121,10 +121,7 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
-      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
-      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
-      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -1126,6 +1123,45 @@
         {
           "x" : 12.56770038604736,
           "y" : -7.989089965820312
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 18,
+            "name" : "fixture3",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 18,
+        "linearVelocity" : 0,
+        "name" : "levelY",
+        "position" : 
+        {
+          "x" : 94.62948608398438,
+          "y" : -27.11283493041992
         },
         "type" : "static"
       },

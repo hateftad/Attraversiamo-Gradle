@@ -20,7 +20,7 @@ import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.utils.Converters;
 
-public class CameraSystem extends EntityProcessingSystem implements InputProcessor, LevelEventListener{
+public class CameraSystem extends EntityProcessingSystem implements InputProcessor{
 
 	@Mapper ComponentMapper<CameraComponent> cameraComp;
 	@Mapper ComponentMapper<PlayerComponent> playerComp;
@@ -176,23 +176,4 @@ public class CameraSystem extends EntityProcessingSystem implements InputProcess
 	public void dispose(){
 		rayHandler.dispose();
 	}
-
-	@Override
-	public void onRestartLevel() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void OnStartLevel() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onFinishedLevel(int levelNr) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

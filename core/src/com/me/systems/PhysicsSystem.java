@@ -21,6 +21,7 @@ import com.me.controllers.B2BuoyancyController;
 import com.me.controllers.B2Controller;
 import com.me.component.QueueComponent.QueueType;
 import com.me.events.states.PlayerState;
+import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.listeners.PhysicsContactListener;
 import com.me.physics.JointFactory;
@@ -322,8 +323,13 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     }
 
     @Override
-    public void onFinishedLevel(int nr) {
+    public void onFinishedLevel(Level nr) {
 
+    }
+
+    @Override
+    public void onDied() {
+        onRestartLevel();
     }
 
 }

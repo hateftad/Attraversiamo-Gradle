@@ -3,9 +3,7 @@ package com.me.screens;
 import box2dLight.RayHandler;
 
 import com.artemis.managers.GroupManager;
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
@@ -47,7 +45,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         this.cameraSystem = entityWorld.setSystem(new CameraSystem(rayHandler, camera));
         this.renderSystem = entityWorld.setSystem(new RenderSystem(camera));
         this.entityWorld.setSystem(physicsSystem);
-        this.entityWorld.setSystem(new LevelSystem(this));
+        this.entityWorld.setSystem(new LevelSystem());
         this.entityWorld.setSystem(new ContinousParticlesSystem(2));
         this.entityWorld.setSystem(new EventParticlesSystem());
         this.entityWorld.setSystem(new ManInteractionSystem());
@@ -56,7 +54,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         this.entityWorld.setSystem(playerOneSystem);
         this.playerTwoSystem = entityWorld.setSystem(new GirlSystem(currentLevel));
         this.entityWorld.initialize();
-        InputManager.getInstance().addEventListener(physicsSystem);
+        this.entityWorld.addObserver(physicsSystem);
         this.userInterface = new UserInterface(currentLevel);
         this.userInterface.init();
         this.game.processors.clear();
@@ -180,12 +178,17 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     }
 
     @Override
-    public void onFinishedLevel(int nr) {
+    public void onFinishedLevel(Level currentLevel) {
         game.showInterstitialAd();
-        PersistenceManager.getInstance().saveProgress(nr);
-        game.loadingScreen.load(nr);
+        PersistenceManager.getInstance().saveProgress(currentLevel.getNextLevel());
+        game.loadingScreen.load(currentLevel.getNextLevel());
         game.setScreen(game.loadingScreen);
         loadedNextLevel = true;
+    }
+
+    @Override
+    public void onDied() {
+
     }
 
     @Override

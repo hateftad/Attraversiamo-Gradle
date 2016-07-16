@@ -15,6 +15,7 @@ public class Level {
         public float maxX;
         public float minY;
         public float maxY;
+        public float minimumLevelY;
     }
 
     private LevelConfig levelConfig;

@@ -15,6 +15,35 @@
 				{
 					"circle" : 
 					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "levelY",
+			"position" : 
+			{
+				"x" : 70.65826416015625,
+				"y" : -34.56428527832031
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
 						"center" : 
 						{
 							"x" : 0.06801605224609375,
@@ -582,7 +611,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 4,
+			"body" : 5,
 			"center" : 
 			{
 				"x" : -36.16730499267578,
@@ -627,7 +656,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 9,
+			"body" : 10,
 			"center" : 
 			{
 				"x" : -3.221226215362549,
@@ -673,7 +702,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 5,
+			"body" : 6,
 			"center" : 
 			{
 				"x" : 52.77907562255859,
@@ -719,7 +748,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 8,
+			"body" : 9,
 			"center" : 
 			{
 				"x" : -1.241046905517578,

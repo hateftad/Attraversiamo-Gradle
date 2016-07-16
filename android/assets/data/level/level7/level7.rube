@@ -50,9 +50,9 @@
     
     {
       "class" : "body",
-      "displayName" : "particlename",
-      "name" : "particlename",
-      "type" : "string"
+      "displayName" : "flip_animation",
+      "name" : "flip_animation",
+      "type" : "bool"
     },
     
     {
@@ -64,22 +64,22 @@
     
     {
       "class" : "body",
-      "displayName" : "flip_animation",
-      "name" : "flip_animation",
-      "type" : "bool"
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "particlename",
+      "name" : "particlename",
+      "type" : "string"
     },
     
     {
       "class" : "body",
       "displayName" : "taskId",
       "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -92,16 +92,16 @@
     
     {
       "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     },
     
     {
       "class" : "body",
-      "displayName" : "bodyType",
-      "name" : "bodyType",
-      "type" : "string"
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
     },
     
     {
@@ -113,9 +113,9 @@
     
     {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
+      "displayName" : "bodyType",
+      "name" : "bodyType",
+      "type" : "string"
     },
     
     {
@@ -123,6 +123,13 @@
       "displayName" : "lightColor",
       "name" : "lightColor",
       "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "fluidVel",
+      "name" : "fluidVel",
+      "type" : "vec2"
     }
   ],
   "metaworld" : 
@@ -135,10 +142,7 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
-      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
-      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
-      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -261,8 +265,8 @@
         "name" : "minY",
         "position" : 
         {
-          "x" : 62.14820861816406,
-          "y" : -29.15174484252930
+          "x" : 57.96221160888672,
+          "y" : -6.965972900390625
         },
         "type" : "static"
       },
@@ -1538,6 +1542,15 @@
           {
             "int" : 2,
             "name" : "taskId"
+          },
+          
+          {
+            "name" : "fluidVel",
+            "vec2" : 
+            {
+              "x" : -1,
+              "y" : 4
+            }
           }
         ],
         "fixture" : 
@@ -2170,6 +2183,45 @@
         {
           "x" : 116.6345214843750,
           "y" : 11.23575878143311
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 33,
+            "name" : "fixture3",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 33,
+        "linearVelocity" : 0,
+        "name" : "levelY",
+        "position" : 
+        {
+          "x" : 53.38843536376953,
+          "y" : -17.91174697875977
         },
         "type" : "static"
       },

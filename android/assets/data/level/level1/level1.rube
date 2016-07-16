@@ -43,15 +43,15 @@
     
     {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     },
     
     {
       "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     },
     
@@ -64,8 +64,8 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
       "type" : "int"
     },
     
@@ -943,8 +943,8 @@
         "name" : "minY",
         "position" : 
         {
-          "x" : 26.00247192382812,
-          "y" : -41.21989059448242
+          "x" : 21.72738647460938,
+          "y" : -20.21627044677734
         },
         "type" : "static"
       },
@@ -1102,6 +1102,45 @@
           "y" : 13.46432971954346
         },
         "sleepingAllowed" : false,
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 19,
+            "name" : "fixture3",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 18,
+        "linearVelocity" : 0,
+        "name" : "levelY",
+        "position" : 
+        {
+          "x" : 16.99857330322266,
+          "y" : -46.14122009277344
+        },
         "type" : "static"
       },
       

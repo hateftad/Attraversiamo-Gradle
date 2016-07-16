@@ -43,13 +43,6 @@
     
     {
       "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "lightColor",
       "name" : "lightColor",
       "type" : "string"
@@ -57,8 +50,8 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -67,6 +60,13 @@
       "displayName" : "hitAnimation",
       "name" : "hitAnimation",
       "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
     }
   ],
   "metaworld" : 
@@ -79,10 +79,7 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
-      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
-      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
-      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -692,6 +689,45 @@
         {
           "x" : 69.09159851074219,
           "y" : -16.34491157531738
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 12,
+            "name" : "fixture3",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 12,
+        "linearVelocity" : 0,
+        "name" : "levelY",
+        "position" : 
+        {
+          "x" : 70.65826416015625,
+          "y" : -34.56428527832031
         },
         "type" : "static"
       }

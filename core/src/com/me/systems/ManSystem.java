@@ -10,6 +10,8 @@ import com.me.component.*;
 import com.me.config.GameConfig;
 import com.me.config.GlobalConfig;
 import com.me.events.GameEventType;
+import com.me.events.LevelEvent;
+import com.me.events.LevelEventType;
 import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
 import com.me.level.Level;
@@ -145,8 +147,8 @@ public class ManSystem extends PlayerSystem {
         }
         setPlayerState(entity);
 
-        if (isDead(physicsComponent, currentLevel) || animation.isCompleted(PlayerState.Drowning)) {
-            inputMgr.callRestart();
+        if (isDead(physicsComponent, currentLevel)) {
+            notifyObservers(new LevelEvent(LevelEventType.OnDied, currentLevel));
         }
 
         checkFinished(touch, player, feetComponent);

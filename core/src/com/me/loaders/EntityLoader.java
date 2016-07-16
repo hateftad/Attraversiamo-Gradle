@@ -175,17 +175,21 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("maxY")) {
                 level.getLevelBoundaries().maxY = Converters.ToWorld(body.getPosition().y);
             }
+            if (ud.mName.equalsIgnoreCase("levelY")) {
+                level.getLevelBoundaries().minimumLevelY = Converters.ToWorld(body.getPosition().y);
+            }
             if (ud.mName.equalsIgnoreCase("cage")) {
                 entityWorld.addObserver(pComp);
             }
 
             if (ud.mName.equalsIgnoreCase("water")) {
                 int eventId = scene.getCustom(body, "taskId", 0);
+                Vector2 fluidVel = scene.getCustom(body, "fluidVel", Vector2.Zero);
                 //pass in fluid velocity
                 BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
                 buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 1), 4, 4);
                 buoyancyComponent.addControllerInfo(PlayerTwoComponent.PlayerTwo, new Vector2(0, 1), 0.2f, 0);
-                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, new Vector2(-1, 4), 5, 2);
+                buoyancyComponent.addControllerInfo(WorldObjectComponent.WorldObject, fluidVel, 5, 2);
                 entityWorld.addObserver(buoyancyComponent);
                 entity.addComponent(buoyancyComponent);
             }

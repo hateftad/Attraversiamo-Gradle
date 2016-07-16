@@ -5,9 +5,7 @@ import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.*;
-import com.me.events.AnimationEvent;
-import com.me.events.GameEventType;
-import com.me.events.TaskEvent;
+import com.me.events.*;
 import com.me.events.states.PlayerState;
 
 import static com.artemis.Aspect.getAspectForAll;
@@ -144,6 +142,7 @@ public class GirlInteractionSystem extends PlayerSystem {
 
         if(playerComponent.isDrowning()){
             if(animation.isCompleted(PlayerState.Drowning)){
+                notifyObservers(new LevelEvent(LevelEventType.OnDied));
                 setPlayerState(entity, PlayerState.Idle);
             }
         }

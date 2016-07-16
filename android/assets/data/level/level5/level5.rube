@@ -49,9 +49,9 @@
     },
     
     {
-      "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
+      "class" : "joint",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     },
     
@@ -78,13 +78,6 @@
     
     {
       "class" : "joint",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "joint",
       "displayName" : "taskFinishers",
       "name" : "taskFinishers",
       "type" : "int"
@@ -94,6 +87,13 @@
       "class" : "body",
       "displayName" : "taskId",
       "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     }
   ],
@@ -2112,6 +2112,45 @@
           "y" : -19.65506553649902
         },
         "sleepingAllowed" : false,
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 35,
+            "name" : "fixture3",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 33,
+        "linearVelocity" : 0,
+        "name" : "levelY",
+        "position" : 
+        {
+          "x" : 68.13681793212891,
+          "y" : -40.58844757080078
+        },
         "type" : "static"
       }
     ],
