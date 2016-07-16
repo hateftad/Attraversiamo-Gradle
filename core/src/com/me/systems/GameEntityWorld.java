@@ -98,7 +98,13 @@ public class GameEntityWorld extends World {
                     break;
                 case OnFinished:
                     levelEventListener.onFinishedLevel(levelEvent.getCurrentLevel());
+                    break;
+
             }
         }
+    }
+
+    public Array<LevelEventListener> getLevelEventListeners() {
+        return levelEventListeners;
     }
 }

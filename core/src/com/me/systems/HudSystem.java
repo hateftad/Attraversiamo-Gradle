@@ -1,73 +1,33 @@
 package com.me.systems;
 
 import com.artemis.Aspect;
+import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.systems.EntityProcessingSystem;
-import com.badlogic.gdx.InputProcessor;
+import com.artemis.annotations.Mapper;
+import com.me.component.HudComponent;
+import com.me.events.LevelEvent;
+import com.me.events.LevelEventType;
 
-public class HudSystem extends EntityProcessingSystem implements InputProcessor{
+public class HudSystem extends GameEntityProcessingSystem{
 
+	@Mapper
+    ComponentMapper<HudComponent> hudComponentComponentMapper;
 	
-	
-	public HudSystem(Aspect aspect) {
-		super(aspect);
-		// TODO Auto-generated constructor stub
-	}
-	
-	@Override
-	protected void process(Entity arg0) {
-		// TODO Auto-generated method stub
-		
+	public HudSystem() {
+		super(Aspect.getAspectForOne(HudComponent.class));
 	}
 
 	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	protected void process(Entity entity) {
 
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-
+        HudComponent hudComponent = hudComponentComponentMapper.get(entity);
+        hudComponent.update(world.delta);
+        if (hudComponent.restartPressed()){
+            notifyObservers(new LevelEvent(LevelEventType.OnRestart));
+            hudComponent.setRestartPRessed(false);
+        }
+        if(hudComponent.isPaused()){
+            notifyObservers(new LevelEvent(LevelEventType.OnPaused));
+        }
+    }
 }

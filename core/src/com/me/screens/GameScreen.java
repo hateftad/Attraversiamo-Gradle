@@ -2,11 +2,13 @@ package com.me.screens;
 
 import box2dLight.RayHandler;
 
+import com.artemis.Entity;
 import com.artemis.managers.GroupManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.me.attraversiamo.Attraversiamo;
+import com.me.component.HudComponent;
 import com.me.level.Level;
 import com.me.listeners.LevelEventListener;
 import com.me.manager.PersistenceManager;
@@ -24,7 +26,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     private PlayerSystem playerTwoSystem;
     private RenderSystem renderSystem;
     private CameraSystem cameraSystem;
-    private UserInterface userInterface;
+
     private boolean loadedNextLevel;
 
 
@@ -50,13 +52,21 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         this.entityWorld.setSystem(new EventParticlesSystem());
         this.entityWorld.setSystem(new ManInteractionSystem());
         this.entityWorld.setSystem(new GirlInteractionSystem());
+        this.entityWorld.setSystem(new HudSystem());
         this.playerOneSystem = new ManSystem(currentLevel);
         this.entityWorld.setSystem(playerOneSystem);
         this.playerTwoSystem = entityWorld.setSystem(new GirlSystem(currentLevel));
         this.entityWorld.initialize();
         this.entityWorld.addObserver(physicsSystem);
-        this.userInterface = new UserInterface(currentLevel);
-        this.userInterface.init();
+        this.entityWorld.addObserver(this);
+
+        UserInterface userInterface = new UserInterface(currentLevel, entityWorld.getLevelEventListeners());
+        userInterface.init();
+
+        Entity hudEntity = this.entityWorld.createEntity();
+        hudEntity.addComponent(new HudComponent(userInterface));
+        this.entityWorld.addEntity(hudEntity);
+
         this.game.processors.clear();
         this.game.processors.add(userInterface.getStage());
         this.game.processors.add(cameraSystem);
@@ -74,12 +84,8 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         entityWorld.process();
 
         cameraSystem.process();
-        InputManager.getInstance().update();
 
-        if (userInterface != null) {
-            userInterface.update(delta);
-            toggleProcessingOnSystems(!userInterface.isPaused());
-        }
+        InputManager.getInstance().update();
 
         if (loadedNextLevel) {
             OnStartLevel();
@@ -164,12 +170,21 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         entityWorld.dispose();
         renderSystem.dispose();
         cameraSystem.dispose();
-        userInterface.dispose();
     }
 
     @Override
     public void onRestartLevel() {
         loadedNextLevel = false;
+    }
+
+    @Override
+    public void onLevelPaused() {
+        toggleProcessingOnSystems(false);
+    }
+
+    @Override
+    public void onLevelResumed() {
+        toggleProcessingOnSystems(true);
     }
 
     @Override

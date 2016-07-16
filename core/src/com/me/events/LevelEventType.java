@@ -5,6 +5,7 @@ package com.me.events;
  */
 public enum LevelEventType {
     OnStart,
+    OnPaused,
     OnRestart,
     OnFinished,
     OnDied

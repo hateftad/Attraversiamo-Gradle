@@ -238,7 +238,6 @@ public class ManSystem extends PlayerSystem {
         TouchComponent touch = touchComps.get(entity);
         HangComponent hangComponent = hangComps.get(entity);
         PlayerComponent player = playerComps.get(entity);
-        PushComponent push = pushComps.get(entity);
         FeetComponent feetComponent = rayCastComps.get(entity);
         JointComponent jointComponent = jointComp.get(entity);
 
@@ -247,21 +246,25 @@ public class ManSystem extends PlayerSystem {
             if (vel.velocity > 0) {
                 vel.velocity = -VELOCITYINR;
             }
-            if (!touch.shouldPush()) {
+            if (touch.shouldPush()) {
+                movementComponent.setVelocity(-vel.pushlimit);
+                setPlayerState(entity, PlayerState.Pushing);
+            } else {
                 vel.velocity -= VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() < -vel.walkLimit) {
                     movementComponent.setVelocity(-vel.walkLimit);
-                    setPlayerState(entity, PlayerState.Running);
+                    if(!touch.boxHandTouch) {
+                        setPlayerState(entity, PlayerState.Running);
+                    }
                     vel.velocity = -vel.walkLimit;
                 } else {
-                    setPlayerState(entity, PlayerState.Jogging);
+                    if(!touch.boxHandTouch) {
+                        setPlayerState(entity, PlayerState.Jogging);
+                    }
                 }
             }
-            if (touch.shouldPush() && push.pushLeft) {
-                movementComponent.setVelocity(-vel.pushlimit);
-                setPlayerState(entity, PlayerState.Pushing);
-            }
+
             if (!ps.isDynamic()) {
                 setPlayerState(entity, PlayerState.Walking);
                 ps.makeDynamic();
@@ -286,7 +289,6 @@ public class ManSystem extends PlayerSystem {
         TouchComponent touch = touchComps.get(entity);
         HangComponent hangComponent = hangComps.get(entity);
         PlayerComponent player = playerComps.get(entity);
-        PushComponent push = pushComps.get(entity);
         FeetComponent feetComponent = rayCastComps.get(entity);
         JointComponent jointComponent = jointComp.get(entity);
 
@@ -294,21 +296,25 @@ public class ManSystem extends PlayerSystem {
             if (vel.velocity < 0) {
                 vel.velocity = VELOCITYINR;
             }
-            if (!touch.shouldPush()) {
+            if (touch.shouldPush()) {
+                setPlayerState(entity, PlayerState.Pushing);
+                movementComponent.setVelocity(vel.pushlimit);
+            } else {
                 vel.velocity += VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() > vel.walkLimit) {
                     movementComponent.setVelocity(vel.walkLimit);
-                    setPlayerState(entity, PlayerState.Running);
+                    if(!touch.boxHandTouch) {
+                        setPlayerState(entity, PlayerState.Running);
+                    }
                     vel.velocity = vel.walkLimit;
                 } else {
-                    setPlayerState(entity, PlayerState.Jogging);
+                    if(!touch.boxHandTouch) {
+                        setPlayerState(entity, PlayerState.Jogging);
+                    }
                 }
             }
-            if (touch.shouldPush() && push.pushRight) {
-                setPlayerState(entity, PlayerState.Pushing);
-                movementComponent.setVelocity(vel.pushlimit);
-            }
+
             if (!ps.isDynamic()) {
                 setPlayerState(entity, PlayerState.Walking);
                 ps.makeDynamic();

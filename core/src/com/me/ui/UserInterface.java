@@ -13,23 +13,27 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.me.config.PlayerConfig;
 import com.me.level.Level;
+import com.me.listeners.LevelEventListener;
 
 public class UserInterface {
 
+    private final Array<LevelEventListener> levelEventListeners;
     private Stage stage;
     private Skin skin;
     private int nrOfPlayers;
     private Window pauseWindow;
     private UIButton jumpBtn;
 
+    private boolean restartPressed;
 
-    public UserInterface(Level level){
-
-		stage = new Stage();
+    public UserInterface(Level level, Array<LevelEventListener> levelEventListeners){
+        this.levelEventListeners = levelEventListeners;
+        stage = new Stage();
 
         loadSkin();
         nrOfPlayers = level.getNumberOfFinishers();
@@ -45,6 +49,24 @@ public class UserInterface {
     private void loadSkin(){
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/ui/hud/buttons.atlas"));
         skin = new Skin(atlas);
+    }
+
+    private void onRestartLevelPressed(){
+        for (LevelEventListener levelEventListener : levelEventListeners) {
+            levelEventListener.onRestartLevel();
+        }
+    }
+
+    private void onLevelResumePressed(){
+        for (LevelEventListener levelEventListener : levelEventListeners) {
+            levelEventListener.onLevelResumed();
+        }
+    }
+
+    private void onLevelPausedPressed(){
+        for (LevelEventListener levelEventListener : levelEventListeners) {
+            levelEventListener.onLevelPaused();
+        }
     }
 	
 	public void init(){
@@ -88,6 +110,7 @@ public class UserInterface {
         menuBtn.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 menuBtnWrapper.setScale(0.85f);
+                onLevelPausedPressed();
                 return true;
             }
 
@@ -200,12 +223,11 @@ public class UserInterface {
 
     public void createPauseMenu(int width, int height, int size){
 
-
-
         UIButton continueButton = createButton("continue.up", "continue.up", new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setPauseVisibility(false);
+                onLevelResumePressed();
             }
         });
 
@@ -214,7 +236,7 @@ public class UserInterface {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setPauseVisibility(false);
-                InputManager.getInstance().callRestart();
+                onRestartLevelPressed();
             }
         });
 
@@ -223,7 +245,7 @@ public class UserInterface {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setPauseVisibility(false);
-
+                onLevelResumePressed();
             }
         });
 
@@ -261,8 +283,7 @@ public class UserInterface {
         TextButtonStyle btnStyle = new TextButtonStyle();
         btnStyle.up = skin.getDrawable(upDrawable);
         btnStyle.down = skin.getDrawable(downDrawable);
-        UIButton button = createButton(btnStyle);
-        return button;
+        return createButton(btnStyle);
     }
 
     private UIButton createButton(TextButtonStyle btnStyle){
@@ -288,4 +309,13 @@ public class UserInterface {
     public void dispose() {
         stage.dispose();
     }
+
+    public boolean restartPressed() {
+        return restartPressed;
+    }
+
+    public void setRestartPressed(boolean pressed){
+        this.restartPressed = pressed;
+    }
+
 }

@@ -318,6 +318,16 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     }
 
     @Override
+    public void onLevelPaused() {
+
+    }
+
+    @Override
+    public void onLevelResumed() {
+
+    }
+
+    @Override
     public void OnStartLevel() {
         restart = false;
     }
