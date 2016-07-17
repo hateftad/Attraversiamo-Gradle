@@ -37,6 +37,7 @@ public class LoadingScreen extends AbstractScreen {
     public void load(int levelNr) {
         loader.setLevel(levelNr);
         loader.run();
+        timerIsOn = false;
     }
 
     @Override
@@ -77,6 +78,7 @@ public class LoadingScreen extends AbstractScreen {
         Screen transitionScreen = new TransitionScreen(game, current, next, effects);
 
         game.setScreen(transitionScreen);
+
     }
 
     @Override

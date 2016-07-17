@@ -533,8 +533,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 80.97649383544922,
-          "y" : 0.4598836898803711
+          "x" : 70.32009124755859,
+          "y" : 1.543585777282715
         },
         "type" : "dynamic"
       },
@@ -1443,8 +1443,8 @@
         "name" : "box",
         "position" : 
         {
-          "x" : 92.35520172119141,
-          "y" : 0.8680109977722168
+          "x" : 81.87941741943359,
+          "y" : 0.6873927116394043
         },
         "sleepingAllowed" : false,
         "type" : "dynamic"
@@ -1549,7 +1549,7 @@
             "vec2" : 
             {
               "x" : -1,
-              "y" : 4
+              "y" : 3
             }
           }
         ],
@@ -1793,8 +1793,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 82.69930267333984,
-          "y" : 0.5272815227508545
+          "x" : 72.04290008544922,
+          "y" : 1.610983610153198
         },
         "type" : "dynamic"
       },
@@ -1862,8 +1862,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 84.45117950439453,
-          "y" : 0.5598878860473633
+          "x" : 73.79477691650391,
+          "y" : 1.643589973449707
         },
         "type" : "dynamic"
       },
@@ -1931,8 +1931,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 86.20520019531250,
-          "y" : 0.5772726535797119
+          "x" : 75.54879760742188,
+          "y" : 1.660974740982056
         },
         "type" : "dynamic"
       },
@@ -2000,8 +2000,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 87.94860839843750,
-          "y" : 0.5845069885253906
+          "x" : 77.29220581054688,
+          "y" : 1.668209075927734
         },
         "type" : "dynamic"
       },
@@ -2069,8 +2069,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 89.69201660156250,
-          "y" : 0.6062092781066895
+          "x" : 79.03561401367188,
+          "y" : 1.689911365509033
         },
         "type" : "dynamic"
       },
@@ -2227,145 +2227,7 @@
       },
       
       {
-        "angle" : -0.1539983749389648,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 95,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 95,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 44.43437957763672,
-          "y" : 0.5206651687622070
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : -0.1539983749389648,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 96,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 96,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 46.05352783203125,
-          "y" : 0.2795157432556152
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : -0.1539983749389648,
+        "angle" : 0.3126546144485474,
         "angularVelocity" : 0,
         "awake" : true,
         "bullet" : true,
@@ -2427,14 +2289,14 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 47.65544891357422,
-          "y" : 0.02114057540893555
+          "x" : 49.09067916870117,
+          "y" : 0.8802528381347656
         },
         "type" : "dynamic"
       },
       
       {
-        "angle" : -0.1539983749389648,
+        "angle" : 0.3126546144485474,
         "angularVelocity" : 0,
         "awake" : true,
         "bullet" : true,
@@ -2496,8 +2358,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 49.27459335327148,
-          "y" : -0.2200083732604980
+          "x" : 50.64519882202148,
+          "y" : 1.393339157104492
         },
         "type" : "dynamic"
       },
@@ -2565,8 +2427,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 50.89273834228516,
-          "y" : -0.4817671775817871
+          "x" : 51.99123001098633,
+          "y" : 1.612229824066162
         },
         "type" : "dynamic"
       },
@@ -2634,8 +2496,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 52.53469848632812,
-          "y" : -0.7435259819030762
+          "x" : 53.63319015502930,
+          "y" : 1.350471019744873
         },
         "type" : "dynamic"
       },
@@ -2703,8 +2565,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 54.17811584472656,
-          "y" : -1.002040863037109
+          "x" : 55.27660751342773,
+          "y" : 1.091956138610840
         },
         "type" : "dynamic"
       },
@@ -2772,8 +2634,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 55.85363769531250,
-          "y" : -1.167982578277588
+          "x" : 56.95212936401367,
+          "y" : 0.9260144233703613
         },
         "type" : "dynamic"
       },
@@ -2841,8 +2703,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 57.53901672363281,
-          "y" : -1.229057788848877
+          "x" : 58.63750839233398,
+          "y" : 0.8649392127990723
         },
         "type" : "dynamic"
       },
@@ -2910,8 +2772,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 59.22948455810547,
-          "y" : -1.273308753967285
+          "x" : 60.32797622680664,
+          "y" : 0.8206882476806641
         },
         "type" : "dynamic"
       },
@@ -2979,8 +2841,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 60.88527679443359,
-          "y" : -1.291258096694946
+          "x" : 61.98376846313477,
+          "y" : 0.8027389049530029
         },
         "type" : "dynamic"
       },
@@ -3048,491 +2910,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 62.54716110229492,
-          "y" : -1.291258096694946
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : 0.06618475914001465,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 107,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 107,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 64.22301483154297,
-          "y" : -1.250213861465454
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : 0.09845519065856934,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 108,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 108,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 65.86924743652344,
-          "y" : -1.065733432769775
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : 0.07931506633758545,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 109,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 109,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 67.54611206054688,
-          "y" : -0.8471813201904297
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : 0.07771754264831543,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 110,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 110,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 69.22953033447266,
-          "y" : -0.6401615142822266
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : 0.03263199329376221,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 111,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 111,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 70.88419342041016,
-          "y" : -0.5120277404785156
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : 0.02438271045684814,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 112,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 112,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 72.53040313720703,
-          "y" : -0.3864749968051910
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : 0.02438271045684814,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 113,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 113,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 74.23564910888672,
-          "y" : -0.3233179152011871
+          "x" : 63.64565277099609,
+          "y" : 0.8027389049530029
         },
         "type" : "dynamic"
       },
@@ -3600,8 +2979,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 75.87773895263672,
-          "y" : -0.2285818159580231
+          "x" : 65.22133636474609,
+          "y" : 0.8551203012466431
         },
         "type" : "dynamic"
       },
@@ -3669,8 +3048,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 77.57667541503906,
-          "y" : -0.1324171125888824
+          "x" : 66.92027282714844,
+          "y" : 0.9512850046157837
         },
         "type" : "dynamic"
       },
@@ -3738,77 +3117,8 @@
         "name" : "rope",
         "position" : 
         {
-          "x" : 79.23348236083984,
-          "y" : 0.1150350570678711
-        },
-        "type" : "dynamic"
-      },
-      
-      {
-        "angle" : -0.1539983749389648,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "bullet" : true,
-        "customProperties" : 
-        [
-          
-          {
-            "int" : 34,
-            "name" : "boxIndex"
-          },
-          
-          {
-            "int" : 2,
-            "name" : "collisionGroup"
-          }
-        ],
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "id" : 117,
-            "name" : "fixture6",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -0.7667617797851562,
-                0.7894668579101562,
-                0.7894668579101562,
-                -0.7667617797851562
-              ],
-              "y" : 
-              [
-                -0.3014602661132812,
-                -0.2792911529541016,
-                0.3236293792724609,
-                0.3014602661132812
-              ]
-            }
-          }
-        ],
-        "id" : 117,
-        "linearVelocity" : 0,
-        "massData-I" : 0.2180625349283218,
-        "massData-center" : 
-        {
-          "x" : 0.01135253906250,
-          "y" : 0.01108455657958984
-        },
-        "massData-mass" : 0.9382822513580322,
-        "name" : "rope",
-        "position" : 
-        {
-          "x" : 42.88635253906250,
-          "y" : 0.7716970443725586
+          "x" : 68.57707977294922,
+          "y" : 1.198737144470215
         },
         "type" : "dynamic"
       },
@@ -4263,6 +3573,24 @@
       
       {
         "aspectScale" : 1,
+        "body" : 14,
+        "center" : 
+        {
+          "x" : -31.40946960449219,
+          "y" : 6.618389129638672
+        },
+        "file" : "../common/blocker-200.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 12,
+        "name" : "image1",
+        "opacity" : 1,
+        "renderOrder" : 9,
+        "scale" : 92.58092498779297
+      },
+      
+      {
+        "aspectScale" : 1,
         "body" : 9,
         "center" : 
         {
@@ -4295,44 +3623,6 @@
         "opacity" : 0.5,
         "renderOrder" : 4,
         "scale" : 1
-      },
-      
-      {
-        "angle" : 0.003191471099853516,
-        "aspectScale" : 1,
-        "body" : 95,
-        "center" : 
-        {
-          "x" : -0.1049033701419830,
-          "y" : 0.02706634439527988
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 83,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
-      },
-      
-      {
-        "angle" : 0.003191471099853516,
-        "aspectScale" : 1,
-        "body" : 96,
-        "center" : 
-        {
-          "x" : -0.01238534413278103,
-          "y" : 0.01497923396527767
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 84,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
       },
       
       {
@@ -4526,139 +3816,6 @@
       },
       
       {
-        "angle" : 0.02666711807250977,
-        "aspectScale" : 1,
-        "body" : 107,
-        "center" : 
-        {
-          "x" : 0.04446101188659668,
-          "y" : 0.008402070030570030
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 96,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
-      },
-      
-      {
-        "angle" : -0.005603313446044922,
-        "aspectScale" : 1,
-        "body" : 108,
-        "center" : 
-        {
-          "x" : 0.03146027028560638,
-          "y" : 0.005246159620583057
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 97,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
-      },
-      
-      {
-        "angle" : 0.01353681087493896,
-        "aspectScale" : 1,
-        "body" : 109,
-        "center" : 
-        {
-          "x" : 0.06406250596046448,
-          "y" : -0.03395226597785950
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 98,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
-      },
-      
-      {
-        "angle" : 0.01513433456420898,
-        "aspectScale" : 1,
-        "body" : 110,
-        "center" : 
-        {
-          "x" : 0.02516249567270279,
-          "y" : -0.03369153290987015
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 99,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
-      },
-      
-      {
-        "angle" : 0.003144025802612305,
-        "aspectScale" : 1,
-        "body" : 111,
-        "center" : 
-        {
-          "x" : 0.01671787537634373,
-          "y" : -0.01073830667883158
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 100,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
-      },
-      
-      {
-        "angle" : 0.01139330863952637,
-        "aspectScale" : 1,
-        "body" : 112,
-        "center" : 
-        {
-          "x" : 0.04052620008587837,
-          "y" : -0.02463680133223534
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 101,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
-      },
-      
-      {
-        "angle" : 0.01139330863952637,
-        "aspectScale" : 1,
-        "body" : 113,
-        "center" : 
-        {
-          "x" : 0.01740670017898083,
-          "y" : 0.002456360030919313
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 102,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183039963245392
-      },
-      
-      {
         "angle" : 0.01139330863952637,
         "aspectScale" : 1,
         "body" : 114,
@@ -4716,25 +3873,6 @@
       },
       
       {
-        "angle" : 0.003191471099853516,
-        "aspectScale" : 1,
-        "body" : 117,
-        "center" : 
-        {
-          "x" : -0.1049033701419830,
-          "y" : 0.02706634439527988
-        },
-        "file" : "../common/rope.png",
-        "filter" : 1,
-        "flip" : false,
-        "id" : 106,
-        "name" : "rope",
-        "opacity" : 1,
-        "renderOrder" : 4,
-        "scale" : 0.4183044135570526
-      },
-      
-      {
         "aspectScale" : 1,
         "body" : 118,
         "center" : 
@@ -4754,6 +3892,58 @@
     ],
     "metajoint" : 
     [
+      
+      {
+        "anchorA" : 
+        {
+          "x" : 0.7897398471832275,
+          "y" : 0.007840128615498543
+        },
+        "anchorB" : 
+        {
+          "x" : -0.7762073278427124,
+          "y" : -0.02592822536826134
+        },
+        "bodyA" : 106,
+        "bodyB" : 114,
+        "collideConnected" : false,
+        "enableLimit" : false,
+        "enableMotor" : false,
+        "id" : 1,
+        "lowerLimit" : 0,
+        "maxMotorTorque" : 0,
+        "motorSpeed" : 0,
+        "name" : "joint12",
+        "referenceAngle" : 0,
+        "type" : "revolute",
+        "upperLimit" : 0
+      },
+      
+      {
+        "anchorA" : 
+        {
+          "x" : -0.6250299811363220,
+          "y" : -1.122820019721985
+        },
+        "anchorB" : 
+        {
+          "x" : 0.4531559944152832,
+          "y" : 1.314919948577881
+        },
+        "bodyA" : 97,
+        "bodyB" : 22,
+        "collideConnected" : false,
+        "enableLimit" : false,
+        "enableMotor" : false,
+        "id" : 2,
+        "lowerLimit" : 0,
+        "maxMotorTorque" : 0,
+        "motorSpeed" : 0,
+        "name" : "joint3",
+        "referenceAngle" : 0,
+        "type" : "revolute",
+        "upperLimit" : 0
+      },
       
       {
         "anchorA" : 
@@ -4780,8 +3970,8 @@
       {
         "anchorA" : 
         {
-          "x" : -0.9961700439453125,
-          "y" : 0.01982593536376953
+          "x" : 0.01617432385683060,
+          "y" : 0.05076549947261810
         },
         "anchorB" : 
         {
@@ -4792,7 +3982,7 @@
         "bodyB" : 21,
         "collideConnected" : false,
         "id" : 4,
-        "maxLength" : 49.10705947875977,
+        "maxLength" : 38.05131530761719,
         "name" : "joint0",
         "type" : "rope"
       },
@@ -4982,32 +4172,6 @@
       {
         "anchorA" : 
         {
-          "x" : 0.8068640232086182,
-          "y" : -0.001603979966603220
-        },
-        "anchorB" : 
-        {
-          "x" : -0.8157309889793396,
-          "y" : 0.007994160056114197
-        },
-        "bodyA" : 96,
-        "bodyB" : 97,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 52,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint4",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
           "x" : 0.8394420146942139,
           "y" : 0.001753570046275854
         },
@@ -5130,188 +4294,6 @@
         "maxMotorTorque" : 0,
         "motorSpeed" : 0,
         "name" : "joint11",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.8692449927330017,
-          "y" : -0.03876470029354095
-        },
-        "anchorB" : 
-        {
-          "x" : 0.7746660113334656,
-          "y" : 0.01590860076248646
-        },
-        "bodyA" : 114,
-        "bodyB" : 113,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 63,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint12",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.8948420286178589,
-          "y" : -0.0716359019279480
-        },
-        "anchorB" : 
-        {
-          "x" : 0.8114359974861145,
-          "y" : -0.05007189884781837
-        },
-        "bodyA" : 113,
-        "bodyB" : 112,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 64,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint13",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.8236860036849976,
-          "y" : -0.04225980117917061
-        },
-        "anchorB" : 
-        {
-          "x" : 0.8254230022430420,
-          "y" : 0.03631269931793213
-        },
-        "bodyA" : 112,
-        "bodyB" : 111,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 65,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint14",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.7827590107917786,
-          "y" : -0.1036249995231628
-        },
-        "anchorB" : 
-        {
-          "x" : 0.8729829788208008,
-          "y" : -0.06896059960126877
-        },
-        "bodyA" : 111,
-        "bodyB" : 110,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 66,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint15",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.8946970105171204,
-          "y" : -0.05991340056061745
-        },
-        "anchorB" : 
-        {
-          "x" : 0.7997369766235352,
-          "y" : 0.01450449973344803
-        },
-        "bodyA" : 110,
-        "bodyB" : 109,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 67,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint16",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.8796790242195129,
-          "y" : -0.07710730284452438
-        },
-        "anchorB" : 
-        {
-          "x" : 0.8092330098152161,
-          "y" : -0.007592760026454926
-        },
-        "bodyA" : 109,
-        "bodyB" : 108,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 68,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint17",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : 0.7949810028076172,
-          "y" : -0.04580869898200035
-        },
-        "anchorB" : 
-        {
-          "x" : -0.8858910202980042,
-          "y" : -0.03763239830732346
-        },
-        "bodyA" : 106,
-        "bodyB" : 107,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 69,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint18",
         "referenceAngle" : 0,
         "type" : "revolute",
         "upperLimit" : 0
@@ -5468,110 +4450,6 @@
         "maxMotorTorque" : 0,
         "motorSpeed" : 0,
         "name" : "joint24",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.8078290224075317,
-          "y" : -0.07334630191326141
-        },
-        "anchorB" : 
-        {
-          "x" : 0.8497869968414307,
-          "y" : -0.02417200058698654
-        },
-        "bodyA" : 108,
-        "bodyB" : 107,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 76,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint25",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.8162739872932434,
-          "y" : 0.0004958729841746390
-        },
-        "anchorB" : 
-        {
-          "x" : 0.8207030296325684,
-          "y" : 0.01056210044771433
-        },
-        "bodyA" : 96,
-        "bodyB" : 95,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 79,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint3",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -0.7700350284576416,
-          "y" : 0.01470359973609447
-        },
-        "anchorB" : 
-        {
-          "x" : 0.7981780171394348,
-          "y" : 0.004095009993761778
-        },
-        "bodyA" : 95,
-        "bodyB" : 117,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 80,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint26",
-        "referenceAngle" : 0,
-        "type" : "revolute",
-        "upperLimit" : 0
-      },
-      
-      {
-        "anchorA" : 
-        {
-          "x" : -1.446317672729492,
-          "y" : -0.09324458241462708
-        },
-        "anchorB" : 
-        {
-          "x" : 0.6444565057754517,
-          "y" : 0.3580282926559448
-        },
-        "bodyA" : 117,
-        "bodyB" : 22,
-        "collideConnected" : false,
-        "enableLimit" : false,
-        "enableMotor" : false,
-        "id" : 81,
-        "lowerLimit" : 0,
-        "maxMotorTorque" : 0,
-        "motorSpeed" : 0,
-        "name" : "joint27",
         "referenceAngle" : 0,
         "type" : "revolute",
         "upperLimit" : 0

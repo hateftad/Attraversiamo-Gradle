@@ -5,6 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.*;
 import com.me.config.GameConfig;
@@ -384,6 +385,9 @@ public class ManSystem extends PlayerSystem {
     @Override
     public boolean keyDown(int keycode) {
         inputMgr.keyDown(keycode);
+        if(keycode == Input.Keys.R){
+            notifyObservers(new LevelEvent(LevelEventType.OnRestart));
+        }
         return true;
     }
 

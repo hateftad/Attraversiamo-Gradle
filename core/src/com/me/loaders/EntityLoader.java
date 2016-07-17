@@ -184,7 +184,7 @@ public class EntityLoader {
 
             if (ud.mName.equalsIgnoreCase("water")) {
                 int eventId = scene.getCustom(body, "taskId", 0);
-                Vector2 fluidVel = scene.getCustom(body, "fluidVel", new Vector2(0, 4));
+                Vector2 fluidVel = scene.getCustom(body, "fluidVel", new Vector2(0, 3));
                 //pass in fluid velocity
                 BuoyancyComponent buoyancyComponent = new BuoyancyComponent(eventId);
                 buoyancyComponent.addControllerInfo(PlayerOneComponent.PlayerOne, new Vector2(0, 1), 4, 4);

@@ -2082,6 +2082,25 @@
     [
       
       {
+        "angle" : 3.141360521316528,
+        "aspectScale" : 1,
+        "body" : 29,
+        "center" : 
+        {
+          "x" : 18.60320281982422,
+          "y" : -41.96555709838867
+        },
+        "file" : "../common/blocker-200.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 1,
+        "name" : "image5",
+        "opacity" : 0.5,
+        "renderOrder" : 9,
+        "scale" : 116.9514923095703
+      },
+      
+      {
         "aspectScale" : 1,
         "body" : 6,
         "center" : 
