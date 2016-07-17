@@ -43,22 +43,36 @@
     
     {
       "class" : "body",
+      "displayName" : "fluidVel",
+      "name" : "fluidVel",
+      "type" : "vec2"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "eventType",
       "name" : "eventType",
       "type" : "string"
     },
     
     {
-      "class" : "joint",
+      "class" : "body",
+      "displayName" : "playerNr",
+      "name" : "playerNr",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "taskFinishers",
       "name" : "taskFinishers",
       "type" : "int"
     },
     
     {
-      "class" : "body",
-      "displayName" : "playerNr",
-      "name" : "playerNr",
+      "class" : "joint",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -85,8 +99,8 @@
     
     {
       "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     },
     
@@ -95,13 +109,6 @@
       "displayName" : "lightColor",
       "name" : "lightColor",
       "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
     },
     
     {
@@ -1557,6 +1564,15 @@
           {
             "int" : 2,
             "name" : "taskId"
+          },
+          
+          {
+            "name" : "fluidVel",
+            "vec2" : 
+            {
+              "x" : 0,
+              "y" : 4
+            }
           }
         ],
         "fixture" : 

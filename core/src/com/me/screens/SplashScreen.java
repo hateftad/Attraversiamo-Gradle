@@ -8,10 +8,16 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 import com.me.component.LevelAnimationComponent;
+import com.me.screens.transitions.FadeInTransitionEffect;
+import com.me.screens.transitions.FadeOutTransitionEffect;
+import com.me.screens.transitions.TransitionEffect;
+
+import java.util.ArrayList;
 
 public class SplashScreen extends AbstractScreen {
 
     private AnimationComponent animation;
+    private boolean changingScreen;
     private boolean timerIsOn = false;
 
     public SplashScreen(Attraversiamo game) {
@@ -40,34 +46,35 @@ public class SplashScreen extends AbstractScreen {
 
         if (!timerIsOn) {
             timerIsOn = true;
-
-            Timer.schedule(new Task() {
-
-                @Override
-                public void run() {
-                    changeScreen();
-                }
-
-            }, 3);
-
+            changeScreenTask = Timer.schedule(changeScreenTask, 3);
         } else if (Gdx.input.isTouched()) {
             Timer.instance().clear();
-            changeScreen();
+            if(!changingScreen) {
+                changeScreen();
+            }
         }
     }
 
+    Task changeScreenTask = new Task() {
+        @Override
+        public void run() {
+            changeScreen();
+        }
+    };
+
     private void changeScreen() {
-        Screen current = game.getScreen();
+        changingScreen = true;
+        Screen current = this;
         Screen next = new MenuScreen(game);
 
-//        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
-//
-//        effects.add(new FadeOutTransitionEffect(1f));
-//        effects.add(new FadeInTransitionEffect(1f));
-//
-//        Screen transitionScreen = new TransitionScreen(game, current, next, effects);
+        ArrayList<TransitionEffect> effects = new ArrayList<>();
 
-        game.setScreen(next);
+        effects.add(new FadeOutTransitionEffect(1f));
+        effects.add(new FadeInTransitionEffect(2f));
+
+        Screen transitionScreen = new TransitionScreen(game, current, next, effects);
+
+        game.setScreen(transitionScreen);
         game.showBannerAd(true);
     }
 

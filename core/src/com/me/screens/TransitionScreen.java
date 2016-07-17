@@ -34,7 +34,7 @@ public class TransitionScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        if (currentTransitionEffect >= transitionEffects.size()) {
+        if (currentTransitionEffect == transitionEffects.size()) {
             game.setScreen(next);
             return;
         }

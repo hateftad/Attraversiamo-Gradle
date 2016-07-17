@@ -34,7 +34,7 @@ public class TouchComponent extends BaseComponent {
     }
 
     public boolean shouldPush(){
-        return boxTouch && boxHandTouch;
+        return boxTouch || boxHandTouch;
     }
 
 	@Override

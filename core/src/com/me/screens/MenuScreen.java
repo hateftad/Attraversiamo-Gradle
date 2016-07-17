@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.component.AnimationComponent;
 import com.me.component.LevelAnimationComponent;
@@ -141,6 +142,7 @@ public class MenuScreen extends AbstractScreen {
     @Override
     public void show() {
         super.show();
+        Timer.instance().clear();
     }
 
     @Override
@@ -161,17 +163,17 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private void changeScreen() {
-        Screen current = game.getScreen();
+        Screen current = this;
         game.loadingScreen = new LoadingScreen(game);
         LevelInfo levelInfo = PersistenceManager.getInstance().getLevelInfo();
-//        game.loadingScreen.load(levelInfo.getCurrentLevel());
-        game.loadingScreen.load(1);
+        game.loadingScreen.load(levelInfo.getCurrentLevel());
 
-//        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
-//        effects.add(new FadeOutTransitionEffect(1f));
-//        Screen transitionScreen = new TransitionScreen(game, current, game.loadingScreen, effects);
+        ArrayList<TransitionEffect> effects = new ArrayList<>();
+        effects.add(new FadeOutTransitionEffect(1f));
+        effects.add(new FadeInTransitionEffect(6f));
+        Screen transitionScreen = new TransitionScreen(game, current, game.loadingScreen, effects);
 
-        game.setScreen(game.loadingScreen);
+        game.setScreen(transitionScreen);
     }
 
     @Override

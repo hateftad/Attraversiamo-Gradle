@@ -174,6 +174,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
 
     @Override
     public void onRestartLevel() {
+        toggleProcessingOnSystems(true);
         loadedNextLevel = false;
     }
 

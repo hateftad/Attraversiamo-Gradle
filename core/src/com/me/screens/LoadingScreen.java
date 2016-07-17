@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Timer;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.listeners.LoadCompletionListener;
 import com.me.loaders.BackgroundLoader;
@@ -19,6 +20,7 @@ public class LoadingScreen extends AbstractScreen {
     private Texture splsh;
     private BackgroundLoader loader;
     private boolean loadComplete = false;
+    private boolean timerIsOn = false;
 
     public LoadingScreen(Attraversiamo game) {
         super(game);
@@ -43,25 +45,38 @@ public class LoadingScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         spriteBatch.begin();
-        spriteBatch.draw(splsh, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2.5f);
+        spriteBatch.draw(splsh, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2f);
         spriteBatch.end();
-        if (loadComplete) {
-            changeScreen();
+        if(!timerIsOn) {
+            timerIsOn = true;
+            if (loadComplete) {
+                changeScreen();
+            }
+//            Timer.schedule(changeScreemTask, 4);
         }
 
     }
 
+    Timer.Task changeScreemTask = new Timer.Task(){
+        @Override
+        public void run() {
+            if (loadComplete) {
+                changeScreen();
+            }
+        }
+    };
+
     private void changeScreen() {
-        Screen current = game.getScreen();
+        Timer.instance().clear();
+        Screen current = this;
         Screen next = game.gameScreen;
 
-//        ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
-//
-//        effects.add(new FadeOutTransitionEffect(1f));
-//
-//        Screen transitionScreen = new TransitionScreen(game, current, next, effects);
+        ArrayList<TransitionEffect> effects = new ArrayList<>();
+        effects.add(new FadeOutTransitionEffect(1f));
+        effects.add(new FadeInTransitionEffect(3f));
+        Screen transitionScreen = new TransitionScreen(game, current, next, effects);
 
-        game.setScreen(next);
+        game.setScreen(transitionScreen);
     }
 
     @Override

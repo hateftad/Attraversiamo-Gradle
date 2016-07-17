@@ -43,6 +43,34 @@
     
     {
       "class" : "body",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "eventType",
+      "name" : "eventType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "atlas",
+      "name" : "atlas",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "skeleton",
       "name" : "skeleton",
       "type" : "string"
@@ -57,36 +85,8 @@
     
     {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "atlas",
-      "name" : "atlas",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "characterType",
       "name" : "characterType",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
       "type" : "string"
     }
   ],
@@ -512,8 +512,8 @@
         "name" : "boxHand",
         "position" : 
         {
-          "x" : -1.6,
-          "y" : 5
+          "x" : -1.012305378913879,
+          "y" : 5.038537502288818
         },
         "type" : "dynamic"
       },
@@ -679,8 +679,8 @@
         "name" : "boxHand",
         "position" : 
         {
-          "x" : 1.840246796607971,
-          "y" : 5
+          "x" : 1.185110688209534,
+          "y" : 5.028902530670166
         },
         "type" : "dynamic"
       },
@@ -828,13 +828,13 @@
       {
         "anchorA" : 
         {
-          "x" : -1.207148313522339,
-          "y" : -0.4263384640216827
+          "x" : -0.5134756565093994,
+          "y" : -0.3203604519367218
         },
         "anchorB" : 
         {
           "x" : 0.5365868806838989,
-          "y" : 0.1394705772399902
+          "y" : 0.3706946372985840
         },
         "bodyA" : 4,
         "bodyB" : 6,
@@ -850,13 +850,13 @@
       {
         "anchorA" : 
         {
-          "x" : -0.4953010082244873,
-          "y" : 0.1537030041217804
+          "x" : -0.5627419948577881,
+          "y" : 0.3849275410175323
         },
         "anchorB" : 
         {
-          "x" : 1.291409969329834,
-          "y" : -0.3975090086460114
+          "x" : 0.5688357353210449,
+          "y" : -0.3107999861240387
         },
         "bodyA" : 9,
         "bodyB" : 4,
