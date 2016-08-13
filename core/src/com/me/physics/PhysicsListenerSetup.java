@@ -210,7 +210,7 @@ public class PhysicsListenerSetup {
                             }
 
                             if (otherUd.getType() == Type.InsideCage) {
-                                e.getComponent(PhysicsComponent.class).setFixedRotation(PhysicsComponent.Center, false);
+//                                e.getComponent(PhysicsComponent.class).setFixedRotation(PhysicsComponent.Center, false);
                             }
 
                             if (otherUd.getType() == Type.LeftCrawl) {
@@ -225,7 +225,7 @@ public class PhysicsListenerSetup {
                                 e.getComponent(TouchComponent.class).insideFinish = true;
                             }
                             if (otherUd.getType() == Type.InsideCage) {
-                                e.getComponent(PhysicsComponent.class).setFixedRotation(PhysicsComponent.Center, true);
+//                                e.getComponent(PhysicsComponent.class).setFixedRotation(PhysicsComponent.Center, true);
                             }
                             if (otherUd.getType() == Type.InsideCage) {
                                 e.getComponent(TouchComponent.class).cageTouch = true;
@@ -385,9 +385,6 @@ public class PhysicsListenerSetup {
                         if (otherUd.getType() == Type.PullLedge && playerUd.getType() == Type.HangHands) {
                             e.getComponent(TouchComponent.class).edgeTouch = false;
                             e.getComponent(TouchComponent.class).pullEdgeTouch = false;
-                        }
-                        if (otherUd.getType() == Type.InsideCage) {
-                            e.getComponent(PhysicsComponent.class).setFixedRotation(PhysicsComponent.Center, false);
                         }
                         if (otherUd.getType() == Type.InsideCage) {
                             e.getComponent(TouchComponent.class).cageTouch = false;

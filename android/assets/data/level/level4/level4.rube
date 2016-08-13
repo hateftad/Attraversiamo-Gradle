@@ -43,8 +43,8 @@
     
     {
       "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     },
     
@@ -57,20 +57,6 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "lightColor",
-      "name" : "lightColor",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "taskFinishers",
       "name" : "taskFinishers",
       "type" : "int"
@@ -78,15 +64,8 @@
     
     {
       "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "playerNr",
-      "name" : "playerNr",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
       "type" : "int"
     },
     
@@ -98,6 +77,13 @@
     },
     
     {
+      "class" : "body",
+      "displayName" : "particlename",
+      "name" : "particlename",
+      "type" : "string"
+    },
+    
+    {
       "class" : "joint",
       "displayName" : "taskFinishers",
       "name" : "taskFinishers",
@@ -106,16 +92,30 @@
     
     {
       "class" : "body",
-      "displayName" : "particlename",
-      "name" : "particlename",
+      "displayName" : "bodyType",
+      "name" : "bodyType",
       "type" : "string"
     },
     
     {
       "class" : "body",
-      "displayName" : "bodyType",
-      "name" : "bodyType",
+      "displayName" : "eventType",
+      "name" : "eventType",
       "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "lightColor",
+      "name" : "lightColor",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "playerNr",
+      "name" : "playerNr",
+      "type" : "int"
     }
   ],
   "metaworld" : 
@@ -697,8 +697,8 @@
         "name" : "singleParticleEmitter",
         "position" : 
         {
-          "x" : 54.47456741333008,
-          "y" : 11.08199024200439
+          "x" : 49.45276641845703,
+          "y" : 11.16046237945557
         },
         "type" : "dynamic"
       },
@@ -861,8 +861,8 @@
         "name" : "cage",
         "position" : 
         {
-          "x" : 58.31081390380859,
-          "y" : 17.72817039489746
+          "x" : 53.28901290893555,
+          "y" : 17.80664253234863
         },
         "type" : "dynamic"
       },
@@ -899,8 +899,8 @@
         "name" : "body1",
         "position" : 
         {
-          "x" : 57.97593688964844,
-          "y" : 47.36608886718750
+          "x" : 52.95413589477539,
+          "y" : 47.44456100463867
         },
         "type" : "static"
       },
@@ -955,8 +955,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.38931655883789,
-          "y" : 24.62959098815918
+          "x" : 53.36751556396484,
+          "y" : 24.70806312561035
         },
         "type" : "dynamic"
       },
@@ -1011,8 +1011,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.34363937377930,
-          "y" : 27.12400054931641
+          "x" : 53.32183837890625,
+          "y" : 27.20247268676758
         },
         "type" : "dynamic"
       },
@@ -1074,8 +1074,8 @@
         "name" : "body0",
         "position" : 
         {
-          "x" : 59.36245727539062,
-          "y" : 40.62169647216797
+          "x" : 58.18547058105469,
+          "y" : 40.70016860961914
         },
         "type" : "static"
       },
@@ -1144,8 +1144,8 @@
         "name" : "body4",
         "position" : 
         {
-          "x" : 55.52630233764648,
-          "y" : 15.21508407592773
+          "x" : 50.50450134277344,
+          "y" : 15.29355621337891
         },
         "type" : "dynamic"
       },
@@ -1214,8 +1214,8 @@
         "name" : "body4",
         "position" : 
         {
-          "x" : 61.34390640258789,
-          "y" : 15.21508216857910
+          "x" : 56.32210540771484,
+          "y" : 15.29355430603027
         },
         "type" : "dynamic"
       },
@@ -1270,8 +1270,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.29796218872070,
-          "y" : 29.6184082031250
+          "x" : 53.27616119384766,
+          "y" : 29.69688034057617
         },
         "type" : "dynamic"
       },
@@ -1326,8 +1326,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.25228881835938,
-          "y" : 32.11281585693359
+          "x" : 53.23048782348633,
+          "y" : 32.19128799438477
         },
         "type" : "dynamic"
       },
@@ -1382,8 +1382,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.20661163330078,
-          "y" : 34.60722351074219
+          "x" : 53.18481063842773,
+          "y" : 34.68569564819336
         },
         "type" : "dynamic"
       },
@@ -1438,8 +1438,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.16093444824219,
-          "y" : 37.10163497924805
+          "x" : 53.13913345336914,
+          "y" : 37.18010711669922
         },
         "type" : "dynamic"
       },
@@ -1494,8 +1494,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.11525726318359,
-          "y" : 39.59604263305664
+          "x" : 53.09345626831055,
+          "y" : 39.67451477050781
         },
         "type" : "dynamic"
       },
@@ -1550,8 +1550,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.06958389282227,
-          "y" : 42.09045410156250
+          "x" : 53.04778289794922,
+          "y" : 42.16892623901367
         },
         "type" : "dynamic"
       },
@@ -1606,8 +1606,8 @@
         "name" : "body2",
         "position" : 
         {
-          "x" : 58.02390670776367,
-          "y" : 44.58486175537109
+          "x" : 53.00210571289062,
+          "y" : 44.66333389282227
         },
         "type" : "dynamic"
       },
@@ -1675,8 +1675,8 @@
         "name" : "body3",
         "position" : 
         {
-          "x" : 57.58605575561523,
-          "y" : 11.17475128173828
+          "x" : 52.56425476074219,
+          "y" : 11.25322341918945
         },
         "type" : "dynamic"
       },
@@ -1779,8 +1779,8 @@
         "name" : "player_position",
         "position" : 
         {
-          "x" : 58.23261260986328,
-          "y" : 16.02981567382812
+          "x" : 53.21081161499023,
+          "y" : 16.10828781127930
         },
         "type" : "static"
       },
@@ -1840,8 +1840,8 @@
         "name" : "ledgeSensor",
         "position" : 
         {
-          "x" : 52.58810043334961,
-          "y" : 10.18970012664795
+          "x" : 47.56629943847656,
+          "y" : 10.26817226409912
         },
         "sleepingAllowed" : false,
         "type" : "dynamic"
@@ -2106,7 +2106,7 @@
         "body" : 14,
         "center" : 
         {
-          "x" : 1.730600357055664,
+          "x" : 5.418481826782227,
           "y" : -36.56999969482422
         },
         "file" : "../common/light_faded.png",

@@ -320,10 +320,6 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
                 body.get(name).getPosition().y, true);
     }
 
-    public void setFixedRotation(String name, boolean fixed) {
-        body.get(name).setFixedRotation(fixed);
-    }
-
     public Vector2 getLinearVelocity() {
         return body.get(name).getLinearVelocity();
     }
