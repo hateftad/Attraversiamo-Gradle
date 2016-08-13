@@ -43,9 +43,37 @@
     
     {
       "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "joint",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "fluidVel",
       "name" : "fluidVel",
       "type" : "vec2"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
     },
     
     {
@@ -64,27 +92,6 @@
     
     {
       "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "joint",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "boxIndex",
       "name" : "boxIndex",
       "type" : "int"
@@ -98,9 +105,9 @@
     },
     
     {
-      "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
+      "class" : "joint",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     },
     
@@ -109,13 +116,6 @@
       "displayName" : "lightColor",
       "name" : "lightColor",
       "type" : "string"
-    },
-    
-    {
-      "class" : "joint",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
     }
   ],
   "metaworld" : 
@@ -1969,8 +1969,8 @@
         "name" : "particleEmitter",
         "position" : 
         {
-          "x" : 76.92355346679688,
-          "y" : -27.19024276733398
+          "x" : 83.25795745849609,
+          "y" : -27.73631668090820
         },
         "type" : "static"
       },
@@ -2123,16 +2123,16 @@
         "body" : 16,
         "center" : 
         {
-          "x" : -30.26630020141602,
-          "y" : 10.68819999694824
+          "x" : -30.40065193176270,
+          "y" : 10.25496292114258
         },
-        "file" : "background.png",
+        "file" : "../common/dawn.png",
         "filter" : 1,
         "flip" : false,
-        "id" : 4,
+        "id" : 3,
         "name" : "image1",
-        "opacity" : 1,
-        "scale" : 80.0
+        "opacity" : 0.5,
+        "scale" : 79.73493957519531
       },
       
       {
@@ -2197,13 +2197,13 @@
           "x" : 0.07228089869022369,
           "y" : 0.07077030092477798
         },
-        "file" : "../common/particle2.png",
+        "file" : "../../clear.png",
         "filter" : 1,
         "flip" : false,
         "id" : 12,
         "name" : "image3",
         "opacity" : 0.5,
-        "renderOrder" : 6,
+        "renderOrder" : 7,
         "scale" : 1
       },
       

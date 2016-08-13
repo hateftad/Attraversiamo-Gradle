@@ -6,12 +6,12 @@ lowMin: 1000.0
 lowMax: 1000.0
 - Count - 
 min: 0
-max: 20
+max: 10
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 10.0
-highMax: 10.0
+highMin: 1000.0
+highMax: 1000.0
 relative: false
 scalingCount: 2
 scaling0: 1.0

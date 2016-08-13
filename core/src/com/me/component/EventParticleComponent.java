@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.me.component.interfaces.ParticleEventObserverComponent;
 import com.me.events.ParticleEvent;
 import com.me.events.TaskEvent;
+import com.me.utils.Converters;
 
 /**
  * Created by hateftadayon on 1/31/16.

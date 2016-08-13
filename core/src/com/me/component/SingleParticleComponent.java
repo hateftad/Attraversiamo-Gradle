@@ -18,7 +18,7 @@ public class SingleParticleComponent extends ParticleComponent implements TaskEv
 
     public SingleParticleComponent(String effect, int id, Vector2 position) {
         super(effect, 10);
-        setPosition(Converters.ToWorld(position));
+        setPosition(position);
         this.id = id;
     }
 

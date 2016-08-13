@@ -6,6 +6,7 @@ import com.me.events.ButtonEvent;
 import com.me.events.GameEventType;
 import com.me.events.HorizontalButtonEvent;
 import com.me.events.TaskEvent;
+import com.me.utils.Converters;
 import com.me.utils.Direction;
 
 /**
@@ -14,6 +15,7 @@ import com.me.utils.Direction;
 public class ContinuousParticles extends ParticleComponent implements ButtonStateObserverComponent {
     public ContinuousParticles(String effect, Vector2 position) {
         super(effect, position);
+        setPosition(position);
     }
 
     @Override

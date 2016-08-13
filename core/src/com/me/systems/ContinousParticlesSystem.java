@@ -26,7 +26,7 @@ public class ContinousParticlesSystem extends IntervalEntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-        if(continuousParticles.has(entity)) {
+        if (continuousParticles.has(entity)) {
             ContinuousParticles particle = continuousParticles.get(entity);
             particle.start();
         }

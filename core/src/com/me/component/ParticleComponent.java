@@ -27,7 +27,6 @@ public abstract class ParticleComponent extends BaseComponent {
 		particle = loadParticle(effect);
 		pool = new ParticleEffectPool(particle, 10, 10);
 		effects = new Array<>();
-		setPosition(Converters.ToWorld(position));
 	}
 
     public ParticleComponent(){}
@@ -35,7 +34,7 @@ public abstract class ParticleComponent extends BaseComponent {
 	protected ParticleEffect loadParticle(String effectName){
         effect = effectName;
 		ParticleEffect particle = new ParticleEffect();
-		particle.load(Gdx.files.internal("data/particles/" + effect + ".p"), Gdx.files.internal("data"));
+		particle.load(Gdx.files.internal("data/particles/" + effect + ".p"), Gdx.files.internal("data/particles"));
 		particle.start();
 		return particle;
 	}

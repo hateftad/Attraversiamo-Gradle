@@ -214,7 +214,7 @@ public class EntityLoader {
 
             if (ud.mName.equalsIgnoreCase("particleEmitter")) {
                 String particleName = scene.getCustom(body, "particlename", "");
-                ContinuousParticles particleComponent = new ContinuousParticles(particleName, pComp.getPosition());
+                ContinuousParticles particleComponent = new ContinuousParticles(particleName, body.getPosition());
                 entity.addComponent(particleComponent);
                 entityWorld.addObserver(particleComponent);
             }
