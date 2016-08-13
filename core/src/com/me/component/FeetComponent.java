@@ -74,7 +74,6 @@ public class FeetComponent extends BaseComponent {
             if(other.getType() == RBUserData.Type.Ground || other.getType() == RBUserData.Type.Box || other.getType() == RBUserData.Type.CageHatch){
                 collided = true;
             }
-            normal = normal;
             return 1;
         }
     }
@@ -101,8 +100,12 @@ public class FeetComponent extends BaseComponent {
             startPoints.add(Vector2.Zero);
             startPoints.add(Vector2.Zero);
             startPoints.add(Vector2.Zero);
+            startPoints.add(Vector2.Zero);
+            startPoints.add(Vector2.Zero);
 
             endPoints = new ArrayList<>();
+            endPoints.add(new Vector2(0, 0));
+            endPoints.add(new Vector2(0, 0));
             endPoints.add(new Vector2(0, 0));
             endPoints.add(new Vector2(0, 0));
             endPoints.add(new Vector2(0, 0));
@@ -110,13 +113,17 @@ public class FeetComponent extends BaseComponent {
 
         private void updatePoints(Vector2 bodyPosition){
             Vector2 startCpy = bodyPosition.cpy();
-            Vector2 left = startPoints.get(0).set(startCpy.x, startCpy.y);
-            Vector2 middle = startPoints.get(1).set(startCpy.x, startCpy.y);
-            Vector2 right = startPoints.get(2).set(startCpy.x, startCpy.y);
+            Vector2 west = startPoints.get(0).set(startCpy.x, startCpy.y);
+            Vector2 sWest = startPoints.get(1).set(startCpy.x, startCpy.y);
+            Vector2 middle = startPoints.get(2).set(startCpy.x, startCpy.y);
+            Vector2 eEast = startPoints.get(3).set(startCpy.x, startCpy.y);
+            Vector2 east = startPoints.get(4).set(startCpy.x, startCpy.y);
 
-            endPoints.get(0).set(left.x - 0.4f, left.y - RAY_LENGTH + 0.1f);
-            endPoints.get(1).set(middle.x, middle.y - RAY_LENGTH);
-            endPoints.get(2).set(right.x + 0.4f, right.y - RAY_LENGTH + 0.1f);
+            endPoints.get(0).set(west.x - RAY_LENGTH, west.y);
+            endPoints.get(1).set(sWest.x - RAY_LENGTH, sWest.y - RAY_LENGTH);
+            endPoints.get(2).set(middle.x, middle.y - RAY_LENGTH);
+            endPoints.get(3).set(eEast.x + RAY_LENGTH, eEast.y - RAY_LENGTH);
+            endPoints.get(4).set(east.x + RAY_LENGTH, east.y);
         }
     }
 

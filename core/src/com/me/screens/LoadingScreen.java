@@ -71,13 +71,13 @@ public class LoadingScreen extends AbstractScreen {
         Timer.instance().clear();
         Screen current = this;
         Screen next = game.gameScreen;
+//
+//        ArrayList<TransitionEffect> effects = new ArrayList<>();
+//        effects.add(new FadeOutTransitionEffect(1f));
+//        effects.add(new FadeInTransitionEffect(3f));
+//        Screen transitionScreen = new TransitionScreen(game, current, next, effects);
 
-        ArrayList<TransitionEffect> effects = new ArrayList<>();
-        effects.add(new FadeOutTransitionEffect(1f));
-        effects.add(new FadeInTransitionEffect(3f));
-        Screen transitionScreen = new TransitionScreen(game, current, next, effects);
-
-        game.setScreen(transitionScreen);
+        game.setScreen(game.gameScreen);
 
     }
 
