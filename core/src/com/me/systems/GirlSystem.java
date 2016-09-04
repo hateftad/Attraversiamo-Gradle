@@ -135,7 +135,7 @@ public class GirlSystem extends PlayerSystem {
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
-            velocityLimitComponent.velocity = 0;
+            velocityLimitComponent.velocity = 2;
             if (playerComponent.shouldBeIdle() &&
                     !physicsComponent.isFalling()) {
                 setPlayerState(entity, PlayerState.Idle);
@@ -191,7 +191,7 @@ public class GirlSystem extends PlayerSystem {
         if (feetComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.boxTouch) {
                 if (vel.velocity > 0) {
-                    vel.velocity = 0;
+                    vel.velocity = -4;
                 }
                 vel.velocity -= VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
@@ -232,7 +232,7 @@ public class GirlSystem extends PlayerSystem {
         if (feetComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.boxTouch) {
                 if (vel.velocity < 0) {
-                    vel.velocity = 0;
+                    vel.velocity = 4;
                 }
                 vel.velocity += VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);

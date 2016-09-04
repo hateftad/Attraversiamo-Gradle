@@ -166,7 +166,7 @@ public class MenuScreen extends AbstractScreen {
         Screen current = this;
         game.loadingScreen = new LoadingScreen(game);
         LevelInfo levelInfo = PersistenceManager.getInstance().getLevelInfo();
-        game.loadingScreen.load(1);//levelInfo.getCurrentLevel());
+        game.loadingScreen.load(5);//levelInfo.getCurrentLevel());
 
 //        ArrayList<TransitionEffect> effects = new ArrayList<>();
 //        effects.add(new FadeOutTransitionEffect(1f));
@@ -201,8 +201,7 @@ public class MenuScreen extends AbstractScreen {
         TextButton.TextButtonStyle btnStyle = new TextButton.TextButtonStyle();
         btnStyle.up = skin.getDrawable(upDrawable);
         btnStyle.down = skin.getDrawable(downDrawable);
-        UIButton button = createButton(btnStyle);
-        return button;
+        return createButton(btnStyle);
     }
 
     private UIButton createButton(TextButton.TextButtonStyle btnStyle) {

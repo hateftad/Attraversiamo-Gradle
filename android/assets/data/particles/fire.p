@@ -157,8 +157,9 @@ continuous: false
 aligned: false
 additive: true
 behind: false
+premultipliedAlpha: false
 - Image Path -
-C:\Users\Hatef\git\attraversiamo\attraversiamo-android\assets\data\particle2.png
+particle.png
 
 
 laserBeam
@@ -303,6 +304,7 @@ continuous: false
 aligned: false
 additive: true
 behind: false
+premultipliedAlpha: false
 - Image Path -
 particle.png
 
@@ -433,5 +435,6 @@ continuous: false
 aligned: false
 additive: true
 behind: false
+premultipliedAlpha: false
 - Image Path -
 particle.png

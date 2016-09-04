@@ -92,6 +92,7 @@ public class ManSystem extends PlayerSystem {
                 if (touch.boxHandTouch && !player.isClimbingBox()) {
                     movementComponent.standStill();
                     setPlayerState(entity, PlayerState.ClimbBox);
+                    touch.boxHandTouch = false;
                 } else {
                     jump(entity);
                 }
@@ -187,7 +188,7 @@ public class ManSystem extends PlayerSystem {
             }
         }
         if (playerComponent.isFalling() && feetComponent.hasCollided()) {
-            if (playerComponent.getState() == PlayerState.RunFalling) {
+            if (playerComponent.getState() == PlayerState.RunFalling && movementComponent.getSpeed() > 2) {
                 setPlayerState(entity, PlayerState.RunLanding);
             } else {
                 setPlayerState(entity, PlayerState.Landing);
@@ -201,7 +202,6 @@ public class ManSystem extends PlayerSystem {
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
         }
-
     }
 
     protected void setPlayerState(Entity entity, PlayerState state) {

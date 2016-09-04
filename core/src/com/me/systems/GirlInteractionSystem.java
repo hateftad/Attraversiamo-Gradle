@@ -47,7 +47,6 @@ public class GirlInteractionSystem extends GameEntityProcessingSystem  {
         PhysicsComponent physicsComponent = physComp.get(entity);
         CharacterMovementComponent movementComponent = movementComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
-        GrabComponent grabComponent = grabComps.get(entity);
 
         if (touchComponent.handTouch && playerComponent.isJumping()) {
             if (!playerComponent.isPullingUp()) {

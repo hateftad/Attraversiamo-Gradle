@@ -77,7 +77,6 @@ public class ManInteractionSystem extends GameEntityProcessingSystem  {
             if(animation.isCompleted(PlayerState.ClimbBox)){
                 physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
                 setPlayerState(entity, PlayerState.Idle);
-                touchComponent.boxTouch = false;
             }
         }
         if (touchComponent.canPullUp() &&
