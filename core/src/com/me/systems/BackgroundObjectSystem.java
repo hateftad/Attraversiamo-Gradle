@@ -14,6 +14,7 @@ import com.me.ui.InputManager;
 public class BackgroundObjectSystem extends EntityProcessingSystem {
 
     private final CameraController cameraComponent;
+    private boolean process = true;
 
     @Mapper
     ComponentMapper<BackgroundComponent> backgroundComponents;
@@ -30,9 +31,18 @@ public class BackgroundObjectSystem extends EntityProcessingSystem {
 	protected void process(Entity e) {
         BackgroundComponent backgroundComponent = backgroundComponents.get(e);
         float v = cameraComponent.getPosition().x * backgroundComponent.getVelocityX() * 0.002f;
-        PhysicsComponent physicsComponent = physicsComp.get(e);
+        PhysicsComponent physicsComponent = physicsComp.getSafe(e);
         if(InputManager.getInstance().shouldLockCamera()) {
             physicsComponent.setPosition(v, physicsComponent.getPosition().y);
         }
+    }
+
+    @Override
+    protected boolean checkProcessing() {
+        return process;
+    }
+
+    public void toggleProcessing(boolean process) {
+        this.process = process;
     }
 }

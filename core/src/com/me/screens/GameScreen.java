@@ -27,6 +27,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
     private PlayerSystem playerTwoSystem;
     private RenderSystem renderSystem;
     private CameraSystem cameraSystem;
+    private BackgroundObjectSystem backgroundObjectSystem;
 
     private boolean loadedNextLevel;
 
@@ -50,7 +51,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         this.renderSystem = entityWorld.setSystem(new RenderSystem(camera));
         this.entityWorld.setSystem(physicsSystem);
         this.entityWorld.setSystem(new LevelSystem());
-        this.entityWorld.setSystem(new BackgroundObjectSystem(cameraController));
+        this.backgroundObjectSystem = this.entityWorld.setSystem(new BackgroundObjectSystem(cameraController));
         this.entityWorld.setSystem(new ContinousParticlesSystem(2));
         this.entityWorld.setSystem(new EventParticlesSystem());
         this.entityWorld.setSystem(new ManInteractionSystem());
@@ -116,6 +117,7 @@ public class GameScreen extends AbstractScreen implements LevelEventListener {
         playerTwoSystem.toggleProcessing(state);
         cameraSystem.toggleProcess(state);
         physicsSystem.toggleProcessing(state);
+        backgroundObjectSystem.toggleProcessing(state);
     }
 
     public void clear() {
