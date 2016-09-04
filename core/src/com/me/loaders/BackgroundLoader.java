@@ -38,7 +38,6 @@ public class BackgroundLoader {
     public void run() {
         doRun();
         listener.onComplete();
-
     }
 
     public void doRun() {

@@ -166,7 +166,7 @@ public class MenuScreen extends AbstractScreen {
         Screen current = this;
         game.loadingScreen = new LoadingScreen(game);
         LevelInfo levelInfo = PersistenceManager.getInstance().getLevelInfo();
-        game.loadingScreen.load(5);//levelInfo.getCurrentLevel());
+        game.loadingScreen.load(1);//levelInfo.getCurrentLevel());
 
 //        ArrayList<TransitionEffect> effects = new ArrayList<>();
 //        effects.add(new FadeOutTransitionEffect(1f));
@@ -190,7 +190,7 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private Container createWrapper(WidgetGroup btn, float scale){
-        Container wrapper = new Container(btn);
+        Container wrapper = new Container<>(btn);
         wrapper.setTransform(true);
         wrapper.setOrigin(wrapper.getPrefWidth() / 2, wrapper.getPrefHeight() / 2);
         wrapper.setScale(scale);

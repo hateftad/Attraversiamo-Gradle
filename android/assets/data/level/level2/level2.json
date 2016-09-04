@@ -1972,7 +1972,7 @@
 					0.5707703232765198
 				]
 			},
-			"file" : "../../clear.png",
+			"file" : "../common/clear.png",
 			"filter" : 1,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
 			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],

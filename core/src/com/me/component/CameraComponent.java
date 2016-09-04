@@ -36,7 +36,7 @@ public class CameraComponent extends BaseComponent {
 		this.target.set(target.x, target.y, 0);
 	}
 	
-	public void update(float delta){
+	public void update(){
 		
 		Vector3 position = getCamera().position;
 		

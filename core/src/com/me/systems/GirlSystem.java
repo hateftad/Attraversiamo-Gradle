@@ -186,13 +186,12 @@ public class GirlSystem extends PlayerSystem {
         VelocityLimitComponent vel = velComps.get(entity);
         TouchComponent touch = touchComps.get(entity);
         FeetComponent feetComponent = feetComps.get(entity);
-
-
+        if (vel.velocity > 0) {
+            vel.velocity = -4;
+        }
         if (feetComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.boxTouch) {
-                if (vel.velocity > 0) {
-                    vel.velocity = -4;
-                }
+
                 vel.velocity -= VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() < -vel.walkLimit) {
@@ -228,12 +227,12 @@ public class GirlSystem extends PlayerSystem {
         VelocityLimitComponent vel = velComps.get(entity);
         TouchComponent touch = touchComps.get(entity);
         FeetComponent feetComponent = feetComps.get(entity);
-
+        if (vel.velocity < 0) {
+            vel.velocity = 4;
+        }
         if (feetComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.boxTouch) {
-                if (vel.velocity < 0) {
-                    vel.velocity = 4;
-                }
+
                 vel.velocity += VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() > vel.walkLimit) {

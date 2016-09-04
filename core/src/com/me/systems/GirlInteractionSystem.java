@@ -131,7 +131,7 @@ public class GirlInteractionSystem extends GameEntityProcessingSystem  {
 
         if(playerComponent.isLanding()){
             if(animation.isCompleted(PlayerState.Landing)){
-                velocityLimitComponent.velocity = 0;
+                velocityLimitComponent.initialVelocty();
                 setPlayerState(entity, PlayerState.Idle);
             }
             if(animation.isCompleted(PlayerState.RunLanding)){
