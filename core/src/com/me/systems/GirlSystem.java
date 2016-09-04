@@ -40,7 +40,7 @@ public class GirlSystem extends PlayerSystem {
 
     @SuppressWarnings("unchecked")
     public GirlSystem(Level currentLevel) {
-        super(Aspect.getAspectForOne(PlayerTwoComponent.class));
+        super(Aspect.getAspectForOne(PlayerTwoComponent.class), currentLevel);
         inputMgr = InputManager.getInstance();
         this.currentLevel = currentLevel;
     }
@@ -99,7 +99,7 @@ public class GirlSystem extends PlayerSystem {
             }
         }
 
-        if (isDead(physicsComponent, currentLevel)) {
+        if (isDead(physicsComponent)) {
             notifyObservers(new LevelEvent(LevelEventType.OnDied, currentLevel));
         }
 

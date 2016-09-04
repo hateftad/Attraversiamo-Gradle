@@ -23,9 +23,11 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
 
     protected boolean process = true;
     protected InputManager inputMgr;
+    protected Level currentLevel;
 
-    public PlayerSystem(Aspect aspect) {
+    public PlayerSystem(Aspect aspect, Level currentLevel) {
         super(aspect);
+        this.currentLevel = currentLevel;
     }
 
     protected void animateBody(PhysicsComponent ps, PlayerComponent player,
@@ -78,7 +80,7 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
 
     protected abstract void setPlayerState(Entity entity, PlayerState state);
 
-    protected boolean isDead(PhysicsComponent ps, Level currentLevel) {
+    protected boolean isDead(PhysicsComponent ps) {
         return ps.getWorldPosition().y < currentLevel.getLevelBoundaries().minimumLevelY;
     }
 

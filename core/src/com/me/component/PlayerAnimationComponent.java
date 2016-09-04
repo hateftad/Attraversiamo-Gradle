@@ -41,6 +41,7 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     public void setAnimationState(PlayerState state) {
 
         if (state != previousState) {
+            System.out.println(getState());
             setState(state);
             switch (state) {
                 case Walking:
@@ -71,7 +72,7 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     playAnimation("runFalling", true);
                     break;
                 case Hanging:
-                    playAnimation("hang", true);
+                    playAnimation("wallHang", true);
                     break;
                 case ClimbingLedge:
                     playAnimation("climbUp", false);

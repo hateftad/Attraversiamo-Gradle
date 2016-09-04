@@ -122,6 +122,10 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
         return state == PlayerState.Running;
     }
 
+    public boolean isClimbingBox() {
+        return state == PlayerState.ClimbBox;
+    }
+
     public enum PlayerNumber {
         NONE,
         ONE, TWO, THREE

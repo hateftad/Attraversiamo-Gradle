@@ -235,9 +235,25 @@ public class PhysicsListenerSetup {
                     }
                 } else {
                     if (player.getRBUserData(fB.getBody()).getCollisionGroup() == otherUd.getCollisionGroup()) {
+                        Entity e1 = (Entity) fA.getBody().getUserData();
                         if (e.getComponent(PlayerComponent.class) != null) {
                             if (otherUd.getType() == Type.Box && playerUd.getType() == Type.BoxHand) {
                                 e.getComponent(TouchComponent.class).boxHandTouch = true;
+                                if (e.getComponent(FeetComponent.class).hasCollided()) {
+                                    QueueComponent queueComp = e1.getComponent(QueueComponent.class);
+                                    queueComp.mass = 5f;
+                                    queueComp.type = QueueType.Mass;
+                                    queueComp.bodyName = "box";
+                                    if (e.getComponent(PushComponent.class) != null) {
+                                        if (e.getComponent(PlayerComponent.class).isFacingLeft()) {
+                                            e.getComponent(PushComponent.class).pushLeft = true;
+                                            e.getComponent(PushComponent.class).pushRight = false;
+                                        } else {
+                                            e.getComponent(PushComponent.class).pushLeft = false;
+                                            e.getComponent(PushComponent.class).pushRight = true;
+                                        }
+                                    }
+                                }
                                 System.out.println("BoxTouch");
                             }
                         }
@@ -258,22 +274,21 @@ public class PhysicsListenerSetup {
                             }
 
                             if (playerUd.getType() == Type.Torso && otherUd.getType() == Type.Box) {
-                                if (e.getComponent(FeetComponent.class).hasCollided()) {
-                                    QueueComponent queueComp = e1.getComponent(QueueComponent.class);
-                                    queueComp.mass = 5f;
-                                    queueComp.type = QueueType.Mass;
-                                    queueComp.bodyName = "box";
-                                    e.getComponent(TouchComponent.class).boxTouch = true;
-                                    if (e.getComponent(PushComponent.class) != null) {
-                                        if (e.getComponent(PlayerComponent.class).isFacingLeft()) {
-                                            e.getComponent(PushComponent.class).pushLeft = true;
-                                            e.getComponent(PushComponent.class).pushRight = false;
-                                        } else {
-                                            e.getComponent(PushComponent.class).pushLeft = false;
-                                            e.getComponent(PushComponent.class).pushRight = true;
-                                        }
-                                    }
-                                }
+//                                if (e.getComponent(FeetComponent.class).hasCollided()) {
+//                                    QueueComponent queueComp = e1.getComponent(QueueComponent.class);
+//                                    queueComp.mass = 5f;
+//                                    queueComp.type = QueueType.Mass;
+//                                    queueComp.bodyName = "box";
+//                                    if (e.getComponent(PushComponent.class) != null) {
+//                                        if (e.getComponent(PlayerComponent.class).isFacingLeft()) {
+//                                            e.getComponent(PushComponent.class).pushLeft = true;
+//                                            e.getComponent(PushComponent.class).pushRight = false;
+//                                        } else {
+//                                            e.getComponent(PushComponent.class).pushLeft = false;
+//                                            e.getComponent(PushComponent.class).pushRight = true;
+//                                        }
+//                                    }
+//                                }
                             }
                         }
                     }
@@ -391,6 +406,14 @@ public class PhysicsListenerSetup {
                         }
                         if (otherUd.getType() == Type.Box && playerUd.getType() == Type.BoxHand) {
                             e.getComponent(TouchComponent.class).boxHandTouch = false;
+
+                            Body b = other.getBody("box");
+                            b.getFixtureList().get(0).setFriction(PhysicsComponent.HIGH_FRICTION);
+                            e1.getComponent(QueueComponent.class).mass = 20f;
+                            if (e.getComponent(PushComponent.class) != null) {
+                                e.getComponent(PushComponent.class).pushLeft = false;
+                                e.getComponent(PushComponent.class).pushRight = false;
+                            }
                             System.out.println("No BoxTouch");
                         }
                     }
@@ -410,7 +433,6 @@ public class PhysicsListenerSetup {
                             Body b = other.getBody("box");
                             b.getFixtureList().get(0).setFriction(PhysicsComponent.HIGH_FRICTION);
                             e1.getComponent(QueueComponent.class).mass = 20f;
-                            e.getComponent(TouchComponent.class).boxTouch = false;
                             if (e.getComponent(PushComponent.class) != null) {
                                 e.getComponent(PushComponent.class).pushLeft = false;
                                 e.getComponent(PushComponent.class).pushRight = false;

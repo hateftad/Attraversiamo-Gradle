@@ -25,7 +25,6 @@ public class ManSystem extends PlayerSystem {
 
     private float VELOCITY = 11.0f;
     private float VELOCITYINR = 3.0f;
-    private Level currentLevel;
     @Mapper
     ComponentMapper<SingleParticleComponent> particleComps;
     @Mapper
@@ -55,10 +54,9 @@ public class ManSystem extends PlayerSystem {
 
     @SuppressWarnings("unchecked")
     public ManSystem(Level currentLevel) {
-        super(Aspect.getAspectForOne(PlayerOneComponent.class));
+        super(Aspect.getAspectForOne(PlayerOneComponent.class), currentLevel);
 
         inputMgr = InputManager.getInstance();
-        this.currentLevel = currentLevel;
         if (GlobalConfig.getInstance().config.platform == GameConfig.Platform.DESKTOP) {
             Gdx.input.setInputProcessor(this);
         }
@@ -91,7 +89,7 @@ public class ManSystem extends PlayerSystem {
             }
 
             if (keyInputComponent.jump) {
-                if (touch.boxTouch) {
+                if (touch.boxHandTouch && !player.isClimbingBox()) {
                     movementComponent.standStill();
                     setPlayerState(entity, PlayerState.ClimbBox);
                 } else {
@@ -148,7 +146,7 @@ public class ManSystem extends PlayerSystem {
         }
         setPlayerState(entity);
 
-        if (isDead(physicsComponent, currentLevel)) {
+        if (isDead(physicsComponent)) {
             notifyObservers(new LevelEvent(LevelEventType.OnDied, currentLevel));
         }
 

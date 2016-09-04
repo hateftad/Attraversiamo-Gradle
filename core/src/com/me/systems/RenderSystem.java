@@ -107,7 +107,6 @@ public class RenderSystem extends EntitySystem {
 
         }
 
-
         if (shaderComps.has(entity)) {
             ShaderComponent sComp = shaderComps.get(entity);
             sComp.render(batch, camera, spritesComponents.get(entity));
@@ -142,6 +141,10 @@ public class RenderSystem extends EntitySystem {
     protected void inserted(Entity e) {
 
         sortedEntities.add(e);
+        sortEntities();
+    }
+
+    private void sortEntities(){
         Collections.sort(sortedEntities, new Comparator<Entity>() {
             @Override
             public int compare(Entity e1, Entity e2) {

@@ -3,17 +3,17 @@ package com.me.systems;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.badlogic.gdx.math.Vector2;
 import com.me.component.*;
 import com.me.events.*;
 import com.me.events.states.PlayerState;
+import com.me.level.Level;
 
 import static com.artemis.Aspect.getAspectForAll;
 
 /**
  * Created by hateftadayon on 1/5/16.
  */
-public class GirlInteractionSystem extends PlayerSystem {
+public class GirlInteractionSystem extends GameEntityProcessingSystem  {
 
 
     @Mapper
@@ -148,19 +148,9 @@ public class GirlInteractionSystem extends PlayerSystem {
         }
     }
 
-    @Override
     protected void setPlayerState(Entity entity, PlayerState state) {
         animComps.get(entity).setAnimationState(state);
         playerComp.get(entity).setState(state);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
 }

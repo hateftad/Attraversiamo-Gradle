@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "E1A/dM2I7Bn6CHNBodT/zYD6hn8", "spine": "3.3.07", "width": 143.66, "height": 729.71, "images": "./../Images/" },
+"skeleton": { "hash": "o6+WyihwiUBQxCe/LYaXZuRewWo", "spine": "3.4.02", "width": 143.66, "height": 729.71, "images": "./../Images/" },
 "bones": [
 	{ "name": "root", "x": -4.12, "scaleX": 1.4, "scaleY": 1.4 },
 	{ "name": "hip", "parent": "root", "x": -5.41, "y": 271.15 },
@@ -4065,6 +4065,154 @@
 			],
 			"right_leg_constraint": [
 				{ "time": 0, "mix": 0, "bendPositive": false }
+			]
+		}
+	},
+	"wallHang": {
+		"slots": {
+			"left hooked arm": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"right hooked arm": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			},
+			"right open hand": {
+				"attachment": [
+					{ "time": 0, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"leftUpperArm": {
+				"rotate": [
+					{ "time": 0, "angle": 155.57, "curve": "stepped" },
+					{ "time": 1.3333, "angle": 155.57 }
+				],
+				"translate": [
+					{ "time": 0, "x": -16.34, "y": -0.18, "curve": "stepped" },
+					{ "time": 1.3333, "x": -16.34, "y": -0.18 }
+				]
+			},
+			"rightUpperArm": {
+				"rotate": [
+					{ "time": 0, "angle": 149.36, "curve": "stepped" },
+					{ "time": 1.3333, "angle": 149.36 }
+				],
+				"translate": [
+					{ "time": 0, "x": -16.34, "y": -0.18, "curve": "stepped" },
+					{ "time": 1.3333, "x": -16.34, "y": -0.18 }
+				]
+			},
+			"head": {
+				"rotate": [
+					{ "time": 0, "angle": 41.94 },
+					{ "time": 0.6666, "angle": 17.59 },
+					{ "time": 1.3333, "angle": 41.94 }
+				]
+			},
+			"leftLowerArm": {
+				"rotate": [
+					{ "time": 0, "angle": 10.62, "curve": "stepped" },
+					{ "time": 1.3333, "angle": 10.62 }
+				]
+			},
+			"rightLowerArm": {
+				"rotate": [
+					{ "time": 0, "angle": 16.06, "curve": "stepped" },
+					{ "time": 1.3333, "angle": 16.06 }
+				]
+			},
+			"leftUpperLeg": {
+				"rotate": [
+					{ "time": 0, "angle": 2.23 },
+					{ "time": 0.1666, "angle": 9.68 },
+					{ "time": 0.3333, "angle": -0.47 },
+					{ "time": 0.5, "angle": 20.96 },
+					{ "time": 0.6666, "angle": -23.28 },
+					{ "time": 1, "angle": -28 },
+					{ "time": 1.3333, "angle": 2.23 }
+				]
+			},
+			"rightUpperLeg": {
+				"rotate": [
+					{ "time": 0, "angle": -10.5 },
+					{ "time": 0.1666, "angle": 11.43 },
+					{ "time": 0.5, "angle": 22.71 },
+					{ "time": 0.6666, "angle": -4.45 },
+					{ "time": 1, "angle": -14.51 },
+					{ "time": 1.3333, "angle": -10.5 }
+				]
+			},
+			"leftLowerLeg": {
+				"rotate": [
+					{ "time": 0, "angle": -19.35 },
+					{ "time": 0.1666, "angle": -41.81 },
+					{ "time": 0.6666, "angle": -53.79 },
+					{ "time": 1.3333, "angle": -19.35 }
+				]
+			},
+			"rightLowerLeg": {
+				"rotate": [
+					{ "time": 0, "angle": -0.43 },
+					{ "time": 0.1666, "angle": -12.28 },
+					{ "time": 0.8333, "angle": -35.18 },
+					{ "time": 1.1666, "angle": -58.55 },
+					{ "time": 1.3333, "angle": -0.43 }
+				]
+			},
+			"hip": {
+				"translate": [
+					{ "time": 0, "x": 47.09, "y": 3.81 },
+					{ "time": 0.5333, "x": -1.87, "y": 19.01 },
+					{ "time": 1.3333, "x": 47.09, "y": 3.81 }
+				]
+			},
+			"right_arm_constraint": {
+				"translate": [
+					{ "time": 0, "x": 114.62, "y": 319.88 },
+					{ "time": 1.3333, "x": 114.62, "y": 311.44 }
+				]
+			},
+			"left_arm_constraint": {
+				"translate": [
+					{ "time": 0, "x": 95.96, "y": 315.44 },
+					{ "time": 0.8333, "x": 99.34, "y": 313.75 },
+					{ "time": 1.3333, "x": 95.96, "y": 315.44 }
+				]
+			},
+			"right_leg_constraint": {
+				"translate": [
+					{ "time": 0, "x": 136.77, "y": 180.67, "curve": "stepped" },
+					{ "time": 1.3333, "x": 136.77, "y": 180.67 }
+				]
+			},
+			"left_leg_constraint": {
+				"translate": [
+					{ "time": 0, "x": 138.46, "y": 103 },
+					{ "time": 1.3333, "x": 146.9, "y": 113.13 }
+				]
+			}
+		},
+		"ik": {
+			"left_arm_constraint": [
+				{ "time": 0, "curve": "stepped" },
+				{ "time": 1.3333 }
+			],
+			"left_leg_constraint": [
+				{ "time": 0, "bendPositive": false, "curve": "stepped" },
+				{ "time": 1.3333, "bendPositive": false }
+			],
+			"right_arm_constraint": [
+				{ "time": 0, "curve": "stepped" },
+				{ "time": 1.3333 }
+			],
+			"right_leg_constraint": [
+				{ "time": 0, "bendPositive": false, "curve": "stepped" },
+				{ "time": 1.3333, "bendPositive": false }
 			]
 		}
 	}

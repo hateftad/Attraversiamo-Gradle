@@ -11,7 +11,7 @@ import com.me.events.states.PlayerState;
 /**
  * Created by hateftadayon on 1/2/16.
  */
-public class ManInteractionSystem extends PlayerSystem {
+public class ManInteractionSystem extends GameEntityProcessingSystem  {
 
     @Mapper
     ComponentMapper<PlayerAnimationComponent> animComps;
@@ -77,6 +77,7 @@ public class ManInteractionSystem extends PlayerSystem {
             if(animation.isCompleted(PlayerState.ClimbBox)){
                 physicsComponent.setAllBodiesPosition(animation.getPositionRelative("left upper leg"));
                 setPlayerState(entity, PlayerState.Idle);
+                touchComponent.boxTouch = false;
             }
         }
         if (touchComponent.canPullUp() &&
@@ -147,19 +148,8 @@ public class ManInteractionSystem extends PlayerSystem {
         }
     }
 
-    @Override
     protected void setPlayerState(Entity entity, PlayerState state) {
         animComps.get(entity).setAnimationState(state);
         playerComp.get(entity).setState(state);
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
     }
 }
