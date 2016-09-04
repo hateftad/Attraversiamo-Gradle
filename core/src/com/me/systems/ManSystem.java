@@ -89,7 +89,7 @@ public class ManSystem extends PlayerSystem {
             }
 
             if (keyInputComponent.jump) {
-                if (touch.boxHandTouch && !player.isClimbingBox()) {
+                if (touch.boxHandTouch && !player.isClimbingBox() && !player.isJumping()) {
                     movementComponent.standStill();
                     setPlayerState(entity, PlayerState.ClimbBox);
                     touch.boxHandTouch = false;

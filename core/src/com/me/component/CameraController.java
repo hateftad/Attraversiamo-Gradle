@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.me.level.Level;
 
-public class CameraComponent extends BaseComponent {
+public class CameraController{
 
 	private OrthographicCamera camera;
 	
@@ -16,7 +16,7 @@ public class CameraComponent extends BaseComponent {
 	private float lerp;
 
 
-    public CameraComponent(OrthographicCamera camera){
+    public CameraController(OrthographicCamera camera){
 		this.camera = camera;
 		this.lerp = 0.07f;
 	}
@@ -84,16 +84,4 @@ public class CameraComponent extends BaseComponent {
 	public Matrix4 getCombined(){
 		return new Matrix4(camera.combined);
 	}
-
-	@Override
-	public void dispose() {
-		
-	}
-
-	@Override
-	public void restart() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

@@ -141,8 +141,8 @@ public class EntityLoader {
             BodyUserData ud = (BodyUserData) body.getUserData();
 
             if (ud.mName.equalsIgnoreCase("sky_light")) {
-                CameraComponent camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
-                entity.addComponent(camComp);
+                CameraController camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
+//                entity.addComponent(camComp);
                 String color = scene.getCustom(body, "lightColor", "");
                 if(!color.equalsIgnoreCase("none") && !color.isEmpty()) {
                     PointLight light = new PointLight(rh, 50, GameUtils.getColor(color), 5000, camComp.getCamera().position.x, camComp.getCamera().position.y);
@@ -235,6 +235,13 @@ public class EntityLoader {
             if (ud.mName.equalsIgnoreCase("player_position")) {
                 int player = scene.getCustom(body, "playerNr", -1);
                 level.addPlayerPosition(player, body.getPosition());
+            }
+
+            if (ud.mName.equalsIgnoreCase("background")) {
+                int velocity = scene.getCustom(body, "movementVelocity", 0);
+                BackgroundComponent backgroundComponent = new BackgroundComponent(velocity);
+                entity.addComponent(backgroundComponent);
+
             }
 
             if (ud.mName.equalsIgnoreCase("animating_body")) {

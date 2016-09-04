@@ -43,29 +43,15 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "boxIndex",
       "name" : "boxIndex",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
       "type" : "int"
     },
     
@@ -78,9 +64,9 @@
     
     {
       "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
-      "type" : "string"
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
     },
     
     {
@@ -88,6 +74,27 @@
       "displayName" : "lightColor",
       "name" : "lightColor",
       "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "eventType",
+      "name" : "eventType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "movementVelocity",
+      "name" : "movementVelocity",
+      "type" : "int"
     }
   ],
   "metaworld" : 
@@ -1020,8 +1027,8 @@
         "name" : "minX",
         "position" : 
         {
-          "x" : -9.791374206542969,
-          "y" : 4.263135910034180
+          "x" : 2.312976837158203,
+          "y" : 47.85414886474609
         },
         "type" : "static"
       },
@@ -1302,6 +1309,52 @@
           "y" : 30.966308593750
         },
         "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 3,
+            "name" : "movementVelocity"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 23,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 22,
+        "linearVelocity" : 0,
+        "name" : "background",
+        "position" : 
+        {
+          "x" : 18.31826400756836,
+          "y" : 45.63308715820312
+        },
+        "type" : "kinematic"
       }
     ],
     "metaimage" : 
@@ -1326,11 +1379,11 @@
       
       {
         "aspectScale" : 1,
-        "body" : 12,
+        "body" : 22,
         "center" : 
         {
-          "x" : 9.050336837768555,
-          "y" : 0.2177643775939941
+          "x" : 19.34758949279785,
+          "y" : -26.79062652587891
         },
         "file" : "../common/background1.png",
         "filter" : 1,

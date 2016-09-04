@@ -42,9 +42,16 @@
   [
     
     {
+      "class" : "joint",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
+      "type" : "int"
+    },
+    
+    {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -52,13 +59,6 @@
       "class" : "body",
       "displayName" : "taskId",
       "name" : "taskId",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "joint",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -71,8 +71,15 @@
     
     {
       "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
       "type" : "int"
     },
     
@@ -87,13 +94,6 @@
       "class" : "body",
       "displayName" : "playerNr",
       "name" : "playerNr",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
       "type" : "int"
     },
     
@@ -2197,7 +2197,7 @@
           "x" : 0.07228089869022369,
           "y" : 0.07077030092477798
         },
-        "file" : "../../clear.png",
+        "file" : "../common/clear.png",
         "filter" : 1,
         "flip" : false,
         "id" : 12,
