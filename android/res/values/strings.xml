@@ -5,4 +5,6 @@
     <string name="ad_bottom_banner_menu">ca-app-pub-8364054019750662/7216821036</string>
     <string name="between_level_interstitial">ca-app-pub-8364054019750662/3885001836</string>
 
+    <string name="test_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="test_interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
 </resources>
