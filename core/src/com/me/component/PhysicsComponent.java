@@ -115,7 +115,8 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
     }
 
     private MassData previousMassData;
-    public void makeImmovable(){
+
+    public void makeImmovable() {
         previousMassData = body.get(name).getMassData();
         MassData massData = new MassData();
         massData.I = 0;
@@ -125,15 +126,15 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         setImmovable(true);
     }
 
-    private void storeMass(String name){
+    private void storeMass(String name) {
         previousMassData = body.get(name).getMassData();
     }
 
-    private void restoreMassData(String name){
+    private void restoreMassData(String name) {
         body.get(name).setMassData(previousMassData);
     }
 
-    public void makeMovable(){
+    public void makeMovable() {
         body.get(name).setMassData(previousMassData);
         setImmovable(false);
     }
@@ -368,6 +369,10 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
 
     public void setIsPlayer(boolean player) {
         isPlayer = player;
+    }
+
+    public void setStartPosition(Vector2 startPosition){
+        this.startPosition = startPosition;
     }
 
     public void setBodyActive(boolean active) {

@@ -1,0 +1,1664 @@
+
+{
+	"allowSleep" : true,
+	"autoClearForces" : true,
+	"body" : 
+	[
+		
+		{
+			"allowSleep" : false,
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 16,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				},
+				
+				{
+					"int" : 2,
+					"name" : "taskFinishers"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskId"
+				},
+				
+				{
+					"name" : "eventType",
+					"string" : "ReachEnd"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture2",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								11.99484825134277,
+								11.99484825134277,
+								0.3886833190917969,
+								0.3886537551879883
+							],
+							"y" : 
+							[
+								-2.885971069335938,
+								2.690260648727417,
+								2.774424314498901,
+								-2.801805496215820
+							]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "finish",
+			"position" : 
+			{
+				"x" : 104.4636306762695,
+				"y" : 5.887193679809570
+			},
+			"type" : 0
+		},
+		
+		{
+			"allowSleep" : false,
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 13,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 20.0,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 76,
+					"friction" : 0.1,
+					"name" : "fixture32",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								2.849699974060059,
+								2.849699974060059,
+								-2.911959886550903,
+								-2.911959886550903
+							],
+							"y" : 
+							[
+								-2.806010007858276,
+								2.955650091171265,
+								2.955650091171265,
+								-2.806010007858276
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 3677.768310546875,
+			"massData-center" : 
+			{
+				"x" : -0.03112995810806751,
+				"y" : 0.07482004165649414
+			},
+			"massData-mass" : 663.9344482421875,
+			"name" : "box",
+			"position" : 
+			{
+				"x" : 54.26570892333984,
+				"y" : -15.03209209442139
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : -1.56833541393280,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 76,
+					"friction" : 0.2,
+					"name" : "fixture6",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								1.213073730468750,
+								1.213073730468750,
+								-1.213073730468750,
+								-1.213073730468750
+							],
+							"y" : 
+							[
+								-8.913074493408203,
+								8.313074111938477,
+								8.313074111938477,
+								-8.913074493408203
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 1057.737915039062,
+			"massData-center" : 
+			{
+				"x" : 0,
+				"y" : -0.3
+			},
+			"massData-mass" : 41.79317855834961,
+			"name" : "door",
+			"position" : 
+			{
+				"x" : -20.45428085327148,
+				"y" : -11.59640789031982
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : -1.56833541393280,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture7"
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "doorHinge",
+			"position" : 
+			{
+				"x" : -12.49496269226074,
+				"y" : -13.09782123565674
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 24,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskFinishers"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskID"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskId"
+				},
+				
+				{
+					"name" : "eventType",
+					"string" : "Door"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 4,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.34851074218750,
+								0.34851074218750,
+								-0.34851074218750,
+								-0.34851074218750
+							],
+							"y" : 
+							[
+								-0.3485059738159180,
+								0.3485059738159180,
+								0.3485059738159180,
+								-0.3485059738159180
+							]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.03933884203433990,
+			"massData-mass" : 0.4858323037624359,
+			"name" : "bodyInfo",
+			"position" : 
+			{
+				"x" : -21.62255096435547,
+				"y" : 17.36015701293945
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"name" : "bodyType",
+					"string" : "light"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.3375701904296875,
+								0.3375701904296875,
+								-0.3594512939453125,
+								-0.3594512939453125
+							],
+							"y" : 
+							[
+								-0.3928289413452148,
+								0.3041839599609375,
+								0.3041839599609375,
+								-0.3928289413452148
+							]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "portalLight",
+			"position" : 
+			{
+				"x" : -20.06755828857422,
+				"y" : 19.00685882568359
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 23,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskFinishers"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskID"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskId"
+				},
+				
+				{
+					"name" : "eventType",
+					"string" : "Door"
+				},
+				
+				{
+					"name" : "taskType",
+					"string" : "Door"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 4,
+					"friction" : 0.2,
+					"name" : "fixture5",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.34851074218750,
+								0.34851074218750,
+								-0.3484954833984375,
+								-0.3484954833984375
+							],
+							"y" : 
+							[
+								-0.3485069274902344,
+								0.3485059738159180,
+								0.3485059738159180,
+								-0.3485069274902344
+							]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.03933722525835037,
+			"massData-center" : 
+			{
+				"x" : 7.629394076502649e-06,
+				"y" : -4.768371297814156e-07
+			},
+			"massData-mass" : 0.4858223199844360,
+			"name" : "bodyInfo",
+			"position" : 
+			{
+				"x" : -18.70854949951172,
+				"y" : 17.34885787963867
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 27,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				},
+				
+				{
+					"int" : 2,
+					"name" : "taskId"
+				},
+				
+				{
+					"name" : "fluidVel",
+					"vec2" : 
+					{
+						"x" : 0,
+						"y" : 4
+					}
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 0.01,
+					"filter-categoryBits" : 2,
+					"filter-maskBits" : 76,
+					"friction" : 0.2,
+					"name" : "boxWaterFixture",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								6.525712966918945,
+								6.371511459350586,
+								-6.542022705078125,
+								-6.443222045898438
+							],
+							"y" : 
+							[
+								-16.78838539123535,
+								16.97374725341797,
+								16.96920776367188,
+								-16.87867736816406
+							]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "water",
+			"position" : 
+			{
+				"x" : -8.463630676269531,
+				"y" : -29.88335609436035
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 27,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				},
+				
+				{
+					"int" : 2,
+					"name" : "taskId"
+				},
+				
+				{
+					"name" : "fluidVel",
+					"vec2" : 
+					{
+						"x" : 0,
+						"y" : 4
+					}
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 0.01,
+					"filter-categoryBits" : 2,
+					"filter-maskBits" : 76,
+					"friction" : 0.2,
+					"name" : "boxWaterFixture",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								6.525712966918945,
+								6.371511459350586,
+								-6.542022705078125,
+								-6.443222045898438
+							],
+							"y" : 
+							[
+								-16.78838539123535,
+								16.97374725341797,
+								16.96920776367188,
+								-16.87867736816406
+							]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "water",
+			"position" : 
+			{
+				"x" : 55.36605072021484,
+				"y" : -31.86313438415527
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 76,
+					"friction" : 10,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								15.91973876953125,
+								15.90638732910156,
+								-13.22682380676270,
+								-15.67193031311035,
+								-17.00177764892578,
+								-17.67215347290039,
+								-18.28154373168945,
+								-18.23265838623047
+							],
+							"y" : 
+							[
+								-12.62302398681641,
+								12.32930850982666,
+								12.48460483551025,
+								12.24721431732178,
+								11.8256082534790,
+								11.21332168579102,
+								10.39888954162598,
+								-12.43360710144043
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "ground",
+			"position" : 
+			{
+				"x" : 75.68894195556641,
+				"y" : -22.49438858032227
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "levelY",
+			"position" : 
+			{
+				"x" : -10.82028961181641,
+				"y" : -34.98310852050781
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "minY",
+			"position" : 
+			{
+				"x" : 33.49689483642578,
+				"y" : -39.01692581176758
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "maxY",
+			"position" : 
+			{
+				"x" : 87.60519409179688,
+				"y" : 32.87468719482422
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 2,
+					"name" : "playerNr"
+				},
+				
+				{
+					"name" : "bodyType",
+					"string" : "player_two"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -3.814697265625000e-06,
+							"y" : 0
+						},
+						"radius" : 0.4218782186508179
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture9",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "player_position",
+			"position" : 
+			{
+				"x" : -36.57979202270508,
+				"y" : 28.68116760253906
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "minX",
+			"position" : 
+			{
+				"x" : 1.090160369873047,
+				"y" : 32.72190856933594
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture3"
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "maxX",
+			"position" : 
+			{
+				"x" : 106.9168701171875,
+				"y" : 16.74660873413086
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"name" : "bodyType",
+					"string" : "skyLight"
+				},
+				
+				{
+					"name" : "lightColor",
+					"string" : "black"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture4"
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.09817477315664291,
+			"massData-mass" : 0.7853981852531433,
+			"name" : "sky_light",
+			"position" : 
+			{
+				"x" : 38.59354782104492,
+				"y" : 33.08018493652344
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "playerNr"
+				},
+				
+				{
+					"name" : "bodyType",
+					"string" : "player_one"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture8",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "player_position",
+			"position" : 
+			{
+				"x" : -33.61779403686523,
+				"y" : 28.41541481018066
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : -1.575825691223145,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 76,
+					"friction" : 10,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								5.121957302093506,
+								5.035646438598633,
+								-5.178098678588867,
+								-5.091778278350830
+							],
+							"y" : 
+							[
+								-10.87718486785889,
+								10.92008972167969,
+								10.92008972167969,
+								-10.87718391418457
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "wallR1",
+			"position" : 
+			{
+				"x" : 47.36754608154297,
+				"y" : 17.18061447143555
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : -1.575825691223145,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 76,
+					"friction" : 10,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								12.54831314086914,
+								12.33685779571533,
+								-10.78826713562012,
+								-11.48846912384033,
+								-12.00564861297607,
+								-12.42838382720947,
+								-12.66583538055420,
+								-12.47437667846680
+							],
+							"y" : 
+							[
+								-26.64807891845703,
+								26.75318908691406,
+								26.75134277343750,
+								26.06018829345703,
+								25.26843261718750,
+								23.91872215270996,
+								22.16590499877930,
+								-26.64807891845703
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "wallR1",
+			"position" : 
+			{
+				"x" : 24.14804458618164,
+				"y" : -22.64069557189941
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 76,
+					"friction" : 10,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								17.03054809570312,
+								16.71269607543945,
+								-8.310014724731445,
+								-7.992141723632812
+							],
+							"y" : 
+							[
+								-1.321268081665039,
+								21.54513931274414,
+								21.54513931274414,
+								-1.321268081665039
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "wallR1",
+			"position" : 
+			{
+				"x" : -30.43657302856445,
+				"y" : -8.519557952880859
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 12,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 128,
+					"filter-maskBits" : 32,
+					"friction" : 0.2,
+					"name" : "fixture1",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								1.273290038108826,
+								1.273290038108826,
+								-1.251070022583008,
+								-1.251070022583008
+							],
+							"y" : 
+							[
+								-1.085790038108826,
+								1.138569951057434,
+								1.138569951057434,
+								-1.085790038108826
+							]
+						}
+					},
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "liedownsensor",
+			"position" : 
+			{
+				"x" : 91.69070434570312,
+				"y" : 3.582177162170410
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 6,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : -0.02704238891601562,
+							"y" : -0.03652334213256836
+						},
+						"radius" : 1.213846683502197
+					},
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 6,
+					"friction" : 0.2,
+					"name" : "Edge",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "ledgeSensor",
+			"position" : 
+			{
+				"x" : 89.83490753173828,
+				"y" : 1.592817306518555
+			},
+			"type" : 0
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"density" : 1,
+					"filter-categoryBits" : 64,
+					"filter-maskBits" : 76,
+					"friction" : 10,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								15.38969993591309,
+								15.31135082244873,
+								-9.711360931396484,
+								-9.632989883422852
+							],
+							"y" : 
+							[
+								-10.3151102066040,
+								9.278053283691406,
+								9.278053283691406,
+								-10.3151102066040
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "wallR1",
+			"position" : 
+			{
+				"x" : 100.6810760498047,
+				"y" : -7.028568267822266
+			},
+			"type" : 0
+		}
+	],
+	"collisionbitplanes" : 
+	{
+		"names" : 
+		[
+			"bitplane1",
+			"bitplane2",
+			"bitplane3",
+			"bitplane4",
+			"bitplane5",
+			"bitplane6",
+			"bitplane7",
+			"bitplane8",
+			"bitplane9",
+			"bitplane10",
+			"bitplane11",
+			"bitplane12",
+			"bitplane13",
+			"bitplane14",
+			"bitplane15",
+			"bitplane16",
+			"bitplane17",
+			"bitplane18",
+			"bitplane19",
+			"bitplane20",
+			"bitplane21",
+			"bitplane22",
+			"bitplane23",
+			"bitplane24",
+			"bitplane25",
+			"bitplane26",
+			"bitplane27",
+			"bitplane28",
+			"bitplane29",
+			"bitplane30",
+			"bitplane31",
+			"bitplane32"
+		]
+	},
+	"continuousPhysics" : true,
+	"gravity" : 
+	{
+		"x" : 0,
+		"y" : -10
+	},
+	"image" : 
+	[
+		
+		{
+			"aspectScale" : 1,
+			"body" : 23,
+			"center" : 
+			{
+				"x" : -59.15215682983398,
+				"y" : 39.93668365478516
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					-155.0096588134766,
+					36.70534133911133,
+					36.70534133911133,
+					-155.0096588134766
+				],
+				"y" : 
+				[
+					-55.92081451416016,
+					-55.92081451416016,
+					135.7941894531250,
+					135.7941894531250
+				]
+			},
+			"file" : "../common/sky.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				-155.0096588134766,
+				-55.92081451416016,
+				36.70534133911133,
+				-55.92081451416016,
+				36.70534133911133,
+				135.7941894531250,
+				-155.0096588134766,
+				135.7941894531250
+			],
+			"name" : "sky",
+			"opacity" : 0.5,
+			"scale" : 191.7149963378906
+		},
+		
+		{
+			"aspectScale" : 1,
+			"body" : 5,
+			"center" : 
+			{
+				"x" : -0.02384948730468750,
+				"y" : -1.831393241882324
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					-0.7075785994529724,
+					0.6598796248435974,
+					0.6598796248435974,
+					-0.7075785994529724
+				],
+				"y" : 
+				[
+					-6.151318073272705,
+					-6.151318073272705,
+					2.488531589508057,
+					2.488531589508057
+				]
+			},
+			"file" : "../common/machine.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				-0.7075785994529724,
+				-6.151318073272705,
+				0.6598796248435974,
+				-6.151318073272705,
+				0.6598796248435974,
+				2.488531589508057,
+				-0.7075785994529724,
+				2.488531589508057
+			],
+			"name" : "portallight",
+			"opacity" : 1,
+			"renderOrder" : 4,
+			"scale" : 8.639849662780762
+		},
+		
+		{
+			"aspectScale" : 1,
+			"body" : 2,
+			"center" : 
+			{
+				"x" : 0.5965200662612915,
+				"y" : 0.3407053947448730
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					0.08637797832489014,
+					1.106662154197693,
+					1.106662154197693,
+					0.08637797832489014
+				],
+				"y" : 
+				[
+					-7.429151535034180,
+					-7.429151535034180,
+					8.110562324523926,
+					8.110562324523926
+				]
+			},
+			"file" : "../common/door.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				0.08637797832489014,
+				-7.429151535034180,
+				1.106662154197693,
+				-7.429151535034180,
+				1.106662154197693,
+				8.110562324523926,
+				0.08637797832489014,
+				8.110562324523926
+			],
+			"name" : "portallight",
+			"opacity" : 1,
+			"renderOrder" : 4,
+			"scale" : 15.53971385955811
+		},
+		
+		{
+			"aspectScale" : 1,
+			"body" : 1,
+			"center" : 
+			{
+				"x" : -0.03999390080571175,
+				"y" : 0.08659580349922180
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					-3.140269279479980,
+					3.060281276702881,
+					3.060281276702881,
+					-3.140269279479980
+				],
+				"y" : 
+				[
+					-2.837527513504028,
+					-2.837527513504028,
+					3.010719060897827,
+					3.010719060897827
+				]
+			},
+			"file" : "../common/box.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				-3.140269279479980,
+				-2.837527513504028,
+				3.060281276702881,
+				-2.837527513504028,
+				3.060281276702881,
+				3.010719060897827,
+				-3.140269279479980,
+				3.010719060897827
+			],
+			"name" : "box",
+			"opacity" : 1,
+			"renderOrder" : 6,
+			"scale" : 5.848246574401855
+		},
+		
+		{
+			"aspectScale" : 1,
+			"body" : 8,
+			"center" : 
+			{
+				"x" : -14.23092269897461,
+				"y" : 11.05595588684082
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					-86.60420227050781,
+					58.14236068725586,
+					58.14236068725586,
+					-86.60420227050781
+				],
+				"y" : 
+				[
+					5.228385448455811,
+					5.228385448455811,
+					16.88352584838867,
+					16.88352584838867
+				]
+			},
+			"file" : "../common/watergray.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				-86.60420227050781,
+				5.228385448455811,
+				58.14236068725586,
+				5.228385448455811,
+				58.14236068725586,
+				16.88352584838867,
+				-86.60420227050781,
+				16.88352584838867
+			],
+			"name" : "image2",
+			"opacity" : 1,
+			"renderOrder" : 8,
+			"scale" : 11.65514087677002
+		}
+	],
+	"joint" : 
+	[
+		
+		{
+			"anchorA" : 
+			{
+				"x" : -0.3678431510925293,
+				"y" : 0.0006439242279157043
+			},
+			"anchorB" : 
+			{
+				"x" : 1.153640985488892,
+				"y" : 7.956190109252930
+			},
+			"bodyA" : 3,
+			"bodyB" : 2,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 1,
+					"name" : "taskFinishers"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskId"
+				}
+			],
+			"enableLimit" : true,
+			"enableMotor" : false,
+			"localAxisA" : 
+			{
+				"x" : 0,
+				"y" : 1
+			},
+			"lowerLimit" : -20.0,
+			"maxMotorForce" : 800.0,
+			"motorSpeed" : 500.0,
+			"name" : "doorMotor",
+			"refAngle" : 0,
+			"type" : "prismatic",
+			"upperLimit" : 15.0
+		},
+		
+		{
+			"anchorA" : 
+			{
+				"x" : 0.758972167968750,
+				"y" : 0.8885040283203125
+			},
+			"anchorB" : 
+			{
+				"x" : -0.7964172363281250,
+				"y" : -0.7582511901855469
+			},
+			"bodyA" : 4,
+			"bodyB" : 5,
+			"dampingRatio" : 0,
+			"frequency" : 0,
+			"name" : "joint1",
+			"refAngle" : 0,
+			"type" : "weld"
+		},
+		
+		{
+			"anchorA" : 
+			{
+				"x" : -0.5198516845703125,
+				"y" : 0.9873733520507812
+			},
+			"anchorB" : 
+			{
+				"x" : 0.8391571044921875,
+				"y" : -0.6706275939941406
+			},
+			"bodyA" : 6,
+			"bodyB" : 5,
+			"dampingRatio" : 0,
+			"frequency" : 0,
+			"name" : "joint2",
+			"refAngle" : 0,
+			"type" : "weld"
+		}
+	],
+	"positionIterations" : 3,
+	"stepsPerSecond" : 60.0,
+	"subStepping" : false,
+	"velocityIterations" : 8,
+	"warmStarting" : true
+}

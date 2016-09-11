@@ -432,6 +432,7 @@ public class EntityLoader {
                 stateData.setMix("runLanding", "jogging", 0.2f);
 
                 animationComponent.setSkin(playerConfig.getSkinName());
+                pComp.setStartPosition(playerConfig.getPosition());
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
 
             } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_two")) {
@@ -486,10 +487,8 @@ public class EntityLoader {
                 HandHoldComponent handHoldComponent = new HandHoldComponent();
                 entity.addComponent(handHoldComponent);
                 entityWorld.addObserver(handHoldComponent);
-
+                pComp.setStartPosition(playerConfig.getPosition());
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
-
-
             }
 
             BodyUserData ud = (BodyUserData) body.getUserData();
