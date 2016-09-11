@@ -38,6 +38,10 @@ public class CharacterMovementComponent extends BaseComponent implements TaskEve
         return wheelJoint.getMotorSpeed();
     }
 
+    public boolean shouldFallAndRun(){
+        return getSpeed() < 2 || getSpeed() > 2;
+    }
+
     @Override
     public void dispose() {
     }

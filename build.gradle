@@ -112,11 +112,11 @@ project(":ios") {
     }
 
     robovm {
-        iosSignIdentity = "iPhone Distribution: Hatef  Tadayon"
+        iosSignIdentity = "iPhone Distribution: Hatef  Tadayon (92JTYG87T8)"
         iosProvisioningProfile = "Attraversiamo Production 2016-07-13"
         iosSkipSigning = false
-        stdoutFifo = ""
-        stderrFifo = ""
+        stdoutFifo = null
+        stderrFifo = null
     }
 }
 /*
