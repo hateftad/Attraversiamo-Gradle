@@ -10,9 +10,14 @@ import com.artemis.EntitySystem;
 import com.artemis.annotations.Mapper;
 import com.artemis.utils.Bag;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.me.component.*;
+import com.me.utils.Converters;
 
 public class RenderSystem extends EntitySystem {
 
@@ -31,11 +36,15 @@ public class RenderSystem extends EntitySystem {
     @Mapper
     ComponentMapper<EventParticleComponent> eventParticles;
     @Mapper
+    ComponentMapper<RayCastComponent> rayCastMapper;
+    @Mapper
     ComponentMapper<ShaderComponent> shaderComps;
 
     private List<Entity> sortedEntities;
 
     private SpriteBatch batch;
+
+    private ShapeRenderer shapeDebugger;
 
     private OrthographicCamera camera;
 
@@ -45,6 +54,7 @@ public class RenderSystem extends EntitySystem {
         super(Aspect.getAspectForAll(PhysicsComponent.class,
                 SpriteComponent.class));
         this.camera = camera;
+        shapeDebugger = new ShapeRenderer();
     }
 
     @Override
@@ -66,13 +76,29 @@ public class RenderSystem extends EntitySystem {
 
     @Override
     protected void end() {
-        this.batch.end();
+
     }
 
     @Override
     protected void processEntities(ImmutableBag<Entity> entities) {
         for (Entity sortedEntity : sortedEntities) {
             process(sortedEntity);
+        }
+        this.batch.end();
+        for (Entity sortedEntity : sortedEntities) {
+            if (rayCastMapper.has(sortedEntity)) {
+                RayCastComponent rayCastComponent = rayCastMapper.get(sortedEntity);
+                Gdx.gl20.glLineWidth(2);
+                shapeDebugger.setProjectionMatrix(camera.combined);
+                shapeDebugger.begin(ShapeRenderer.ShapeType.Line);
+                shapeDebugger.setColor(1, 0, 1, 1);
+                Vector2 startPoint = Converters.ToWorld(rayCastComponent.getStartPoint());
+                for (Vector2 endPoint : rayCastComponent.getEndPoints()) {
+                    Vector2 endPointConverted = Converters.ToWorld(endPoint);
+                    shapeDebugger.line(startPoint.x, startPoint.y,endPointConverted.x, endPointConverted.y);
+                }
+                shapeDebugger.end();
+            }
         }
     }
 
@@ -104,7 +130,6 @@ public class RenderSystem extends EntitySystem {
                     anim.update(batch, world.delta);
                 }
             }
-
         }
 
         if (shaderComps.has(entity)) {
@@ -144,7 +169,7 @@ public class RenderSystem extends EntitySystem {
         sortEntities();
     }
 
-    private void sortEntities(){
+    private void sortEntities() {
         Collections.sort(sortedEntities, new Comparator<Entity>() {
             @Override
             public int compare(Entity e1, Entity e2) {

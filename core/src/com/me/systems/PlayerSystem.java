@@ -68,9 +68,9 @@ public abstract class PlayerSystem extends GameEntityProcessingSystem implements
         }
     }
 
-    protected void checkFinished(TouchComponent touch, PlayerComponent player, FeetComponent feetComponent) {
+    protected void checkFinished(TouchComponent touch, PlayerComponent player, RayCastComponent rayCastComponent) {
         if(touch.insideFinish){
-            if(feetComponent.hasCollided() && !player.isFinishing() && !player.isFinished()){
+            if(rayCastComponent.hasCollided() && !player.isFinishing() && !player.isFinished()){
                 System.out.println("finished");
                 player.setFinished(true);
                 notifyObservers(new TaskEvent(GameEventType.InsideFinishArea, player.getPlayerNr()));

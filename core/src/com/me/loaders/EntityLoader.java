@@ -27,9 +27,7 @@ import com.me.factory.GameEventFactory;
 import com.me.level.Level;
 import com.me.loaders.BodySerializer.BodyUserData;
 import com.me.loaders.RubeScene.Indexes;
-import com.me.physics.JointFactory;
-import com.me.physics.PhysicsListenerSetup;
-import com.me.physics.RBUserData;
+import com.me.physics.*;
 import com.me.systems.CameraSystem;
 import com.me.systems.GameEntityWorld;
 import com.me.utils.Converters;
@@ -259,6 +257,12 @@ public class EntityLoader {
                 entityWorld.addObserver(levelAnimationComponent);
 
             }
+            if(ud.mName.equalsIgnoreCase("ai")){
+                entity.addComponent(new AIComponent());
+                entity.addComponent(new RestartComponent());
+                entity.addComponent(new SteeringComponent(body.getPosition(), 20));
+                entity.addComponent(new RayCastComponent(new EyeRay(pComp.getPosition("ai"), 20), new EyeRayCastListener()));
+            }
 
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
             pComp.setUserData(entity, ((BodyUserData) body.getUserData()).mName);
@@ -336,8 +340,8 @@ public class EntityLoader {
                         entity.addComponent(pComp);
                     }
 
-                    FeetComponent feetComponent = new FeetComponent(name);
-                    entity.addComponent(feetComponent);
+                    RayCastComponent rayCastComponent = new RayCastComponent(new FeetRay(pComp.getPosition("feet"), 1), new FeetRayCastListener());
+                    entity.addComponent(rayCastComponent);
 
                 } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase(
                         "hand")) {

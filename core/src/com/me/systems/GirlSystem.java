@@ -34,7 +34,7 @@ public class GirlSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
-    ComponentMapper<FeetComponent> feetComps;
+    ComponentMapper<RayCastComponent> feetComps;
 
     private float VELOCITY = 4.5f;
 
@@ -131,7 +131,7 @@ public class GirlSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = physComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         PlayerComponent playerComponent = playerComps.get(entity);
-        FeetComponent feetComponent = feetComps.get(entity);
+        RayCastComponent rayCastComponent = feetComps.get(entity);
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
@@ -144,14 +144,14 @@ public class GirlSystem extends PlayerSystem {
             if (playerComponent.crawling()) {
                 setPlayerState(entity, PlayerState.LyingDown);
             }
-            if (playerComponent.isFalling() && feetComponent.hasCollided()) {
+            if (playerComponent.isFalling() && rayCastComponent.hasCollided()) {
                 setPlayerState(entity, PlayerState.Landing);
                 movementComponent.standStill();
             }
         }
 
         if (physicsComponent.isFalling() &&
-                !feetComponent.hasCollided() &&
+                !rayCastComponent.hasCollided() &&
                 !playerComponent.isFalling()) {
             System.out.println("In the Air!");
             if (playerComponent.isRunning()) {
@@ -160,7 +160,7 @@ public class GirlSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Falling);
             }
         }
-        if (playerComponent.isFalling() && feetComponent.hasCollided()) {
+        if (playerComponent.isFalling() && rayCastComponent.hasCollided()) {
             System.out.println("Hit the ground!");
             if (playerComponent.getState() == PlayerState.RunFalling) {
                 setPlayerState(entity, PlayerState.RunLanding);
@@ -185,11 +185,11 @@ public class GirlSystem extends PlayerSystem {
         CharacterMovementComponent movementComponent = movementComps.get(entity);
         VelocityLimitComponent vel = velComps.get(entity);
         TouchComponent touch = touchComps.get(entity);
-        FeetComponent feetComponent = feetComps.get(entity);
+        RayCastComponent rayCastComponent = feetComps.get(entity);
         if (vel.velocity > 0) {
             vel.velocity = -4;
         }
-        if (feetComponent.hasCollided() && !player.isCrawling()) {
+        if (rayCastComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.boxTouch) {
 
                 vel.velocity -= VELOCITY * world.delta;
@@ -226,11 +226,11 @@ public class GirlSystem extends PlayerSystem {
         PlayerComponent player = playerComps.get(entity);
         VelocityLimitComponent vel = velComps.get(entity);
         TouchComponent touch = touchComps.get(entity);
-        FeetComponent feetComponent = feetComps.get(entity);
+        RayCastComponent rayCastComponent = feetComps.get(entity);
         if (vel.velocity < 0) {
             vel.velocity = 4;
         }
-        if (feetComponent.hasCollided() && !player.isCrawling()) {
+        if (rayCastComponent.hasCollided() && !player.isCrawling()) {
             if (!touch.boxTouch) {
 
                 vel.velocity += VELOCITY * world.delta;

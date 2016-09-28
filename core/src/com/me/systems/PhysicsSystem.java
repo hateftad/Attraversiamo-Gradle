@@ -49,7 +49,7 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     ComponentMapper<BuoyancyComponent> bouyComps;
 
     @Mapper
-    ComponentMapper<FeetComponent> feetComponents;
+    ComponentMapper<RayCastComponent> rayCastComponents;
 
     private World physicsWorld;
 
@@ -156,12 +156,12 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                 if (physicsComponents.has(e)) {
                     PhysicsComponent physicsComponent = physicsComponents.get(e);
                     physicsComponent.updatePreviousPosition();
-                    if (feetComponents.has(e)) {
-                        FeetComponent feetComponent = feetComponents.get(e);
-                        feetComponent.reset();
-                        feetComponent.update(physicsComponent.getBody(feetComponent.getBodyName()));
-                        for (int i = 0; i < feetComponent.getStartPoints().size(); i++) {
-                            physicsWorld.rayCast(feetComponent.getRaycastCallback(), feetComponent.getStartPoints().get(i), feetComponent.getEndPoints().get(i));
+                    if (rayCastComponents.has(e)) {
+                        RayCastComponent rayCastComponent = rayCastComponents.get(e);
+                        rayCastComponent.reset();
+                        rayCastComponent.update();
+                        for (int i = 0; i < rayCastComponent.getEndPoints().size(); i++) {
+                            physicsWorld.rayCast(rayCastComponent.getRaycastCallback(), rayCastComponent.getStartPoint(), rayCastComponent.getEndPoints().get(i));
                         }
                     }
                 }

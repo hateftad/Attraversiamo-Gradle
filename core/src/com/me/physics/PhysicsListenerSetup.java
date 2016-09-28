@@ -1,7 +1,6 @@
 package com.me.physics;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -13,10 +12,8 @@ import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
 import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
-import com.me.level.Player;
 import com.me.physics.RBUserData.Type;
 import com.me.systems.GameEntityWorld;
-import com.me.utils.Converters;
 
 public class PhysicsListenerSetup {
 
@@ -239,7 +236,7 @@ public class PhysicsListenerSetup {
                         if (e.getComponent(PlayerComponent.class) != null) {
                             if (otherUd.getType() == Type.Box && playerUd.getType() == Type.BoxHand) {
                                 e.getComponent(TouchComponent.class).boxHandTouch = true;
-                                if (e.getComponent(FeetComponent.class).hasCollided()) {
+                                if (e.getComponent(RayCastComponent.class).hasCollided()) {
                                     QueueComponent queueComp = e1.getComponent(QueueComponent.class);
                                     queueComp.mass = 5f;
                                     queueComp.type = QueueType.Mass;

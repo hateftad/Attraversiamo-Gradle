@@ -480,6 +480,10 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         isImmovable = immovable;
     }
 
+    public Vector2 getPosition(String name) {
+        return body.get(name).getPosition();
+    }
+
 
     public interface ImmediateModePhysicsListener {
 

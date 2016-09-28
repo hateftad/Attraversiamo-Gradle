@@ -48,7 +48,7 @@ public class ManSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
-    ComponentMapper<FeetComponent> rayCastComps;
+    ComponentMapper<RayCastComponent> rayCastComps;
     @Mapper
     ComponentMapper<HandHoldComponent> handHoldComps;
 
@@ -70,7 +70,7 @@ public class ManSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = physComps.get(entity);
         CharacterMovementComponent movementComponent = movementComps.get(entity);
         KeyInputComponent keyInputComponent = movComps.get(entity);
-        FeetComponent feetComponent = rayCastComps.get(entity);
+        RayCastComponent rayCastComponent = rayCastComps.get(entity);
 
         animation.setFacing(player.isFacingLeft());
 
@@ -151,7 +151,7 @@ public class ManSystem extends PlayerSystem {
             notifyObservers(new LevelEvent(LevelEventType.OnDied, currentLevel));
         }
 
-        checkFinished(touch, player, feetComponent);
+        checkFinished(touch, player, rayCastComponent);
 
         animateBody(physicsComponent, player, animation);
 
@@ -163,7 +163,7 @@ public class ManSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = physComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         PlayerComponent playerComponent = playerComps.get(entity);
-        FeetComponent feetComponent = rayCastComps.get(entity);
+        RayCastComponent rayCastComponent = rayCastComps.get(entity);
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
@@ -172,14 +172,14 @@ public class ManSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Idle);
                 movementComponent.standStill();
             }
-            if (playerComponent.isFalling() && feetComponent.hasCollided()) {
+            if (playerComponent.isFalling() && rayCastComponent.hasCollided()) {
                 setPlayerState(entity, PlayerState.Landing);
                 movementComponent.standStill();
             }
         }
 
         if (physicsComponent.isFalling() &&
-                !feetComponent.hasCollided() &&
+                !rayCastComponent.hasCollided() &&
                 !playerComponent.isFalling()) {
             if (!playerComponent.isUpJumping()) {
                 setPlayerState(entity, PlayerState.RunFalling);
@@ -187,7 +187,7 @@ public class ManSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Falling);
             }
         }
-        if (playerComponent.isFalling() && feetComponent.hasCollided()) {
+        if (playerComponent.isFalling() && rayCastComponent.hasCollided()) {
             if (playerComponent.getState() == PlayerState.RunFalling && movementComponent.shouldFallAndRun()) {
                 setPlayerState(entity, PlayerState.RunLanding);
             } else {
@@ -197,7 +197,7 @@ public class ManSystem extends PlayerSystem {
         }
 
         if (!playerComponent.isActive() &&
-                feetComponent.hasCollided() &&
+                rayCastComponent.hasCollided() &&
                 playerComponent.shouldBeIdle()) {
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
@@ -213,9 +213,9 @@ public class ManSystem extends PlayerSystem {
         PlayerComponent player = playerComps.get(entity);
         PhysicsComponent physicsComponent = physComps.get(entity);
         KeyInputComponent keyInputComponent = movComps.get(entity);
-        FeetComponent feetComponent = rayCastComps.get(entity);
+        RayCastComponent rayCastComponent = rayCastComps.get(entity);
 
-        if (feetComponent.hasCollided() && !player.isJumping() && !player.isFalling()) {
+        if (rayCastComponent.hasCollided() && !player.isJumping() && !player.isFalling()) {
             if (keyInputComponent.isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
                     physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -20 : 20), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
@@ -237,11 +237,11 @@ public class ManSystem extends PlayerSystem {
         TouchComponent touch = touchComps.get(entity);
         HangComponent hangComponent = hangComps.get(entity);
         PlayerComponent player = playerComps.get(entity);
-        FeetComponent feetComponent = rayCastComps.get(entity);
+        RayCastComponent rayCastComponent = rayCastComps.get(entity);
         JointComponent jointComponent = jointComp.get(entity);
 
 
-        if (feetComponent.hasCollided() && !player.isHanging() && !player.isLanding()) {
+        if (rayCastComponent.hasCollided() && !player.isHanging() && !player.isLanding()) {
             if (vel.velocity > 0) {
                 vel.velocity = -VELOCITYINR;
             }
@@ -284,10 +284,10 @@ public class ManSystem extends PlayerSystem {
         TouchComponent touch = touchComps.get(entity);
         HangComponent hangComponent = hangComps.get(entity);
         PlayerComponent player = playerComps.get(entity);
-        FeetComponent feetComponent = rayCastComps.get(entity);
+        RayCastComponent rayCastComponent = rayCastComps.get(entity);
         JointComponent jointComponent = jointComp.get(entity);
 
-        if (feetComponent.hasCollided() && !player.isHanging() && !player.isLanding()) {
+        if (rayCastComponent.hasCollided() && !player.isHanging() && !player.isLanding()) {
             if (vel.velocity < 0) {
                 vel.velocity = VELOCITYINR;
             }
