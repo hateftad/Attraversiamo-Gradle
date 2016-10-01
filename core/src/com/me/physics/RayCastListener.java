@@ -10,5 +10,7 @@ public interface RayCastListener extends RayCastCallback {
     Box2dLocation getTarget();
     boolean hasCollided();
     void reset();
+    long getCollisionTime();
 
+    void clearTarget();
 }

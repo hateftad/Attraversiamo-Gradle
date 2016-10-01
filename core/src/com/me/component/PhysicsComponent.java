@@ -310,6 +310,12 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         body.get(Center).setLinearVelocity(x, y);
     }
 
+    public void setLinearVelocityDefault(float x, float y) {
+        //for (Body b : body.values())
+        //	b.setLinearVelocity(x, y);
+        body.get(name).setLinearVelocity(x, y);
+    }
+
     public void setLinearVelocity(float x) {
         //for (Body b : body.values())
         //	b.setLinearVelocity(x, y);

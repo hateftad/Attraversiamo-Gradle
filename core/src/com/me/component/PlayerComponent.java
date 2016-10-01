@@ -128,7 +128,7 @@ public class PlayerComponent extends BaseComponent implements TelegramEventObser
 
     public enum PlayerNumber {
         NONE,
-        ONE, TWO, THREE
+        ONE, TWO, THREE, AI
     }
 
     private PlayerNumber playerNr;

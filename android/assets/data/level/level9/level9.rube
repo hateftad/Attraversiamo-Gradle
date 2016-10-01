@@ -43,6 +43,20 @@
     
     {
       "class" : "body",
+      "displayName" : "boxIndex",
+      "name" : "boxIndex",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "bodyType",
+      "name" : "bodyType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "particlename",
       "name" : "particlename",
       "type" : "string"
@@ -57,23 +71,9 @@
     
     {
       "class" : "body",
-      "displayName" : "boxIndex",
-      "name" : "boxIndex",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "taskId",
       "name" : "taskId",
       "type" : "int"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "bodyType",
-      "name" : "bodyType",
-      "type" : "string"
     },
     
     {
@@ -718,8 +718,8 @@
         "name" : "ai",
         "position" : 
         {
-          "x" : 33.30871582031250,
-          "y" : 0.5643024444580078
+          "x" : 101.6081085205078,
+          "y" : 2.084482192993164
         },
         "type" : "dynamic"
       }
@@ -776,7 +776,7 @@
         "flip" : false,
         "id" : 5,
         "name" : "image3",
-        "opacity" : 0.5,
+        "opacity" : 1,
         "renderOrder" : 1,
         "scale" : 68.19523620605469
       },
@@ -785,12 +785,13 @@
         "aspectScale" : 1,
         "body" : 12,
         "center" : 0,
-        "file" : "../../particles/pump_smoke_06.png",
+        "file" : "../../character/littleGirl/smallCharIdle.png",
         "filter" : 1,
         "flip" : false,
         "id" : 6,
         "name" : "image0",
-        "opacity" : 0.5,
+        "opacity" : 1,
+        "renderOrder" : 5,
         "scale" : 4.816661834716797
       }
     ],

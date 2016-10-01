@@ -11,7 +11,7 @@ import com.me.utils.SteeringUtils;
 /**
  * Created by hateftadayon on 9/28/16.
  */
-public class SteeringComponent extends BaseComponent implements Steerable<Vector2> {
+public class SteeringEntity implements Steerable<Vector2> {
 
 
     private static final SteeringAcceleration<Vector2> steeringOutput =
@@ -31,22 +31,12 @@ public class SteeringComponent extends BaseComponent implements Steerable<Vector
     private float maxAngularSpeed;
     private float maxAngularAcceleration;
 
-    public SteeringComponent(Vector2 position, float boundRadius){
+    public SteeringEntity(Vector2 position, float boundRadius){
         this.position = position;
         this.boundRadius = boundRadius;
         maxLinearAcceleration = 2;
         maxSpeed = 2;
         maxLinearSpeed = 2;
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public void restart() {
-
     }
 
     public void update (float deltaTime) {
@@ -74,7 +64,8 @@ public class SteeringComponent extends BaseComponent implements Steerable<Vector
         // Update position and linear velocity.
         if (!steeringOutput.linear.isZero()) {
             // this method internally scales the force by deltaTime
-            linearVelocity.set(steeringOutput.linear.x, 0);
+            linearVelocity.set(steeringOutput.linear);
+            System.out.println(steeringOutput.linear);
             anyAccelerations = true;
         }
 
@@ -211,7 +202,6 @@ public class SteeringComponent extends BaseComponent implements Steerable<Vector
 
     @Override
     public float vectorToAngle(Vector2 vector) {
-
         return SteeringUtils.vectorToAngle(vector);
     }
 
@@ -231,6 +221,11 @@ public class SteeringComponent extends BaseComponent implements Steerable<Vector
 
     public void setSteeringBehavior (SteeringBehavior<Vector2> steeringBehavior) {
         this.steeringBehavior = steeringBehavior;
+    }
+
+    public void reset(){
+        steeringOutput.setZero();
+        linearVelocity.setZero();
     }
 
     public boolean isIndependentFacing() {

@@ -13,6 +13,7 @@ public class EyeRayCastListener implements RayCastListener {
 
     private boolean collided;
     private Box2dLocation target;
+    private long collisionTime;
 
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
@@ -21,7 +22,7 @@ public class EyeRayCastListener implements RayCastListener {
         PhysicsComponent component = entity.getComponent(PhysicsComponent.class);
         RBUserData other = component.getRBUserData(fixture.getBody());
         if (other.getType() == RBUserData.Type.Torso) {
-            System.out.println("Collidededeadee");
+            collisionTime = System.currentTimeMillis();
             collided = true;
             if (target == null) {
                 target = new Box2dLocation(bodyA.getPosition(), bodyA.getAngle());
@@ -40,11 +41,24 @@ public class EyeRayCastListener implements RayCastListener {
 
     @Override
     public void reset() {
-        collided = false;
-        target = null;
+
     }
 
     public Box2dLocation getTarget(){
         return target;
+    }
+
+    @Override
+    public void clearTarget() {
+        target = null;
+        collided = false;
+    }
+
+    public long getCollisionTime() {
+        return collisionTime;
+    }
+
+    public void setCollisionTime(long collisionTime) {
+        this.collisionTime = collisionTime;
     }
 }

@@ -1,10 +1,6 @@
 package com.me.component;
 
-import com.artemis.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.me.physics.*;
 
 import java.util.List;
@@ -23,36 +19,40 @@ public class RayCastComponent extends BaseComponent {
         this.rays = raySet;
     }
 
-    public RayCastListener getRaycastCallback(){
+    public RayCastListener getRaycastCallback() {
         return raycastCallback;
     }
 
-    public Vector2 getStartPoint(){
+    public Vector2 getStartPoint() {
         return rays.getStartPoint();
     }
 
-    public List<Vector2> getEndPoints(){
+    public List<Vector2> getEndPoints() {
         return rays.getEndPoints();
     }
 
-    public Vector2 getNormal(){
+    public Vector2 getNormal() {
         return normal;
     }
 
-    public void reset(){
+    public void reset() {
         raycastCallback.reset();
     }
 
-    public boolean hasCollided(){
+    public boolean hasCollided() {
         return raycastCallback.hasCollided();
     }
 
-    public void update(){
+    public void update() {
         rays.updatePoints();
     }
 
     public Box2dLocation getTarget() {
         return raycastCallback.getTarget();
+    }
+
+    public long getCollisionTime(){
+        return raycastCallback.getCollisionTime();
     }
 
     @Override
@@ -66,5 +66,7 @@ public class RayCastComponent extends BaseComponent {
     }
 
 
-
+    public void clearTarget() {
+        raycastCallback.clearTarget();
+    }
 }

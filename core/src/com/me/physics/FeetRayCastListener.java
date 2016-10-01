@@ -40,4 +40,14 @@ public class FeetRayCastListener implements RayCastListener {
     public void reset() {
         collided = false;
     }
+
+    @Override
+    public long getCollisionTime() {
+        return 0;
+    }
+
+    @Override
+    public void clearTarget() {
+
+    }
 }

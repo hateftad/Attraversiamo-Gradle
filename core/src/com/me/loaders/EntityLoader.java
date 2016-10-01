@@ -258,10 +258,10 @@ public class EntityLoader {
 
             }
             if(ud.mName.equalsIgnoreCase("ai")){
-                entity.addComponent(new AIComponent());
+                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20)));
+                entity.addComponent(new PlayerComponent(PlayerComponent.PlayerNumber.AI, false));
                 entity.addComponent(new RestartComponent());
-                entity.addComponent(new SteeringComponent(body.getPosition(), 20));
-                entity.addComponent(new RayCastComponent(new EyeRay(pComp.getPosition("ai"), 20), new EyeRayCastListener()));
+                entity.addComponent(new RayCastComponent(new EyeRay(pComp.getPosition(), 5), new EyeRayCastListener()));
             }
 
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
