@@ -493,6 +493,11 @@ public class EntityLoader {
                 entityWorld.addObserver(handHoldComponent);
                 pComp.setStartPosition(playerConfig.getPosition());
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
+            } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("enemy")) {
+                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20)));
+                entity.addComponent(new PlayerComponent(PlayerComponent.PlayerNumber.AI, false));
+                entity.addComponent(new RestartComponent());
+                entity.addComponent(new RayCastComponent(new EyeRay(pComp.getPosition(), 5), new EyeRayCastListener()));
             }
 
             BodyUserData ud = (BodyUserData) body.getUserData();

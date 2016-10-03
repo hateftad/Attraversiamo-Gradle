@@ -5,7 +5,10 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
+import com.badlogic.gdx.ai.steer.behaviors.Wander;
+import com.badlogic.gdx.math.Vector2;
 import com.me.ai.state.EnemyState;
+import com.me.ai.utils.BehaviourFactory;
 import com.me.physics.Box2dLocation;
 
 public class AIComponent extends BaseComponent implements Telegraph {
@@ -18,6 +21,7 @@ public class AIComponent extends BaseComponent implements Telegraph {
         stateMachine = new EnemyStateMachine(new DefaultStateMachine<AIComponent, EnemyState>(this, EnemyState.SEEK));
         stateMachine.getStateMachine().setInitialState(EnemyState.SEEK);
         this.steeringEntity = steeringEntity;
+        steeringEntity.setSteeringBehavior(BehaviourFactory.createWander(steeringEntity));
     }
 
     public void update(float delta){
@@ -33,7 +37,8 @@ public class AIComponent extends BaseComponent implements Telegraph {
 	@Override
 	public void restart() {
 		// TODO Auto-generated method stub
-
+        target = null;
+        stateMachine.getStateMachine().changeState(EnemyState.SEEK);
 	}
 
     @Override

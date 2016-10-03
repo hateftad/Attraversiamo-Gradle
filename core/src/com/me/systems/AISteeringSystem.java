@@ -4,10 +4,7 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
-import com.me.component.AIComponent;
-import com.me.component.PhysicsComponent;
-import com.me.component.RayCastComponent;
-import com.me.component.SteeringEntity;
+import com.me.component.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +19,8 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
     private ComponentMapper<RayCastComponent> rayCastComponentMapper;
     @Mapper
     private ComponentMapper<AIComponent> aiComponentMapper;
+    @Mapper
+    private ComponentMapper<CharacterMovementComponent> characterMovementMapper;
 
     public AISteeringSystem() {
         super(Aspect.getAspectForOne(AIComponent.class));
@@ -39,19 +38,16 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
             if(rayCastComponent.hasCollided() && aiComponent.getTarget() == null){
                 aiComponent.setTarget(rayCastComponent.getTarget());
             }
-            PhysicsComponent physicsComponent = physicsComponentMapper.get(e);
-            if (physicsComponent.getBody() != null) {
-                physicsComponent.setLinearVelocityDefault(steeringComponent.getLinearVelocity().x, 0);
-//                System.out.println(steeringComponent.getLinearVelocity().x);
+            CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(e);
+            if(movementComponent != null) {
+                movementComponent.setVelocity(steeringComponent.getLinearVelocity().x * 10);
             }
         }
 
         if(rayCastComponent.hasCollided() &&
-                rayCastComponent.getCollisionTime() + TimeUnit.SECONDS.toMillis(5) < System.currentTimeMillis()){
+                rayCastComponent.getCollisionTime() + TimeUnit.SECONDS.toMillis(10) < System.currentTimeMillis()){
             rayCastComponent.clearTarget();
             aiComponent.setTarget(null);
-            aiComponent.getSteeringEntity().reset();
-            System.out.println("clearing target");
         }
 
     }

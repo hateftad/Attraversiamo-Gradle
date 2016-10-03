@@ -1,0 +1,188 @@
+
+enemy.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Back End
+  rotate: false
+  xy: 2, 13
+  size: 314, 219
+  orig: 314, 219
+  offset: 0, 0
+  index: -1
+Back Front
+  rotate: false
+  xy: 2, 234
+  size: 373, 276
+  orig: 373, 276
+  offset: 0, 0
+  index: -1
+Back leg
+  rotate: false
+  xy: 674, 172
+  size: 104, 171
+  orig: 104, 171
+  offset: 0, 0
+  index: -1
+Back leg top
+  rotate: true
+  xy: 968, 308
+  size: 202, 240
+  orig: 202, 240
+  offset: 0, 0
+  index: -1
+Back paw
+  rotate: false
+  xy: 775, 115
+  size: 88, 53
+  orig: 88, 53
+  offset: 0, 0
+  index: -1
+Background back leg
+  rotate: false
+  xy: 1915, 339
+  size: 105, 171
+  orig: 105, 171
+  offset: 0, 0
+  index: -1
+Background back leg paw
+  rotate: false
+  xy: 779, 60
+  size: 88, 53
+  orig: 88, 53
+  offset: 0, 0
+  index: -1
+Background back leg top
+  rotate: true
+  xy: 1210, 309
+  size: 201, 240
+  orig: 201, 240
+  offset: 0, 0
+  index: -1
+Background front ankle
+  rotate: false
+  xy: 318, 183
+  size: 52, 49
+  orig: 52, 49
+  offset: 0, 0
+  index: -1
+Background front leg top
+  rotate: true
+  xy: 1693, 336
+  size: 174, 220
+  orig: 174, 220
+  offset: 0, 0
+  index: -1
+Ear
+  rotate: true
+  xy: 780, 170
+  size: 65, 121
+  orig: 65, 121
+  offset: 0, 0
+  index: -1
+Front Leg
+  rotate: false
+  xy: 599, 137
+  size: 73, 198
+  orig: 73, 198
+  offset: 0, 0
+  index: -1
+Front Paw
+  rotate: false
+  xy: 469, 7
+  size: 102, 52
+  orig: 102, 52
+  offset: 0, 0
+  index: -1
+Front ankle
+  rotate: true
+  xy: 865, 117
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+Front top Leg
+  rotate: true
+  xy: 377, 161
+  size: 174, 220
+  orig: 174, 220
+  offset: 0, 0
+  index: -1
+Head Closed
+  rotate: false
+  xy: 672, 345
+  size: 294, 165
+  orig: 294, 165
+  offset: 0, 0
+  index: -1
+Neck
+  rotate: true
+  xy: 1452, 306
+  size: 204, 239
+  orig: 204, 239
+  offset: 0, 0
+  index: -1
+background front leg
+  rotate: true
+  xy: 1693, 261
+  size: 73, 198
+  orig: 73, 198
+  offset: 0, 0
+  index: -1
+backround front paw
+  rotate: false
+  xy: 674, 51
+  size: 103, 51
+  orig: 103, 51
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 377, 337
+  size: 293, 173
+  orig: 293, 173
+  offset: 0, 0
+  index: -1
+jaw
+  rotate: false
+  xy: 674, 104
+  size: 99, 66
+  orig: 99, 66
+  offset: 0, 0
+  index: -1
+tail 01
+  rotate: true
+  xy: 469, 61
+  size: 98, 128
+  orig: 98, 128
+  offset: 0, 0
+  index: -1
+tail 02
+  rotate: false
+  xy: 318, 2
+  size: 149, 157
+  orig: 149, 157
+  offset: 0, 0
+  index: -1
+tail 03
+  rotate: false
+  xy: 780, 237
+  size: 139, 106
+  orig: 139, 106
+  offset: 0, 0
+  index: -1
+tail end
+  rotate: true
+  xy: 599, 22
+  size: 113, 73
+  orig: 113, 73
+  offset: 0, 0
+  index: -1
+tung
+  rotate: true
+  xy: 921, 276
+  size: 67, 30
+  orig: 67, 30
+  offset: 0, 0
+  index: -1

@@ -65,7 +65,7 @@ public class SteeringEntity implements Steerable<Vector2> {
         if (!steeringOutput.linear.isZero()) {
             // this method internally scales the force by deltaTime
             linearVelocity.set(steeringOutput.linear);
-            System.out.println(steeringOutput.linear);
+//            System.out.println(steeringOutput.linear);
             anyAccelerations = true;
         }
 
@@ -221,11 +221,6 @@ public class SteeringEntity implements Steerable<Vector2> {
 
     public void setSteeringBehavior (SteeringBehavior<Vector2> steeringBehavior) {
         this.steeringBehavior = steeringBehavior;
-    }
-
-    public void reset(){
-        steeringOutput.setZero();
-        linearVelocity.setZero();
     }
 
     public boolean isIndependentFacing() {

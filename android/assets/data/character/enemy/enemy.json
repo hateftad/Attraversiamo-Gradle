@@ -1,0 +1,374 @@
+
+{
+	"allowSleep" : true,
+	"autoClearForces" : true,
+	"body" : 
+	[
+		
+		{
+			"allowSleep" : false,
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"bullet" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 3,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				},
+				
+				{
+					"name" : "atlas",
+					"string" : "enemy"
+				},
+				
+				{
+					"name" : "characterType",
+					"string" : "enemy"
+				},
+				
+				{
+					"name" : "skeleton",
+					"string" : "enemyDog"
+				}
+			],
+			"fixedRotation" : true,
+			"fixture" : 
+			[
+				
+				{
+					"density" : 0.5,
+					"filter-categoryBits" : 4,
+					"filter-maskBits" : 65,
+					"friction" : 9.999999974752427e-07,
+					"name" : "fixture3",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.7963140010833740,
+								-0.7440090179443359,
+								-0.5304290056228638,
+								-0.03602850064635277,
+								0.5475829839706421,
+								0.7184479832649231
+							],
+							"y" : 
+							[
+								-1.005280017852783,
+								-1.762680053710938,
+								-2.133810043334961,
+								-2.155090093612671,
+								-2.127310037612915,
+								-1.777019977569580
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 0.5,
+					"filter-categoryBits" : 4,
+					"filter-maskBits" : 65,
+					"friction" : 9.999999974752427e-07,
+					"name" : "fixture3",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.8081610202789307,
+								-0.09962079674005508,
+								-0.7444159984588623,
+								-0.7687960267066956,
+								-0.7440090179443359,
+								0.7963140010833740
+							],
+							"y" : 
+							[
+								1.767040014266968,
+								2.302759885787964,
+								1.812319993972778,
+								-0.9599930047988892,
+								-1.762680053710938,
+								-1.005280017852783
+							]
+						}
+					}
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.0007025182712823153,
+			"massData-center" : 
+			{
+				"x" : 0.01333154458552599,
+				"y" : -0.006515142973512411
+			},
+			"massData-mass" : 3.190695285797119,
+			"name" : "ai",
+			"position" : 
+			{
+				"x" : -0.03018569946289062,
+				"y" : 2.725399971008301
+			},
+			"type" : 2
+		},
+		
+		{
+			"allowSleep" : false,
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 4,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "taskId"
+				},
+				
+				{
+					"name" : "characterType",
+					"string" : "leg"
+				},
+				
+				{
+					"name" : "eventType",
+					"string" : "groundTouch"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.65
+					},
+					"density" : 1,
+					"filter-categoryBits" : 4,
+					"filter-maskBits" : 65,
+					"friction" : 100.0,
+					"name" : "fixture1"
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.2803969085216522,
+			"massData-mass" : 1.327322721481323,
+			"name" : "feet",
+			"position" : 
+			{
+				"x" : -0.02067565917968750,
+				"y" : 0.6912488937377930
+			},
+			"type" : 2
+		},
+		
+		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"customProperties" : 
+			[
+				
+				{
+					"int" : 26,
+					"name" : "boxIndex"
+				},
+				
+				{
+					"int" : 1,
+					"name" : "collisionGroup"
+				}
+			],
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.1215913444757462
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"massData-I" : 0.0003433448437135667,
+			"massData-mass" : 0.04644673690199852,
+			"name" : "body0",
+			"position" : 
+			{
+				"x" : -0.03092575073242188,
+				"y" : 0.6758337020874023
+			},
+			"type" : 2
+		}
+	],
+	"collisionbitplanes" : 
+	{
+		"names" : 
+		[
+			"bitplane1",
+			"bitplane2",
+			"bitplane3",
+			"bitplane4",
+			"bitplane5",
+			"bitplane6",
+			"bitplane7",
+			"bitplane8",
+			"bitplane9",
+			"bitplane10",
+			"bitplane11",
+			"bitplane12",
+			"bitplane13",
+			"bitplane14",
+			"bitplane15",
+			"bitplane16",
+			"bitplane17",
+			"bitplane18",
+			"bitplane19",
+			"bitplane20",
+			"bitplane21",
+			"bitplane22",
+			"bitplane23",
+			"bitplane24",
+			"bitplane25",
+			"bitplane26",
+			"bitplane27",
+			"bitplane28",
+			"bitplane29",
+			"bitplane30",
+			"bitplane31",
+			"bitplane32"
+		]
+	},
+	"continuousPhysics" : true,
+	"gravity" : 
+	{
+		"x" : 0,
+		"y" : -10
+	},
+	"image" : 
+	[
+		
+		{
+			"aspectScale" : 1,
+			"body" : 0,
+			"center" : 
+			{
+				"x" : 0.01958429999649525,
+				"y" : 2.045000076293945
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					-4.695320606231689,
+					4.734488964080811,
+					4.734488964080811,
+					-4.695320606231689
+				],
+				"y" : 
+				[
+					-2.669904708862305,
+					-2.669904708862305,
+					6.759904861450195,
+					6.759904861450195
+				]
+			},
+			"file" : "../smallCharacter/smallCharIdle.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				-4.695320606231689,
+				-2.669904708862305,
+				4.734488964080811,
+				-2.669904708862305,
+				4.734488964080811,
+				6.759904861450195,
+				-4.695320606231689,
+				6.759904861450195
+			],
+			"name" : "image0",
+			"opacity" : 1,
+			"renderOrder" : 6,
+			"scale" : 9.42980957031250
+		}
+	],
+	"joint" : 
+	[
+		
+		{
+			"anchorA" : 0,
+			"anchorB" : 
+			{
+				"x" : -0.01025170087814331,
+				"y" : -0.01541507244110107
+			},
+			"bodyA" : 2,
+			"bodyB" : 1,
+			"dampingRatio" : 0,
+			"frequency" : 0,
+			"name" : "joint1",
+			"refAngle" : 0,
+			"type" : "weld"
+		},
+		
+		{
+			"anchorA" : 
+			{
+				"x" : -0.0002945810556411743,
+				"y" : 0.0007641315460205078
+			},
+			"anchorB" : 
+			{
+				"x" : -0.005705103278160095,
+				"y" : -2.039420604705811
+			},
+			"bodyA" : 1,
+			"bodyB" : 0,
+			"enableLimit" : false,
+			"enableMotor" : true,
+			"jointSpeed" : 0,
+			"lowerLimit" : 0,
+			"maxMotorTorque" : 1000.0,
+			"motorSpeed" : 0,
+			"name" : "footMotor",
+			"refAngle" : 0,
+			"type" : "revolute",
+			"upperLimit" : 0
+		}
+	],
+	"positionIterations" : 3,
+	"stepsPerSecond" : 60.0,
+	"subStepping" : false,
+	"velocityIterations" : 8,
+	"warmStarting" : true
+}

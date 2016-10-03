@@ -15,6 +15,10 @@ public class PlayerConfig {
     private int playerNumber;
     private boolean finishFacingLeft;
 
+    public PlayerConfig(Vector2 playerPosition){
+        this.playerPosition = playerPosition;
+    }
+
  	public PlayerConfig(){
  		playerPosition = new Vector2();
  	}
