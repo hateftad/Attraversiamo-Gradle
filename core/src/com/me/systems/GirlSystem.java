@@ -34,7 +34,7 @@ public class GirlSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
-    ComponentMapper<RayCastComponent> feetComps;
+    ComponentMapper<FeetRayCastComponent> feetComps;
 
     private float VELOCITY = 4.5f;
 
@@ -131,7 +131,7 @@ public class GirlSystem extends PlayerSystem {
         PhysicsComponent physicsComponent = physComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         PlayerComponent playerComponent = playerComps.get(entity);
-        RayCastComponent rayCastComponent = feetComps.get(entity);
+        FeetRayCastComponent rayCastComponent = feetComps.get(entity);
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
@@ -185,7 +185,7 @@ public class GirlSystem extends PlayerSystem {
         CharacterMovementComponent movementComponent = movementComps.get(entity);
         VelocityLimitComponent vel = velComps.get(entity);
         TouchComponent touch = touchComps.get(entity);
-        RayCastComponent rayCastComponent = feetComps.get(entity);
+        FeetRayCastComponent rayCastComponent = feetComps.get(entity);
         if (vel.velocity > 0) {
             vel.velocity = -4;
         }
@@ -226,7 +226,7 @@ public class GirlSystem extends PlayerSystem {
         PlayerComponent player = playerComps.get(entity);
         VelocityLimitComponent vel = velComps.get(entity);
         TouchComponent touch = touchComps.get(entity);
-        RayCastComponent rayCastComponent = feetComps.get(entity);
+        FeetRayCastComponent rayCastComponent = feetComps.get(entity);
         if (vel.velocity < 0) {
             vel.velocity = 4;
         }

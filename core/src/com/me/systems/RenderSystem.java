@@ -11,7 +11,6 @@ import com.artemis.annotations.Mapper;
 import com.artemis.utils.Bag;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -36,7 +35,9 @@ public class RenderSystem extends EntitySystem {
     @Mapper
     ComponentMapper<EventParticleComponent> eventParticles;
     @Mapper
-    ComponentMapper<RayCastComponent> rayCastMapper;
+    ComponentMapper<EyeRayCastComponent> eyeRayCastMapper;
+    @Mapper
+    ComponentMapper<FeetRayCastComponent> feetRayCastMapper;
     @Mapper
     ComponentMapper<ShaderComponent> shaderComps;
 
@@ -86,20 +87,26 @@ public class RenderSystem extends EntitySystem {
         }
         this.batch.end();
         for (Entity sortedEntity : sortedEntities) {
-            if (rayCastMapper.has(sortedEntity)) {
-                RayCastComponent rayCastComponent = rayCastMapper.get(sortedEntity);
-                Gdx.gl20.glLineWidth(2);
-                shapeDebugger.setProjectionMatrix(camera.combined);
-                shapeDebugger.begin(ShapeRenderer.ShapeType.Line);
-                shapeDebugger.setColor(1, 0, 1, 1);
-                Vector2 startPoint = Converters.ToWorld(rayCastComponent.getStartPoint());
-                for (Vector2 endPoint : rayCastComponent.getEndPoints()) {
-                    Vector2 endPointConverted = Converters.ToWorld(endPoint);
-                    shapeDebugger.line(startPoint.x, startPoint.y,endPointConverted.x, endPointConverted.y);
-                }
-                shapeDebugger.end();
+            if (eyeRayCastMapper.has(sortedEntity)) {
+                drawLines(eyeRayCastMapper.get(sortedEntity));
+            }
+            if(feetRayCastMapper.has(sortedEntity)){
+                drawLines(feetRayCastMapper.get(sortedEntity));
             }
         }
+    }
+
+    private void drawLines(RayCastComponent rayCastComponent){
+        Gdx.gl20.glLineWidth(1);
+        shapeDebugger.setProjectionMatrix(camera.combined);
+        shapeDebugger.begin(ShapeRenderer.ShapeType.Line);
+        shapeDebugger.setColor(1, 0, 1, 1);
+        Vector2 startPoint = Converters.ToWorld(rayCastComponent.getStartPoint());
+        for (Vector2 endPoint : rayCastComponent.getEndPoints()) {
+            Vector2 endPointConverted = Converters.ToWorld(endPoint);
+            shapeDebugger.line(startPoint.x, startPoint.y,endPointConverted.x, endPointConverted.y);
+        }
+        shapeDebugger.end();
     }
 
     protected void process(Entity entity) {

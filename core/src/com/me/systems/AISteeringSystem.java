@@ -16,7 +16,7 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
     @Mapper
     private ComponentMapper<PhysicsComponent> physicsComponentMapper;
     @Mapper
-    private ComponentMapper<RayCastComponent> rayCastComponentMapper;
+    private ComponentMapper<EyeRayCastComponent> rayCastComponentMapper;
     @Mapper
     private ComponentMapper<AIComponent> aiComponentMapper;
     @Mapper
@@ -31,7 +31,7 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
 
         AIComponent aiComponent = aiComponentMapper.get(e);
         aiComponent.update(world.delta);
-        RayCastComponent rayCastComponent = rayCastComponentMapper.get(e);
+        EyeRayCastComponent rayCastComponent = rayCastComponentMapper.get(e);
         if(aiComponent.getSteeringEntity() != null) {
             SteeringEntity steeringComponent = aiComponent.getSteeringEntity();
             steeringComponent.update(world.delta);
@@ -39,9 +39,7 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
                 aiComponent.setTarget(rayCastComponent.getTarget());
             }
             CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(e);
-            if(movementComponent != null) {
-                movementComponent.setVelocity(steeringComponent.getLinearVelocity().x * 10);
-            }
+            movementComponent.setVelocity(steeringComponent.getLinearVelocity().x);
         }
 
         if(rayCastComponent.hasCollided() &&

@@ -20,8 +20,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.*;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
+import com.me.config.AIConfig;
+import com.me.config.Config;
 import com.me.events.states.PlayerState;
-import com.me.level.Player;
 import com.me.component.*;
 import com.me.factory.GameEventFactory;
 import com.me.level.Level;
@@ -63,7 +64,6 @@ public class EntityLoader {
             t.dispose();
         }
         textureMap.clear();
-
     }
 
     public void loadLevel(Level level, GameEntityWorld entityWorld,
@@ -258,10 +258,8 @@ public class EntityLoader {
 
             }
             if(ud.mName.equalsIgnoreCase("ai")){
-                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20)));
-                entity.addComponent(new PlayerComponent(PlayerComponent.PlayerNumber.AI, false));
-                entity.addComponent(new RestartComponent());
-                entity.addComponent(new RayCastComponent(new EyeRay(pComp.getPosition(), 5), new EyeRayCastListener()));
+                level.addAiConfig(new AIConfig(pComp.getPosition(), "enemy"));
+
             }
 
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
@@ -274,7 +272,7 @@ public class EntityLoader {
         tempList.clear();
     }
 
-    public Entity loadCharacter(Player playerConfig, GameEntityWorld entityWorld, World physicsWorld) {
+    public Entity loadCharacter(Config playerConfig, GameEntityWorld entityWorld, World physicsWorld) {
         String characterPath = playerConfig.getName() + "/";
         String characterName = playerConfig.getName();
 
@@ -333,14 +331,12 @@ public class EntityLoader {
                     String name = ((BodyUserData) body.getUserData()).mName;
                     if (pComp != null) {
                         pComp.addBody(physicsWorld, body, name);
-//                        pComp.setMass(20f, name);
                     } else {
                         pComp = new PhysicsComponent(physicsWorld, body, name);
-//                        pComp.setMass(20f, name);
                         entity.addComponent(pComp);
                     }
 
-                    RayCastComponent rayCastComponent = new RayCastComponent(new FeetRay(pComp.getPosition("feet"), 1), new FeetRayCastListener());
+                    FeetRayCastComponent rayCastComponent = new FeetRayCastComponent(new FeetRay(pComp.getPosition("feet"), 1), new FeetRayCastListener());
                     entity.addComponent(rayCastComponent);
 
                 } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase(
@@ -497,7 +493,10 @@ public class EntityLoader {
                 entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20)));
                 entity.addComponent(new PlayerComponent(PlayerComponent.PlayerNumber.AI, false));
                 entity.addComponent(new RestartComponent());
-                entity.addComponent(new RayCastComponent(new EyeRay(pComp.getPosition(), 5), new EyeRayCastListener()));
+                entity.addComponent(new EyeRayCastComponent(new EyeRay(pComp.getPosition(), 40), new EyeRayCastListener()));
+                entity.addComponent(new TouchComponent());
+                stateData = animationComponent.setUp(image);
+                pComp.setAllBodiesPosition(playerConfig.getPosition());
             }
 
             BodyUserData ud = (BodyUserData) body.getUserData();

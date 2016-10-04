@@ -2,12 +2,14 @@ package com.me.config;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.me.utils.GameUtils;
 
 public class LevelConfig {
 
 	private PlayerConfigMap player = new PlayerConfigMap();
+    private Array<AIConfig> aiConfigs = new Array<>();
 	private String name;
 	private Color skyLightColor;
 	private int levelNr;
@@ -25,9 +27,16 @@ public class LevelConfig {
     public void addPlayerConfig(PlayerConfig config){
         player.put(config.getPlayerNumber(), config);
     }
+    public void addAIConfig(AIConfig config){
+        aiConfigs.add(config);
+    }
 
     public ObjectMap.Values<PlayerConfig> getPlayerConfigs(){
         return player.values();
+    }
+
+    public Array<AIConfig> getAiConfigs(){
+        return aiConfigs;
     }
 
 	public String getLevelName(){

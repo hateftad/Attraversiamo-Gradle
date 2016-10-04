@@ -43,6 +43,13 @@
     
     {
       "class" : "body",
+      "displayName" : "atlas",
+      "name" : "atlas",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "boxIndex",
       "name" : "boxIndex",
       "type" : "int"
@@ -87,6 +94,13 @@
       "class" : "body",
       "displayName" : "eventType",
       "name" : "eventType",
+      "type" : "string"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "skeleton",
+      "name" : "skeleton",
       "type" : "string"
     }
   ],
@@ -981,6 +995,16 @@
           {
             "int" : 1,
             "name" : "collisionGroup"
+          },
+          
+          {
+            "name" : "atlas",
+            "string" : "enemy"
+          },
+          
+          {
+            "name" : "skeleton",
+            "string" : "enemy"
           }
         ],
         "fixture" : 

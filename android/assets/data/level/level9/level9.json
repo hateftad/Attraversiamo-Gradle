@@ -20,6 +20,16 @@
 				{
 					"int" : 1,
 					"name" : "collisionGroup"
+				},
+				
+				{
+					"name" : "atlas",
+					"string" : "enemy"
+				},
+				
+				{
+					"name" : "skeleton",
+					"string" : "enemy"
 				}
 			],
 			"fixture" : 

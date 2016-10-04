@@ -1,7 +1,9 @@
 package com.me.level;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.me.config.AIConfig;
 import com.me.config.LevelConfig;
 import com.me.config.PlayerConfig;
 
@@ -11,19 +13,23 @@ import com.me.config.PlayerConfig;
 public class Level {
 
     public class LevelBoundaries {
+
         public float minX;
         public float maxX;
         public float minY;
         public float maxY;
         public float minimumLevelY;
     }
-
     private LevelConfig levelConfig;
+
     private LevelBoundaries levelBoundaries;
-
-
     public boolean isFinished() {
         return isFinished;
+    }
+
+
+    public void addAiConfig(AIConfig enemy) {
+        levelConfig.addAIConfig(enemy);
     }
 
     public void setFinished(boolean state) {
@@ -75,6 +81,10 @@ public class Level {
 
     public ObjectMap.Values<PlayerConfig> getPlayerConfigs() {
         return levelConfig.getPlayerConfigs();
+    }
+
+    public Array<AIConfig> getAIConfigs() {
+        return levelConfig.getAiConfigs();
     }
 
     public void restart() {

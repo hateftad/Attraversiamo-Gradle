@@ -59,12 +59,22 @@ public class WorldSerializer extends ReadOnlySerializer<World>
 		// Joints
 		// joints are done in two passes because gear joints reference other joints
 		// First joint pass
-		jointSerializer.init(world, bodies, null);
-		Array<Joint> joints = json.readValue("joint", Array.class, Joint.class, jsonData);
-		// Second joint pass
-		//jointSerializer.init(world, bodies, joints);
-		//joints = json.readValue("joint", Array.class, Joint.class, jsonData);
-		scene.setJoints(joints);
+        jointSerializer.init(world, bodies, null);
+        Array<Joint> joints = json.readValue("joint", Array.class, Joint.class, jsonData);
+        if (joints != null)
+        {
+            if (scene.getJoints() == null)
+            {
+                scene.setJoints(joints);
+            }
+            else
+            {
+                scene.getJoints().addAll(joints);
+            }
+        }
+//        // Second joint pass
+//        jointSerializer.init(world, bodies, joints);
+//        joints = json.readValue("joint", Array.class, Joint.class, jsonData);
 		
 		// Images
 		Array<RubeImage> images = json.readValue("image", Array.class, RubeImage.class, jsonData);

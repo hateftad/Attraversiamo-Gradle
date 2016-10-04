@@ -1,14 +1,15 @@
-package com.me.level;
+package com.me.config;
 
 import com.badlogic.gdx.math.Vector2;
 import com.me.component.AnimationComponent;
+import com.me.config.Config;
 import com.me.config.PlayerConfig;
 import com.me.events.states.PlayerState;
 
 /**
  * Created by hateftadayon on 7/5/15.
  */
-public class Player {
+public class Player implements Config {
 
     private PlayerConfig playerConfig;
 

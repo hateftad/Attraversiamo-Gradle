@@ -49,7 +49,10 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
     ComponentMapper<BuoyancyComponent> bouyComps;
 
     @Mapper
-    ComponentMapper<RayCastComponent> rayCastComponents;
+    ComponentMapper<FeetRayCastComponent> feetRayCastComponents;
+
+    @Mapper
+    ComponentMapper<EyeRayCastComponent> eyeRayCastComponents;
 
     private World physicsWorld;
 
@@ -156,16 +159,23 @@ public class PhysicsSystem extends EntitySystem implements Disposable, LevelEven
                 if (physicsComponents.has(e)) {
                     PhysicsComponent physicsComponent = physicsComponents.get(e);
                     physicsComponent.updatePreviousPosition();
-                    if (rayCastComponents.has(e)) {
-                        RayCastComponent rayCastComponent = rayCastComponents.get(e);
-                        rayCastComponent.reset();
-                        rayCastComponent.update();
-                        for (int i = 0; i < rayCastComponent.getEndPoints().size(); i++) {
-                            physicsWorld.rayCast(rayCastComponent.getRaycastCallback(), rayCastComponent.getStartPoint(), rayCastComponent.getEndPoints().get(i));
-                        }
+                    if (feetRayCastComponents.has(e)) {
+                        checkRayCast(feetRayCastComponents.get(e));
+                    }
+                    if(eyeRayCastComponents.has(e)){
+                        checkRayCast(eyeRayCastComponents.get(e));
+
                     }
                 }
             }
+        }
+    }
+
+    private void checkRayCast(RayCastComponent rayCastComponent){
+        rayCastComponent.reset();
+        rayCastComponent.update();
+        for (int i = 0; i < rayCastComponent.getEndPoints().size(); i++) {
+            physicsWorld.rayCast(rayCastComponent.getRaycastCallback(), rayCastComponent.getStartPoint(), rayCastComponent.getEndPoints().get(i));
         }
     }
 

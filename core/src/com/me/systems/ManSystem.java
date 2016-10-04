@@ -48,7 +48,7 @@ public class ManSystem extends PlayerSystem {
     @Mapper
     ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
-    ComponentMapper<RayCastComponent> rayCastComps;
+    ComponentMapper<FeetRayCastComponent> rayCastComps;
     @Mapper
     ComponentMapper<HandHoldComponent> handHoldComps;
 

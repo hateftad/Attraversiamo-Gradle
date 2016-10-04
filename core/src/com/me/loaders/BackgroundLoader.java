@@ -1,11 +1,11 @@
 package com.me.loaders;
 
-import com.me.level.LevelInfo;
-import com.me.level.Player;
+import com.me.config.AI;
+import com.me.config.AIConfig;
+import com.me.config.Player;
 import com.me.attraversiamo.Attraversiamo;
 import com.me.level.Level;
 import com.me.listeners.LoadCompletionListener;
-import com.me.manager.PersistenceManager;
 import com.me.screens.GameScreen;
 import com.me.systems.LevelSystem;
 import com.me.ui.InputManager;
@@ -45,12 +45,11 @@ public class BackgroundLoader {
         currentLevel = new Level(configLoader.getLevelConfigByName(LEVEL + level));
 
         if (game.gameScreen != null) {
-            stopProcessingSystems();
             clearLevel();
         } else {
-
             game.gameScreen = new GameScreen(game, currentLevel);
         }
+        stopProcessingSystems();
 
         loader.loadLevel(currentLevel, game.gameScreen.getEntityWorld(), game.gameScreen.getPhysicsSystem().getPhysicsWorld(), game.gameScreen.getCameraSystem().getRayHandler());
 
@@ -58,6 +57,11 @@ public class BackgroundLoader {
             Player player = new Player(playerConfig);
             loader.loadCharacter(player, game.gameScreen.getEntityWorld(), game.gameScreen.getPhysicsSystem().getPhysicsWorld());
             InputManager.getInstance().setSelectedPlayer(player.getPlayerNumber(), player.isActive());
+        }
+
+        for (AIConfig aiConfig : currentLevel.getAIConfigs()) {
+            AI ai = new AI(aiConfig);
+            loader.loadCharacter(ai, game.gameScreen.getEntityWorld(), game.gameScreen.getPhysicsSystem().getPhysicsWorld());
         }
 
         loader.dispose();
