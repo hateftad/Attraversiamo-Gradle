@@ -107,8 +107,15 @@ public class Skeleton {
 
 		bones = new Array(skeleton.bones.size);
 		for (Bone bone : skeleton.bones) {
-			Bone parent = bone.parent == null ? null : bones.get(bone.parent.data.index);
-			bones.add(new Bone(bone, this, parent));
+			Bone copy;
+			if (bone.parent == null)
+				copy = new Bone(bone, this, null);
+			else {
+				Bone parent = bones.get(bone.parent.data.index);
+				copy = new Bone(bone, this, parent);
+				parent.children.add(copy);
+			}
+			bones.add(copy);
 		}
 
 		slots = new Array(skeleton.slots.size);
@@ -254,8 +261,12 @@ public class Skeleton {
 			sortBone(slotBone);
 		else {
 			Array<Bone> bones = this.bones;
-			for (int boneIndex : pathBones)
-				sortBone(bones.get(boneIndex));
+			for (int i = 0, n = pathBones.length; i < n;) {
+				int nn = pathBones[i++];
+				nn += i;
+				while (i < nn)
+					sortBone(bones.get(pathBones[i++]));
+			}
 		}
 	}
 
