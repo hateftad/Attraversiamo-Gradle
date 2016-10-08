@@ -381,6 +381,7 @@ public class ManSystem extends PlayerSystem {
     private void choose(Entity entity) {
         if (inputMgr.getSelected() == InputManager.PlayerOne) {
             playerComps.get(entity).setActive(true);
+            aiComponentMapper.get(entity).setActivate(false);
         } else if (playerComps.get(entity).canDeActivate()) {
             playerComps.get(entity).setActive(false);
             velComps.get(entity).velocity = 0;

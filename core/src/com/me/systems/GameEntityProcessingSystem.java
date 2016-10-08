@@ -34,4 +34,8 @@ public abstract class GameEntityProcessingSystem extends EntityProcessingSystem 
         ((GameEntityWorld)world).onNotify(event);
     }
 
+    public void notifyObservers(int keyCode){
+        ((GameEntityWorld)world).onNotify(keyCode);
+    }
+
 }

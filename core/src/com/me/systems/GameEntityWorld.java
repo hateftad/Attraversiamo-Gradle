@@ -2,10 +2,7 @@ package com.me.systems;
 
 import com.artemis.World;
 import com.badlogic.gdx.utils.Array;
-import com.me.component.interfaces.ParticleEventObserverComponent;
-import com.me.component.interfaces.TelegramEventObserverComponent;
-import com.me.component.interfaces.ButtonStateObserverComponent;
-import com.me.component.interfaces.TaskEventObserverComponent;
+import com.me.component.interfaces.*;
 import com.me.events.*;
 import com.me.listeners.LevelEventListener;
 
@@ -18,6 +15,7 @@ public class GameEntityWorld extends World {
     private Array<ButtonStateObserverComponent> buttonStateEventObservers;
     private Array<TelegramEventObserverComponent> binaryEventObservers;
     private Array<ParticleEventObserverComponent> particleEventObservers;
+    private Array<KeyEventObserverComponent> keyEventObserverComponents;
     private Array<LevelEventListener> levelEventListeners;
 
     public GameEntityWorld() {
@@ -27,6 +25,7 @@ public class GameEntityWorld extends World {
         buttonStateEventObservers = new Array<>();
         binaryEventObservers = new Array<>();
         particleEventObservers = new Array<>();
+        keyEventObserverComponents = new Array<>();
     }
 
     public void clearAll() {
@@ -58,6 +57,16 @@ public class GameEntityWorld extends World {
     public void addObserver(TelegramEventObserverComponent observerComponent) {
         taskEventObservers.add(observerComponent);
         binaryEventObservers.add(observerComponent);
+    }
+
+    public void addObserver(KeyEventObserverComponent observerComponent) {
+        keyEventObserverComponents.add(observerComponent);
+    }
+
+    public void onNotify(int keyCode){
+        for (KeyEventObserverComponent keyEventObserverComponent : keyEventObserverComponents) {
+            keyEventObserverComponent.onNotify(keyCode);
+        }
     }
 
     public void onNotify(TaskEvent event) {

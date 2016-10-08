@@ -281,8 +281,10 @@ public class GirlSystem extends PlayerSystem {
     private void choose(Entity entity) {
         if (inputMgr.getSelected() == InputManager.PlayerTwo) {
             playerComps.get(entity).setActive(true);
+            aiComponentMapper.get(entity).setActivate(false);
         } else if (playerComps.get(entity).canDeActivate()) {
             playerComps.get(entity).setActive(false);
+
             velComps.get(entity).velocity = 0;
         }
     }
@@ -299,6 +301,7 @@ public class GirlSystem extends PlayerSystem {
     @Override
     public boolean keyDown(int keycode) {
         inputMgr.keyDown(keycode);
+
         return true;
     }
 
