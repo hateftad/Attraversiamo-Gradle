@@ -164,6 +164,7 @@ public class ManSystem extends PlayerSystem {
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         PlayerComponent playerComponent = playerComps.get(entity);
         RayCastComponent rayCastComponent = rayCastComps.get(entity);
+        TouchComponent touchComponent = touchComps.get(entity);
 
         if (!keyInput.moved()) {
             movementComponent.standStill();
@@ -195,6 +196,20 @@ public class ManSystem extends PlayerSystem {
                 movementComponent.standStill();
             }
         }
+
+        if (rayCastComponent.hasCollided() && !playerComponent.isHanging() && !playerComponent.isLanding()) {
+            if (touchComponent.shouldPush()) {
+                setPlayerState(entity, PlayerState.Pushing);
+            } else {
+                if (Math.abs(movementComponent.getSpeed()) >= velocityLimitComponent.walkLimit) {
+                    setPlayerState(entity, PlayerState.Running);
+                } else if (Math.abs(movementComponent.getSpeed()) > 0) {
+                    setPlayerState(entity, PlayerState.Jogging);
+                }
+            }
+        }
+
+        System.out.println("abs : " + Math.abs(movementComponent.getSpeed()) + " " + velocityLimitComponent.walkLimit);
 
         if (!playerComponent.isActive() &&
                 rayCastComponent.hasCollided() &&
@@ -247,16 +262,12 @@ public class ManSystem extends PlayerSystem {
             }
             if (touch.shouldPush()) {
                 movementComponent.setVelocity(-vel.pushlimit);
-                setPlayerState(entity, PlayerState.Pushing);
             } else {
                 vel.velocity -= VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() < -vel.walkLimit) {
                     movementComponent.setVelocity(-vel.walkLimit);
-                    setPlayerState(entity, PlayerState.Running);
                     vel.velocity = -vel.walkLimit;
-                } else {
-                    setPlayerState(entity, PlayerState.Jogging);
                 }
             }
 
@@ -292,17 +303,13 @@ public class ManSystem extends PlayerSystem {
                 vel.velocity = VELOCITYINR;
             }
             if (touch.shouldPush()) {
-                setPlayerState(entity, PlayerState.Pushing);
                 movementComponent.setVelocity(vel.pushlimit);
             } else {
                 vel.velocity += VELOCITY * world.delta;
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() > vel.walkLimit) {
                     movementComponent.setVelocity(vel.walkLimit);
-                    setPlayerState(entity, PlayerState.Running);
                     vel.velocity = vel.walkLimit;
-                } else {
-                    setPlayerState(entity, PlayerState.Jogging);
                 }
             }
 
@@ -383,7 +390,7 @@ public class ManSystem extends PlayerSystem {
     @Override
     public boolean keyDown(int keycode) {
         inputMgr.keyDown(keycode);
-        if(keycode == Input.Keys.R){
+        if (keycode == Input.Keys.R) {
             notifyObservers(new LevelEvent(LevelEventType.OnRestart));
         }
         return true;

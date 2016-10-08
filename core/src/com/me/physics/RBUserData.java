@@ -74,7 +74,7 @@ public class RBUserData {
             case 3:
                 setType(Type.Torso);
                 filter.categoryBits = CharacterTorso;
-                filter.maskBits = Boundary | WorldObject | WorldSensor;
+                filter.maskBits = Boundary | WorldObject | WorldSensor | CharacterSensor;
                 break;
             case 4:
                 setType(Type.Feet);
@@ -199,12 +199,12 @@ public class RBUserData {
             case 28:
                 setType(Type.LeftHandHold);
                 filter.categoryBits = CharacterSensor;
-                filter.maskBits = CharacterSensor;
+                filter.maskBits = CharacterSensor | CharacterTorso;
                 break;
             case 29:
                 setType(Type.RightHandHold);
                 filter.categoryBits = CharacterSensor;
-                filter.maskBits = CharacterSensor;
+                filter.maskBits = CharacterSensor | CharacterTorso;
                 break;
             case 30:
                 setType(Type.PullLedge);

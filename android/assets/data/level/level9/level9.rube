@@ -1040,6 +1040,110 @@
           "y" : -17.83876037597656
         },
         "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 2,
+            "name" : "playerNr"
+          },
+          
+          {
+            "name" : "bodyType",
+            "string" : "player_two"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 21,
+            "name" : "fixture9",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.4218782186508179,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -3.814697265625000e-06 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 21,
+        "linearVelocity" : 0,
+        "name" : "player_position",
+        "position" : 
+        {
+          "x" : 0.2871208190917969,
+          "y" : 30.966308593750
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "playerNr"
+          },
+          
+          {
+            "name" : "bodyType",
+            "string" : "player_one"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 22,
+            "name" : "fixture8",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 22,
+        "linearVelocity" : 0,
+        "name" : "player_position",
+        "position" : 
+        {
+          "x" : 23.39735412597656,
+          "y" : 29.42636299133301
+        },
+        "type" : "static"
       }
     ],
     "metaimage" : 

@@ -189,23 +189,6 @@ public class PhysicsListenerSetup {
                                 }
                             }
 
-                            if (otherUd.getType() == Type.RightHandHold) {
-                                e2.getComponent(TouchComponent.class).handHoldArea = true;
-                                e2.getComponent(TouchComponent.class).rightHoldArea = true;
-                            }
-                            if (playerUd.getType() == Type.RightHandHold) {
-                                e.getComponent(TouchComponent.class).handHoldArea = true;
-                                e.getComponent(TouchComponent.class).rightHoldArea = true;
-                            }
-                            if (otherUd.getType() == Type.LeftHandHold) {
-                                e2.getComponent(TouchComponent.class).handHoldArea = true;
-                                e2.getComponent(TouchComponent.class).leftHoldArea = true;
-                            }
-                            if (playerUd.getType() == Type.LeftHandHold) {
-                                e.getComponent(TouchComponent.class).handHoldArea = true;
-                                e.getComponent(TouchComponent.class).leftHoldArea = true;
-                            }
-
                             if (otherUd.getType() == Type.InsideCage) {
 //                                e.getComponent(PhysicsComponent.class).setFixedRotation(PhysicsComponent.Center, false);
                             }
@@ -252,6 +235,13 @@ public class PhysicsListenerSetup {
                                     }
                                 }
                                 System.out.println("BoxTouch");
+                            }
+                            if (playerUd.getType() == Type.RightHandHold) {
+                                e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
+                            }
+
+                            if (playerUd.getType() == Type.LeftHandHold) {
+                                e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
                             }
                         }
                     }
@@ -363,12 +353,14 @@ public class PhysicsListenerSetup {
                             e.getComponent(TouchComponent.class).handHoldArea = false;
                             e.getComponent(TouchComponent.class).leftHoldArea = false;
                             e.getComponent(HandHoldComponent.class).setHoldingHands(false);
+//                            e.getComponent(PlayerAIComponent.class).setTarget(null);
                             gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
                         if (playerUd.getType() == Type.RightHandHold) {
                             e.getComponent(TouchComponent.class).handHoldArea = false;
                             e.getComponent(TouchComponent.class).rightHoldArea = false;
                             e.getComponent(HandHoldComponent.class).setHoldingHands(false);
+//                            e.getComponent(PlayerAIComponent.class).setTarget(null);
                             gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
 

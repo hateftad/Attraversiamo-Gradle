@@ -39,7 +39,7 @@ public class CharacterMovementComponent extends BaseComponent implements TaskEve
     }
 
     public boolean shouldFallAndRun(){
-        return getSpeed() < -2 || getSpeed() > 2;
+        return Math.abs(getSpeed()) > 2;
     }
 
     @Override

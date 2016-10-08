@@ -59,10 +59,10 @@ public class BackgroundLoader {
             InputManager.getInstance().setSelectedPlayer(player.getPlayerNumber(), player.isActive());
         }
 
-        for (AIConfig aiConfig : currentLevel.getAIConfigs()) {
-            AI ai = new AI(aiConfig);
-            loader.loadCharacter(ai, game.gameScreen.getEntityWorld(), game.gameScreen.getPhysicsSystem().getPhysicsWorld());
-        }
+//        for (AIConfig aiConfig : currentLevel.getAIConfigs()) {
+//            AI ai = new AI(aiConfig);
+//            loader.loadCharacter(ai, game.gameScreen.getEntityWorld(), game.gameScreen.getPhysicsSystem().getPhysicsWorld());
+//        }
 
         loader.dispose();
         startProcessingSystems();

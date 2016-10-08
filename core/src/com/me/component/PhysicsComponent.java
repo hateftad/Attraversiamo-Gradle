@@ -15,6 +15,7 @@ import com.me.component.interfaces.TaskEventObserverComponent;
 import com.me.events.GameEvent;
 import com.me.events.GameEventType;
 import com.me.events.TaskEvent;
+import com.me.physics.Box2dLocation;
 import com.me.physics.FixtureData;
 import com.me.physics.RBUserData;
 import com.me.utils.Converters;
@@ -385,6 +386,10 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
         for (Body b : body.values()) {
             b.setActive(active);
         }
+    }
+
+    public Box2dLocation getTarget(){
+        return new Box2dLocation(getBody("torso").getPosition(), getBody("torso").getAngle());
     }
 
     public void updateSmoothStates(float accumulatorRatio, double oneMinusRatio) {

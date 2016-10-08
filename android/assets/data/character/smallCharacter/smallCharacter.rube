@@ -50,9 +50,9 @@
     
     {
       "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
-      "type" : "string"
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
     },
     
     {
@@ -64,15 +64,15 @@
     
     {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
+      "displayName" : "eventType",
+      "name" : "eventType",
+      "type" : "string"
     },
     
     {
       "class" : "body",
-      "displayName" : "skeleton",
-      "name" : "skeleton",
+      "displayName" : "characterType",
+      "name" : "characterType",
       "type" : "string"
     },
     
@@ -85,8 +85,8 @@
     
     {
       "class" : "body",
-      "displayName" : "characterType",
-      "name" : "characterType",
+      "displayName" : "skeleton",
+      "name" : "skeleton",
       "type" : "string"
     }
   ],
@@ -512,8 +512,8 @@
         "name" : "boxHand",
         "position" : 
         {
-          "x" : -1.012305378913879,
-          "y" : 5.038537502288818
+          "x" : -1,
+          "y" : 5
         },
         "type" : "dynamic"
       },
@@ -679,8 +679,116 @@
         "name" : "boxHand",
         "position" : 
         {
-          "x" : 1.185110688209534,
-          "y" : 5.028902530670166
+          "x" : 1.2,
+          "y" : 5
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 28,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 10,
+            "name" : "fixture8",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.1340623497962952,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 10,
+        "linearVelocity" : 0,
+        "massData-I" : 0.0005073961801826954,
+        "massData-mass" : 0.05646294727921486,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : -2,
+          "y" : 5
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 29,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 11,
+            "name" : "fixture8",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.1340623497962952,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 11,
+        "linearVelocity" : 0,
+        "massData-I" : 0.0005073961801826954,
+        "massData-mass" : 0.05646294727921486,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : 2,
+          "y" : 5
         },
         "type" : "dynamic"
       },
@@ -909,6 +1017,50 @@
         "frequency" : 0,
         "id" : 7,
         "name" : "joint4",
+        "referenceAngle" : 0,
+        "type" : "weld"
+      },
+      
+      {
+        "anchorA" : 
+        {
+          "x" : -0.8234260082244873,
+          "y" : 0.3299309909343719
+        },
+        "anchorB" : 
+        {
+          "x" : 1.116009950637817,
+          "y" : -0.3870089948177338
+        },
+        "bodyA" : 11,
+        "bodyB" : 4,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 8,
+        "name" : "joint7",
+        "referenceAngle" : 0,
+        "type" : "weld"
+      },
+      
+      {
+        "anchorA" : 
+        {
+          "x" : 1.028200030326843,
+          "y" : 0.3722639977931976
+        },
+        "anchorB" : 
+        {
+          "x" : -1.032369971275330,
+          "y" : -0.3446759879589081
+        },
+        "bodyA" : 10,
+        "bodyB" : 4,
+        "collideConnected" : false,
+        "dampingRatio" : 0,
+        "frequency" : 0,
+        "id" : 9,
+        "name" : "joint8",
         "referenceAngle" : 0,
         "type" : "weld"
       },
