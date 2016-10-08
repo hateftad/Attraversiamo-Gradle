@@ -237,11 +237,17 @@ public class PhysicsListenerSetup {
                                 System.out.println("BoxTouch");
                             }
                             if (playerUd.getType() == Type.RightHandHold) {
-                                e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
+                                PlayerAIComponent component = e.getComponent(PlayerAIComponent.class);
+                                if(component.getTarget() == null) {
+                                    e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
+                                }
                             }
 
                             if (playerUd.getType() == Type.LeftHandHold) {
-                                e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
+                                PlayerAIComponent component = e.getComponent(PlayerAIComponent.class);
+                                if(component.getTarget() == null) {
+                                    e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
+                                }
                             }
                         }
                     }

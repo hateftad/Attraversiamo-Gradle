@@ -42,15 +42,13 @@ public class PlayerAISteeringSystem extends GameEntityProcessingSystem {
             }
             CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(entity);
             System.out.println("Steering Velocity" + steeringComponent.getLinearVelocity());
-            movementComponent.setVelocity(steeringComponent.getLinearVelocity().x * 100);
-            PlayerAnimationComponent animationComponent = animationComponentMapper.get(entity);
-//            if(movementComponent.getSpeed() > 0){
-//                animationComponent.setFacing(false);
-//                setPlayerState(entity, PlayerState.Running);
-//            } else {
-//                animationComponent.setFacing(true);
-//                setPlayerState(entity, PlayerState.Running);
-//            }
+            float velocity = steeringComponent.getLinearVelocity().x;
+            if(Math.abs(velocity) > 1) {
+                movementComponent.setVelocity(velocity);
+            } else {
+                movementComponent.standStill();
+                setPlayerState(entity, PlayerState.Idle);
+            }
         }
     }
 

@@ -1,12 +1,9 @@
 package com.me.component;
 
-import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
-import com.me.ai.state.EnemyState;
-import com.me.ai.utils.BehaviourFactory;
 import com.me.physics.Box2dLocation;
 
 /**
@@ -16,17 +13,17 @@ public class PlayerAIComponent extends BaseComponent implements Telegraph {
 
     private SteeringEntity steeringEntity;
     private Box2dLocation target;
-//    private StateMachine<AIComponent, EnemyState> stateMachine;
+    //    private StateMachine<AIComponent, EnemyState> stateMachine;
     private float elapsedTime;
 
-    public PlayerAIComponent(SteeringEntity steeringEntity){
+    public PlayerAIComponent(SteeringEntity steeringEntity) {
         this.steeringEntity = steeringEntity;
 //        stateMachine = new DefaultStateMachine<>(this, EnemyState.SEEK);
 //        stateMachine.setInitialState(EnemyState.SEEK);
 //        steeringEntity.setSteeringBehavior(BehaviourFactory.createWander(steeringEntity));
     }
 
-    public void update(float delta){
+    public void update(float delta) {
 //        elapsedTime += delta;
 //        if (elapsedTime > 0.8f) {
 //            stateMachine.update();
@@ -52,7 +49,7 @@ public class PlayerAIComponent extends BaseComponent implements Telegraph {
         return false;//stateMachine.handleMessage(msg);
     }
 
-    public SteeringBehavior getSteeringBehavior(){
+    public SteeringBehavior getSteeringBehavior() {
         return steeringEntity.getSteeringBehavior();
     }
 
@@ -68,7 +65,7 @@ public class PlayerAIComponent extends BaseComponent implements Telegraph {
         this.steeringEntity = steeringEntity;
     }
 
-    public StateMachine getStateMachine(){
+    public StateMachine getStateMachine() {
         return null;//stateMachine;
     }
 
@@ -82,5 +79,9 @@ public class PlayerAIComponent extends BaseComponent implements Telegraph {
 
     public Box2dLocation getTarget() {
         return target;
+    }
+
+    public boolean isBeingControlled() {
+        return target != null;
     }
 }

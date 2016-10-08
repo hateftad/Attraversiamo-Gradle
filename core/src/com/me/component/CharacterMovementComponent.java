@@ -42,6 +42,10 @@ public class CharacterMovementComponent extends BaseComponent implements TaskEve
         return Math.abs(getSpeed()) > 2;
     }
 
+    public boolean isMoving(){
+        return Math.abs(getSpeed()) > 0;
+    }
+
     @Override
     public void dispose() {
     }
@@ -49,5 +53,9 @@ public class CharacterMovementComponent extends BaseComponent implements TaskEve
     @Override
     public void restart() {
 
+    }
+
+    public boolean runningLeft() {
+        return getSpeed() < 0;
     }
 }

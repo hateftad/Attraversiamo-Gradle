@@ -51,6 +51,8 @@ public class ManSystem extends PlayerSystem {
     ComponentMapper<FeetRayCastComponent> rayCastComps;
     @Mapper
     ComponentMapper<HandHoldComponent> handHoldComps;
+    @Mapper
+    ComponentMapper<PlayerAIComponent> aiComponentMapper;
 
     @SuppressWarnings("unchecked")
     public ManSystem(Level currentLevel) {
@@ -165,8 +167,9 @@ public class ManSystem extends PlayerSystem {
         PlayerComponent playerComponent = playerComps.get(entity);
         RayCastComponent rayCastComponent = rayCastComps.get(entity);
         TouchComponent touchComponent = touchComps.get(entity);
+        PlayerAIComponent playerAIComponent = aiComponentMapper.get(entity);
 
-        if (!keyInput.moved()) {
+        if (!keyInput.moved() && !playerAIComponent.isBeingControlled()) {
             movementComponent.standStill();
             velocityLimitComponent.velocity = 0;
             if (playerComponent.shouldBeIdle() && !physicsComponent.isFalling()) {
@@ -209,13 +212,15 @@ public class ManSystem extends PlayerSystem {
             }
         }
 
-        System.out.println("abs : " + Math.abs(movementComponent.getSpeed()) + " " + velocityLimitComponent.walkLimit);
-
         if (!playerComponent.isActive() &&
                 rayCastComponent.hasCollided() &&
-                playerComponent.shouldBeIdle()) {
+                playerComponent.shouldBeIdle() &&
+                !playerAIComponent.isBeingControlled()) {
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
+        }
+        if(movementComponent.isMoving()){
+            playerComponent.setFacingLeft(movementComponent.runningLeft());
         }
     }
 
@@ -284,7 +289,6 @@ public class ManSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Falling);
             }
         }
-        player.setFacingLeft(true);
     }
 
     private void moveRight(Entity entity) {
@@ -326,7 +330,6 @@ public class ManSystem extends PlayerSystem {
                 setPlayerState(entity, PlayerState.Falling);
             }
         }
-        player.setFacingLeft(false);
     }
 
     private void holdHands(Entity entity) {
