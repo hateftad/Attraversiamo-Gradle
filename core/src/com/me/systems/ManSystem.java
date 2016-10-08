@@ -145,6 +145,10 @@ public class ManSystem extends PlayerSystem {
                         setPlayerState(entity, PlayerState.ClimbingLedge);
                     }
                 }
+                if(physicsComponent.getTarget() != null){
+                    TelegramEvent telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
+                    telegramEvent.notify(this, entity);
+                }
             }
         }
         setPlayerState(entity);
@@ -169,7 +173,7 @@ public class ManSystem extends PlayerSystem {
         TouchComponent touchComponent = touchComps.get(entity);
         PlayerAIComponent playerAIComponent = aiComponentMapper.get(entity);
 
-        if (!keyInput.moved() && !playerAIComponent.isBeingControlled()) {
+        if (!keyInput.moved() && !playerAIComponent.shouldBeControlled()) {
             movementComponent.standStill();
             velocityLimitComponent.velocity = 0;
             if (playerComponent.shouldBeIdle() && !physicsComponent.isFalling()) {

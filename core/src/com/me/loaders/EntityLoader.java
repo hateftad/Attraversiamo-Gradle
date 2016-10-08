@@ -387,8 +387,10 @@ public class EntityLoader {
                 entityWorld.addObserver(playerComponent);
                 // entity.addComponent(new LightComponent(light, ((BodyUserData)
                 // body.getUserData()).mName));
+                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20), playerComponent.getPlayerNr());
+                entityWorld.addObserver(playerAIComponent);
                 entity.addComponent(playerComponent)
-                        .addComponent(new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20)))
+                        .addComponent(playerAIComponent)
                         .addComponent(new TouchComponent())
                         .addComponent(new KeyInputComponent())
                         .addComponent(new JointComponent())
@@ -471,8 +473,10 @@ public class EntityLoader {
                 stateData.setMix("runLanding", "idle1", 0.2f);
                 entity.addComponent(playerComponent);
                 animationComponent.setSkin(playerConfig.getSkinName());
+                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20), playerComponent.getPlayerNr());
+                entityWorld.addObserver(playerAIComponent);
                 entity.addComponent(new KeyInputComponent())
-                        .addComponent(new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20)))
+                        .addComponent(playerAIComponent)
                         .addComponent(new VelocityLimitComponent(8.5f, 10, 2.5f))
                         .addComponent(new JointComponent())
                         .addComponent(new TouchComponent())

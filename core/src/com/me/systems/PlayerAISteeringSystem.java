@@ -33,8 +33,7 @@ public class PlayerAISteeringSystem extends GameEntityProcessingSystem {
     @Override
     protected void process(Entity entity) {
         PlayerAIComponent playerAIComponent = aiComponentMapper.get(entity);
-        playerAIComponent.update(world.delta);
-        if(playerAIComponent.getTarget() != null){
+        if(playerAIComponent.shouldBeControlled()){
             SteeringEntity steeringComponent = playerAIComponent.getSteeringEntity();
             steeringComponent.update(world.delta);
             if(steeringComponent.getSteeringBehavior() == null){
@@ -52,7 +51,7 @@ public class PlayerAISteeringSystem extends GameEntityProcessingSystem {
         }
     }
 
-    protected void setPlayerState(Entity entity, PlayerState state) {
+    private void setPlayerState(Entity entity, PlayerState state) {
         animationComponentMapper.get(entity).setAnimationState(state);
         playerComps.get(entity).setState(state);
     }

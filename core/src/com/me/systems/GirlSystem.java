@@ -5,8 +5,10 @@ import com.artemis.ComponentMapper;
 import com.artemis.Entity;
 import com.artemis.annotations.Mapper;
 import com.me.component.*;
+import com.me.events.GameEventType;
 import com.me.events.LevelEvent;
 import com.me.events.LevelEventType;
+import com.me.events.TelegramEvent;
 import com.me.events.states.PlayerState;
 import com.me.level.Level;
 import com.me.ui.InputManager;
@@ -35,6 +37,8 @@ public class GirlSystem extends PlayerSystem {
     ComponentMapper<CharacterMovementComponent> movementComps;
     @Mapper
     ComponentMapper<FeetRayCastComponent> feetComps;
+    @Mapper
+    ComponentMapper<PlayerAIComponent> aiComponentMapper;
 
     private float VELOCITY = 4.5f;
 
@@ -96,6 +100,10 @@ public class GirlSystem extends PlayerSystem {
                         setPlayerState(entity, PlayerState.Swinging);
                     }
                 }
+                if(physicsComponent.getTarget() != null){
+                    TelegramEvent telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
+                    telegramEvent.notify(this, entity);
+                }
             }
         }
 
@@ -132,8 +140,9 @@ public class GirlSystem extends PlayerSystem {
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         PlayerComponent playerComponent = playerComps.get(entity);
         FeetRayCastComponent rayCastComponent = feetComps.get(entity);
+        PlayerAIComponent playerAIComponent = aiComponentMapper.get(entity);
 
-        if (!keyInput.moved()) {
+        if (!keyInput.moved() && !playerAIComponent.shouldBeControlled()) {
             movementComponent.standStill();
             velocityLimitComponent.velocity = 2;
             if (playerComponent.shouldBeIdle() &&
@@ -170,11 +179,24 @@ public class GirlSystem extends PlayerSystem {
             }
         }
 
+        if (rayCastComponent.hasCollided() && !playerComponent.isHanging() && !playerComponent.isLanding()) {
+            if (Math.abs(movementComponent.getSpeed()) >= velocityLimitComponent.walkLimit) {
+                setPlayerState(entity, PlayerState.Running);
+            } else if (Math.abs(movementComponent.getSpeed()) > 0) {
+                setPlayerState(entity, PlayerState.Walking);
+            }
+        }
+
         if (!playerComponent.isActive() &&
                 !physicsComponent.isFalling() &&
-                playerComponent.shouldBeIdle()) {
+                playerComponent.shouldBeIdle() &&
+                !playerAIComponent.isBeingControlled()) {
             setPlayerState(entity, PlayerState.Idle);
             movementComponent.standStill();
+        }
+
+        if (movementComponent.isMoving()) {
+            playerComponent.setFacingLeft(movementComponent.runningLeft());
         }
 
     }
@@ -196,10 +218,7 @@ public class GirlSystem extends PlayerSystem {
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() < -vel.walkLimit) {
                     movementComponent.setVelocity(-vel.walkLimit);
-                    setPlayerState(entity, PlayerState.Running);
                     vel.velocity = -vel.walkLimit;
-                } else {
-                    setPlayerState(entity, PlayerState.Walking);
                 }
             } else {
                 PushComponent push = pushComps.get(entity);
@@ -237,10 +256,7 @@ public class GirlSystem extends PlayerSystem {
                 movementComponent.setVelocity(vel.velocity);
                 if (movementComponent.getSpeed() > vel.walkLimit) {
                     movementComponent.setVelocity(vel.walkLimit);
-                    setPlayerState(entity, PlayerState.Running);
                     vel.velocity = vel.walkLimit;
-                } else {
-                    setPlayerState(entity, PlayerState.Walking);
                 }
             } else {
                 PushComponent push = pushComps.get(entity);
