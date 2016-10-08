@@ -389,7 +389,7 @@ public class PhysicsComponent extends BaseComponent implements TaskEventObserver
     }
 
     public Box2dLocation getTarget(){
-        return new Box2dLocation(getBody("feet").getPosition(), getBody("torso").getAngle());
+        return new Box2dLocation(getBody("torso").getPosition(), getBody("torso").getAngle());
     }
 
     public void updateSmoothStates(float accumulatorRatio, double oneMinusRatio) {

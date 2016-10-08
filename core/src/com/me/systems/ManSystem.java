@@ -146,6 +146,8 @@ public class ManSystem extends PlayerSystem {
                     }
                 }
                 if(physicsComponent.getTarget() != null){
+                    PlayerAIComponent aiComponent = aiComponentMapper.get(entity);
+                    aiComponent.setActivate(false);
                     TelegramEvent telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
                     telegramEvent.notify(this, entity);
                 }
