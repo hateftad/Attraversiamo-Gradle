@@ -35,8 +35,8 @@ public class SteeringEntity implements Steerable<Vector2> {
         this.position = position;
         this.boundRadius = 100;
         maxLinearAcceleration = 5;
-        maxSpeed = 4;
-        maxLinearSpeed = 4;
+        maxSpeed = 10;
+        maxLinearSpeed = 10;
     }
 
     public void update (float deltaTime) {

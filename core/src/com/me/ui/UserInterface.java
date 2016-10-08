@@ -199,7 +199,7 @@ public class UserInterface {
             charSwitchBtn.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    if (InputManager.getInstance().playerOneActive) {
+                    if (InputManager.getInstance().getSelected() == InputManager.PlayerOne) {
                         charSwitchBtn.setStyle(btnStyleSecond);
                     } else {
                         charSwitchBtn.setStyle(btnStyleFirst);
@@ -300,7 +300,7 @@ public class UserInterface {
 	
 	public void update(float delta){
 
-        jumpBtn.setDisabled(InputManager.getInstance().playerOneActive);
+        jumpBtn.setDisabled(InputManager.getInstance().getSelected() == InputManager.PlayerOne);
 
         stage.act(delta);
         stage.draw();

@@ -277,13 +277,12 @@ public class GirlSystem extends PlayerSystem {
     }
 
     private void choose(Entity entity) {
-        if (inputMgr.playerSelected == InputManager.PlayerSelection.TWO) {
+        if (inputMgr.getSelected() == InputManager.PlayerTwo) {
             playerComps.get(entity).setActive(true);
         } else if (playerComps.get(entity).canDeActivate()) {
             playerComps.get(entity).setActive(false);
             velComps.get(entity).velocity = 0;
         }
-        inputMgr.reset();
     }
 
     private boolean canBeControlled(PlayerComponent player) {
