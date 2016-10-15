@@ -1,10 +1,7 @@
 package com.me.component;
 
 import com.artemis.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.esotericsoftware.spine.*;
@@ -24,7 +21,6 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     private PlayerState finishAnimation;
     private PlayerComponent.PlayerNumber playerNumber;
     private ConstraintInfo rightArmConstraint;
-    private float time;
 
     public PlayerAnimationComponent(String atlas, String skeleton, float scale, PlayerState finishAnimation, PlayerComponent.PlayerNumber playerNumber) {
         super(atlas, skeleton, scale);

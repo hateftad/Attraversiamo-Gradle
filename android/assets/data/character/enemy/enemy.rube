@@ -70,6 +70,13 @@
     },
     
     {
+      "class" : "image",
+      "displayName" : "shouldDraw",
+      "name" : "shouldDraw",
+      "type" : "bool"
+    },
+    
+    {
       "class" : "body",
       "displayName" : "boxIndex",
       "name" : "boxIndex",
@@ -335,7 +342,15 @@
           "x" : 0.01958429999649525,
           "y" : 2.045000076293945
         },
-        "file" : "../smallCharacter/smallCharIdle.png",
+        "customProperties" : 
+        [
+          
+          {
+            "bool" : false,
+            "name" : "shouldDraw"
+          }
+        ],
+        "file" : "clear.png",
         "filter" : 1,
         "flip" : false,
         "id" : 2,

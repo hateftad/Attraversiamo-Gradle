@@ -167,9 +167,9 @@ public class ManSystem extends PlayerSystem {
     }
 
     private void setPlayerState(Entity entity) {
-        CharacterMovementComponent movementComponent = movementComps.get(entity);
         KeyInputComponent keyInput = movComps.get(entity);
         PhysicsComponent physicsComponent = physComps.get(entity);
+        CharacterMovementComponent movementComponent = movementComps.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         PlayerComponent playerComponent = playerComps.get(entity);
         RayCastComponent rayCastComponent = rayCastComps.get(entity);
@@ -245,7 +245,9 @@ public class ManSystem extends PlayerSystem {
         KeyInputComponent keyInputComponent = movComps.get(entity);
         RayCastComponent rayCastComponent = rayCastComps.get(entity);
 
-        if (rayCastComponent.hasCollided() && !player.isJumping() && !player.isFalling()) {
+        if (rayCastComponent.hasCollided() &&
+                !player.isJumping() &&
+                !player.isFalling()) {
             if (movementComps.get(entity).isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
                     physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -20 : 20), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));

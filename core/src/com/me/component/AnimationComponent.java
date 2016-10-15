@@ -172,6 +172,10 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 		animationState.setAnimation(0, name, loop);
 	}
 
+    public void playAnimation(int trackID, String name, boolean loop){
+        animationState.setAnimation(trackID, name, loop);
+    }
+
 	public void addAnimation(String name, boolean loop, float delay){
 		animationState.addAnimation(0, name, loop, delay);
 	}

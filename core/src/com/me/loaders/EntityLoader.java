@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.me.config.AIConfig;
 import com.me.config.Config;
+import com.me.config.LimitConfig;
 import com.me.events.states.PlayerState;
 import com.me.component.*;
 import com.me.factory.GameEventFactory;
@@ -315,6 +316,7 @@ public class EntityLoader {
                                 image.body, image.color, tmp, image.center,
                                 image.angleInRads * MathUtils.radiansToDegrees,
                                 image.renderOrder);
+                        sComp.shouldDraw = scene.getCustom(image, "shouldDraw", true);
                         if (pComp != null) {
                             pComp.addBody(physicsWorld, body,
                                     ((BodyUserData) body.getUserData()).mName);
@@ -368,18 +370,9 @@ public class EntityLoader {
 
             loadFixtures(pComp, body);
 
-            String skelName = scene.getCustom(body, "skeleton", "failed");
-            String atlasName = scene.getCustom(body, "atlas", "failed");
-            PlayerAnimationComponent animationComponent = null;
-            AnimationStateData stateData;
-            if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
-                animationComponent = new PlayerAnimationComponent(CHARPATH + characterPath
-                        + atlasName, CHARPATH + characterPath + skelName, 1.3f, playerConfig.getFinishAnimation(), getPlayerNumber(playerConfig.getPlayerNumber()));
-                entity.addComponent(animationComponent);
-                entityWorld.addObserver(animationComponent);
-            }
-            if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_one")) {
 
+            if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_one")) {
+                PlayerAnimationComponent animationComponent = getPlayerAnimationComponent(playerConfig, entityWorld, characterPath, entity, body);
                 PlayerComponent playerComponent = new PlayerComponent(getPlayerNumber(playerConfig.getPlayerNumber()), playerConfig.isFinishFacingLeft());
                 playerComponent.setActive(playerConfig.isActive());
                 playerComponent.setFacingLeft(playerConfig.isFacingLeft());
@@ -387,7 +380,8 @@ public class EntityLoader {
                 entityWorld.addObserver(playerComponent);
                 // entity.addComponent(new LightComponent(light, ((BodyUserData)
                 // body.getUserData()).mName));
-                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20, 10, 10, 10), playerComponent.getPlayerNr());
+                LimitConfig limitConfig = new LimitConfig(12, 14, 5, 6f, 0, 10, 10, 20);
+                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20, limitConfig), playerComponent.getPlayerNr());
                 entityWorld.addObserver(playerAIComponent);
                 entity.addComponent(playerComponent)
                         .addComponent(playerAIComponent)
@@ -397,7 +391,7 @@ public class EntityLoader {
                         .addComponent(new HangComponent())
                         .addComponent(new RagDollComponent())
                         .addComponent(new LadderClimbComponent())
-                        .addComponent(new VelocityLimitComponent(12, 14, 5, 6f))
+                        .addComponent(new VelocityLimitComponent(limitConfig))
                         .addComponent(new PushComponent())
                         .addComponent(new JumpComponent())
                         .addComponent(new GrabComponent())
@@ -413,7 +407,7 @@ public class EntityLoader {
 
                 pComp.setName(((BodyUserData) body.getUserData()).mName);
                 pComp.setIsPlayer(true);
-                stateData = animationComponent.setUp(image);
+                AnimationStateData stateData = animationComponent.setUp(image);
                 animationComponent.setAnimationState(PlayerState.Idle);
                 stateData.setMix("idle1", "jogging", 0.4f);
                 stateData.setMix("jogging", "idle1", 0.4f);
@@ -439,16 +433,17 @@ public class EntityLoader {
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
 
             } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("player_two")) {
+                PlayerAnimationComponent animationComponent = getPlayerAnimationComponent(playerConfig, entityWorld, characterPath, entity, body);
                 PlayerComponent playerComponent = new PlayerComponent(getPlayerNumber(playerConfig.getPlayerNumber()), playerConfig.isFinishFacingLeft());
                 playerComponent.setActive(playerConfig.isActive());
                 playerComponent.setFacingLeft(playerConfig.isFacingLeft());
                 playerComponent.setCanBecomeInactive(playerConfig.canDeactivate());
                 entityWorld.addObserver(playerComponent);
-
+                LimitConfig limitConfig = new LimitConfig(8.5f, 10, 0, 0, 2.5f, 10, 10, 20);
                 pComp.setName(((BodyUserData) body.getUserData()).mName);
                 pComp.setMass(0.001f, ((BodyUserData) body.getUserData()).mName);
                 pComp.setIsPlayer(true);
-                stateData = animationComponent.setUp(image);
+                AnimationStateData stateData = animationComponent.setUp(image);
                 animationComponent.setAnimationState(PlayerState.Idle);
                 stateData.setMix("idle1", "walking", 0.4f);
                 stateData.setMix("running", "idle1", 0.4f);
@@ -473,11 +468,11 @@ public class EntityLoader {
                 stateData.setMix("runLanding", "idle1", 0.2f);
                 entity.addComponent(playerComponent);
                 animationComponent.setSkin(playerConfig.getSkinName());
-                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20, 10, 10, 10), playerComponent.getPlayerNr());
+                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20, limitConfig), playerComponent.getPlayerNr());
                 entityWorld.addObserver(playerAIComponent);
                 entity.addComponent(new KeyInputComponent())
                         .addComponent(playerAIComponent)
-                        .addComponent(new VelocityLimitComponent(8.5f, 10, 2.5f))
+                        .addComponent(new VelocityLimitComponent(limitConfig))
                         .addComponent(new JointComponent())
                         .addComponent(new TouchComponent())
                         .addComponent(new JumpComponent())
@@ -496,12 +491,15 @@ public class EntityLoader {
                 pComp.setStartPosition(playerConfig.getPosition());
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
             } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("enemy")) {
-                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20, 10, 10, 10)));
+                LimitConfig limitConfig = new LimitConfig(8.5f, 10, 0, 0, 2.5f, 10, 10, 20);
+                AIAnimationComponent animationComponent = getPlayerAIAnimationComponent(entityWorld, characterPath, entity, body);
+                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20, limitConfig)));
                 entity.addComponent(new PlayerComponent(PlayerComponent.PlayerNumber.AI, false));
+                entity.addComponent(new VelocityLimitComponent(limitConfig));
                 entity.addComponent(new RestartComponent());
                 entity.addComponent(new EyeRayCastComponent(new EyeRay(pComp.getPosition(), 10), new EyeRayCastListener()));
                 entity.addComponent(new TouchComponent());
-                stateData = animationComponent.setUp(image);
+                animationComponent.setUp(image);
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
             }
 
@@ -541,6 +539,32 @@ public class EntityLoader {
         entity.addToWorld();
         entityWorld.getManager(GroupManager.class).add(entity, "players");
         return entity;
+    }
+
+    private PlayerAnimationComponent getPlayerAnimationComponent(Config playerConfig, GameEntityWorld entityWorld, String characterPath, Entity entity, Body body) {
+        String skelName = scene.getCustom(body, "skeleton", "failed");
+        String atlasName = scene.getCustom(body, "atlas", "failed");
+        PlayerAnimationComponent animationComponent = null;
+        if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
+            animationComponent = new PlayerAnimationComponent(CHARPATH + characterPath
+                    + atlasName, CHARPATH + characterPath + skelName, 1.3f, playerConfig.getFinishAnimation(), getPlayerNumber(playerConfig.getPlayerNumber()));
+            entity.addComponent(animationComponent);
+            entityWorld.addObserver(animationComponent);
+        }
+        return animationComponent;
+    }
+
+    private AIAnimationComponent getPlayerAIAnimationComponent(GameEntityWorld entityWorld, String characterPath, Entity entity, Body body) {
+        String skelName = scene.getCustom(body, "skeleton", "failed");
+        String atlasName = scene.getCustom(body, "atlas", "failed");
+        if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
+            AIAnimationComponent animationComponent = new AIAnimationComponent(CHARPATH + characterPath
+                    + atlasName, CHARPATH + characterPath + skelName, 1f);
+            entity.addComponent(animationComponent);
+            entityWorld.addObserver(animationComponent);
+        return animationComponent;
+        }
+        return null;
     }
 
     private void loadBodyJoints(

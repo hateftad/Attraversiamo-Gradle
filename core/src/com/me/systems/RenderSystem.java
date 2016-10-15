@@ -29,6 +29,9 @@ public class RenderSystem extends EntitySystem {
     @Mapper
     ComponentMapper<LevelAnimationComponent> levelAnimation;
     @Mapper
+    ComponentMapper<AIAnimationComponent> aiAnimation;
+
+    @Mapper
     ComponentMapper<SingleParticleComponent> singleParticles;
     @Mapper
     ComponentMapper<ContinuousParticles> continuousParticles;
@@ -133,6 +136,11 @@ public class RenderSystem extends EntitySystem {
                 }
                 if (levelAnimation.has(entity)) {
                     LevelAnimationComponent anim = levelAnimation.get(entity);
+                    anim.setPosition(physics.getPosition());
+                    anim.update(batch, world.delta);
+                }
+                if (aiAnimation.has(entity)) {
+                    AIAnimationComponent anim = aiAnimation.get(entity);
                     anim.setPosition(physics.getPosition());
                     anim.update(batch, world.delta);
                 }

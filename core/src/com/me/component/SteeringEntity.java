@@ -5,6 +5,7 @@ import com.badlogic.gdx.ai.steer.SteeringAcceleration;
 import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector2;
+import com.me.config.LimitConfig;
 import com.me.physics.Box2dLocation;
 import com.me.utils.SteeringUtils;
 
@@ -37,6 +38,10 @@ public class SteeringEntity implements Steerable<Vector2> {
         this.maxLinearAcceleration = 10;
         this.maxSpeed = 10;
         this.maxLinearSpeed = 20;
+    }
+
+    public SteeringEntity(Vector2 position, int boundRadius, LimitConfig limitConfig) {
+        this(position, boundRadius, limitConfig.getMaxLinearAcceleration(), limitConfig.getMaxSpeed(), limitConfig.getMaxLinearSpeed());
     }
 
     public void update (float deltaTime) {

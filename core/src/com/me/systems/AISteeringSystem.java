@@ -23,38 +23,33 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
     @Mapper
     private ComponentMapper<CharacterMovementComponent> characterMovementMapper;
     @Mapper
-    private ComponentMapper<PlayerAnimationComponent> animationComponentMapper;
+    private ComponentMapper<AIAnimationComponent> animationComponentMapper;
+
+    @Mapper
+    private ComponentMapper<VelocityLimitComponent> velComps;
 
     public AISteeringSystem() {
         super(Aspect.getAspectForOne(AIComponent.class));
     }
 
     @Override
-    protected void process(Entity e) {
+    protected void process(Entity entity) {
 
-        AIComponent aiComponent = aiComponentMapper.get(e);
+        AIComponent aiComponent = aiComponentMapper.get(entity);
         aiComponent.update(world.delta);
         if(aiComponent.getSteeringEntity() != null) {
-            EyeRayCastComponent rayCastComponent = rayCastComponentMapper.get(e);
+            EyeRayCastComponent rayCastComponent = rayCastComponentMapper.get(entity);
             SteeringEntity steeringComponent = aiComponent.getSteeringEntity();
             steeringComponent.update(world.delta);
             if(rayCastComponent.hasCollided() && aiComponent.getTarget() == null){
                 aiComponent.setTarget(rayCastComponent.getTarget());
             }
-            CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(e);
+            CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(entity);
             movementComponent.setVelocity(steeringComponent.getLinearVelocity().x);
-            PlayerAnimationComponent animationComponent = animationComponentMapper.get(e);
-            if(movementComponent.getSpeed() > 0){
-                animationComponent.setFacing(false);
-                animationComponent.setAnimationState(PlayerState.Running);
-            } else {
-                animationComponent.setFacing(true);
-                animationComponent.setAnimationState(PlayerState.Running);
-            }
         }
 
-        if(rayCastComponentMapper.has(e)) {
-            EyeRayCastComponent rayCastComponent = rayCastComponentMapper.get(e);
+        if(rayCastComponentMapper.has(entity)) {
+            EyeRayCastComponent rayCastComponent = rayCastComponentMapper.get(entity);
             if (rayCastComponent.hasCollided() &&
                     rayCastComponent.getCollisionTime() + TimeUnit.SECONDS.toMillis(10) < System.currentTimeMillis()) {
                 rayCastComponent.clearTarget();
@@ -62,6 +57,33 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
             }
         }
 
+        setAiState(entity);
+
+    }
+
+    private void setAiState(Entity entity){
+        CharacterMovementComponent movementComponent = characterMovementMapper.get(entity);
+        VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
+        AIAnimationComponent aiAnimationComponent = animationComponentMapper.get(entity);
+        RayCastComponent rayCastComponent = rayCastComponentMapper.get(entity);
+
+        if(rayCastComponent.hasCollided()){
+            if (Math.abs(movementComponent.getSpeed()) >= velocityLimitComponent.walkLimit) {
+                setPlayerState(entity, PlayerState.Running);
+            } else if (Math.abs(movementComponent.getSpeed()) > 0) {
+                setPlayerState(entity, PlayerState.Walking);
+            }
+        }
+
+        if(movementComponent.isMoving()){
+            aiAnimationComponent.setFacing(movementComponent.runningLeft());
+        }
+
+    }
+
+    private void setPlayerState(Entity entity, PlayerState state) {
+        animationComponentMapper.get(entity).setAnimationState(state);
+//        playerComps.get(entity).setState(state);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.me.component;
 
+import com.me.config.LimitConfig;
+
 public class VelocityLimitComponent extends BaseComponent {
 
     public float walkLimit;
@@ -21,6 +23,10 @@ public class VelocityLimitComponent extends BaseComponent {
         this.walkLimit = walkLimit;
         this.jumpLimit = jumpLimit;
         this.crawlLimit = crawlLimit;
+    }
+
+    public VelocityLimitComponent(LimitConfig limitConfig) {
+        this(limitConfig.getWalkLimit(), limitConfig.getJumpLimit(), limitConfig.getLadderLimit(), limitConfig.getPushLimit());
     }
 
     @Override
