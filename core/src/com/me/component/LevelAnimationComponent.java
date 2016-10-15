@@ -2,6 +2,7 @@ package com.me.component;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.esotericsoftware.spine.Skeleton;
 import com.me.component.interfaces.ButtonStateObserverComponent;
 import com.me.events.ButtonEvent;
 import com.me.events.GameEventType;
@@ -23,6 +24,11 @@ public class LevelAnimationComponent extends AnimationComponent implements Butto
 
     public LevelAnimationComponent(String atlas, String skeleton, float scale) {
         super(atlas, skeleton, scale);
+    }
+
+    @Override
+    public void skeletonReady(Skeleton skeleton) {
+
     }
 
     public LevelAnimationComponent(String atlas, String skeleton, float scale, int taskId) {

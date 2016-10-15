@@ -387,7 +387,7 @@ public class EntityLoader {
                 entityWorld.addObserver(playerComponent);
                 // entity.addComponent(new LightComponent(light, ((BodyUserData)
                 // body.getUserData()).mName));
-                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20), playerComponent.getPlayerNr());
+                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20, 10, 10, 10), playerComponent.getPlayerNr());
                 entityWorld.addObserver(playerAIComponent);
                 entity.addComponent(playerComponent)
                         .addComponent(playerAIComponent)
@@ -473,7 +473,7 @@ public class EntityLoader {
                 stateData.setMix("runLanding", "idle1", 0.2f);
                 entity.addComponent(playerComponent);
                 animationComponent.setSkin(playerConfig.getSkinName());
-                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20), playerComponent.getPlayerNr());
+                PlayerAIComponent playerAIComponent = new PlayerAIComponent(new SteeringEntity(pComp.getPosition("torso"), 20, 10, 10, 10), playerComponent.getPlayerNr());
                 entityWorld.addObserver(playerAIComponent);
                 entity.addComponent(new KeyInputComponent())
                         .addComponent(playerAIComponent)
@@ -496,10 +496,10 @@ public class EntityLoader {
                 pComp.setStartPosition(playerConfig.getPosition());
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
             } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("enemy")) {
-                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20)));
+                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20, 10, 10, 10)));
                 entity.addComponent(new PlayerComponent(PlayerComponent.PlayerNumber.AI, false));
                 entity.addComponent(new RestartComponent());
-                entity.addComponent(new EyeRayCastComponent(new EyeRay(pComp.getPosition(), 1), new EyeRayCastListener()));
+                entity.addComponent(new EyeRayCastComponent(new EyeRay(pComp.getPosition(), 10), new EyeRayCastListener()));
                 entity.addComponent(new TouchComponent());
                 stateData = animationComponent.setUp(image);
                 pComp.setAllBodiesPosition(playerConfig.getPosition());

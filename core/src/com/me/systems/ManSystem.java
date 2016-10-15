@@ -148,6 +148,7 @@ public class ManSystem extends PlayerSystem {
                 if(physicsComponent.getTarget() != null){
                     PlayerAIComponent aiComponent = aiComponentMapper.get(entity);
                     aiComponent.setActivate(false);
+                    setPlayerState(entity, PlayerState.HoldHandFollowing);
                     TelegramEvent telegramEvent = new TelegramEvent(GameEventType.HoldingHandsLeading);
                     telegramEvent.notify(this, entity);
                 }
@@ -206,7 +207,10 @@ public class ManSystem extends PlayerSystem {
             }
         }
 
-        if (rayCastComponent.hasCollided() && !playerComponent.isHanging() && !playerComponent.isLanding()) {
+        if (rayCastComponent.hasCollided() &&
+                !playerComponent.isHanging() &&
+                !playerComponent.isLanding() &&
+                !playerComponent.isJumping()) {
             if (touchComponent.shouldPush()) {
                 setPlayerState(entity, PlayerState.Pushing);
             } else {
@@ -242,7 +246,7 @@ public class ManSystem extends PlayerSystem {
         RayCastComponent rayCastComponent = rayCastComps.get(entity);
 
         if (rayCastComponent.hasCollided() && !player.isJumping() && !player.isFalling()) {
-            if (keyInputComponent.isMoving()) {
+            if (movementComps.get(entity).isMoving()) {
                 if (velocityLimitForJumpBoost(entity)) {
                     physicsComponent.applyLinearImpulseAtPoint(PhysicsComponent.Center, new Vector2((keyInputComponent.left ? -20 : 20), physicsComponent.getBody(PhysicsComponent.Center).getMass() * 25));
                 } else {

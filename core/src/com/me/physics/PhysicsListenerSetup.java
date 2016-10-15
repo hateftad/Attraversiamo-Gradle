@@ -238,22 +238,22 @@ public class PhysicsListenerSetup {
                             }
                             if (playerUd.getType() == Type.RightHandHold) {
                                 PlayerAIComponent playerAi = e.getComponent(PlayerAIComponent.class);
-                                if(playerAi.getTarget() == null) {
+                                if(playerAi != null && playerAi.getTarget() == null) {
                                     e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
                                 }
-                                PlayerAIComponent otehrAi = e2.getComponent(PlayerAIComponent.class);
-                                if(otehrAi.getTarget() == null) {
+                                PlayerAIComponent otherAi = e2.getComponent(PlayerAIComponent.class);
+                                if(otherAi != null && otherAi.getTarget() == null ) {
                                     e2.getComponent(PlayerAIComponent.class).setTarget(player.getTarget());
                                 }
                             }
 
                             if (playerUd.getType() == Type.LeftHandHold) {
                                 PlayerAIComponent playerAi = e.getComponent(PlayerAIComponent.class);
-                                if(playerAi.getTarget() == null) {
+                                if(playerAi != null && playerAi.getTarget() == null) {
                                     e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
                                 }
-                                PlayerAIComponent otehrAi = e2.getComponent(PlayerAIComponent.class);
-                                if(otehrAi.getTarget() == null) {
+                                PlayerAIComponent otherAi = e2.getComponent(PlayerAIComponent.class);
+                                if(otherAi != null && otherAi.getTarget() == null ) {
                                     e2.getComponent(PlayerAIComponent.class).setTarget(player.getTarget());
                                 }
                             }
@@ -366,23 +366,23 @@ public class PhysicsListenerSetup {
                         if (playerUd.getType() == Type.LeftHandHold) {
                             e.getComponent(TouchComponent.class).handHoldArea = false;
                             e.getComponent(TouchComponent.class).leftHoldArea = false;
-                            e.getComponent(HandHoldComponent.class).setHoldingHands(false);
+//                            e.getComponent(HandHoldComponent.class).setHoldingHands(false);
 //                            e.getComponent(PlayerAIComponent.class).setTarget(null);
-                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
+//                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
                         if (playerUd.getType() == Type.RightHandHold) {
                             e.getComponent(TouchComponent.class).handHoldArea = false;
                             e.getComponent(TouchComponent.class).rightHoldArea = false;
-                            e.getComponent(HandHoldComponent.class).setHoldingHands(false);
+//                            e.getComponent(HandHoldComponent.class).setHoldingHands(false);
 //                            e.getComponent(PlayerAIComponent.class).setTarget(null);
-                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
+//                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
 
                         if (otherUd.getType() == Type.LeftHandHold) {
                             e2.getComponent(TouchComponent.class).handHoldArea = false;
                             e2.getComponent(TouchComponent.class).leftHoldArea = false;
-                            e2.getComponent(HandHoldComponent.class).setHoldingHands(false);
-                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
+//                            e2.getComponent(HandHoldComponent.class).setHoldingHands(false);
+//                            gameEntityWorld.onNotify(new TaskEvent(GameEventType.HandHoldingEnded));
                         }
                         if (otherUd.getType() == Type.RightHandHold) {
                             e2.getComponent(TouchComponent.class).handHoldArea = false;

@@ -101,8 +101,11 @@ public abstract class AnimationComponent extends BaseComponent implements TaskEv
 		this.skeleton.setSkin(skin);
 		this.center = Converters.ToBox(center);
 		this.skeleton.updateWorldTransform();
+        skeletonReady(skeleton);
 		return stateData;
 	}
+
+	public abstract void skeletonReady(Skeleton skeleton);
 
 	public void setUp(Vector2 center, String animation){
 		AnimationStateData stateData = new AnimationStateData(skeletonData);

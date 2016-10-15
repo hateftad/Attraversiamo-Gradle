@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "o6+WyihwiUBQxCe/LYaXZuRewWo", "spine": "3.4.02", "width": 143.66, "height": 729.71, "images": "./../Images/" },
+"skeleton": { "hash": "GvArIZX35c5Xf73Ct4ZluwZ2/uo", "spine": "3.4.02", "width": 143.66, "height": 729.71, "images": "./../Images/" },
 "bones": [
 	{ "name": "root", "x": -4.12, "scaleX": 1.4, "scaleY": 1.4 },
 	{ "name": "hip", "parent": "root", "x": -5.41, "y": 271.15 },
@@ -42,7 +42,7 @@
 		"y": -0.38,
 		"color": "9b0009ff"
 	},
-	{ "name": "right_arm_constraint", "parent": "root", "x": -25.99, "y": 230.2, "color": "ff3f00ff" },
+	{ "name": "right_arm_constraint", "parent": "root", "x": -22.38, "y": 221.27, "color": "ff3f00ff" },
 	{ "name": "rightUpperArm", "parent": "spine", "length": 79.94, "rotation": -176.92, "x": 127.45, "y": 27.14, "color": "9b0004ff" },
 	{
 		"name": "rightLowerArm",

@@ -31,12 +31,12 @@ public class SteeringEntity implements Steerable<Vector2> {
     private float maxAngularSpeed;
     private float maxAngularAcceleration;
 
-    public SteeringEntity(Vector2 position, float boundRadius){
+    public SteeringEntity(Vector2 position, float boundRadius, float maxLinearAcceleration, float maxSpeed, float maxLinearSpeed){
         this.position = position;
-        this.boundRadius = 100;
-        maxLinearAcceleration = 5;
-        maxSpeed = 10;
-        maxLinearSpeed = 10;
+        this.boundRadius = boundRadius;
+        this.maxLinearAcceleration = 10;
+        this.maxSpeed = 10;
+        this.maxLinearSpeed = 20;
     }
 
     public void update (float deltaTime) {

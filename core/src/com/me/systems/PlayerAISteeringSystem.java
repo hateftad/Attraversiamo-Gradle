@@ -40,7 +40,6 @@ public class PlayerAISteeringSystem extends GameEntityProcessingSystem {
                 steeringComponent.setSteeringBehavior(BehaviourFactory.createSeek(playerAIComponent.getSteeringEntity(), playerAIComponent.getTarget()));
             }
             CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(entity);
-            System.out.println("Steering Velocity" + steeringComponent.getLinearVelocity());
             float velocity = steeringComponent.getLinearVelocity().x;
             if(Math.abs(velocity) > 1) {
                 movementComponent.setVelocity(velocity);

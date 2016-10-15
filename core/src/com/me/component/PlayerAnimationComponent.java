@@ -1,12 +1,13 @@
 package com.me.component;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.esotericsoftware.spine.Bone;
-import com.esotericsoftware.spine.IkConstraint;
-import com.esotericsoftware.spine.Slot;
+import com.esotericsoftware.spine.*;
 import com.me.component.interfaces.TelegramEventObserverComponent;
 import com.me.events.AnimationEvent;
 import com.me.events.TelegramEvent;
@@ -22,6 +23,8 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
 
     private PlayerState finishAnimation;
     private PlayerComponent.PlayerNumber playerNumber;
+    private ConstraintInfo rightArmConstraint;
+    private float time;
 
     public PlayerAnimationComponent(String atlas, String skeleton, float scale, PlayerState finishAnimation, PlayerComponent.PlayerNumber playerNumber) {
         super(atlas, skeleton, scale);
@@ -31,6 +34,12 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
 
     public PlayerAnimationComponent(String atlas, String skeleton, float scale) {
         super(atlas, skeleton, scale);
+    }
+
+    @Override
+    public void skeletonReady(Skeleton skeleton) {
+        rightArmConstraint = new ConstraintInfo();
+        rightArmConstraint.constraint = skeleton.findBone("leftUpperArm");
     }
 
     public AnimationEvent getEvent() {
@@ -115,9 +124,11 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
                     break;
                 case HoldHandLeading:
 //                    playAnimation("holdingHandsIdleLeading", false);
+//                    setIK(Vector2.Zero);
                     break;
                 case HoldHandFollowing:
 //                    playAnimation("holdingHandsIdleFollowing", false);
+//                    setIK(Vector2.Zero);
                     break;
                 case PullingLedge:
                     playAnimation("pullingLedge", false);
@@ -148,20 +159,22 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
         previousState = state;
     }
 
-    public void setIK(Vector2 position) {
+    public void calculateIK(float dt) {
 
-        for (IkConstraint constraint : skeleton.getIkConstraints()) {
-            constraint.setMix(100);
-            Bone target = constraint.getTarget();
-            target.setX(position.x);
-            target.setY(position.y);
-            target.getData().setX(position.x);
-            target.getData().setY(position.y);
-            target.updateWorldTransform();
-            constraint.apply();
-        }
-        skeleton.updateCache();
-        skeleton.updateWorldTransform();
+//        time += Gdx.graphics.getDeltaTime() / 6;
+//
+//        if(rightArmConstraint != null && rightArmConstraint.constraint != null && rightArmConstraint.target != null) {
+//            if (time > 1) {
+//                float jumpTime = time - 1;
+//                float mixTime = 0.4f;
+//                float mix = MathUtils.clamp(jumpTime / mixTime, 0, 1);
+//                float x = rightArmConstraint.constraint.getWorldX() - rightArmConstraint.target.x;
+//                float y = rightArmConstraint.constraint.getWorldY() - rightArmConstraint.target.y;
+//                float r = ((float)Math.atan2(x, y) * MathUtils.radDeg + 90);
+//                rightArmConstraint.constraint.setRotation(r * 10000);
+//                System.out.println(rightArmConstraint.constraint.getRotation());
+//            }
+//        }
     }
 
     public void rotateBoneTo(String name, Vector2 myPos, Vector2 target, boolean left) {
@@ -201,6 +214,7 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
     public void update(SpriteBatch sb, float dt) {
         animationState.update(dt);
         animationState.apply(skeleton);
+        calculateIK(dt);
         skeleton.update(dt);
         skeleton.updateWorldTransform();
         renderer.draw(sb, skeleton);
@@ -222,11 +236,21 @@ public class PlayerAnimationComponent extends AnimationComponent implements Tele
         Entity entity = event.getEntity();
         PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
         if (playerNumber != playerComponent.getPlayerNr()) {
+            PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
+            rightArmConstraint.target = physicsComponent.getWorldPosition();
             if (event.getEventType() == GameEventType.HoldingHandsFollowing) {
                 setAnimationState(PlayerState.HoldHandLeading);
             } else if (event.getEventType() == GameEventType.HoldingHandsLeading) {
                 setAnimationState(PlayerState.HoldHandFollowing);
             }
+        } else {
+            PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
+//            setIK(physicsComponent.getPosition("torso"));
         }
+    }
+
+    private class ConstraintInfo{
+        Bone constraint;
+        Vector2 target;
     }
 }
