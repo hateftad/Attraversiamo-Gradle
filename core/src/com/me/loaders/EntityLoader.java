@@ -499,7 +499,13 @@ public class EntityLoader {
                 entity.addComponent(new RestartComponent());
                 entity.addComponent(new EyeRayCastComponent(new EyeRay(pComp.getPosition(), 10), new EyeRayCastListener()));
                 entity.addComponent(new TouchComponent());
-                animationComponent.setUp(image);
+                AnimationStateData stateData = animationComponent.setUp(image);
+                animationComponent.setAnimationState(PlayerState.Idle);
+                stateData.setMix("idle1", "walking", 0.4f);
+                stateData.setMix("running", "idle1", 0.4f);
+                stateData.setMix("walking", "running", 0.4f);
+                stateData.setMix("running", "walking", 0.4f);
+                stateData.setMix("running", "idle1", 0.4f);
                 pComp.setAllBodiesPosition(playerConfig.getPosition());
             }
 

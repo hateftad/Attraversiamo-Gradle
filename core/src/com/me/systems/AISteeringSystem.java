@@ -19,12 +19,13 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
     @Mapper
     private ComponentMapper<EyeRayCastComponent> rayCastComponentMapper;
     @Mapper
+    private ComponentMapper<FeetRayCastComponent> feetRayCastComponentMapper;
+    @Mapper
     private ComponentMapper<AIComponent> aiComponentMapper;
     @Mapper
     private ComponentMapper<CharacterMovementComponent> characterMovementMapper;
     @Mapper
     private ComponentMapper<AIAnimationComponent> animationComponentMapper;
-
     @Mapper
     private ComponentMapper<VelocityLimitComponent> velComps;
 
@@ -65,13 +66,15 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
         CharacterMovementComponent movementComponent = characterMovementMapper.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         AIAnimationComponent aiAnimationComponent = animationComponentMapper.get(entity);
-        RayCastComponent rayCastComponent = rayCastComponentMapper.get(entity);
+        RayCastComponent rayCastComponent = feetRayCastComponentMapper.get(entity);
 
         if(rayCastComponent.hasCollided()){
             if (Math.abs(movementComponent.getSpeed()) >= velocityLimitComponent.walkLimit) {
                 setPlayerState(entity, PlayerState.Running);
-            } else if (Math.abs(movementComponent.getSpeed()) > 0) {
+            } else if (Math.abs(movementComponent.getSpeed()) > 0.5) {
                 setPlayerState(entity, PlayerState.Walking);
+            } else {
+                setPlayerState(entity, PlayerState.Idle);
             }
         }
 

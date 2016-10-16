@@ -89,14 +89,14 @@ public class RenderSystem extends EntitySystem {
             process(sortedEntity);
         }
         this.batch.end();
-        for (Entity sortedEntity : sortedEntities) {
-            if (eyeRayCastMapper.has(sortedEntity)) {
-                drawLines(eyeRayCastMapper.get(sortedEntity));
-            }
-            if(feetRayCastMapper.has(sortedEntity)){
-                drawLines(feetRayCastMapper.get(sortedEntity));
-            }
-        }
+//        for (Entity sortedEntity : sortedEntities) {
+//            if (eyeRayCastMapper.has(sortedEntity)) {
+//                drawLines(eyeRayCastMapper.get(sortedEntity));
+//            }
+//            if(feetRayCastMapper.has(sortedEntity)){
+//                drawLines(feetRayCastMapper.get(sortedEntity));
+//            }
+//        }
     }
 
     private void drawLines(RayCastComponent rayCastComponent){
