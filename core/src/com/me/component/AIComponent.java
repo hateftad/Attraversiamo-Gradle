@@ -21,11 +21,10 @@ public class AIComponent extends BaseComponent implements Telegraph {
     private boolean shouldJump;
     private float maxVerticalVel;
     private Jump.JumpDescriptor jumpDescriptor;
-    private PlayerState state;
 
     public AIComponent(SteeringEntity steeringEntity) {
-        this.stateMachine = new DefaultStateMachine<>(this, StateMachineState.SEEK);
-        this.stateMachine.setInitialState(StateMachineState.SEEK);
+        this.stateMachine = new DefaultStateMachine<>(this, StateMachineState.WANDER);
+        this.stateMachine.setInitialState(StateMachineState.WANDER);
         this.steeringEntity = steeringEntity;
         this.steeringEntity.setSteeringBehavior(BehaviourFactory.createWander(steeringEntity));
     }
@@ -45,7 +44,7 @@ public class AIComponent extends BaseComponent implements Telegraph {
     @Override
     public void restart() {
         target = null;
-        stateMachine.changeState(StateMachineState.SEEK);
+        stateMachine.changeState(StateMachineState.WANDER);
     }
 
     @Override
@@ -126,13 +125,5 @@ public class AIComponent extends BaseComponent implements Telegraph {
 
     public void setJumpDescriptor(Jump.JumpDescriptor<Vector2> jumpDescriptor) {
         this.jumpDescriptor = jumpDescriptor;
-    }
-
-    public void setState(PlayerState state) {
-        this.state = state;
-    }
-
-    public PlayerState getState(){
-        return state;
     }
 }

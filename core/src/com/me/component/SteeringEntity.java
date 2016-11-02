@@ -58,6 +58,8 @@ public class SteeringEntity implements Steerable<Vector2> {
 
             // Apply steering acceleration
             applySteering(deltaTime);
+        } else {
+            linearVelocity.setZero();
         }
 
     }

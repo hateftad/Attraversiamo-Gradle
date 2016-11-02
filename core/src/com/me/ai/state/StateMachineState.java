@@ -12,7 +12,7 @@ import com.me.physics.Box2dLocation;
  */
 public enum StateMachineState implements State<AIComponent> {
 
-    SEEK() {
+    WANDER() {
         @Override
         public void enter(AIComponent entity) {
             System.out.println("Seek : Enter");
@@ -48,7 +48,7 @@ public enum StateMachineState implements State<AIComponent> {
         @Override
         public void update(AIComponent entity) {
             if (!entity.isEnemySeen()) {
-                entity.getStateMachine().changeState(StateMachineState.SEEK);
+                entity.getStateMachine().changeState(StateMachineState.WANDER);
             }
         }
 
@@ -71,13 +71,14 @@ public enum StateMachineState implements State<AIComponent> {
                     entity.getJumpDescriptor(),
                     entity.getJumpCallback(),
                     new Vector2(0, -14)));
+            entity.setTarget(null);
         }
 
         @Override
         public void update(AIComponent entity) {
             //System.out.println("ATTACK : update");
-            if (entity.getState() != null) {
-                entity.getStateMachine().changeState(StateMachineState.SEEK);
+            if(entity.isEnemySeen()){
+                entity.getStateMachine().changeState(StateMachineState.ATTACK);
             }
         }
 
@@ -103,7 +104,7 @@ public enum StateMachineState implements State<AIComponent> {
         public void update(AIComponent entity) {
             //System.out.println("ATTACK : update");
             if (entity.isEnemySeen()) {
-                entity.getStateMachine().changeState(StateMachineState.SEEK);
+                entity.getStateMachine().changeState(StateMachineState.ATTACK);
             }
         }
 

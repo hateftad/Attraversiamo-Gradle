@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "1cfK/sDNCaUbViNgleT/NITTvwU", "spine": "3.4.02", "width": 907.1, "height": 703.22, "images": "./images/" },
+"skeleton": { "hash": "KjmPEZkTpM3ZYFdsxhZiNxQQUG8", "spine": "3.4.02", "width": 907.1, "height": 703.22, "images": "./images/" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "upper_torso_bone", "parent": "root", "length": 168.66, "rotation": -171.79, "x": 199.87, "y": 438.87 },
@@ -475,6 +475,8 @@
 			}
 		}
 	},
+	"landing": {},
+	"runFalling": {},
 	"runJumping": {
 		"bones": {
 			"tail_bone_03": {
@@ -686,6 +688,7 @@
 			]
 		}
 	},
+	"runLanding": {},
 	"running": {
 		"bones": {
 			"upper_torso_bone": {

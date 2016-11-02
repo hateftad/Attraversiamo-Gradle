@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class AISteeringSystem extends GameEntityProcessingSystem {
 
     @Mapper
+    ComponentMapper<PlayerComponent> playerComps;
+    @Mapper
     private ComponentMapper<PhysicsComponent> physicsComponentMapper;
     @Mapper
     private ComponentMapper<EyeRayCastComponent> rayCastComponentMapper;
@@ -38,24 +40,22 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
         PhysicsComponent physicsComponent = physicsComponentMapper.getSafe(entity);
         AIComponent aiComponent = aiComponentMapper.get(entity);
         aiComponent.update(world.delta);
-        if(aiComponent.getSteeringEntity() != null) {
-            EyeRayCastComponent rayCastComponent = rayCastComponentMapper.get(entity);
-            SteeringEntity steeringComponent = aiComponent.getSteeringEntity();
-            steeringComponent.update(world.delta);
-            if(rayCastComponent.hasCollided() && aiComponent.getTarget() == null){
-                aiComponent.setTarget(rayCastComponent.getTarget());
-            }
-            CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(entity);
-            movementComponent.setVelocity(steeringComponent.getLinearVelocity().x);
-            if(aiComponent.shouldJump()){
-                physicsComponent.setLinearVelocity(physicsComponent.getLinearVelocity().add(0, aiComponent.getMaxVerticalVel()));
-                setPlayerState(entity, PlayerState.Jumping);
-                aiComponent.setShouldJump(false);
-            }
+        EyeRayCastComponent rayCastComponent = rayCastComponentMapper.get(entity);
+        SteeringEntity steeringComponent = aiComponent.getSteeringEntity();
+        steeringComponent.update(world.delta);
+        if (rayCastComponent.hasCollided() && aiComponent.getTarget() == null) {
+            aiComponent.setTarget(rayCastComponent.getTarget());
+        }
+        CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(entity);
+        movementComponent.setVelocity(steeringComponent.getLinearVelocity().x);
+        if (aiComponent.shouldJump()) {
+            physicsComponent.setLinearVelocity(physicsComponent.getLinearVelocity().add(0, aiComponent.getMaxVerticalVel()));
+            setPlayerState(entity, PlayerState.Jumping);
+            aiComponent.setShouldJump(false);
+            aiComponent.setSteeringBehavior(null);
         }
 
-        if(rayCastComponentMapper.has(entity)) {
-            EyeRayCastComponent rayCastComponent = rayCastComponentMapper.get(entity);
+        if (rayCastComponentMapper.has(entity)) {
             if (rayCastComponent.hasCollided() &&
                     rayCastComponent.getCollisionTime() + TimeUnit.SECONDS.toMillis(10) < System.currentTimeMillis()) {
                 rayCastComponent.clearTarget();
@@ -68,13 +68,15 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
 
     }
 
-    private void setAiState(Entity entity){
+    private void setAiState(Entity entity) {
         CharacterMovementComponent movementComponent = characterMovementMapper.get(entity);
         VelocityLimitComponent velocityLimitComponent = velComps.get(entity);
         AIAnimationComponent aiAnimationComponent = animationComponentMapper.get(entity);
-        RayCastComponent rayCastComponent = feetRayCastComponentMapper.get(entity);
+        FeetRayCastComponent feetRayCastComponent = feetRayCastComponentMapper.get(entity);
+        PlayerComponent playerComponent = playerComps.get(entity);
+        PhysicsComponent physicsComponent = physicsComponentMapper.getSafe(entity);
 
-        if(rayCastComponent.hasCollided()){
+        if (feetRayCastComponent.hasCollided()) {
             if (Math.abs(movementComponent.getSpeed()) >= velocityLimitComponent.walkLimit) {
                 setPlayerState(entity, PlayerState.Running);
             } else if (Math.abs(movementComponent.getSpeed()) > 0.5) {
@@ -83,8 +85,25 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
                 setPlayerState(entity, PlayerState.Idle);
             }
         }
+        if (physicsComponent.isFalling() &&
+                !feetRayCastComponent.hasCollided() &&
+                !playerComponent.isFalling()) {
+            if (!playerComponent.isUpJumping()) {
+                setPlayerState(entity, PlayerState.RunFalling);
+            } else {
+                setPlayerState(entity, PlayerState.Falling);
+            }
+        }
+        if (playerComponent.isFalling() && feetRayCastComponent.hasCollided()) {
+            if (playerComponent.getState() == PlayerState.RunFalling && movementComponent.shouldFallAndRun()) {
+                setPlayerState(entity, PlayerState.RunLanding);
+            } else {
+                setPlayerState(entity, PlayerState.Landing);
+                movementComponent.standStill();
+            }
+        }
 
-        if(movementComponent.isMoving()){
+        if (movementComponent.isMoving()) {
             aiAnimationComponent.setFacing(movementComponent.runningLeft());
         }
 
@@ -92,7 +111,7 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
 
     private void setPlayerState(Entity entity, PlayerState state) {
         animationComponentMapper.get(entity).setAnimationState(state);
-//        playerComps.get(entity).setState(state);
+        playerComps.get(entity).setState(state);
     }
 
 }
