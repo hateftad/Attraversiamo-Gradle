@@ -334,6 +334,22 @@
 	[
 		
 		{
+			"anchorA" : 0,
+			"anchorB" : 
+			{
+				"x" : -0.01025170087814331,
+				"y" : -0.01541507244110107
+			},
+			"bodyA" : 2,
+			"bodyB" : 1,
+			"dampingRatio" : 0,
+			"frequency" : 0,
+			"name" : "joint1",
+			"refAngle" : 0,
+			"type" : "weld"
+		},
+		
+		{
 			"anchorA" : 
 			{
 				"x" : -0.01033772528171539,
@@ -356,22 +372,6 @@
 			"refAngle" : 0,
 			"type" : "revolute",
 			"upperLimit" : 0
-		},
-		
-		{
-			"anchorA" : 0,
-			"anchorB" : 
-			{
-				"x" : -0.01025170087814331,
-				"y" : -0.01541507244110107
-			},
-			"bodyA" : 2,
-			"bodyB" : 1,
-			"dampingRatio" : 0,
-			"frequency" : 0,
-			"name" : "joint1",
-			"refAngle" : 0,
-			"type" : "weld"
 		}
 	],
 	"positionIterations" : 3,

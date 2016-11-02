@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "uhVhqfPc9q+wsrYUygvqsU2NJeg", "spine": "3.4.02", "width": 907.1, "height": 703.22, "images": "./images/" },
+"skeleton": { "hash": "1cfK/sDNCaUbViNgleT/NITTvwU", "spine": "3.4.02", "width": 907.1, "height": 703.22, "images": "./images/" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "upper_torso_bone", "parent": "root", "length": 168.66, "rotation": -171.79, "x": 199.87, "y": 438.87 },
@@ -473,6 +473,217 @@
 					{ "time": 2.3333, "x": 0, "y": 1.46 }
 				]
 			}
+		}
+	},
+	"runJumping": {
+		"bones": {
+			"tail_bone_03": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 26 }
+				]
+			},
+			"right_front_paw_bone": {
+				"rotate": [
+					{ "time": 0, "angle": -130.86 },
+					{ "time": 0.3333, "angle": -24.36 }
+				],
+				"translate": [
+					{ "time": 0, "x": -6.32, "y": -21.42 }
+				]
+			},
+			"upper_jaw_bone": {
+				"rotate": [
+					{ "time": 0, "angle": 24.33 },
+					{ "time": 0.3333, "angle": 52.31 }
+				],
+				"translate": [
+					{ "time": 0, "x": -35.63, "y": 13.91 },
+					{ "time": 0.3333, "x": -44.17, "y": 20.75 }
+				]
+			},
+			"lower_jaw_bone": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 10.19 }
+				],
+				"translate": [
+					{ "time": 0.3333, "x": -5.46, "y": -4.32 }
+				]
+			},
+			"left_front_upper_leg_bone": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 72.86 }
+				],
+				"translate": [
+					{ "time": 0.3333, "x": 13.99, "y": -8.74 }
+				]
+			},
+			"left_front_paw_bone": {
+				"rotate": [
+					{ "time": 0, "angle": -133.06 },
+					{ "time": 0.3333, "angle": -19.44 }
+				],
+				"translate": [
+					{ "time": 0, "x": 23.68, "y": -18.39 }
+				]
+			},
+			"tail_bone_04": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 48.06 }
+				]
+			},
+			"neck_bone": {
+				"rotate": [
+					{ "time": 0, "angle": -35.36 },
+					{ "time": 0.3333, "angle": -60.35 }
+				],
+				"translate": [
+					{ "time": 0, "x": -70.44, "y": -0.86 },
+					{ "time": 0.3333, "x": -70.7, "y": 25.01 }
+				]
+			},
+			"right_back_lower_leg": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 16.2 }
+				]
+			},
+			"ear_bone": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 26.74 }
+				]
+			},
+			"left_back_leg_constraint": {
+				"rotate": [
+					{ "time": 0, "angle": -7.8 }
+				],
+				"translate": [
+					{ "time": 0, "x": -269.8, "y": -8.61 },
+					{ "time": 0.3333, "x": -298.78, "y": 177.48 }
+				]
+			},
+			"right_front_leg_constraint": {
+				"translate": [
+					{ "time": 0, "x": 143.74, "y": 311.8 },
+					{ "time": 0.3333, "x": 55.05, "y": 31.54 }
+				]
+			},
+			"right_back_leg_constraint": {
+				"rotate": [
+					{ "time": 0, "angle": 8.44 }
+				],
+				"translate": [
+					{ "time": 0, "x": -276.98, "y": 3.64 },
+					{ "time": 0.3333, "x": -156.37, "y": 151.15 }
+				]
+			},
+			"upper_torso_bone": {
+				"rotate": [
+					{ "time": 0, "angle": 13.58 },
+					{ "time": 0.3333, "angle": 347.56 }
+				],
+				"translate": [
+					{ "time": 0, "x": -181.55, "y": 29.01 },
+					{ "time": 0.3333, "x": -26.15, "y": -6.15 }
+				]
+			},
+			"left_back_upper_leg": {
+				"rotate": [
+					{ "time": 0.3333, "angle": -31.62 }
+				],
+				"translate": [
+					{ "time": 0, "x": 3.4, "y": 21.76 },
+					{ "time": 0.3333, "x": 43.95, "y": 22.06 }
+				]
+			},
+			"right_back_upper_leg": {
+				"rotate": [
+					{ "time": 0.3333, "angle": -28.76 }
+				]
+			},
+			"right_front_upper_leg_bone": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 54.79 }
+				],
+				"translate": [
+					{ "time": 0.3333, "x": 31.6, "y": 35.86 }
+				]
+			},
+			"left_front_leg_constraint": {
+				"rotate": [
+					{ "time": 0, "angle": 7.98 }
+				],
+				"translate": [
+					{ "time": 0, "x": 13.77, "y": 239.41 },
+					{ "time": 0.3333, "x": 164.41, "y": 101.2 }
+				]
+			},
+			"left_back_lower_leg": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 18.18 }
+				]
+			},
+			"right_front_lower_leg_bone": {
+				"rotate": [
+					{ "time": 0.3333, "angle": -37.3 }
+				],
+				"translate": [
+					{ "time": 0, "x": -6.92, "y": -2.78 },
+					{ "time": 0.3333, "x": -6.09, "y": -9.02 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "time": 0, "x": 52.64, "y": 5.54 },
+					{ "time": 0.3333, "x": 0, "y": 5.54 }
+				]
+			},
+			"tail_bone_02": {
+				"rotate": [
+					{ "time": 0.3333, "angle": 10.15 }
+				]
+			},
+			"left_back_paw": {
+				"rotate": [
+					{ "time": 0, "angle": -20.37 },
+					{ "time": 0.3333, "angle": -69.88 }
+				]
+			},
+			"right_back_paw": {
+				"rotate": [
+					{ "time": 0, "angle": -14.31 },
+					{ "time": 0.3333, "angle": -65.42 }
+				],
+				"translate": [
+					{ "time": 0, "x": -3.04, "y": 2.33 }
+				]
+			},
+			"lower_torso_bone": {
+				"rotate": [
+					{ "time": 0, "angle": 8.87 },
+					{ "time": 0.3333, "angle": 16.36 }
+				],
+				"translate": [
+					{ "time": 0, "x": 7.77, "y": -1.96 },
+					{ "time": 0.3333, "x": -1.23, "y": 2.93 }
+				]
+			},
+			"left_front_lower_leg_bone": {
+				"rotate": [
+					{ "time": 0.3333, "angle": -12.57 }
+				]
+			},
+			"tail_bone_01": {
+				"rotate": [
+					{ "time": 0.3333, "angle": -30.51 }
+				]
+			}
+		},
+		"ik": {
+			"left_front_leg_constraint": [
+				{ "time": 0 }
+			],
+			"right_front_leg_constraint": [
+				{ "time": 0 }
+			]
 		}
 	},
 	"running": {

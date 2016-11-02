@@ -23,6 +23,7 @@ import com.esotericsoftware.spine.AnimationStateData;
 import com.me.config.AIConfig;
 import com.me.config.Config;
 import com.me.config.LimitConfig;
+import com.me.events.JumpEvent;
 import com.me.events.states.PlayerState;
 import com.me.component.*;
 import com.me.factory.GameEventFactory;
@@ -143,7 +144,7 @@ public class EntityLoader {
                 CameraController camComp = entityWorld.getSystem(CameraSystem.class).getCameraComponent();
 //                entity.addComponent(camComp);
                 String color = scene.getCustom(body, "lightColor", "");
-                if(!color.equalsIgnoreCase("none") && !color.isEmpty()) {
+                if (!color.equalsIgnoreCase("none") && !color.isEmpty()) {
                     PointLight light = new PointLight(rh, 50, GameUtils.getColor(color), 5000, camComp.getCamera().position.x, camComp.getCamera().position.y);
                     entity.addComponent(new LightComponent(light, "cameraLight"));
                     entityWorld.getManager(GroupManager.class).add(entity, "lights");
@@ -199,11 +200,11 @@ public class EntityLoader {
                 entity.addComponent(reachEndComponent);
                 entityWorld.addObserver(reachEndComponent);
                 int taskId = scene.getCustom(body, "taskId", 0);
-                if(ud.mName.equalsIgnoreCase("finish")) {
+                if (ud.mName.equalsIgnoreCase("finish")) {
                     LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers(), LevelComponent.RUNOUT, taskId);
                     entityWorld.addObserver(levelComponent);
                     entity.addComponent(levelComponent);
-                } else if (ud.mName.equalsIgnoreCase("portal")){
+                } else if (ud.mName.equalsIgnoreCase("portal")) {
                     LevelComponent levelComponent = new LevelComponent(level.getNumberOfFinishers(), LevelComponent.PORTAL, taskId);
                     entityWorld.addObserver(levelComponent);
                     entity.addComponent(levelComponent);
@@ -258,9 +259,21 @@ public class EntityLoader {
                 entityWorld.addObserver(levelAnimationComponent);
 
             }
-            if(ud.mName.equalsIgnoreCase("ai")){
+            if (ud.mName.equalsIgnoreCase("ai")) {
                 level.addAiConfig(new AIConfig(pComp.getPosition(), "enemy"));
-
+            }
+            if(ud.mName.equalsIgnoreCase("jump")){
+                Vector2 takeOff = null, landPos = null;
+                for (Fixture fixture : body.getFixtureList()) {
+                    FixtureSerializer.BodyUserData userData = (FixtureSerializer.BodyUserData) fixture.getUserData();
+                    if(userData.mName.equalsIgnoreCase("jump")){
+                        takeOff = fixture.getBody().getPosition();
+                    } else if(userData.mName.equalsIgnoreCase("land")){
+                        landPos = fixture.getBody().getPosition();
+                    }
+                }
+                JumpEvent jumpEvent = new JumpEvent(takeOff, new Vector2(landPos.x + 400, landPos.y));
+                pComp.setTaskInfo(jumpEvent);
             }
 
             pComp.setRBUserData(pComp.getBody(ud.mName), new RBUserData(ud.mBoxIndex, ud.mCollisionGroup, ud.mtaskId, pComp.getBody(ud.mName)));
@@ -393,7 +406,6 @@ public class EntityLoader {
                         .addComponent(new LadderClimbComponent())
                         .addComponent(new VelocityLimitComponent(limitConfig))
                         .addComponent(new PushComponent())
-                        .addComponent(new JumpComponent())
                         .addComponent(new GrabComponent())
                         .addComponent(new PlayerOneComponent())
                         .addComponent(new TriggerComponent())
@@ -475,7 +487,6 @@ public class EntityLoader {
                         .addComponent(new VelocityLimitComponent(limitConfig))
                         .addComponent(new JointComponent())
                         .addComponent(new TouchComponent())
-                        .addComponent(new JumpComponent())
                         .addComponent(new GrabComponent())
                         .addComponent(new PlayerTwoComponent())
                         .addComponent(new TriggerComponent())
@@ -493,12 +504,12 @@ public class EntityLoader {
             } else if (scene.getCustom(body, "characterType", "").equalsIgnoreCase("enemy")) {
                 LimitConfig limitConfig = new LimitConfig(8.5f, 10, 0, 0, 2.5f, 10, 10, 20);
                 AIAnimationComponent animationComponent = getPlayerAIAnimationComponent(entityWorld, characterPath, entity, body);
-                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20, limitConfig)));
-                entity.addComponent(new PlayerComponent(PlayerComponent.PlayerNumber.AI, false));
-                entity.addComponent(new VelocityLimitComponent(limitConfig));
-                entity.addComponent(new RestartComponent());
-                entity.addComponent(new EyeRayCastComponent(new EyeRay(pComp.getPosition(), 10), new EyeRayCastListener()));
-                entity.addComponent(new TouchComponent());
+                entity.addComponent(new AIComponent(new SteeringEntity(pComp.getPosition(), 20, limitConfig)))
+                        .addComponent(new PlayerComponent(PlayerComponent.PlayerNumber.AI, false))
+                        .addComponent(new VelocityLimitComponent(limitConfig))
+                        .addComponent(new RestartComponent())
+                        .addComponent(new EyeRayCastComponent(new EyeRay(pComp.getPosition(), 10), new EyeRayCastListener()))
+                        .addComponent(new TouchComponent());
                 AnimationStateData stateData = animationComponent.setUp(image);
                 animationComponent.setAnimationState(PlayerState.Idle);
                 stateData.setMix("idle1", "walking", 0.4f);
@@ -565,10 +576,10 @@ public class EntityLoader {
         String atlasName = scene.getCustom(body, "atlas", "failed");
         if (!skelName.equalsIgnoreCase("failed") && !atlasName.equalsIgnoreCase("failed")) {
             AIAnimationComponent animationComponent = new AIAnimationComponent(CHARPATH + characterPath
-                    + atlasName, CHARPATH + characterPath + skelName, 1f);
+                    + atlasName, CHARPATH + characterPath + skelName, 0.9f);
             entity.addComponent(animationComponent);
             entityWorld.addObserver(animationComponent);
-        return animationComponent;
+            return animationComponent;
         }
         return null;
     }

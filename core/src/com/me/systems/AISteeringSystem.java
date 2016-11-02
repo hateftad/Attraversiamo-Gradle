@@ -35,7 +35,7 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
 
     @Override
     protected void process(Entity entity) {
-
+        PhysicsComponent physicsComponent = physicsComponentMapper.getSafe(entity);
         AIComponent aiComponent = aiComponentMapper.get(entity);
         aiComponent.update(world.delta);
         if(aiComponent.getSteeringEntity() != null) {
@@ -47,6 +47,11 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
             }
             CharacterMovementComponent movementComponent = characterMovementMapper.getSafe(entity);
             movementComponent.setVelocity(steeringComponent.getLinearVelocity().x);
+            if(aiComponent.shouldJump()){
+                physicsComponent.setLinearVelocity(physicsComponent.getLinearVelocity().add(0, aiComponent.getMaxVerticalVel()));
+                setPlayerState(entity, PlayerState.Jumping);
+                aiComponent.setShouldJump(false);
+            }
         }
 
         if(rayCastComponentMapper.has(entity)) {
@@ -56,6 +61,7 @@ public class AISteeringSystem extends GameEntityProcessingSystem {
                 rayCastComponent.clearTarget();
                 aiComponent.setTarget(null);
             }
+
         }
 
         setAiState(entity);

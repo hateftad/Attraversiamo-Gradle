@@ -12,7 +12,8 @@ public class RBUserData {
         Ladder, LeftLadder, RightLadder, TopLadder, BottomLadder,
         Box, LeftPullup, RightPullup, Hand, BoxHand, Portal, ObjectWorldCollision,
         Finish, LeftCrawl, RightCrawl, CrawlCanal, LeftPushButton, RightPushButton,
-        HangHands, FootSensor, Water, RightHandHold, LeftHandHold, ColorChangeSensor, InsideCage, CageHatch, PullLedge
+        HangHands, FootSensor, Water, RightHandHold, LeftHandHold, ColorChangeSensor,
+        InsideCage, CageHatch, PullLedge, Jump
     }
 
     public static final int
@@ -226,10 +227,15 @@ public class RBUserData {
                 filter.categoryBits = Boundary;
                 filter.maskBits = ALL;
                 break;
+            case 35:
+                setType(Type.Jump);
+                filter.categoryBits = WorldSensor;
+                filter.maskBits = CharacterSensor;
+                break;
             case 34:
                 filter.categoryBits = WorldSensor;
                 filter.maskBits = Boundary;
-
+                break;
             default:
                 break;
         }

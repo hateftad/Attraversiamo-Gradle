@@ -1,16 +1,20 @@
 package com.me.physics;
 
 import com.artemis.Entity;
+import com.badlogic.gdx.ai.steer.behaviors.Jump;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.me.ai.state.StateMachineState;
+import com.me.ai.utils.BehaviourFactory;
 import com.me.component.*;
 import com.me.controllers.B2BuoyancyController;
 import com.me.component.QueueComponent.QueueType;
 import com.me.component.PhysicsComponent.ImmediateModePhysicsListener;
 import com.me.events.GameEvent;
 import com.me.events.GameEventType;
+import com.me.events.JumpEvent;
 import com.me.events.TaskEvent;
 import com.me.physics.RBUserData.Type;
 import com.me.systems.GameEntityWorld;
@@ -74,7 +78,6 @@ public class PhysicsListenerSetup {
                 RBUserData playerUd = player.getRBUserData(fB.getBody());
                 if (playerUd == null || otherUd == null)
                     return;
-
                 if (fA.isSensor()) {
 
                     if (player.getRBUserData(fB.getBody()).getCollisionGroup() == otherUd.getCollisionGroup()) {
@@ -185,7 +188,7 @@ public class PhysicsListenerSetup {
                                         }
                                     }
 
-                                    e.getComponent(GrabComponent.class).positionToSet.set(player.getBody("rightHand").getPosition().x, player.getBody("rightHand").getPosition().y -4f);
+                                    e.getComponent(GrabComponent.class).positionToSet.set(player.getBody("rightHand").getPosition().x, player.getBody("rightHand").getPosition().y - 4f);
                                 }
                             }
 
@@ -210,7 +213,18 @@ public class PhysicsListenerSetup {
                             if (otherUd.getType() == Type.InsideCage) {
                                 e.getComponent(TouchComponent.class).cageTouch = true;
                             }
-
+                            if (otherUd.getType() == Type.Jump) {
+                                if (e.getComponent(AIComponent.class) != null) {
+                                    if (otherUd.getType() == Type.Jump) {
+//                                        other.getEventInfo().notify(gameEntityWorld);
+                                        System.out.println("HITTING JUMP");
+                                        AIComponent aiComponent = e.getComponent(AIComponent.class);
+                                        aiComponent.setShouldJump(true);
+                                        aiComponent.setJumpDescriptor(((JumpEvent)other.getEventInfo()).getJumpDescriptor());
+                                        aiComponent.getStateMachine().changeState(StateMachineState.JUMP);
+                                    }
+                                }
+                            }
                         }
                     }
                 } else {
@@ -238,22 +252,22 @@ public class PhysicsListenerSetup {
                             }
                             if (playerUd.getType() == Type.RightHandHold) {
                                 PlayerAIComponent playerAi = e.getComponent(PlayerAIComponent.class);
-                                if(playerAi != null && playerAi.getTarget() == null) {
+                                if (playerAi != null && playerAi.getTarget() == null) {
                                     e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
                                 }
                                 PlayerAIComponent otherAi = e2.getComponent(PlayerAIComponent.class);
-                                if(otherAi != null && otherAi.getTarget() == null ) {
+                                if (otherAi != null && otherAi.getTarget() == null) {
                                     e2.getComponent(PlayerAIComponent.class).setTarget(player.getTarget());
                                 }
                             }
 
                             if (playerUd.getType() == Type.LeftHandHold) {
                                 PlayerAIComponent playerAi = e.getComponent(PlayerAIComponent.class);
-                                if(playerAi != null && playerAi.getTarget() == null) {
+                                if (playerAi != null && playerAi.getTarget() == null) {
                                     e.getComponent(PlayerAIComponent.class).setTarget(other.getTarget());
                                 }
                                 PlayerAIComponent otherAi = e2.getComponent(PlayerAIComponent.class);
-                                if(otherAi != null && otherAi.getTarget() == null ) {
+                                if (otherAi != null && otherAi.getTarget() == null) {
                                     e2.getComponent(PlayerAIComponent.class).setTarget(player.getTarget());
                                 }
                             }
@@ -263,7 +277,9 @@ public class PhysicsListenerSetup {
 
                 if (contact.isTouching()) {
                     Entity e1 = (Entity) fA.getBody().getUserData();
-
+                    if (otherUd.getType() == Type.Jump) {
+                        System.out.println("JUMP");
+                    }
                     if (playerUd.getCollisionGroup() == otherUd.getCollisionGroup()) {
 
                         if (e.getComponent(PlayerComponent.class) != null) {

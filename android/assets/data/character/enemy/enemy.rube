@@ -43,16 +43,16 @@
     
     {
       "class" : "body",
-      "displayName" : "atlas",
-      "name" : "atlas",
-      "type" : "string"
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
     },
     
     {
       "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
+      "displayName" : "atlas",
+      "name" : "atlas",
+      "type" : "string"
     },
     
     {

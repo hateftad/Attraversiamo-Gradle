@@ -23,6 +23,7 @@ public enum GameEventType {
     VerticalButton,
     PullingLedge,
     PortalParticleFinish,
-    PortalParticle, Particle
-
+    PortalParticle,
+    Particle,
+    Jump
 }

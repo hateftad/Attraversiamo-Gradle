@@ -20,7 +20,16 @@ public class FixtureSerializer extends ReadOnlySerializer<Fixture>
 	private Body body;
 	private final ChainShapeSerializer 	 chainShapeSerializer;
 	private RubeScene scene;
-	
+
+    public class BodyUserData
+    {
+        public String mName;
+        public BodyUserData(String name) {
+            mName = name;
+        }
+
+    }
+
 	public FixtureSerializer(RubeScene scene, Json json)
 	{		
 		this.scene = scene;
@@ -107,8 +116,9 @@ public class FixtureSerializer extends ReadOnlySerializer<Fixture>
 				}
 			}
 		}
-		
+        String name = json.readValue("name",  String.class, jsonData);
 		Fixture fixture = body.createFixture(def);
+        fixture.setUserData(new BodyUserData(name));
 		def.shape.dispose();
 		scene.parseCustomProperties(json, fixture, jsonData);
 		return fixture;

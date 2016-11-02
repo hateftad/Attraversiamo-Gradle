@@ -43,6 +43,20 @@
     
     {
       "class" : "body",
+      "displayName" : "taskId",
+      "name" : "taskId",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "collisionGroup",
+      "name" : "collisionGroup",
+      "type" : "int"
+    },
+    
+    {
+      "class" : "body",
       "displayName" : "boxIndex",
       "name" : "boxIndex",
       "type" : "int"
@@ -50,8 +64,8 @@
     
     {
       "class" : "body",
-      "displayName" : "taskId",
-      "name" : "taskId",
+      "displayName" : "taskFinishers",
+      "name" : "taskFinishers",
       "type" : "int"
     },
     
@@ -64,13 +78,6 @@
     
     {
       "class" : "body",
-      "displayName" : "taskFinishers",
-      "name" : "taskFinishers",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "lightColor",
       "name" : "lightColor",
       "type" : "string"
@@ -78,23 +85,16 @@
     
     {
       "class" : "body",
-      "displayName" : "eventType",
-      "name" : "eventType",
-      "type" : "string"
-    },
-    
-    {
-      "class" : "body",
-      "displayName" : "collisionGroup",
-      "name" : "collisionGroup",
-      "type" : "int"
-    },
-    
-    {
-      "class" : "body",
       "displayName" : "movementVelocity",
       "name" : "movementVelocity",
       "type" : "int"
+    },
+    
+    {
+      "class" : "body",
+      "displayName" : "eventType",
+      "name" : "eventType",
+      "type" : "string"
     }
   ],
   "metaworld" : 
@@ -1355,6 +1355,68 @@
           "y" : 45.63308715820312
         },
         "type" : "kinematic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "customProperties" : 
+        [
+          
+          {
+            "int" : 1,
+            "name" : "boxIndex"
+          },
+          
+          {
+            "int" : 1,
+            "name" : "collisionGroup"
+          },
+          
+          {
+            "name" : "atlas",
+            "string" : "enemy"
+          },
+          
+          {
+            "name" : "skeleton",
+            "string" : "enemy"
+          }
+        ],
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 24,
+            "name" : "fixture6",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.5,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 23,
+        "linearVelocity" : 0,
+        "name" : "ai",
+        "position" : 
+        {
+          "x" : 35.59223937988281,
+          "y" : 4.094226837158203
+        },
+        "type" : "static"
       }
     ],
     "metaimage" : 
